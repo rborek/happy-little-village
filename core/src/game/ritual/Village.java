@@ -9,5 +9,14 @@ public class Village {
 		this.villagers= villagers;
 	}
 	
-	public void addVillage()
+	public void addVillager(Villager a){
+		villagers.add(a);
+	}
+	
+	public void removeVillager(Villager a){
+		villagers.remove(a);
+	}
+	
+
 }
+
