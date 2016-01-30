@@ -1,7 +1,7 @@
-package game.ritual;
+package game.ritual.gems;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
+import game.ritual.GameObject;
 
 public class Gem extends GameObject {
 	GemColour colour;

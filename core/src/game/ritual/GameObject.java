@@ -9,7 +9,7 @@ public abstract class GameObject {
 	protected Texture text;
 	protected float width;
 	
-	GameObject(Texture text, float xPos, float yPos){
+	protected GameObject(Texture text, float xPos, float yPos){
 		this.text = text;
 		this.position = new Vector2(xPos, yPos);
         width = text.getWidth();

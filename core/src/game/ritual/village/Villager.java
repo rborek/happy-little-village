@@ -1,4 +1,4 @@
-package game.ritual;
+package game.ritual.village;
 
 public class Villager {
 	VillagerRole role;

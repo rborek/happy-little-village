@@ -1,4 +1,8 @@
-package game.ritual;
+package game.ritual.rituals;
+
+import game.ritual.gems.Gem;
+import game.ritual.gems.GemColour;
+import game.ritual.village.Village;
 
 public abstract class Ritual {
     private static Village village;

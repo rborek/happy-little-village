@@ -1,8 +1,10 @@
-package game.ritual;
+package game.ritual.gems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import game.ritual.GameObject;
+import game.ritual.rituals.Ritual;
 
 import java.util.ArrayList;
 
