@@ -29,6 +29,8 @@ public class GameHandler {
     public void init() {
         gemSlots = new GemSlots(640, 600, 2, 2);
         gemSlots.add(new Gem(GemColour.RED));
+        gemSlots.add(new Gem(GemColour.BLUE));
+        gemSlots.add(new Gem(GemColour.YELLOW));
         gemBag = new GemBag(new Texture("gems/slot.png"), 780, 0);
         village = new Village();
         village.addVillager(new Villager(VillagerRole.CITIZEN));
