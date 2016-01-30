@@ -25,9 +25,11 @@ public abstract class GameObject {
 	protected Texture text;
 	protected float width;
 	
-	GameObject(Texture text, Vector2 position){
-		this.text=text;
-		this.position= position;
+	GameObject(Texture text, float xPos, float yPos){
+		this.text = text;
+		this.position = new Vector2(xPos, yPos);
+        width = text.getWidth();
+        height = text.getHeight();
 	}
 	
 	public abstract void update(float delta);
