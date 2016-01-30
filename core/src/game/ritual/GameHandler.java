@@ -35,6 +35,11 @@ public class GameHandler {
 		village = new Village();
 		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
 		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
+		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
+		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
+		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
+		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
+		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
 		inputHandler = new InputHandler(gemSlots, gemBag);
 		Gdx.input.setInputProcessor(inputHandler);
 	}
