@@ -18,8 +18,8 @@ public class GameScreen implements Screen {
 	}
 
 	private void init() {
-		Texture a = new Texture();
-		village.addVillager(new Villager(VillagerRole.CITIZEN));
+		Texture a = new Texture("yoshi.jpg");
+		village.addVillager(new Villager(VillagerRole.CITIZEN, a));
 		
 
 	}
