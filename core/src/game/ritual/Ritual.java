@@ -1,15 +1,21 @@
 package game.ritual;
 
 public class Ritual {
-    GemColour[] gemCombination;
+    private static Village;
+    private GemColour[] gemCombination;
 
     public Ritual(GemColour[] gemCombination) {
         this.gemCombination = gemCombination;
     }
 
-    public void attempt(Gem[] gems) {
+    public boolean attempt(Gem[] gems) {
 
     }
+
+    public static void setVillage(Village village) {
+        this.village = village;
+    }
+
 
 
 

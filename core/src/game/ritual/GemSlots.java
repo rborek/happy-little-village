@@ -7,8 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.ArrayList;
 
 public class GemSlots extends GameObject {
-    Gem[] gems;
-    ArrayList<Ritual> rituals;
+    private Gem[] gems;
+    private int count;
+    private ArrayList<Ritual> rituals;
 
     public GemSlots(Texture text, float xPos, float yPos, int size) {
         super(text, xPos, yPos);
@@ -24,7 +25,22 @@ public class GemSlots extends GameObject {
 
     private void useGems() {
         for (Ritual ritual : rituals) {
-            ritual.attempt(gems);
+            if (ritual.attempt(gems)) {
+               removeAllGems();
+            }
         }
     }
+
+    public void add(Gem gem) {
+        if (count < gems.length) {
+            gems[count] = gem;
+        }
+    }
+
+    private void removeAllGems() {
+        for (int i = 0; i < gems.length; i++) {
+            gems[i] = null;
+        }
+    }
+
 }
