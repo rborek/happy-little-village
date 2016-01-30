@@ -14,33 +14,27 @@ public class GemSlots extends GameObject {
     private Gem[] gems;
     private Rectangle[] slots;
     private ArrayList<Ritual> rituals;
-    private Texture slotTexture = new Texture("gems/slot.png");
-    private static final int spacing = 40;
-    private static final int internalPadding = 2;
-    private static final int slotSize = 80;
+    private static final int spacingX = 136;
+    private static final int spacingY = 120;
+    private static final int paddingX = 60;
+    private static final int paddingY = 67;
+    private static final int slotSize = 64;
 
     public GemSlots(float xPos, float yPos, int rows, int cols) {
-        super(new Texture("gems/slot.png"), xPos, yPos);
-        height *= rows;
-        height += spacing * rows - 1;
-        width *= cols;
-        width += spacing * cols - 1;
+        super(new Texture("altar/altar1.png"), xPos, yPos);
+//        height *= rows;
+//        height += spacing * rows - 1;
+//        width *= cols;
+//        width += spacing * cols - 1;
         gems = new Gem[rows * cols];
         slots = new Rectangle[rows * cols];
-        for (int i = 0; i < gems.length / 2; i++) {
-            float drawX = position.x + (i * slotSize);
-            if (i != 0) {
-                drawX += spacing;
-            }
-            slots[i] = new Rectangle(drawX, position.y, slotSize, slotSize);
-        }
-        for (int i = gems.length / 2; i < gems.length; i++) {
-            float drawX = position.x - ((gems.length / 2) * slotSize) + (i * slotSize) + internalPadding;
-            if (i != gems.length / 2) {
-                drawX += spacing;
-            }
-            float drawY = position.y - slotSize - spacing + internalPadding;
-            slots[i] = new Rectangle(drawX, drawY, slotSize, slotSize);
+        slots[0] = new Rectangle(paddingX, paddingY + 64 + spacingY, 64, 64);
+        slots[1] = new Rectangle(paddingX + 64 + spacingX, paddingY + 64 + spacingY, 64, 64);
+        slots[2] = new Rectangle(paddingX, paddingY, 64, 64);
+        slots[3] = new Rectangle(paddingX + 64 + spacingX, paddingY, 64, 64);
+        for (int i = 0; i < slots.length; i++) {
+            slots[i].x += position.x;
+            slots[i].y += position.y;
         }
     }
 
@@ -53,9 +47,10 @@ public class GemSlots extends GameObject {
 
     @Override
     public void render(Batch batch) {
-        for (Rectangle rect : slots) {
-            batch.draw(slotTexture, rect.x, rect.y, slotSize, slotSize);
-        }
+//        for (Rectangle rect : slots) {
+//            batch.draw(slotTexture, rect.x, rect.y, slotSize, slotSize);
+//        }
+        batch.draw(texture, position.x, position.y);
         for (int i = 0; i < gems.length; i++) {
             if (gems[i] != null) {
                 batch.draw(gems[i].getTexture(), slots[i].x+ 8, slots[i].y + 8);
@@ -109,3 +104,4 @@ public class GemSlots extends GameObject {
     }
 
 }
+
