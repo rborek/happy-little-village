@@ -8,6 +8,7 @@ public abstract class GameObject {
 	protected Vector2 position;
 	protected Texture text;
 	protected float width;
+	SpriteBatch batch;
 	
 	protected GameObject(Texture text, float xPos, float yPos){
 		this.text = text;
