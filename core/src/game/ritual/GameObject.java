@@ -1,6 +1,7 @@
 package game.ritual;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class GameObject {
@@ -17,6 +18,10 @@ public abstract class GameObject {
 	}
 	
 	public abstract void update(float delta);
+
+	public void render(Batch batch) {
+		batch.draw(text, position.x, position.y, width, height);
+	}
 	
 	
 	public float getWidth() {
