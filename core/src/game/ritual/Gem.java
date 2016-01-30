@@ -16,6 +16,9 @@ public class Gem extends GameObject {
 	public void update(float delta) {
 		// TODO Auto-generated method stub
 	}
-
+	
+	public GemColour getColour(){
+		return colour;
+	}
 	
 }

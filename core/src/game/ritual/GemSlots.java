@@ -27,4 +27,5 @@ public class GemSlots extends GameObject {
             ritual.attempt(gems);
         }
     }
+    
 }
