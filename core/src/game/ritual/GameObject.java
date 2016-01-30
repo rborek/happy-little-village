@@ -8,21 +8,21 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class GameObject {
 	protected float height;
 	protected Vector2 position;
-	protected Texture text;
 	protected float width;
+	protected Texture texture;
 	SpriteBatch batch;
 	
-	protected GameObject(Texture text, float xPos, float yPos){
-		this.text = text;
+	protected GameObject(Texture texture, float xPos, float yPos){
+		this.texture = texture;
 		this.position = new Vector2(xPos, yPos);
-        width = text.getWidth();
-        height = text.getHeight();
+        width = texture.getWidth();
+        height = texture.getHeight();
 	}
 	
 	public abstract void update(float delta);
 
 	public void render(Batch batch) {
-		batch.draw(text, position.x, position.y, width, height);
+		batch.draw(texture, position.x, position.y, width, height);
 	}
 	
 	
@@ -38,8 +38,8 @@ public abstract class GameObject {
 		return position;
 	}
 
-	public Texture getText() {
-		return text;
+	public Texture getTexture() {
+		return texture;
 	}
 
 	

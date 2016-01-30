@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import game.ritual.GameObject;
 
 public class GemBag extends GameObject {
-    int[] gemAmounts;
+    private GemSlots gemSlot;
+    private int[] gemAmounts = new int[GemColour.values().length];
+
 
     protected GemBag(Texture text, float xPos, float yPos) {
         super(text, xPos, yPos);

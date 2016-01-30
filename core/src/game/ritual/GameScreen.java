@@ -6,43 +6,35 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import game.ritual.gems.Gem;
+import game.ritual.gems.GemColour;
 import game.ritual.village.Village;
 import game.ritual.village.Villager;
 import game.ritual.village.VillagerRole;
 
 public class GameScreen implements Screen {
 	private RitualGame game;
-	private Village village;
+	private GameHandler gameHandler;
 	private SpriteBatch batch;
 
 	public GameScreen(RitualGame game) {
 		this.game = game;
-		init();
-	}
-
-	private void init() {
 		batch = new SpriteBatch();
-		village = new Village();
-		Texture a = new Texture("yoshi.jpg");
-		village.addVillager(new Villager(VillagerRole.CITIZEN, a));
+		gameHandler = new GameHandler();
 	}
 
 	@Override
 	public void show() {
-
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+		gameHandler.update(delta);
+		Gdx.gl30.glClearColor(1, 1, 1, 1);
+		Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		for(int i=0; i < village.getSize();i++){
-			village.getVillager(i).render(batch);
-		}
+		gameHandler.render(batch);
 		batch.end();
-		
-
 	}
 
 	@Override

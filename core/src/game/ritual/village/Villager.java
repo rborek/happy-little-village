@@ -6,12 +6,12 @@ import game.ritual.GameObject;
 
 public class Villager extends GameObject {
 	private VillagerRole role;
-	private Texture text;
+	private final static  Texture[] villagerTextures = {new Texture("villagers/citizen.jpg")};
 
-	public Villager(VillagerRole role, Texture text) {
-		super(text, 0, 0);
+	public Villager(VillagerRole role) {
+		super(villagerTextures[role.ordinal()], 0, 0);
 		this.role = role;
-		this.text = text;
+
 	}
 
 	public void update(float delta) {
