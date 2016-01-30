@@ -8,13 +8,18 @@ public class GemBag extends GameObject {
     private int[] gemAmounts = new int[GemColour.values().length];
 
 
-    protected GemBag(Texture text, float xPos, float yPos) {
+    public GemBag(Texture text, float xPos, float yPos) {
         super(text, xPos, yPos);
         gemAmounts = new int[GemColour.values().length];
     }
 
     public void add(GemColour colour) {
+        System.out.println(gemAmounts[0]);
         gemAmounts[colour.ordinal()]++;
+    }
+
+    public void remove(GemColour colour) {
+        gemAmounts[colour.ordinal()]--;
     }
 
     @Override

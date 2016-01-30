@@ -8,7 +8,7 @@ public class Gem {
 	GemColour colour;
 	private final static Texture[] gemTextures = {new Texture("gems/gem_red.png")};
 
-	public Gem(float xPos, float yPos, GemColour colour) {
+	public Gem(GemColour colour) {
 		this.colour = colour;
 	}
 

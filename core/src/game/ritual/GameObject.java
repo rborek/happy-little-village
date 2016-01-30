@@ -18,13 +18,19 @@ public abstract class GameObject {
         width = texture.getWidth();
         height = texture.getHeight();
 	}
+
+	protected GameObject(Texture texture, float xPos, float yPos, int width, int height){
+		this.texture = texture;
+		this.position = new Vector2(xPos, yPos);
+		this.width = width;
+		this.height = height;
+	}
 	
 	public abstract void update(float delta);
 
 	public void render(Batch batch) {
 		batch.draw(texture, position.x, position.y, width, height);
 	}
-	
 	
 	public float getWidth() {
 		return width;
