@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import game.ritual.village.Village;
 import game.ritual.village.Villager;
 import game.ritual.village.VillagerRole;
@@ -11,6 +13,7 @@ import game.ritual.village.VillagerRole;
 public class GameScreen implements Screen {
 	private RitualGame game;
 	private Village village;
+	SpriteBatch batch;
 
 	public GameScreen(RitualGame game) {
 		this.game = game;
@@ -18,10 +21,9 @@ public class GameScreen implements Screen {
 	}
 
 	private void init() {
+		village = new Village();
 		Texture a = new Texture("yoshi.jpg");
 		village.addVillager(new Villager(VillagerRole.CITIZEN, a));
-		
-
 	}
 
 	@Override
@@ -33,6 +35,12 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+		for(int i=0; i < village.getSize();i++){
+			village.getVillager(i).render(batch);
+		}
+		batch.end();
+		
 
 	}
 
