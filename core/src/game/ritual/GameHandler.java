@@ -14,41 +14,40 @@ import game.ritual.village.Villager;
 import game.ritual.village.VillagerRole;
 
 public class GameHandler {
-    private Village village;
-    private GemSlots gemSlots;
-    private GemBag gemBag;
-    private InputHandler inputHandler;
-    private Gem gem;
-    private boolean paused = false;
+	private Village village;
+	private GemSlots gemSlots;
+	private GemBag gemBag;
+	private InputHandler inputHandler;
+	private Gem gem;
+	private boolean paused = false;
 
-    public GameHandler() {
-        init();
-    }
+	public GameHandler() {
+		init();
+	}
 
+	public void init() {
+		gemSlots = new GemSlots(640, 600, 2, 2);
+		gemSlots.add(new Gem(GemColour.RED));
+		gemBag = new GemBag(new Texture("gems/slot.png"), 780, 0);
+		village = new Village();
+		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
+		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
+		inputHandler = new InputHandler(gemSlots, gemBag);
+		Gdx.input.setInputProcessor(inputHandler);
+	}
 
-    public void init() {
-        gemSlots = new GemSlots(640, 600, 2, 2);
-        gemSlots.add(new Gem(GemColour.RED));
-        gemBag = new GemBag(new Texture("gems/slot.png"), 780, 0);
-        village = new Village();
-        village.addVillager(new Villager(VillagerRole.CITIZEN));
-        inputHandler = new InputHandler(gemSlots, gemBag);
-        Gdx.input.setInputProcessor(inputHandler);
-    }
+	// game logic goes here
+	public void update(float delta) {
+		if (!paused) {
+			village.update(delta);
+		}
+	}
 
-    // game logic goes here
-    public void update(float delta) {
-        if (!paused) {
-            village.update(delta);
-        }
-    }
+	// rendering goes here
+	public void render(Batch batch) {
+		village.render(batch);
+		gemSlots.render(batch);
 
-    // rendering goes here
-    public void render(Batch batch) {
-        village.render(batch);
-        gemSlots.render(batch);
-
-    }
-
+	}
 
 }
