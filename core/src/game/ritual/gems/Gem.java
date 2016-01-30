@@ -3,22 +3,24 @@ package game.ritual.gems;
 import com.badlogic.gdx.graphics.Texture;
 import game.ritual.GameObject;
 
-public class Gem extends GameObject {
+public class Gem {
 	GemColour colour;
+	private static Texture[] gemTextures;
 	private static GemSlots gemSlot;
 
 	public Gem(Texture text, float xPos, float yPos, GemColour colour) {
-		super(text, xPos, yPos);
 		this.colour = colour;
-	}
-
-	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
 	}
 	
 	public GemColour getColour(){
 		return colour;
 	}
+
+	public Texture getTexture() {
+		return gemTextures[colour.ordinal()];
+	}
+
+
+
 	
 }

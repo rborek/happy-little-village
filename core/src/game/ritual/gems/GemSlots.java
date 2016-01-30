@@ -3,6 +3,7 @@ package game.ritual.gems;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import game.ritual.GameObject;
 import game.ritual.rituals.Ritual;
 
@@ -22,6 +23,13 @@ public class GemSlots extends GameObject {
     public void update(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             useGems();
+        }
+    }
+
+    @Override
+    public void render(Batch batch) {
+        for (int i = 0; i < gems.length; i++) {
+            batch.draw(gems[i].getTexture(), position.x + (i * 128), position.y);
         }
     }
 
