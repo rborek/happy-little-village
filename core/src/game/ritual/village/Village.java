@@ -3,9 +3,9 @@ package game.ritual.village;
 import java.util.ArrayList;
 
 public class Village {
-	ArrayList<Villager> villagers;
+	private ArrayList<Villager> villagers;
 	
-	Village(ArrayList<Villager> villagers){
+	public Village(ArrayList<Villager> villagers){
 		this.villagers= villagers;
 	}
 	

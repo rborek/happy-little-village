@@ -3,15 +3,16 @@ package game.ritual;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Texture;
 import game.ritual.village.Village;
 import game.ritual.village.Villager;
 import game.ritual.village.VillagerRole;
 
 public class GameScreen implements Screen {
-	RitualGame game;
+	private RitualGame game;
 	private Village village;
 
-	GameScreen(RitualGame game) {
+	public GameScreen(RitualGame game) {
 		this.game = game;
 		init();
 	}

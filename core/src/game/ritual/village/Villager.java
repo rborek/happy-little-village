@@ -1,9 +1,9 @@
 package game.ritual.village;
 
 public class Villager {
-	VillagerRole role;
+	private VillagerRole role;
 	
-	Villager(VillagerRole role){
+	public Villager(VillagerRole role){
 		this.role=role;
 	}
 	

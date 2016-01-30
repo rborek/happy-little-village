@@ -7,7 +7,7 @@ public class Gem extends GameObject {
 	GemColour colour;
 	private static GemSlots gemSlot;
 
-	Gem(Texture text, float xPos, float yPos, GemColour colour) {
+	public Gem(Texture text, float xPos, float yPos, GemColour colour) {
 		super(text, xPos, yPos);
 		this.colour = colour;
 	}
