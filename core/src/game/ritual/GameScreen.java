@@ -13,7 +13,7 @@ import game.ritual.village.VillagerRole;
 public class GameScreen implements Screen {
 	private RitualGame game;
 	private Village village;
-	SpriteBatch batch;
+	private SpriteBatch batch;
 
 	public GameScreen(RitualGame game) {
 		this.game = game;
@@ -21,6 +21,7 @@ public class GameScreen implements Screen {
 	}
 
 	private void init() {
+		batch = new SpriteBatch();
 		village = new Village();
 		Texture a = new Texture("yoshi.jpg");
 		village.addVillager(new Villager(VillagerRole.CITIZEN, a));
