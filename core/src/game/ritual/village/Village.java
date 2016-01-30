@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Village {
 	private ArrayList<Villager> villagers;
 	
-	public Village(ArrayList<Villager> villagers){
-		this.villagers= villagers;
+	public Village(){
+		this.villagers=  new ArrayList<Villager>() ;
 	}
 	
 	public void addVillager(Villager a){
@@ -17,6 +17,12 @@ public class Village {
 		villagers.remove(a);
 	}
 	
-
+	public Villager getVillager(int a){
+		return villagers.get(a);
+	}
+	
+	public int getSize(){
+		return villagers.size();
+	}
 }
 
