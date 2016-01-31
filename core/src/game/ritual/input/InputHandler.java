@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
+
+import game.ritual.MessageBox;
+import game.ritual.WeekSummary;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
@@ -13,13 +16,15 @@ public class InputHandler implements InputProcessor {
 	private RitualAltar ritualAltar;
 	private GemBag gemBag;
 	private Gem selectedGem;
+	private MessageBox messageBox;
 	boolean enabled = true;
 
-	public InputHandler(RitualAltar ritualAltar, GemBag gemBag) {
+
+	public InputHandler(RitualAltar ritualAltar, GemBag gemBag, WeekSummary messageBox) {
 		this.ritualAltar = ritualAltar;
 		this.gemBag = gemBag;
+		this.messageBox = messageBox;
 	}
-
 	public void renderSelectedGem(Batch batch) {
 		if (selectedGem != null) {
 			float mouseX = Gdx.input.getX();
@@ -35,7 +40,13 @@ public class InputHandler implements InputProcessor {
 	public void disable() {
 		enabled = false;
 	}
-
+	
+	public void setMessageBox(MessageBox message) {
+		this.messageBox = message;
+	}
+	private void checkContinue(float mouseX, float mouseY){
+		messageBox.checkClick(mouseX, mouseY);
+	}
 	private void pickUpGem(float mouseX, float mouseY) {
 		if (selectedGem == null) {
 			Gem potentialGem = gemBag.pickUpGem(mouseX, mouseY);
@@ -101,8 +112,9 @@ public class InputHandler implements InputProcessor {
 		if (enabled) {
 			removeFromSlots(mouseX, mouseY);
 			pickUpGem(mouseX, mouseY);
+			
 		} else {
-			 
+			 checkContinue(mouseX,mouseY);
 		}
 		return true;
 	}
