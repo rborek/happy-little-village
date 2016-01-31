@@ -26,6 +26,10 @@ public class Gem {
 		return gemTextures[colour.ordinal()];
 	}
 
+	public static Texture[] getArrayOfTextures() {
+		return gemTextures;
+	}
+
 
 
 	

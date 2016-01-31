@@ -10,7 +10,7 @@ import game.ritual.GameObject;
 
 public class Villager extends GameObject {
 	private VillagerRole role;
-	private final static Texture[] villagerTextures = { new Texture("villagers/citizen.jpg") };
+	private final static Texture[] villagerTextures = { new Texture("villagers/citizen/citizen.png") };
 	private Village village;
 	private Vector2 destination;
 	private float speed = 120; // magnitude of the villager

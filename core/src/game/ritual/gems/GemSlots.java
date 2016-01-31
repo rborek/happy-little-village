@@ -15,7 +15,7 @@ public class GemSlots extends GameObject {
     private Rectangle[] slots;
     private ArrayList<Ritual> rituals;
     private static final int spacingX = 136;
-    private static final int spacingY = 120;
+    private static final int spacingY = 121;
     private static final int paddingX = 60;
     private static final int paddingY = 67;
     private static final int slotSize = 64;
@@ -47,9 +47,6 @@ public class GemSlots extends GameObject {
 
     @Override
     public void render(Batch batch) {
-//        for (Rectangle rect : slots) {
-//            batch.draw(slotTexture, rect.x, rect.y, slotSize, slotSize);
-//        }
         batch.draw(texture, position.x, position.y);
         for (int i = 0; i < gems.length; i++) {
             if (gems[i] != null) {
@@ -88,6 +85,15 @@ public class GemSlots extends GameObject {
             }
         }
     }
+
+    public void add(Gem gem, float x, float y) {
+        for (int i = 0; i < slots.length; i++) {
+            if (slots[i].contains(x, y)) {
+                gems[i] = gem;
+            }
+        }
+    }
+
 
     public GemColour getColour(int index) {
         if (gems[index] != null) {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
@@ -26,12 +27,12 @@ public class GameHandler {
 	}
 
 	public void init() {
-		gemSlots = new GemSlots(1280-400, 720-400, 2, 2);
+		gemSlots = new GemSlots(1280-400-35-40, 720-400-40, 2, 2);
 		gemSlots.add(new Gem(GemColour.RED));
         gemSlots.add(new Gem(GemColour.BLUE));
         gemSlots.add(new Gem(GemColour.YELLOW));
         gemSlots.add(new Gem(GemColour.GREEN));
-		gemBag = new GemBag(new Texture("gems/slot.png"), 780, 0);
+		gemBag = new GemBag(1280-420-25-40, 30+40);
 		village = new Village();
 		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
 		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
@@ -55,6 +56,8 @@ public class GameHandler {
 	public void render(Batch batch) {
 		village.render(batch);
 		gemSlots.render(batch);
+		gemBag.render(batch);
+		inputHandler.renderSelectedGem(batch);
 
 	}
 
