@@ -172,8 +172,10 @@ public class Village {
 		villagerAdded +=1;
 	}
 
-	public void removeVillager(Villager a) {
-		villagers.remove(a);
+	public void removeVillager() {
+		Random random = new Random();
+		random.nextInt(villagers.size());
+		villagers.remove(random);
 	}
 
 	public Villager getVillager(int a) {
