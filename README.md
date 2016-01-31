@@ -21,5 +21,9 @@ Colors: Red, green, blue, yellow                Starting amount: 5 of each colou
 | 1Red 3Green | Gain 15 water, lose 20 food |
 | 3Blue 1 Green | Gain 15 food, lose 20 water |
 
+abstract class:
 
+array of gem colors
 
+commence
+village. (...)
