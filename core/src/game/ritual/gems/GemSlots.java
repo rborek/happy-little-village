@@ -93,8 +93,9 @@ public class GemSlots extends GameObject {
     }
 
     public void add(Gem gem, float x, float y) {
+        Rectangle gemBounds = new Rectangle(x - 32, y - 32, 64, 64);
         for (int i = 0; i < slots.length; i++) {
-            if (slots[i].contains(x, y)) {
+            if (slots[i].overlaps(gemBounds)) {
                 if (gems[i] != null) {
                     gemBag.add(gems[i].getColour());
                 }
