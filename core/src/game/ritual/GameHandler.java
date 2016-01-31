@@ -74,8 +74,12 @@ public class GameHandler {
 		ritualAltar.render(batch);
 		gemBag.render(batch);
 		inputHandler.renderSelectedGem(batch);
-		if (paused && intro == false) {
-			messageBox.render(batch);
+		if (paused) {
+			if (intro) {
+				introduction.render(batch);
+			} else {
+				messageBox.render(batch);
+			}
 		}
 
 	}
