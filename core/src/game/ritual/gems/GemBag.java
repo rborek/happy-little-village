@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import game.ritual.GameObject;
 
 public class GemBag extends GameObject {
-    private GemSlots gemSlot;
+    private RitualAltar gemSlot;
     private Texture[] gemTextures = Gem.getArrayOfTextures();
     private static final int slotSize = 64;
     private Rectangle[] slots = new Rectangle[4];
