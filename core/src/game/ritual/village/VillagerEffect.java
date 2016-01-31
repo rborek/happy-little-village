@@ -16,6 +16,10 @@ public abstract class VillagerEffect extends GameObject {
         frames = getFrames();
     }
 
+    public Villager getVillager() {
+        return villager;
+    }
+
     protected abstract Texture[] getFrames();
 
     @Override
