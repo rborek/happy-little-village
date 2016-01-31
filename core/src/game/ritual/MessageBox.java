@@ -12,63 +12,74 @@ import game.ritual.village.Village;
 import game.ritual.village.VillageInformation;
 
 public class MessageBox extends GameObject {
-	protected BitmapFont font;
-	protected String text;
-	protected Texture continueButton = new Texture("scroll/toContinue.png");
-	protected String clickToContinue = "Click to Continue";
-	protected boolean click = false;
-	protected float continueX;
-	protected float continueY;
+    protected GameHandler gameHandler;
+    protected BitmapFont font;
+    protected String text;
+    protected Texture continueButton = new Texture("scroll/toContinue.png");
+    protected String clickToContinue = "Click to Continue";
+    protected boolean click = false;
+    protected float continueX;
+    protected float continueY;
 
-	protected MessageBox(Texture texture, float xPos, float yPos) {
-		super(texture, xPos, yPos);
-		font = new BitmapFont();
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.borderColor = Color.BLACK;
-		parameter.borderWidth = 1;
-		font = generator.generateFont(parameter);
-		continueX =position.x+260;
-		continueY = position.y+30;
-		
-	}
+    protected MessageBox(Texture texture, float xPos, float yPos) {
+        super(texture, xPos, yPos);
+        font = new BitmapFont();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.borderColor = Color.BLACK;
+        parameter.borderWidth = 1;
+        font = generator.generateFont(parameter);
+        setButtonPos();
+    }
 
-	// for the instruction
-	protected MessageBox(Texture texture, float xPos, float yPos, String instruction) {
-		super(texture, xPos, yPos);
-		font = new BitmapFont();
-		this.text = instruction;
-	}
 
-	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
-	}
-	public boolean checkClick(float x, float y){
-		Rectangle r = new Rectangle(continueX,continueY,continueButton.getWidth(),continueButton.getHeight());
-		if(r.contains(x, y)){
-			click = true; 
-		}
-		return true;
-	}
-	public void setClick(){
-		click =false;
-	}
-	public boolean  getClick(){
-		return click;
-	}
-	@Override
-	public void render(Batch batch) {
-		batch.draw(texture, position.x, position.y);
-		batch.draw(continueButton, continueX, continueY);
-		font.draw(batch, clickToContinue, continueX+40, continueY+30);
-		// font.draw(batch, text, position.x+20, position.y+200);
-		// font.draw(batch, "The amount of consumed food is:"+
-		// village.getConsumedFood(), position.x+20, position.y+200);
-		// font.draw(batch, "The amount of gathered food is:"+
-		// village.getGatheredFood(), position.x+60, position.y+200);
-		// font.draw(batch, "The remaining amount of food is:"+
-		// village.getFood(), position.x+100, position.y+200);
-	}
+    // for the instruction
+    protected MessageBox(String instruction, GameHandler gameHandler) {
+        super(new Texture("scroll/Summary.png"), 20, 300);
+        font = new BitmapFont();
+        this.text = instruction;
+        this.gameHandler = gameHandler;
+        setButtonPos();
+    }
+
+    private void setButtonPos() {
+        continueX = position.x + 300;
+        continueY = position.y + 20;
+    }
+
+    @Override
+    public void update(float delta) {
+        // TODO Auto-generated method stub
+    }
+
+    public void checkClick(float x, float y) {
+        Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
+        System.out.println(continueX + ", " + continueY);
+        if (r.contains(x, y)) {
+            gameHandler.unpause();
+        }
+    }
+
+    public void unclick() {
+        click = false;
+    }
+
+    public boolean getClick() {
+        return click;
+    }
+
+    @Override
+    public void render(Batch batch) {
+        batch.draw(texture, position.x, position.y);
+        batch.draw(continueButton, continueX, continueY);
+        font.draw(batch, clickToContinue, continueX + 28, continueY + 27);
+        // font.draw(batch, text, position.x+20, position.y+200);
+        // font.draw(batch, "The amount of consumed food is:"+
+        // village.getConsumedFood(), position.x+20, position.y+200);
+        // font.draw(batch, "The amount of gathered food is:"+
+        // village.getGatheredFood(), position.x+60, position.y+200);
+        // font.draw(batch, "The remaining amount of food is:"+
+        // village.getFood(), position.x+100, position.y+200);
+    }
 
 }

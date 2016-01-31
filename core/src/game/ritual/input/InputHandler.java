@@ -20,7 +20,7 @@ public class InputHandler implements InputProcessor {
 	boolean enabled = true;
 
 
-	public InputHandler(RitualAltar ritualAltar, GemBag gemBag, WeekSummary messageBox) {
+	public InputHandler(RitualAltar ritualAltar, GemBag gemBag, MessageBox messageBox) {
 		this.ritualAltar = ritualAltar;
 		this.gemBag = gemBag;
 		this.messageBox = messageBox;
@@ -112,7 +112,6 @@ public class InputHandler implements InputProcessor {
 		if (enabled) {
 			removeFromSlots(mouseX, mouseY);
 			pickUpGem(mouseX, mouseY);
-			
 		} else {
 			 checkContinue(mouseX,mouseY);
 		}

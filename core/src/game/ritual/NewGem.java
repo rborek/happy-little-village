@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class NewGem extends MessageBox {
 
-	protected NewGem(Texture texture, float xPos, float yPos) {
-		super(texture, xPos, yPos);
+	protected NewGem(GameHandler gameHandler) {
+		super(null, gameHandler);
 		// TODO Auto-generated constructor stub
 	}
 	@Override

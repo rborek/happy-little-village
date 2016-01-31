@@ -21,9 +21,8 @@ public class GameHandler {
 	private InputHandler inputHandler;
 	private Gem gem;
 	private Texture scroll = new Texture("scroll/scroll.png");
-	private boolean paused = true;
-	private WeekSummary weekSummary;
-	private MessageBox introduction;
+	private boolean paused;
+	private MessageBox messageBox;
 	private NewGem newGem;
 	private boolean intro = true;
 
@@ -38,22 +37,24 @@ public class GameHandler {
 		for (int i = 0; i < 7; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
-		weekSummary = new WeekSummary(new Texture("scroll/Summary.png"), 20, 300, village);
-		newGem = new NewGem(new Texture("scroll/Summary.png"), 20, 300);
-		introduction = new MessageBox(new Texture("scroll/Summary.png"), 20, 300,
-				"This is the game's Instruction:\n" + "Just kidding\n");
-		inputHandler = new InputHandler(ritualAltar, gemBag, introduction);
+		newGem = new NewGem(this);
+		messageBox = new MessageBox("This is the game's Instruction:\n" + "Just kidding\n", this);
+		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox);
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
+		pause();
 
 	}
 	
-	private void pause() {
+	public void pause() {
 		paused = true;
 		inputHandler.disable();
 	}
 	
-	private void unpause() {
+	public void unpause() {
+		if (!(messageBox instanceof WeekSummary)) {
+			messageBox = new WeekSummary(village, this);
+		}
 		paused = false;
 		inputHandler.enable();
 	}
@@ -67,14 +68,6 @@ public class GameHandler {
 			}
 			village.update(delta);
 
-		} else {
-			if (weekSummary.getClick()) {
-				if (message)
-				unpause();
-				inputHandler.setMessageBox(weekSummary);
-				intro = false;
-				weekSummary.setClick();
-			}
 		}
 
 	}
@@ -92,11 +85,7 @@ public class GameHandler {
 		gemBag.render(batch);
 		inputHandler.renderSelectedGem(batch);
 		if (paused) {
-			if (intro) {
-				introduction.render(batch);
-			} else {
-				weekSummary.render(batch);
-			}
+			messageBox.render(batch);
 		}
 
 	}
