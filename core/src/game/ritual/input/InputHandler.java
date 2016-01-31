@@ -40,14 +40,22 @@ public class InputHandler implements InputProcessor {
         if (selectedGem == null) {
             Gem potentialGem = gemBag.pickUpGem(mouseX, mouseY);
             if (potentialGem != null) {
-                selectedGem = potentialGem;
+                GemColour gemColour = potentialGem.getColour();
+                if (gemBag.getAmount(gemColour) > 0) {
+                    selectedGem = potentialGem;
+                    gemBag.remove(gemColour);
+
+                }
+
             }
         }
     }
 
     private void dropGem(float mouseX, float mouseY) {
         if (selectedGem != null) {
-            ritualAltar.add(selectedGem, mouseX, mouseY);
+            if (!ritualAltar.add(selectedGem, mouseX, mouseY)) {
+                gemBag.add(selectedGem.getColour());
+            }
             selectedGem = null;
         }
 
@@ -58,15 +66,15 @@ public class InputHandler implements InputProcessor {
     }
 
     private void removeFromSlots(float mouseX, float mouseY) {
-        int index = ritualAltar.removeGem(mouseX, mouseY);
-        if (index != -1) {
-            GemColour colour = ritualAltar.getColour(index);
-            if (colour != null) {
-                gemBag.add(colour);
+        if (selectedGem == null) {
+            Gem potentialGem = ritualAltar.pickUpGem(mouseX, mouseY);
+            if (potentialGem != null) {
+                selectedGem = potentialGem;
             }
-        }
 
+        }
     }
+
 
     @Override
     public boolean keyDown(int keycode) {
