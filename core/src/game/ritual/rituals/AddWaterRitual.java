@@ -17,7 +17,7 @@ public class AddWaterRitual extends Ritual {
 
 	@Override
 	protected void commence() {
-		village.addWater(10);
+		village.addWater(25);
 	}
 
 }
