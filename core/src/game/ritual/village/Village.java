@@ -103,10 +103,6 @@ public class Village {
 		return random.nextInt(720 - 48);
 	}
 
-	public void addVillager(Villager a) {
-		villagers.add(a);
-	}
-
 	public void addVillager(VillagerRole role) {
 		villagers.add(new Villager(role, this));
 	}

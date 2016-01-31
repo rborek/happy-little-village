@@ -34,13 +34,9 @@ public class GameHandler {
 		ritualAltar.add(new Gem(GemColour.YELLOW));
 		ritualAltar.add(new Gem(GemColour.GREEN));
 		village = new Village();
-		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
-		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
-		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
-		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
-		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
-		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
-		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
+		for (int i = 0; i < 7; i++) {
+			village.addVillager(VillagerRole.CITIZEN);
+		}
 		inputHandler = new InputHandler(ritualAltar, gemBag);
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
