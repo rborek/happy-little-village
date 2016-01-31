@@ -69,4 +69,7 @@ public class Villager extends GameObject {
 	public VillagerRole getRole() {
 		return role;
 	}
+	public void setRole(VillagerRole a){
+		role = a;
+	}
 }

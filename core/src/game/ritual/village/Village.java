@@ -11,15 +11,25 @@ import java.util.Random;
 public class Village {
 	private ArrayList<Villager> villagers;
 	private float food = 0;
-	private float water= 0;
+	private float water = 0;
 	private VillageInformation info;
 
 	public Village() {
 		this.villagers = new ArrayList<Villager>();
-		info = new VillageInformation(new Texture("villagers/VillageInfo.png"),0,0);
+		info = new VillageInformation(new Texture("villagers/VillageInfo.png"), 0, 0);
 		food = 100;
 		water = 100;
 
+	}
+
+	public boolean convertCitizen(VillagerRole role) {
+		for (int k = 0; k < villagers.size(); k++) {
+			if (villagers.get(k).getRole().equals(VillagerRole.CITIZEN)) {
+				villagers.get(k).setRole(role);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void consume(float delta) {

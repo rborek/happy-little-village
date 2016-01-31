@@ -11,6 +11,11 @@ public class VillageInformation extends GameObject {
 	private int food;
 	private int water;
 	private int pop;
+	// add file to constructors
+	private Texture foodTexture;
+	private Texture waterTexture;
+	private Texture popTexture;
+	
 
 	protected VillageInformation(Texture texture, float xPos, float yPos) {
 		super(texture, xPos, yPos);
@@ -37,9 +42,9 @@ public class VillageInformation extends GameObject {
 	@Override
 	public void render(Batch batch) {
 		batch.draw(texture, position.x, position.y);
-		font.draw(batch, "Food: " + food, 200, 200);
-		font.draw(batch, "Water:" + water, 300, 200);
-		font.draw(batch, "Pop" + pop, 400, 200);
+		font.draw(batch, "Food: " + food, 200, 50);
+		font.draw(batch, "Water: " + water, 300, 50);
+		font.draw(batch, "Population: " + pop, 400, 50);
 	}
 
 }
