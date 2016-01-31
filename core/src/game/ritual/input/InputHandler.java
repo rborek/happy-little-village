@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
-import game.ritual.gems.RitualAltar;
+import game.ritual.rituals.RitualAltar;
 
 public class InputHandler implements InputProcessor {
     private RitualAltar ritualAltar;

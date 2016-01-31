@@ -6,11 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
-import game.ritual.gems.RitualAltar;
+import game.ritual.rituals.RitualAltar;
 import game.ritual.input.InputHandler;
 import game.ritual.rituals.Ritual;
 import game.ritual.village.Village;
-import game.ritual.village.Villager;
 import game.ritual.village.VillagerRole;
 
 public class GameHandler {
