@@ -41,8 +41,22 @@ public class RitualAltar extends GameObject {
             slots[i].x += position.x;
             slots[i].y += position.y;
         }
-        gainRitual(new AddFoodRitual());
+        gainStartingRituals();
     }
+
+    private void gainStartingRituals() {
+        gainRitual(new AddFoodRitual());
+        gainRitual(new AddFoodLoseWaterRitual());
+        gainRitual(new AddFoodLoseWaterRitual());
+        gainRitual(new AddVillagerRitual());
+        gainRitual(new AddWaterLoseFoodRitual());
+        gainRitual(new AddWaterRemoveFoodRitual());
+        gainRitual(new AddWaterRitual());
+        gainRitual(new ToExplorerRitual());
+        gainRitual(new ToFarmerRitual());
+        gainRitual(new ToMinerRitual());
+    }
+
 
     public boolean gainRitual(Ritual ritual) {
         int ritualID = ritual.getID();

@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import game.ritual.GameObject;
+import game.ritual.GameScreen;
 import game.ritual.rituals.RitualAltar;
 
 public class GemBag extends GameObject {
     private BitmapFont font;
     private RitualAltar gemSlot;
     private Texture[] gemTextures = Gem.getArrayOfTextures();
+    private Texture inactiveGem = new Texture("gems/gem_grey.png");
     private static final int slotSize = 64;
     private Rectangle[] slots = new Rectangle[4];
     private int[] gemAmounts = new int[GemColour.values().length];
@@ -23,7 +25,7 @@ public class GemBag extends GameObject {
         super(new Texture("gems/gem_bag.png"), xPos, yPos);
         gemAmounts = new int[GemColour.values().length];
         for (int i = 0; i < gemAmounts.length; i++) {
-            gemAmounts[i] = i + 2;
+            gemAmounts[i] = 99;
         }
         slots[0] = new Rectangle(42, 54, slotSize, slotSize);
         slots[1] = new Rectangle(135, 54, slotSize, slotSize);
@@ -59,7 +61,11 @@ public class GemBag extends GameObject {
     public void render(Batch batch) {
         batch.draw(texture, position.x, position.y);
         for (int i = 0; i < gemTextures.length; i++) {
-            batch.draw(gemTextures[i], slots[i].x, slots[i].y);
+            if (gemAmounts[i] != 0) {
+                batch.draw(gemTextures[i], slots[i].x, slots[i].y);
+            } else {
+                batch.draw(inactiveGem, slots[i].x, slots[i].y);
+            }
         }
         for (int i = 0; i < gemTextures.length; i++) {
             font.draw(batch, "" + gemAmounts[i], slots[i].x + 50, slots[i].y + 16);

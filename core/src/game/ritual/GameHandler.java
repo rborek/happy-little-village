@@ -41,9 +41,14 @@ public class GameHandler {
 		inputHandler = new InputHandler(ritualAltar, gemBag);
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
+<<<<<<< HEAD
 		messageBox = new WeekSummary(new Texture("scroll/Summary.png"), 20, 300);
 		messageBox.setVillage(village);
 		newGem = new NewGem(new Texture("scroll/Summary.png"), 20, 300);
+=======
+		messageBox = new MessageBox(new Texture("scroll/Summary.png"), 20, 300);
+		messageBox.setVillage(village);
+>>>>>>> a687d8b93893c8730d204f4a82b889bdfa87e048
 		introduction = new MessageBox(new Texture("scroll/Summary.png"), 20, 300,
 				"This is the game's Instruction:\n"
 				+ "Just kidding\n");

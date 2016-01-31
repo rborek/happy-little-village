@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
 
 	}
 
-	private static ShaderProgram createDefaultShader () {
+	public static ShaderProgram createDefaultShader () {
 		String vertexShader = "#version 330 core\n"
 				+ "in vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
 				+ "in vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
