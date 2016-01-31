@@ -7,10 +7,25 @@ import java.util.Random;
 
 public class MonthlyRitual extends Ritual {
     private Village village;
+    private int timesPerformed;
+    private int timesToDo;
     public MonthlyRitual(int numGems, Village village) {
         super();
         generateRandom(numGems);
         this.village = village;
+    }
+
+    public boolean isComplete() {
+        return timesToDo == timesPerformed;
+    }
+
+
+    public int getTimesToDo() {
+        return timesToDo;
+    }
+
+    public int getTimesPerformed() {
+        return timesPerformed;
     }
 
     @Override
@@ -28,6 +43,6 @@ public class MonthlyRitual extends Ritual {
 
     @Override
     protected void commence() {
-        village.setWeeksLeft(4);
+        timesPerformed++;
     }
 }
