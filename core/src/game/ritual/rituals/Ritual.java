@@ -20,10 +20,13 @@ public abstract class Ritual {
                 gemsToUse[i] = gems[i].getColour();
             }
         }
-        boolean working = false;
+        if (gemCombination.length != gemsToUse.length) {
+            return false;
+        }
+        boolean working = true;
         for (int i = 0; i < gemCombination.length; i++) {
-            if (gemCombination[i] == gemsToUse[i]) {
-                working = true;
+            if (gemCombination[i] != gemsToUse[i]) {
+                working = false;
             }
             if (!working) {
                 return false;
