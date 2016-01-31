@@ -11,10 +11,21 @@ import game.ritual.GameObject;
 
 public class Villager extends GameObject {
 	private VillagerRole role;
-	private final static Texture[][] villagerTextures = {
-			{new Texture("villagers/citizen/citizen.png"), new Texture("villagers/citizen/citizen_left_1.png"),
-			 new Texture("villagers/citizen/citizen_left_2.png"), new Texture("villagers/citizen/citizen_left_3.png"),
-			new Texture("villagers/citizen/citizen_left_2.png")}};
+	private final static Texture[][] villagerTextures = { { new Texture("villagers/citizen/citizen.png"),
+			new Texture("villagers/citizen/citizen_left_1.png"), new Texture("villagers/citizen/citizen_left_2.png"),
+			new Texture("villagers/citizen/citizen_left_3.png"), new Texture("villagers/citizen/citizen_left_2.png") },
+			{ new Texture("villagers/miner/miner.png"), new Texture("villagers/miner/miner_left_1.png"),
+					new Texture("villagers/miner/miner_left_2.png"),
+					new Texture("villagers/miner/miner_left_3.png"),
+					new Texture("villagers/miner/miner_left_2.png") },
+			{ new Texture("villagers/farmer/farmer.png"), new Texture("villagers/farmer/farmer_left_1.png"),
+					new Texture("villagers/farmer/farmer_left_2.png"),
+					new Texture("villagers/farmer/farmer_left_3.png"),
+					new Texture("villagers/farmer/farmer_left_2.png") },
+			{ new Texture("villagers/explorer/explorer.png"), new Texture("villagers/explorer/explorer_left_1.png"),
+					new Texture("villagers/explorer/explorer_left_2.png"),
+					new Texture("villagers/explorer/explorer_left_3.png"),
+					new Texture("villagers/explorer/explorer_left_2.png") } };
 	private Village village;
 	private Vector2 destination;
 	private float speed = 120; // magnitude of the villager
@@ -32,15 +43,12 @@ public class Villager extends GameObject {
 		velocity = new Vector2(0, 0);
 	}
 
-
 	public boolean isMovingRight() {
 		return position.x < destination.x;
 	}
 
-
-
 	private void move(float delta) {
-		int frame = (int)(walkTimer * 5 % 4) + 1;
+		int frame = (int) (walkTimer * 5 % 4) + 1;
 		texture = villagerTextures[role.ordinal()][frame];
 		walkTimer += delta;
 		float x = destination.x - position.x;
@@ -60,7 +68,8 @@ public class Villager extends GameObject {
 
 	@Override
 	public void render(Batch batch) {
-		batch.draw(texture, position.x, position.y, width, height, 0, 0, (int)width, (int)height, isMovingRight(), false);
+		batch.draw(texture, position.x, position.y, width, height, 0, 0, (int) width, (int) height, isMovingRight(),
+				false);
 	}
 
 	@Override
@@ -85,7 +94,8 @@ public class Villager extends GameObject {
 	public VillagerRole getRole() {
 		return role;
 	}
-	public void setRole(VillagerRole a){
+
+	public void setRole(VillagerRole a) {
 		role = a;
 	}
 }
