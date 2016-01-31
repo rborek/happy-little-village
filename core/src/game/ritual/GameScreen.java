@@ -18,6 +18,7 @@ public class GameScreen implements Screen {
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private RitualGame game;
+	private int dayTime;
 	private GameHandler gameHandler;
 	private SpriteBatch batch;
 	private OrthographicCamera camera = new OrthographicCamera(1280, 720);
@@ -29,6 +30,7 @@ public class GameScreen implements Screen {
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		gameHandler = new GameHandler();
+		dayTime = gameHandler.getVillage().getMaxHours();
 	}
 
 	@Override
@@ -38,7 +40,10 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		gameHandler.update(delta);
-		Gdx.gl30.glClearColor(1, 1, 1, 1);
+		float time = gameHandler.getVillage().getHoursLeft();
+		float percentage  = (time / dayTime);
+
+		Gdx.gl30.glClearColor(0, 191/255f * percentage, 255/255f * percentage, 1);
 		Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		gameHandler.render(batch);
