@@ -8,11 +8,8 @@ import game.ritual.village.Village;
 public class WeekSummary extends MessageBox {
 	private Village village;
 	
-	protected WeekSummary(Texture texture, float xPos, float yPos) {
+	protected WeekSummary(Texture texture, float xPos, float yPos, Village village) {
 		super(texture, xPos, yPos);
-	}
-	 
-	public void setVillage( Village village){
 		this.village = village;
 	}
 	

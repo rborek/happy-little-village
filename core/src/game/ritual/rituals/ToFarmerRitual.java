@@ -17,6 +17,6 @@ public class ToFarmerRitual extends Ritual {
 
 	@Override
 	protected void commence() {
-		village.convertCitizen(VillagerRole.FARMER);
+		System.out.println(village.convertCitizen(VillagerRole.FARMER));
 	}
 }

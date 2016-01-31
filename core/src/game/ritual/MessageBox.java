@@ -40,21 +40,13 @@ public class MessageBox extends GameObject {
 
 	@Override
 	public void render(Batch batch) {
-<<<<<<< HEAD
 		batch.draw(texture, position.x, position.y);
 		batch.draw(continueButton, position.x+ 260, position.y+30);
 		font.draw(batch, clickToContinue,  position.x+300, position.y + 60);
-=======
-		batch.draw(texture,position.x,position.y);
 //		font.draw(batch, text, position.x+20, position.y+200);
 //		font.draw(batch, "The amount of consumed food is:"+ village.getConsumedFood(), position.x+20, position.y+200);
 		//font.draw(batch, "The amount of gathered food is:"+ village.getGatheredFood(), position.x+60, position.y+200);
 		//font.draw(batch, "The remaining amount of food is:"+ village.getFood(), position.x+100, position.y+200);
-	}
-	public void setVillage(Village village2) {
-		village = village2;
-		System.out.println(village);
->>>>>>> a687d8b93893c8730d204f4a82b889bdfa87e048
 	}
 
 }

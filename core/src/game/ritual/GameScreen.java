@@ -3,6 +3,7 @@ package game.ritual;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -14,13 +15,19 @@ import game.ritual.village.Villager;
 import game.ritual.village.VillagerRole;
 
 public class GameScreen implements Screen {
+	private static final int WIDTH = 1280;
+	private static final int HEIGHT = 720;
 	private RitualGame game;
 	private GameHandler gameHandler;
 	private SpriteBatch batch;
+	private OrthographicCamera camera = new OrthographicCamera(1280, 720);
 
 	public GameScreen(RitualGame game) {
 		this.game = game;
 		batch = new SpriteBatch(1000, createDefaultShader());
+		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
 		gameHandler = new GameHandler();
 	}
 

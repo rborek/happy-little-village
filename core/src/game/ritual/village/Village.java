@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Village {
-	private static final int MAX_HOURS = 5;
+	private static final int MAX_HOURS = 100;
 	private ArrayList<Villager> villagers;
 	private float food = 0;
 	private float consumedFood = 0;
