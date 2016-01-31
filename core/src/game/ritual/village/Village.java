@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Village {
+	private static final int MAX_HOURS = 168;
 	private ArrayList<Villager> villagers;
 	private float food = 0;
 	private float water = 0;
 	private VillageInformation info;
-	private float hour;
+	private float hoursLeft;
 	private float weekLeft;
 	private float week;
 	private boolean isNextWeek = false;
@@ -23,10 +24,9 @@ public class Village {
 		info = new VillageInformation(new Texture("villagers/info_menu.png"), 60, 10);
 		food = 100;
 		water = 100;
-		hour = 168;
+		hoursLeft = MAX_HOURS;
 		weekLeft = 4;
 		week = 0;
-
 	}
 
 	public boolean convertCitizen(VillagerRole role) {
@@ -77,16 +77,16 @@ public class Village {
 		}
 		isNextWeek = false;
 		consume(delta);
-		info.setResources((int) food, (int) water, villagers.size(), (int) hour, (int) week, (int) weekLeft);
+		info.setResources((int) food, (int) water, villagers.size(), (int) hoursLeft, (int) week, (int) weekLeft);
 		timePass(delta);
 	}
 
 	private void timePass(float delta) {
-		hour -= (float) (delta * 1.4);
-		if (hour <= 0) {
+		hoursLeft -= (float) (delta * 1.4);
+		if (hoursLeft <= 0) {
 			weekLeft -= 1;
 			week += 1;
-			hour = 168;
+			hoursLeft = MAX_HOURS;
 			isNextWeek = true;
 		}
 	}
@@ -94,7 +94,12 @@ public class Village {
 	public boolean isNextWeek() {
 		return isNextWeek;
 	}
-
+	public float getHoursLeft(){
+		return hoursLeft;
+	}
+	public float getWeek(){
+		return week;
+	}
 	public void render(Batch batch) {
 		for (Villager villager : villagers) {
 			villager.render(batch);

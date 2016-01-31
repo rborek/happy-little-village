@@ -21,8 +21,11 @@ public class GameHandler {
 	private InputHandler inputHandler;
 	private Gem gem;
 	private Texture scroll = new Texture("scroll/scroll.png");
-	private boolean paused = false;
-	private MessageBox message;
+	private boolean paused = true;
+	private MessageBox messageBox;
+	private MessageBox introduction;
+	private MessageBox messagePointer;
+	private boolean intro = true;
 
 	public GameHandler() {
 		init();
@@ -38,7 +41,13 @@ public class GameHandler {
 		inputHandler = new InputHandler(ritualAltar, gemBag);
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
-		message = new MessageBox(new Texture("scroll/Summary.png"), 20, 300);
+		messageBox = new MessageBox(new Texture("scroll/Summary.png"), 20, 300);
+		introduction = new MessageBox(new Texture("scroll/Summary.png"), 20, 300,
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n Fusce ullamcorper rutrum purus, vel auctor sapien tincidunt vel.\n"
+						+ " Proin felis massa, venenatis ut imperdiet in, scelerisque a ex. Donec eget mauris enim.\n"
+						+ " In nec est vel risus ultricies placerat.\n"
+						+ " Cras vulputate, enim at semper volutpat, libero sem euismod justo, gravida lobortis nulla nunc id nunc.\n"
+						+ " Suspendisse lacinia felis odio, vel mollis velit sodales id. Maecenas id erat rhoncus, vehicula augue sit amet, suscipit nulla.");
 	}
 
 	// game logic goes here
@@ -51,6 +60,7 @@ public class GameHandler {
 		} else {
 			if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 				paused = false;
+				intro = false;
 			}
 		}
 
@@ -64,9 +74,10 @@ public class GameHandler {
 		ritualAltar.render(batch);
 		gemBag.render(batch);
 		inputHandler.renderSelectedGem(batch);
-		if (paused) {
-			message.render(batch);
+		if (paused && intro == false) {
+			messageBox.render(batch);
 		}
+
 	}
 
 }
