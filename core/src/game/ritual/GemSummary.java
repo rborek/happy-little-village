@@ -8,7 +8,7 @@ import game.ritual.gems.GemColour;
 import game.ritual.village.Village;
 import game.ritual.village.VillagerRole;
 
-public class NewGem extends MessageBox {
+public class GemSummary extends MessageBox {
 	private GemBag gemBag;
 	private Village village;
 	private int RED;
@@ -16,12 +16,12 @@ public class NewGem extends MessageBox {
 	private int GREEN;
 	private int YELLOW;
 
-	protected NewGem(GameHandler gameHandler) {
+	protected GemSummary(GameHandler gameHandler) {
 		super(null, gameHandler);
 		// TODO Auto-generated constructor stub
 	}
 
-	protected NewGem(GemBag gemBag, Village village, GameHandler gameHandler) {
+	protected GemSummary(GemBag gemBag, Village village, GameHandler gameHandler) {
 		super("", gameHandler);
 		this.gemBag = gemBag;
 		this.village = village;
@@ -48,10 +48,10 @@ public class NewGem extends MessageBox {
 	@Override
 	public void render(Batch batch) {
 		super.render(batch);
-		font.draw(batch, "The amount of mined red gem is:" + RED, position.x + 20, position.y + 200);
-		font.draw(batch, "The amount of mined blue gem is:" + YELLOW, position.x + 20, position.y + 250);
-		font.draw(batch, "The amount of mined green gem is:" + GREEN, position.x + 20, position.y + 150);
-		font.draw(batch, "The amount of mined yellow gem is:" + BLUE, position.x + 20, position.y + 100);
+		font.draw(batch, "The amount of mined red gem is:" + RED, position.x + 70, position.y + 200);
+		font.draw(batch, "The amount of mined blue gem is:" + YELLOW, position.x + 70, position.y + 250);
+		font.draw(batch, "The amount of mined green gem is:" + GREEN, position.x + 70, position.y + 150);
+		font.draw(batch, "The amount of mined yellow gem is:" + BLUE, position.x + 70, position.y + 100);
 
 	}
 
