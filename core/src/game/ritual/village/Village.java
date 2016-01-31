@@ -14,7 +14,7 @@ public class Village {
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
-	private MonthlyRitual monthlyRitual = new MonthlyRitual(4, this);
+	private MonthlyRitual monthlyRitual = new MonthlyRitual(4, 4, this);
 	private float food = 0;
 	private float consumedFood = 0;
 	private float gatheredFood = 0;
@@ -33,7 +33,7 @@ public class Village {
 		return monthlyRitual;
 	}
 	public void checkRitual(){
-		if (monthlyRitual.)
+
 	}
 	public Village() {
 		this.villagers = new ArrayList<Villager>();
