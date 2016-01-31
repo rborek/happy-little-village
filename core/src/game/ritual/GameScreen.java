@@ -8,15 +8,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import game.ritual.gems.Gem;
-import game.ritual.gems.GemColour;
-import game.ritual.village.Village;
-import game.ritual.village.Villager;
-import game.ritual.village.VillagerRole;
+import com.badlogic.gdx.math.Vector2;
 
 public class GameScreen implements Screen {
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
+	private Texture sun = new Texture("scroll/sun.png");
+	private Vector2 sunPos = new Vector2();
 	private RitualGame game;
 	private int dayTime;
 	private GameHandler gameHandler;
@@ -41,17 +39,19 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		gameHandler.update(delta);
 		float time = dayTime - gameHandler.getVillage().getHoursLeft();
-		float percentage  = (time / dayTime) * 100;
-		float skyAlpha = getSkyAlpa(percentage) + 0.2f;
-
+		float percentage  = (time / dayTime);
+		float skyAlpha = getSkyAlpha(percentage * 100) + 0.2f;
+		sunPos.x = percentage * 640;
+		sunPos.y = 485 + skyAlpha * 125f;
 		Gdx.gl30.glClearColor(0, 191/255f * skyAlpha, 255/255f * skyAlpha, 1);
 		Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		batch.begin();
+		batch.draw(sun, sunPos.x, sunPos.y);
 		gameHandler.render(batch);
 		batch.end();
 	}
 
-	private float getSkyAlpa(float x) {
+	private float getSkyAlpha(float x) {
 		return (float) (Math.sqrt((50f*50f)-(float)Math.pow(x-50, 2))/50f);
 	}
 

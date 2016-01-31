@@ -11,6 +11,7 @@ import java.util.Random;
 public class Village {
 	private static final int MAX_HOURS = 24;
 	private ArrayList<Villager> villagers;
+	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
 	private float food = 0;
 	private float consumedFood = 0;
@@ -100,6 +101,9 @@ public class Village {
 		for (int i = 0; i < effects.size(); i++) {
 			effects.get(i).update(delta);
 			if (effects.get(i).isDone()) {
+				if (effects.get(i) instanceof VillagerDeathEffect) {
+					deadVillagers.remove(effects.get(i).getVillager());
+				}
 				effects.remove(i);
 				i--;
 			}
@@ -135,6 +139,9 @@ public class Village {
 
 	public void render(Batch batch) {
 		for (Villager villager : villagers) {
+			villager.render(batch);
+		}
+		for (Villager villager : deadVillagers) {
 			villager.render(batch);
 		}
 		for (VillagerEffect villagerEffect : effects) {
@@ -191,6 +198,7 @@ public class Village {
 			Random random = new Random();
 			int randomInt = random.nextInt(villagers.size());
 			effects.add(new VillagerDeathEffect(villagers.get(randomInt)));
+			deadVillagers.add(villagers.get(randomInt));
 			villagers.remove(randomInt);
 			return true;
 		}
