@@ -65,6 +65,10 @@ public class GameHandler {
 
 	}
 
+	public Village getVillage() {
+		return village;
+	}
+
 	// rendering goes here
 	public void render(Batch batch) {
 		batch.draw(background, 0, 0);

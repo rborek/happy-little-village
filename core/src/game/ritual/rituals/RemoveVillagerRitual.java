@@ -16,8 +16,9 @@ public class RemoveVillagerRitual extends Ritual {
 
     @Override
     protected void commence() {
-        village.removeVillager();
-    	village.addWater(40);
-		village.addFood(25);
+        if (village.removeVillager()){
+            village.addWater(40);
+            village.addFood(25);
+        }
     }
 }

@@ -173,12 +173,14 @@ public class Village {
 		villagerAdded +=1;
 	}
 
-	public void removeVillager() {
+	public boolean removeVillager() {
 		if (villagers.size() > 0) {
 			Random random = new Random();
 			int randomInt = random.nextInt(villagers.size());
 			villagers.remove(randomInt);
+			return true;
 		}
+		return false;
 	}
 
 	public Villager getVillager(int a) {
@@ -187,6 +189,10 @@ public class Village {
 
 	public int getSize() {
 		return villagers.size();
+	}
+
+	public int getMaxHours() {
+		return MAX_HOURS;
 	}
 
 	public boolean isEmpty() {
