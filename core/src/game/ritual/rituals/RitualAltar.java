@@ -77,16 +77,19 @@ public class RitualAltar extends GameObject {
         }
     }
 
-    public int removeGem(float x, float y) {
+
+
+    public Gem pickUpGem(float x, float y) {
         for (int i = 0; i < slots.length; i++) {
             if (slots[i].contains(x, y)) {
                 if (gems[i] != null) {
+                    Gem gemToReturn = gems[i];
                     gems[i] = null;
-                    return i;
+                    return gemToReturn;
                 }
             }
         }
-        return -1;
+        return null;
     }
 
     public void useGems() {
@@ -98,16 +101,7 @@ public class RitualAltar extends GameObject {
         removeAllGems();
     }
 
-    public void add(Gem gem) {
-        for (int i = 0; i < gems.length; i++) {
-            if (gems[i] == null) {
-                gems[i] = gem;
-                return;
-            }
-        }
-    }
-
-    public void add(Gem gem, float x, float y) {
+    public boolean add(Gem gem, float x, float y) {
         Rectangle gemBounds = new Rectangle(x - 32, y - 32, 64, 64);
         for (int i = 0; i < slots.length; i++) {
             if (slots[i].overlaps(gemBounds)) {
@@ -115,13 +109,16 @@ public class RitualAltar extends GameObject {
                     gemBag.add(gems[i].getColour());
                 }
                 gems[i] = gem;
+                return true;
             }
         }
+        return false;
     }
 
 
     public GemColour getColour(int index) {
         if (gems[index] != null) {
+            System.out.println("not null");
             return gems[index].getColour();
         }
         return null;

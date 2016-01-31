@@ -23,7 +23,7 @@ public class GemBag extends GameObject {
         super(new Texture("gems/gem_bag.png"), xPos, yPos);
         gemAmounts = new int[GemColour.values().length];
         for (int i = 0; i < gemAmounts.length; i++) {
-            gemAmounts[i] = 5;
+            gemAmounts[i] = i + 2;
         }
         slots[0] = new Rectangle(42, 54, slotSize, slotSize);
         slots[1] = new Rectangle(135, 54, slotSize, slotSize);
@@ -66,6 +66,9 @@ public class GemBag extends GameObject {
         }
     }
 
+    public int getAmount(GemColour colour) {
+        return gemAmounts[colour.ordinal()];
+    }
 
 
     public void remove(GemColour colour) {
