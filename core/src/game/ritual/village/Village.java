@@ -9,18 +9,20 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Village {
-	private static final int MAX_HOURS = 168;
+	private static final int MAX_HOURS = 5;
 	private ArrayList<Villager> villagers;
 	private float food = 0;
 	private float consumedFood = 0;
 	private float gatheredFood = 0;
 	private float water = 0;
 	private float consumedWater = 0;
+	private float gatheredWater = 0;
 	private VillageInformation info;
 	private float hoursLeft;
 	private float weekLeft;
 	private float week;
 	private boolean isNextWeek = false;
+	private int villagerAdded = 0;
 
 	public Village() {
 		this.villagers = new ArrayList<Villager>();
@@ -49,13 +51,13 @@ public class Village {
 			consumeFood += villager.getRole().foodConsumption();
 		}
 		food -= consumeFood * delta;
-		consumedFood = consumeFood*delta;
+		consumedFood += consumeFood * delta;
 
 		for (Villager villager : villagers) {
 			consumeWater += villager.getRole().foodConsumption();
 		}
 		water -= consumeWater * delta;
-		consumedWater = consumeWater*delta;
+		consumedWater += consumeWater * delta;
 	}
 
 	public void addFood(float x) {
@@ -104,6 +106,7 @@ public class Village {
 			week += 1;
 			hoursLeft = MAX_HOURS;
 			isNextWeek = true;
+			villagerAdded =0;
 		}
 	}
 
@@ -166,6 +169,7 @@ public class Village {
 
 	public void addVillager(VillagerRole role) {
 		villagers.add(new Villager(role, this));
+		villagerAdded +=1;
 	}
 
 	public void removeVillager(Villager a) {
@@ -188,25 +192,33 @@ public class Village {
 	public void setVillage(ArrayList<Villager> a) {
 		villagers = a;
 	}
-
 	public int getFood() {
 		return (int) food;
 	}
 
-	public int getGatheredFood(){
-		return (int) gatheredFood;
-	}
 	public int getWater() {
 		return (int) water;
+	}
+	public int getGatheredFood() {
+		return (int) gatheredFood;
+	}
+
+	public int getGatheredWater(){
+		return (int) gatheredWater;
 	}
 
 	public int getPop() {
 		return villagers.size();
 	}
-	public int getConsumedFood(){
+	public int getVillagerAdded(){
+		return villagerAdded;
+	}
+
+	public int getConsumedFood() {
 		return (int) consumedFood;
 	}
-	public int getConsumedWater(){
+
+	public int getConsumedWater() {
 		return (int) consumedWater;
 	}
 }

@@ -22,8 +22,9 @@ public class GameHandler {
 	private Gem gem;
 	private Texture scroll = new Texture("scroll/scroll.png");
 	private boolean paused = true;
-	private MessageBox messageBox;
+	private WeekSummary messageBox;
 	private MessageBox introduction;
+	private NewGem newGem;
 	private boolean intro = true;
 
 	public GameHandler() {
@@ -40,8 +41,9 @@ public class GameHandler {
 		inputHandler = new InputHandler(ritualAltar, gemBag);
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
-		messageBox = new MessageBox(new Texture("scroll/Summary.png"), 20, 300);
-		messageBox.setvillage(village);
+		messageBox = new WeekSummary(new Texture("scroll/Summary.png"), 20, 300);
+		messageBox.setVillage(village);
+		newGem = new NewGem(new Texture("scroll/Summary.png"), 20, 300);
 		introduction = new MessageBox(new Texture("scroll/Summary.png"), 20, 300,
 				"This is the game's Instruction:\n"
 				+ "Just kidding\n");

@@ -1,31 +1,37 @@
 package game.ritual;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import game.ritual.village.Village;
 import game.ritual.village.VillageInformation;
 
 public class MessageBox extends GameObject {
-	private BitmapFont font;
-	private VillageInformation info;
-
-	private String text;
-	private Village village;
+	protected BitmapFont font;
+	protected String text;
+	protected Texture continueButton = new Texture("scroll/toContinue.png");
+	protected String clickToContinue = "Click to Continue";
 
 	protected MessageBox(Texture texture, float xPos, float yPos) {
 		super(texture, xPos, yPos);
 		font = new BitmapFont();
-		text = " this week you did this much";
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.borderColor = Color.BLACK;
+		parameter.borderWidth = 1;
+		font = generator.generateFont(parameter);
 	}
+
 	// for the instruction
 	protected MessageBox(Texture texture, float xPos, float yPos, String instruction) {
 		super(texture, xPos, yPos);
 		font = new BitmapFont();
 		this.text = instruction;
 	}
-
 
 	@Override
 	public void update(float delta) {
@@ -34,14 +40,9 @@ public class MessageBox extends GameObject {
 
 	@Override
 	public void render(Batch batch) {
-		batch.draw(texture,position.x,position.y);
-		font.draw(batch, text, position.x+20, position.y+200);
-		//font.draw(batch, "The amount of consumed food is:"+ village.getConsumedFood(), position.x+20, position.y+200);
-		//font.draw(batch, "The amount of gathered food is:"+ village.getGatheredFood(), position.x+60, position.y+200);
-		//font.draw(batch, "The remaining amount of food is:"+ village.getFood(), position.x+100, position.y+200);
-	}
-	public void setvillage(Village village2) {
-		village = village2;
+		batch.draw(texture, position.x, position.y);
+		batch.draw(continueButton, position.x+ 260, position.y+30);
+		font.draw(batch, clickToContinue,  position.x+300, position.y + 60);
 	}
 
 }
