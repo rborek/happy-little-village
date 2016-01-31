@@ -22,7 +22,7 @@ public class GameHandler {
 	private Gem gem;
 	private Texture scroll = new Texture("scroll/scroll.png");
 	private boolean paused = true;
-	private WeekSummary messageBox;
+	private WeekSummary weekSummary;
 	private MessageBox introduction;
 	private NewGem newGem;
 	private boolean intro = true;
@@ -38,28 +38,42 @@ public class GameHandler {
 		for (int i = 0; i < 7; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
-		inputHandler = new InputHandler(ritualAltar, gemBag);
-		Ritual.setVillage(village);
-		Gdx.input.setInputProcessor(inputHandler);
-		messageBox = new WeekSummary(new Texture("scroll/Summary.png"), 20, 300, village);
+		weekSummary = new WeekSummary(new Texture("scroll/Summary.png"), 20, 300, village);
 		newGem = new NewGem(new Texture("scroll/Summary.png"), 20, 300);
 		introduction = new MessageBox(new Texture("scroll/Summary.png"), 20, 300,
-				"This is the game's Instruction:\n"
-				+ "Just kidding\n");
+				"This is the game's Instruction:\n" + "Just kidding\n");
+		inputHandler = new InputHandler(ritualAltar, gemBag, introduction);
+		Ritual.setVillage(village);
+		Gdx.input.setInputProcessor(inputHandler);
+
+	}
+	
+	private void pause() {
+		paused = true;
+		inputHandler.disable();
+	}
+	
+	private void unpause() {
+		paused = false;
+		inputHandler.enable();
 	}
 
 	// game logic goes here
 	public void update(float delta) {
 		if (!paused) {
 			if (village.isNextWeek()) {
-				paused = true;
+				pause();
 				village.gatheredFood();
 			}
 			village.update(delta);
+
 		} else {
-			if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-				paused = false;
+			if (weekSummary.getClick()) {
+				if (message)
+				unpause();
+				inputHandler.setMessageBox(weekSummary);
 				intro = false;
+				weekSummary.setClick();
 			}
 		}
 
@@ -81,7 +95,7 @@ public class GameHandler {
 			if (intro) {
 				introduction.render(batch);
 			} else {
-				messageBox.render(batch);
+				weekSummary.render(batch);
 			}
 		}
 

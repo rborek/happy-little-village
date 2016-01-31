@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Rectangle;
 
 import game.ritual.village.Village;
 import game.ritual.village.VillageInformation;
@@ -15,6 +16,9 @@ public class MessageBox extends GameObject {
 	protected String text;
 	protected Texture continueButton = new Texture("scroll/toContinue.png");
 	protected String clickToContinue = "Click to Continue";
+	protected boolean click = false;
+	protected float continueX;
+	protected float continueY;
 
 	protected MessageBox(Texture texture, float xPos, float yPos) {
 		super(texture, xPos, yPos);
@@ -24,6 +28,9 @@ public class MessageBox extends GameObject {
 		parameter.borderColor = Color.BLACK;
 		parameter.borderWidth = 1;
 		font = generator.generateFont(parameter);
+		continueX =position.x+260;
+		continueY = position.y+30;
+		
 	}
 
 	// for the instruction
@@ -37,16 +44,31 @@ public class MessageBox extends GameObject {
 	public void update(float delta) {
 		// TODO Auto-generated method stub
 	}
-
+	public boolean checkClick(float x, float y){
+		Rectangle r = new Rectangle(continueX,continueY,continueButton.getWidth(),continueButton.getHeight());
+		if(r.contains(x, y)){
+			click = true; 
+		}
+		return true;
+	}
+	public void setClick(){
+		click =false;
+	}
+	public boolean  getClick(){
+		return click;
+	}
 	@Override
 	public void render(Batch batch) {
 		batch.draw(texture, position.x, position.y);
-		batch.draw(continueButton, position.x+ 260, position.y+30);
-		font.draw(batch, clickToContinue,  position.x+300, position.y + 60);
-//		font.draw(batch, text, position.x+20, position.y+200);
-//		font.draw(batch, "The amount of consumed food is:"+ village.getConsumedFood(), position.x+20, position.y+200);
-		//font.draw(batch, "The amount of gathered food is:"+ village.getGatheredFood(), position.x+60, position.y+200);
-		//font.draw(batch, "The remaining amount of food is:"+ village.getFood(), position.x+100, position.y+200);
+		batch.draw(continueButton, continueX, continueY);
+		font.draw(batch, clickToContinue, continueX+40, continueY+30);
+		// font.draw(batch, text, position.x+20, position.y+200);
+		// font.draw(batch, "The amount of consumed food is:"+
+		// village.getConsumedFood(), position.x+20, position.y+200);
+		// font.draw(batch, "The amount of gathered food is:"+
+		// village.getGatheredFood(), position.x+60, position.y+200);
+		// font.draw(batch, "The remaining amount of food is:"+
+		// village.getFood(), position.x+100, position.y+200);
 	}
 
 }
