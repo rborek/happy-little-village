@@ -5,7 +5,7 @@ import game.ritual.gems.GemColour;
 import game.ritual.village.Village;
 
 public abstract class Ritual {
-    private int id;
+    public int id;
     protected static Village village;
     protected GemColour[] gemCombination;
 

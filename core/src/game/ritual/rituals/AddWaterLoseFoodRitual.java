@@ -4,19 +4,21 @@ import game.ritual.gems.GemColour;
 import game.ritual.village.VillagerRole;
 import game.ritual.village.Villager;
 
-public class ToFarmerRitual extends Ritual {
+public class AddWaterLoseFoodRitual extends Ritual {
 	
-	public ToFarmerRitual() {
-		id = 7;
+	public AddWaterLoseFoodRitual() {
+		id = 3;
 	}
-	
+
 	@Override
 	protected GemColour[] getCombination() {
-		return new GemColour[] { GemColour.GREEN, GemColour.GREEN, GemColour.GREEN, GemColour.GREEN };
+		return new GemColour[] { GemColour.GREEN, GemColour.GREEN, GemColour.GREEN, GemColour.RED };
 	}
 
 	@Override
 	protected void commence() {
-		village.convertCitizen(VillagerRole.FARMER);
+		village.addWater(15);
+		village.removeFood(20);
 	}
+
 }
