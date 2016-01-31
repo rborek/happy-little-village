@@ -8,13 +8,20 @@ import game.ritual.village.Village;
 
 public class WeekSummary extends MessageBox {
 	private Village village;
-
+	
 	protected WeekSummary(Village village, GameHandler gameHandler) {
 		super("", gameHandler);
 		this.village = village;
 	}
 	
-
+	@Override
+	public void checkClick(float x, float y ){
+		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
+        //System.out.println(continueX + ", " + continueY);
+        if (r.contains(x, y)) {
+            gameHandler.unpause();
+        }
+	}
 	@Override
 	public void update(float delta) {
 		// TODO Auto-generated method stub

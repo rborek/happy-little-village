@@ -45,18 +45,23 @@ public class GameHandler {
 		pause();
 
 	}
-	
+
 	public void pause() {
 		paused = true;
 		inputHandler.disable();
 	}
-	
+
 	public void unpause() {
-		if (!(messageBox instanceof WeekSummary)) {
+		if (messageBox instanceof WeekSummary) {
+			messageBox = new NewGem(gemBag,village, this);
+
+		} else if (messageBox instanceof MessageBox) {
 			messageBox = new WeekSummary(village, this);
+			paused = false;
+			inputHandler.enable();
+
 		}
-		paused = false;
-		inputHandler.enable();
+
 	}
 
 	// game logic goes here

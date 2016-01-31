@@ -73,13 +73,6 @@ public class MessageBox extends GameObject {
         batch.draw(texture, position.x, position.y);
         batch.draw(continueButton, continueX, continueY);
         font.draw(batch, clickToContinue, continueX + 28, continueY + 27);
-        // font.draw(batch, text, position.x+20, position.y+200);
-        // font.draw(batch, "The amount of consumed food is:"+
-        // village.getConsumedFood(), position.x+20, position.y+200);
-        // font.draw(batch, "The amount of gathered food is:"+
-        // village.getGatheredFood(), position.x+60, position.y+200);
-        // font.draw(batch, "The remaining amount of food is:"+
-        // village.getFood(), position.x+100, position.y+200);
     }
 
 }

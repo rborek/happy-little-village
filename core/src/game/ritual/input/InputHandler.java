@@ -55,9 +55,7 @@ public class InputHandler implements InputProcessor {
 				if (gemBag.getAmount(gemColour) > 0) {
 					selectedGem = potentialGem;
 					gemBag.remove(gemColour);
-
 				}
-
 			}
 		}
 	}
