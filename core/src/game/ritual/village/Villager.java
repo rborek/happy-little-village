@@ -23,11 +23,7 @@ public class Villager extends GameObject {
 		this.village = village;
 		position = village.getEmptyPosition();
 		this.role = role;
-		if (village.isEmpty()) {
-			destination = new Vector2(100, 100);
-		} else {
-			destination = village.getEmptyPosition();
-		}
+		destination = village.getEmptyPosition();
 		velocity = new Vector2(0, 0);
 	}
 

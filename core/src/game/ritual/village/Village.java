@@ -116,12 +116,12 @@ public class Village {
 
 	private int randomX() {
 		Random random = new Random();
-		return random.nextInt(690)+10;
+		return random.nextInt(680)+10;
 	}
 
 	private int randomY() {
 		Random random = new Random();
-		return random.nextInt(540)+180;
+		return random.nextInt(540)+180 - 48;
 	}
 
 	public void addVillager(VillagerRole role) {
