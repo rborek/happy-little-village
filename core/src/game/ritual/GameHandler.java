@@ -1,6 +1,7 @@
 package game.ritual;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import game.ritual.gems.Gem;
@@ -20,7 +21,7 @@ public class GameHandler {
 	private Gem gem;
 	private Texture scroll = new Texture("scroll/scroll.png");
 	private boolean paused = false;
-
+	private MessageBox message;
 	public GameHandler() {
 		init();
 	}
@@ -39,13 +40,22 @@ public class GameHandler {
 		inputHandler = new InputHandler(ritualAltar, gemBag);
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
+		message = new MessageBox(new Texture("scroll/Summary.png"),20,300);
 	}
 
 	// game logic goes here
 	public void update(float delta) {
 		if (!paused) {
 			village.update(delta);
+			if(village.weekPass()){
+				paused =true;
+			}
+		} else {
+			if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+				paused = false;
+			}
 		}
+
 	}
 
 	// rendering goes here
@@ -55,7 +65,9 @@ public class GameHandler {
 		ritualAltar.render(batch);
 		gemBag.render(batch);
 		inputHandler.renderSelectedGem(batch);
-
+		if(paused){
+			message.render(batch);
+		}
 	}
 
 }

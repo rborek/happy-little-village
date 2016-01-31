@@ -79,7 +79,7 @@ public class Village {
 		info.setResources((int)food,(int) water,villagers.size(),(int) hour, (int) week,(int) weekLeft);
 		timePass(delta);
 	}
-
+	
 	private void timePass(float delta){
 		hour += (float) (delta * 1.4);
 		if(hour>=168){
@@ -87,7 +87,9 @@ public class Village {
 			week+=1;
 			hour=0;
 		}
-		
+	}
+	public boolean weekPass(){
+		return hour>=10;
 	}
 	public void render(Batch batch) {
 		for (Villager villager : villagers) {
