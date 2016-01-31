@@ -90,6 +90,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         float mouseX = Gdx.input.getX();
         float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+        System.out.println("Mouse position: " + mouseX + ", " + mouseY);
         if (enabled) {
             removeFromSlots(mouseX, mouseY);
             pickUpGem(mouseX, mouseY);

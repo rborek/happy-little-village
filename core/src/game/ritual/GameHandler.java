@@ -26,8 +26,8 @@ public class GameHandler {
 	}
 
 	public void init() {
-		gemBag = new GemBag(1280-420-25-40, 30+40);
-		ritualAltar = new RitualAltar(gemBag, 1280-400-35-40, 720-400-40, 2, 2);
+		gemBag = new GemBag(1280-420-36-32, 30+35-12);
+		ritualAltar = new RitualAltar(gemBag, 1280-400-48-30, 720-400-40-12, 2, 2);
 		ritualAltar.add(new Gem(GemColour.RED));
 		ritualAltar.add(new Gem(GemColour.BLUE));
 		ritualAltar.add(new Gem(GemColour.YELLOW));
@@ -51,7 +51,7 @@ public class GameHandler {
 	// rendering goes here
 	public void render(Batch batch) {
 		village.render(batch);
-		batch.draw(scroll, 1280 - 520, 0);
+		batch.draw(scroll, 1280 - 550, -12);
 		ritualAltar.render(batch);
 		gemBag.render(batch);
 		inputHandler.renderSelectedGem(batch);
