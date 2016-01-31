@@ -7,11 +7,12 @@ import game.ritual.village.Villager;
 public class AddFoodRitual extends Ritual {
 	
 	public AddFoodRitual() {
-		id =0;
+		id = 1;
+	
 	}
 	@Override
 	protected GemColour[] getCombination() {
-		return new GemColour[] { GemColour.GREEN, GemColour.GREEN, GemColour.RED };
+		return new GemColour[] { GemColour.GREEN, GemColour.GREEN, null, GemColour.RED };
 	}
 
 	@Override

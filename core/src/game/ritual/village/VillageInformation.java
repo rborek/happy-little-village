@@ -15,8 +15,8 @@ public class VillageInformation extends GameObject {
 	private int weeksLeft;
 	private int week;
 	// add file to constructors
-	private Texture foodTexture;
-	private Texture waterTexture;
+	private Texture foodTexture = new Texture("scroll/food.png");
+	private Texture waterTexture = new Texture("scroll/water.png");
 	private Texture popTexture;
 
 	protected VillageInformation(Texture texture, float xPos, float yPos) {
@@ -52,12 +52,14 @@ public class VillageInformation extends GameObject {
 	@Override
 	public void render(Batch batch) {
 		batch.draw(texture, position.x, position.y);
-		font.draw(batch, "Food: " + food, 20, 50);
-		font.draw(batch, "Water: " + water, 20, 100);
-		font.draw(batch, "Population: " + pop, 20,150);
-		font.draw(batch, "Hour: " + hour, 170, 50);
-		font.draw(batch, "Week So Far: " + week, 170, 100);
-		font.draw(batch, "Week Left to Ritual: " + weeksLeft, 170, 150);
+		font.draw(batch, "" + food, position.x + 80, position.y + 80);
+		batch.draw(foodTexture, position.x + 20, 65);
+		font.draw(batch, "" + water, position.x + 180, position.y + 80);
+		batch.draw(waterTexture, position.x + 120, 70);
+		font.draw(batch, "Population: " + pop, position.x + 280, position.y + 80);
+		font.draw(batch, "Hours Left: " + hour, position.x + 400, 50);
+		font.draw(batch, "Weeks So Far: " + week, position.x + 400, 90);
+		font.draw(batch, "Weeks Left to Ritual: " + weeksLeft, position.x + 400, 130);
 	}
 
 }

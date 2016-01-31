@@ -6,13 +6,13 @@ public enum VillagerRole {
 	public float foodConsumption() {
 		switch (this) {
 		case CITIZEN:
-			return 1;
+			return 0.1f;
 		case MINER:
-			return 2;
+			return 0.2f;
 		case FARMER:
 			return 1;
 		case EXPLORER:
-			return 1.5f;
+			return 0.15f;
 		default:
 			return -1;
 		}
@@ -21,13 +21,13 @@ public enum VillagerRole {
 	public float waterConsumption() {
 		switch (this) {
 		case CITIZEN:
-			return 1;
+			return 0.1f;
 		case MINER:
-			return 1;
+			return 0.1f;
 		case FARMER:
-			return 2;
+			return 0.2f;
 		case EXPLORER:
-			return 1.5f;
+			return 0.15f;
 		default:
 			return -1;
 		}
