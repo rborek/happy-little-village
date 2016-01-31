@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Village {
-	private static final int MAX_HOURS = 1;
+	private static final int MAX_HOURS = 168;
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -94,6 +94,17 @@ public class Village {
 		}
 		addFood(food);
 		gatheredFood = food;
+	}
+	
+	public void gatheredWater() {
+		float water = 0;
+		for (Villager villager : villagers) {
+			if (villager.getRole().equals(VillagerRole.EXPLORER)) {
+				water += 20;
+			}
+			addWater(water);
+			gatheredWater = water;
+		}
 	}
 
 	public void removeFood(float x) {

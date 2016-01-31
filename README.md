@@ -3,8 +3,6 @@ Colors: Red, green, blue, yellow                Starting amount: 5 of each colou
 
 | To do: | 
 | -------- | 
-| Make miner && farmer move around mine | 
-| Alter animations | 
 | God Rituals | 
 
 

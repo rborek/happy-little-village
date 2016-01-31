@@ -9,10 +9,12 @@ public class MonthlyRitual extends Ritual {
     private Village village;
     private int timesPerformed;
     private int timesToDo;
-    public MonthlyRitual(int numGems, Village village) {
+
+    public MonthlyRitual(int numGems, int timesToDo, Village village) {
         super();
         generateRandom(numGems);
         this.village = village;
+        this.timesToDo = timesToDo;
     }
 
     public boolean isComplete() {
@@ -31,6 +33,10 @@ public class MonthlyRitual extends Ritual {
     @Override
     protected GemColour[] getCombination() {
         return new GemColour[0];
+    }
+
+    public GemColour[] getColours() {
+        return gemCombination;
     }
 
     private void generateRandom(int numGems) {
