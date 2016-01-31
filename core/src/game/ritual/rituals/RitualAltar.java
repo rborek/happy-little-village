@@ -43,6 +43,9 @@ public class RitualAltar extends GameObject {
         }
     }
 
+    public void gainRitual(Ritual ritual) {
+    }
+
     public void setGemBag(GemBag gemBag) {
         this.gemBag = gemBag;
     }
