@@ -16,22 +16,31 @@ public abstract class Ritual {
     public boolean attempt(Gem[] gems) {
         GemColour[] gemsToUse = new GemColour[gems.length];
         for (int i = 0; i < gems.length; i++) {
-            gemsToUse[i] = gems[i].getColour();
+            if (gems[i] != null) {
+                gemsToUse[i] = gems[i].getColour();
+            }
+        }
+        int numGemsUsing = 0;
+        for (int i = 0; i < gems.length; i++) {
+            if (gems[i] != null) {
+                numGemsUsing++;
+            }
+        }
+        if (numGemsUsing != gemCombination.length) {
+            System.out.println("A");
+            return false;
         }
         boolean working = false;
-        int ritualGemIndex = 0;
-        int totalGemsUsed = 0;
-        for (int i = 0; i < gemsToUse.length; i++) {
-            if (gemCombination[ritualGemIndex] == gemsToUse[i]) {
-                ritualGemIndex++;
-                i = 0;
+        for (int i = 0; i < gemCombination.length; i++) {
+            if (gemCombination[i] == gemsToUse[i]) {
+                working = true;
             }
-            if (ritualGemIndex > gemCombination.length) {
-                commence();
-                return true;
+            if (!working) {
+                return false;
             }
         }
-        return false;
+        commence();
+        return true;
     }
 
     protected abstract GemColour[] getCombination();

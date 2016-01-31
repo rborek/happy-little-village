@@ -71,7 +71,7 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-
+            ritualAltar.useGems();
         }
         return true;
     }

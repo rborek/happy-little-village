@@ -41,9 +41,19 @@ public class RitualAltar extends GameObject {
             slots[i].x += position.x;
             slots[i].y += position.y;
         }
+        gainRitual(new AddFoodRitual());
     }
 
-    public void gainRitual(Ritual ritual) {
+    public boolean gainRitual(Ritual ritual) {
+        int ritualID = ritual.getID();
+        for (Ritual ritualToCheck : rituals) {
+            if (ritualID == ritualToCheck.getID()) {
+                return false;
+            }
+        }
+        rituals.add(ritual);
+        return true;
+
     }
 
     public void setGemBag(GemBag gemBag) {
@@ -79,7 +89,7 @@ public class RitualAltar extends GameObject {
         return -1;
     }
 
-    private void useGems() {
+    public void useGems() {
         for (Ritual ritual : rituals) {
             if (ritual.attempt(gems)) {
                removeAllGems();
