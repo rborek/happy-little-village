@@ -4,17 +4,20 @@ import game.ritual.gems.GemColour;
 import game.ritual.village.VillagerRole;
 import game.ritual.village.Villager;
 
-public class GetWaterRitual extends Ritual {
+public class AddWaterRemoveFoodRitual extends Ritual {
 
+	public AddWaterRemoveFoodRitual() {
+		id = 4;
+	}
 	@Override
 	protected GemColour[] getCombination() {
-		return new GemColour[] { GemColour.BLUE, GemColour.BLUE, GemColour.GREEN, GemColour.GREEN };
+		return new GemColour[] { GemColour.GREEN, GemColour.GREEN, GemColour.GREEN, GemColour.RED };
 	}
 
 	@Override
 	protected void commence() {
 		village.addWater(15);
+		village.removeFood(20);
 	}
 
 }
-
