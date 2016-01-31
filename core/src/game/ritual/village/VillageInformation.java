@@ -1,13 +1,16 @@
 package game.ritual.village;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import game.ritual.GameObject;
 
 public class VillageInformation extends GameObject {
-	private BitmapFont font;
+	private BitmapFont resourceFont;
+	private BitmapFont statusFont;
 	private int food;
 	private int water;
 	private int pop;
@@ -21,7 +24,14 @@ public class VillageInformation extends GameObject {
 
 	protected VillageInformation(Texture texture, float xPos, float yPos) {
 		super(texture, xPos, yPos);
-		font = new BitmapFont();
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.borderColor = Color.BLACK;
+		parameter.borderWidth = 1;
+		parameter.size = 36;
+		resourceFont = generator.generateFont(parameter);
+		parameter.size = 30;
+		statusFont = generator.generateFont(parameter);
 	}
 
 	public void setResources(int food, int water, int pop, int hour, int week, int weekLeft) {
@@ -52,14 +62,14 @@ public class VillageInformation extends GameObject {
 	@Override
 	public void render(Batch batch) {
 		batch.draw(texture, position.x, position.y);
-		font.draw(batch, "" + food, position.x + 80, position.y + 80);
+		resourceFont.draw(batch, "" + food, position.x + 80, position.y + 90);
 		batch.draw(foodTexture, position.x + 20, 65);
-		font.draw(batch, "" + water, position.x + 180, position.y + 80);
+		resourceFont.draw(batch, "" + water, position.x + 180, position.y + 90);
 		batch.draw(waterTexture, position.x + 120, 70);
-		font.draw(batch, "Population: " + pop, position.x + 280, position.y + 80);
-		font.draw(batch, "Hours Left: " + hour, position.x + 400, 50);
-		font.draw(batch, "Weeks So Far: " + week, position.x + 400, 90);
-		font.draw(batch, "Weeks Left to Ritual: " + weeksLeft, position.x + 400, 130);
+		statusFont.draw(batch, "Population: " + pop, position.x + 240, position.y + 120);
+		statusFont.draw(batch, "Hours: " + hour, position.x + 240, 80);
+		statusFont.draw(batch, "Weeks elapsed: " + week, position.x + 400, 120);
+		statusFont.draw(batch, "Weeks left: " + weeksLeft, position.x + 400, 80);
 	}
 
 }
