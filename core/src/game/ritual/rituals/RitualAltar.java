@@ -50,7 +50,6 @@ public class RitualAltar extends GameObject {
         gainRitual(new AddFoodLoseWaterRitual());
         gainRitual(new AddFoodLoseWaterRitual());
         gainRitual(new AddVillagerRitual());
-        gainRitual(new AddWaterLoseFoodRitual());
         gainRitual(new AddWaterRemoveFoodRitual());
         gainRitual(new AddWaterRitual());
         gainRitual(new ToExplorerRitual());

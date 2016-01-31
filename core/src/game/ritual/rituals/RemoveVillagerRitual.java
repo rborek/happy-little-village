@@ -7,7 +7,7 @@ import game.ritual.village.VillagerRole;
 public class RemoveVillagerRitual extends Ritual {
 	
 	public RemoveVillagerRitual() {
-		id = 9;
+		id = 5;
 	}
     @Override
     protected GemColour[] getCombination() {
