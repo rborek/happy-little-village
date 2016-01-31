@@ -4,7 +4,7 @@ import game.ritual.gems.GemColour;
 import game.ritual.village.Villager;
 import game.ritual.village.VillagerRole;
 
-public class VillagerRitual extends Ritual {
+public class AddVillagerRitual extends Ritual {
 
     @Override
     protected GemColour[] getCombination() {
