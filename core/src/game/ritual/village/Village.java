@@ -61,6 +61,16 @@ public class Village {
 		water += y;
 	}
 
+	public void removeFood(float x) {
+		food -= x;
+		food = Math.max(0, food);
+	}
+
+	public void removeWater(float x) {
+		water -= x;
+		water = Math.max(0, water);
+	}
+
 	public void update(float delta) {
 		for (Villager villager : villagers) {
 			villager.update(delta);
