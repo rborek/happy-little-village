@@ -5,6 +5,10 @@ import game.ritual.village.VillagerRole;
 import game.ritual.village.Villager;
 
 public class AddFoodLoseWaterRitual extends Ritual {
+	
+	public AddFoodLoseWaterRitual() {
+		id = 0;
+	}
 
 	@Override
 	protected GemColour[] getCombination() {
