@@ -40,14 +40,19 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		gameHandler.update(delta);
-		float time = gameHandler.getVillage().getHoursLeft();
-		float percentage  = (time / dayTime);
+		float time = dayTime - gameHandler.getVillage().getHoursLeft();
+		float percentage  = (time / dayTime) * 100;
+		float skyAlpha = getSkyAlpa(percentage) + 0.2f;
 
-		Gdx.gl30.glClearColor(0, 191/255f * percentage, 255/255f * percentage, 1);
+		Gdx.gl30.glClearColor(0, 191/255f * skyAlpha, 255/255f * skyAlpha, 1);
 		Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		gameHandler.render(batch);
 		batch.end();
+	}
+
+	private float getSkyAlpa(float x) {
+		return (float) (Math.sqrt((50f*50f)-(float)Math.pow(x-50, 2))/50f);
 	}
 
 	@Override
