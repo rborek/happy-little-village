@@ -13,8 +13,9 @@ public class Village {
 	private float food = 0;
 	private float water = 0;
 	private VillageInformation info;
-	private float week;
+	private float hour;
 	private float weekLeft;
+	private float week;
 	
 
 	public Village() {
@@ -22,8 +23,9 @@ public class Village {
 		info = new VillageInformation(new Texture("villagers/VillageInfo.png"), 0, 0);
 		food = 100;
 		water = 100;
-		week = 0;
+		hour = 168;
 		weekLeft =4;
+		week=0;
 
 	}
 
@@ -64,12 +66,18 @@ public class Village {
 			villager.update(delta);
 		}
 		consume(delta);
-		info.setResources((int)food,(int) water,villagers.size(),(int) week,(int) weekLeft);
+		info.setResources((int)food,(int) water,villagers.size(),(int) hour, (int) week,(int) weekLeft);
+		timePass(delta);
 	}
 
 	private void timePass(float delta){
-		week += (float) (delta * 1.4);
-		weekLeft -= (float)(delta*1.4);
+		hour += (float) (delta * 1.4);
+		if(hour>=168){
+			weekLeft-=1;
+			week+=1;
+			hour=0;
+		}
+		
 	}
 	public void render(Batch batch) {
 		for (Villager villager : villagers) {
@@ -103,8 +111,6 @@ public class Village {
 				newPosition.setPosition(randomX(), randomY());
 			}
 		}
-		System.out.print("x"+newPosition.x);
-		System.out.println(newPosition.y);
 		return new Vector2(newPosition.x, newPosition.y);
 	}
 
