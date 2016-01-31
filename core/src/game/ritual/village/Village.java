@@ -11,6 +11,7 @@ import java.util.Random;
 public class Village {
 	private static final int MAX_HOURS = 120;
 	private ArrayList<Villager> villagers;
+	private ArrayList<VillagerEffect> effects = new ArrayList<>();
 	private float food = 0;
 	private float consumedFood = 0;
 	private float gatheredFood = 0;
@@ -39,6 +40,7 @@ public class Village {
 			System.out.println(villagers.get(i).getRole());
 			if (villagers.get(i).getRole() == VillagerRole.CITIZEN) {
 				villagers.get(i).setRole(role);
+				effects.add(new VillagerEvolveEffect(villagers.get(i)));
 				return true;
 			}
 		}
@@ -94,6 +96,13 @@ public class Village {
 		for (Villager villager : villagers) {
 			villager.update(delta);
 		}
+		for (int i = 0; i < effects.size(); i++) {
+			effects.get(i).update(delta);
+			if (effects.get(i).isDone()) {
+				effects.remove(i);
+				i--;
+			}
+		}
 		isNextWeek = false;
 		consume(delta);
 		info.setResources((int) food, (int) water, villagers.size(), (int) hoursLeft, (int) week, (int) weekLeft);
@@ -107,7 +116,7 @@ public class Village {
 			week += 1;
 			hoursLeft = MAX_HOURS;
 			isNextWeek = true;
-			villagerAdded =0;
+			villagerAdded = 0;
 		}
 	}
 
@@ -126,6 +135,9 @@ public class Village {
 	public void render(Batch batch) {
 		for (Villager villager : villagers) {
 			villager.render(batch);
+		}
+		for (VillagerEffect villagerEffect : effects) {
+			villagerEffect.render(batch);
 		}
 		info.render(batch);
 
@@ -170,13 +182,14 @@ public class Village {
 
 	public void addVillager(VillagerRole role) {
 		villagers.add(new Villager(role, this));
-		villagerAdded +=1;
+		villagerAdded += 1;
 	}
 
 	public boolean removeVillager() {
 		if (villagers.size() > 0) {
 			Random random = new Random();
 			int randomInt = random.nextInt(villagers.size());
+			effects.add(new VillagerDeathEffect(villagers.get(randomInt)));
 			villagers.remove(randomInt);
 			return true;
 		}
@@ -203,6 +216,7 @@ public class Village {
 	public void setVillage(ArrayList<Villager> a) {
 		villagers = a;
 	}
+
 	public int getFood() {
 		return (int) food;
 	}
@@ -210,18 +224,20 @@ public class Village {
 	public int getWater() {
 		return (int) water;
 	}
+
 	public int getGatheredFood() {
 		return (int) gatheredFood;
 	}
 
-	public int getGatheredWater(){
+	public int getGatheredWater() {
 		return (int) gatheredWater;
 	}
 
 	public int getPop() {
 		return villagers.size();
 	}
-	public int getVillagerAdded(){
+
+	public int getVillagerAdded() {
 		return villagerAdded;
 	}
 
