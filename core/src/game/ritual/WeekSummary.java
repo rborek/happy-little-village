@@ -2,6 +2,7 @@ package game.ritual;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 
 import game.ritual.village.Village;
 
@@ -17,6 +18,15 @@ public class WeekSummary extends MessageBox {
 	@Override
 	public void update(float delta) {
 		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public boolean checkClick(float x, float y){
+		Rectangle r = new Rectangle(continueX,continueY,continueButton.getWidth(),continueButton.getHeight());
+		if(r.contains(x, y)){
+			click = true; 
+		}
+		return false;
 	}
 	
 	@Override

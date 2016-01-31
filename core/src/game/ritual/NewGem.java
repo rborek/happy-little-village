@@ -13,8 +13,6 @@ public class NewGem extends MessageBox {
 	public void render(Batch batch){
 		super.render(batch);
 	}
-	public void checkContinue(float mouseX, float mouseY){
-		
-	}
+	
 
 }
