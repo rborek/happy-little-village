@@ -1,12 +1,10 @@
 package game.ritual;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
-import game.ritual.gems.GemColour;
 import game.ritual.rituals.RitualAltar;
 import game.ritual.input.InputHandler;
 import game.ritual.rituals.Ritual;
@@ -23,7 +21,7 @@ public class GameHandler {
 	private Texture scroll = new Texture("scroll/scroll.png");
 	private boolean paused;
 	private MessageBox messageBox;
-	private NewGem newGem;
+	private GemSummary gemSummary;
 	private boolean intro = true;
 
 	public GameHandler() {
@@ -37,7 +35,7 @@ public class GameHandler {
 		for (int i = 0; i < 7; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
-		newGem = new NewGem(this);
+		gemSummary = new GemSummary(this);
 		messageBox = new MessageBox("This is the game's Instruction:\n" + "Just kidding\n", this);
 		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox);
 		Ritual.setVillage(village);
@@ -53,8 +51,8 @@ public class GameHandler {
 
 	public void unpause() {
 		if (messageBox instanceof WeekSummary) {
-			messageBox = new NewGem(gemBag,village, this);
-			((NewGem)messageBox).gemMined();
+			messageBox = new GemSummary(gemBag,village, this);
+			((GemSummary)messageBox).gemMined();
 
 		} else if (messageBox instanceof MessageBox) {
 			messageBox = new WeekSummary(village, this);
