@@ -13,12 +13,17 @@ public class Village {
 	private float food = 0;
 	private float water = 0;
 	private VillageInformation info;
+	private float week;
+	private float weekLeft;
+	
 
 	public Village() {
 		this.villagers = new ArrayList<Villager>();
 		info = new VillageInformation(new Texture("villagers/VillageInfo.png"), 0, 0);
 		food = 100;
 		water = 100;
+		week = 0;
+		weekLeft =4;
 
 	}
 
@@ -59,21 +64,19 @@ public class Village {
 			villager.update(delta);
 		}
 		consume(delta);
-		info.setFood((int) food);
-		info.setWater((int) water);
-		info.setPop(villagers.size());
+		info.setResources((int)food,(int) water,villagers.size(),(int) week,(int) weekLeft);
 	}
 
-	private void updateResources(float delta) {
-		// TODO
-		// update resources here (e.g. food being eaten)
+	private void timePass(float delta){
+		week += (float) (delta * 1.4);
+		weekLeft -= (float)(delta*1.4);
 	}
-
 	public void render(Batch batch) {
 		for (Villager villager : villagers) {
 			villager.render(batch);
 		}
 		info.render(batch);
+		
 	}
 
 	// return a position that does not overlap current villagers
@@ -100,17 +103,19 @@ public class Village {
 				newPosition.setPosition(randomX(), randomY());
 			}
 		}
+		System.out.print("x"+newPosition.x);
+		System.out.println(newPosition.y);
 		return new Vector2(newPosition.x, newPosition.y);
 	}
 
 	private int randomX() {
 		Random random = new Random();
-		return random.nextInt(640 - 32);
+		return random.nextInt(690)+10;
 	}
 
 	private int randomY() {
 		Random random = new Random();
-		return random.nextInt(720 - 48);
+		return random.nextInt(540)+180;
 	}
 
 	public void addVillager(VillagerRole role) {

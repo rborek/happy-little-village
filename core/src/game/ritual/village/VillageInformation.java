@@ -11,6 +11,8 @@ public class VillageInformation extends GameObject {
 	private int food;
 	private int water;
 	private int pop;
+	private int week;
+	private int weekLeft;
 	// add file to constructors
 	private Texture foodTexture;
 	private Texture waterTexture;
@@ -20,21 +22,24 @@ public class VillageInformation extends GameObject {
 	protected VillageInformation(Texture texture, float xPos, float yPos) {
 		super(texture, xPos, yPos);
 		font = new BitmapFont();
-		
 	}
 
-	public void setFood(int food) {
+	
+	public void setResources(int food, int water, int pop, int week, int weekLeft){
 		this.food = food;
-	}
-
-	public void setWater(int water) {
 		this.water = water;
-	}
-
-	public void setPop(int pop) {
 		this.pop = pop;
 	}
 
+	public int getFood(){
+		return food;
+	}
+	public int getWater(){
+		return water;
+	}
+	public int getPop(){
+		return pop;
+	}
 	@Override
 	public void update(float delta) {
 	}
