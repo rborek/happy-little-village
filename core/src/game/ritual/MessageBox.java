@@ -16,7 +16,7 @@ public class MessageBox extends GameObject {
 	protected BitmapFont font;
 	protected String text;
 	protected String title;
-	protected Texture continueButton = new Texture("scroll/toContinue.png");
+	protected Texture continueButton = new Texture("scroll/button.png");
 	protected String clickToContinue = "CONTINUE";
 	protected boolean click = false;
 	protected float continueX;
@@ -77,13 +77,15 @@ public class MessageBox extends GameObject {
 
 	@Override
 	public void render(Batch batch) {
-		if (text != null) {
-			font.draw(batch, text, continueX + 28, continueY + 27);
-		}
-		font.draw(batch, title, continueX , continueY + 400);
+
+		
 		batch.draw(texture, position.x, position.y);
 		batch.draw(continueButton, continueX, continueY);
 		font.draw(batch, clickToContinue, continueX + 28, continueY + 27);
+		if (text != null) {
+			font.draw(batch, text, continueX , continueY + 300);
+		}
+		font.draw(batch, title, continueX, continueY + 400);
 	}
 
 }

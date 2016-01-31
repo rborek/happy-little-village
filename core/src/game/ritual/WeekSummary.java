@@ -9,6 +9,7 @@ import game.ritual.village.Village;
 public class WeekSummary extends MessageBox {
 	private Village village;
 	
+	
 	protected WeekSummary(Village village, GameHandler gameHandler) {
 		super("", gameHandler);
 		this.village = village;
@@ -33,17 +34,17 @@ public class WeekSummary extends MessageBox {
 	public void render( Batch batch){
 		super.render(batch);
 		//batch.draw(texture,position.x,position.y);
-		font.draw(batch, "The amount of consumed food is:"+ village.getConsumedFood(), position.x+20, position.y+200);
-		font.draw(batch, "The amount of gathered food is:"+ village.getGatheredFood(), position.x+20, position.y+300);		
-		font.draw(batch, "The remaining amount of food is:"+ village.getFood(), position.x+20, position.y+100);
+		font.draw(batch, "Food Consumed:"+ village.getConsumedFood(), position.x+100, position.y+400);
+		font.draw(batch, "Food Gathered:"+ village.getGatheredFood(), position.x+100, position.y+375);		
+		font.draw(batch, "Food Total:"+ village.getFood(), position.x+100, position.y+350);
 		
-		font.draw(batch, "The amount of consumed water is:"+ village.getConsumedWater(), position.x+260, position.y+200);
-		font.draw(batch, "The amount of gathered water is:"+ village.getGatheredWater(), position.x+260, position.y+300);
-		font.draw(batch, "The remaining amount of water is:"+ village.getWater(), position.x+260, position.y+100);
+		font.draw(batch, "Water Consumed:"+ village.getConsumedWater(), position.x+100, position.y+275);
+		font.draw(batch, "Water Gathered:"+ village.getGatheredWater(), position.x+100, position.y+300);
+		font.draw(batch, "Water Total:"+ village.getWater(), position.x+100, position.y+250);
 		
-		font.draw(batch, "Population of the village:"+ village.getPop(), position.x+600, position.y+200);
-		font.draw(batch, "Number of village created:"+ village.getVillagerAdded(), position.x+600, position.y+300);
-		font.draw(batch, "Number of village lost:"+ (village.getPop()-village.getVillagerAdded()), position.x+600, position.y+100);
+		font.draw(batch, "Population:"+ village.getPop(), position.x+100, position.y+200);
+		font.draw(batch, "Villagers Created:"+ village.getVillagerAdded(), position.x+100, position.y+175);
+		font.draw(batch, "Villagers Lost:"+ (village.getPop()-village.getVillagerAdded()), position.x+100, position.y+150);
 
 	}
 	
