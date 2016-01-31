@@ -1,5 +1,6 @@
 package game.ritual.village;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -9,8 +10,17 @@ import java.util.Random;
 
 public class Village {
 	private ArrayList<Villager> villagers;
-	private float food;
-	private float water;
+	private float food = 0;
+	private float water= 0;
+	private VillageInformation info;
+
+	public Village() {
+		this.villagers = new ArrayList<Villager>();
+		info = new VillageInformation(new Texture("villagers/VillageInfo.png"),0,0);
+		food = 100;
+		water = 100;
+
+	}
 
 	public void consume(float delta) {
 		float consumeFood = 0;
@@ -34,16 +44,14 @@ public class Village {
 		water += y;
 	}
 
-	public Village() {
-		this.villagers = new ArrayList<Villager>();
-	}
-
 	public void update(float delta) {
 		for (Villager villager : villagers) {
 			villager.update(delta);
 		}
 		consume(delta);
-
+		info.setFood((int) food);
+		info.setWater((int) water);
+		info.setPop(villagers.size());
 	}
 
 	private void updateResources(float delta) {
@@ -55,6 +63,7 @@ public class Village {
 		for (Villager villager : villagers) {
 			villager.render(batch);
 		}
+		info.render(batch);
 	}
 
 	// return a position that does not overlap current villagers
