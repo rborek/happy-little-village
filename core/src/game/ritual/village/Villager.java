@@ -66,5 +66,7 @@ public class Villager extends GameObject {
 	public Vector2 getDestination() {
 		return destination;
 	}
-
+	public VillagerRole getRole(){
+		return role;
+	}
 }

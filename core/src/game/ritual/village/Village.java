@@ -9,6 +9,30 @@ import java.util.Random;
 
 public class Village {
 	private ArrayList<Villager> villagers;
+	private float food;
+	private float water;
+
+	public void consume(float delta) {
+		float consumeFood = 0;
+		float consumeWater = 0;
+		for (Villager villager : villagers) {
+			consumeFood += villager.getRole().foodConsumption();
+		}
+		food -= consumeFood * delta;
+
+		for (Villager villager : villagers) {
+			consumeWater += villager.getRole().foodConsumption();
+		}
+		water -= consumeWater * delta;
+	}
+
+	public void addFood(float x) {
+		food += x;
+	}
+
+	public void addWater(float y) {
+		water += y;
+	}
 
 	public Village() {
 		this.villagers = new ArrayList<Villager>();
@@ -18,6 +42,8 @@ public class Village {
 		for (Villager villager : villagers) {
 			villager.update(delta);
 		}
+		consume(delta);
+
 	}
 
 	private void updateResources(float delta) {
@@ -60,13 +86,14 @@ public class Village {
 
 	private int randomX() {
 		Random random = new Random();
-		return random.nextInt(640-32);
+		return random.nextInt(640 - 32);
 	}
-	private int randomY(){
+
+	private int randomY() {
 		Random random = new Random();
-		return random.nextInt(720-48);
+		return random.nextInt(720 - 48);
 	}
-	
+
 	public void addVillager(Villager a) {
 		villagers.add(a);
 	}
