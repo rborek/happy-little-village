@@ -25,6 +25,7 @@ public class NewGem extends MessageBox {
 		super("", gameHandler);
 		this.gemBag = gemBag;
 		this.village = village;
+		title = " Gem Summary";
 	}
 
 	public void gemMined() {

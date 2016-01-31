@@ -12,6 +12,7 @@ public class WeekSummary extends MessageBox {
 	protected WeekSummary(Village village, GameHandler gameHandler) {
 		super("", gameHandler);
 		this.village = village;
+		title = "Resource Summary";
 	}
 	
 	@Override
