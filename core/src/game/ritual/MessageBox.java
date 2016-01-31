@@ -17,11 +17,12 @@ public class MessageBox extends GameObject {
 	protected MessageBox(Texture texture, float xPos, float yPos) {
 		super(texture, xPos, yPos);
 		font = new BitmapFont();
-		instruction = " Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n Fusce ullamcorper rutrum purus, vel auctor sapien tincidunt vel.\n"
-				+ " Proin felis massa, venenatis ut imperdiet in, scelerisque a ex. Donec eget mauris enim.\n"
-				+ " In nec est vel risus ultricies placerat.\n"
-				+ " Cras vulputate, enim at semper volutpat, libero sem euismod justo, gravida lobortis nulla nunc id nunc.\n"
-				+ " Suspendisse lacinia felis odio, vel mollis velit sodales id. Maecenas id erat rhoncus, vehicula augue sit amet, suscipit nulla.";
+		instruction = " this week you did this much";
+	}
+	protected MessageBox(Texture texture, float xPos, float yPos, String instruction) {
+		super(texture, xPos, yPos);
+		font = new BitmapFont();
+		this.instruction = instruction;
 	}
 
 	public void getInfo(int food, int water, int pop) {

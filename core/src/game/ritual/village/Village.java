@@ -23,10 +23,9 @@ public class Village {
 		info = new VillageInformation(new Texture("villagers/info_menu.png"), 60, 10);
 		food = 100;
 		water = 100;
-		hour = 168;
+		hour = 5;
 		weekLeft = 4;
 		week = 0;
-
 	}
 
 	public boolean convertCitizen(VillagerRole role) {
@@ -86,7 +85,7 @@ public class Village {
 		if (hour <= 0) {
 			weekLeft -= 1;
 			week += 1;
-			hour = 168;
+			hour = 5;
 			isNextWeek = true;
 		}
 	}
@@ -94,7 +93,12 @@ public class Village {
 	public boolean isNextWeek() {
 		return isNextWeek;
 	}
-
+	public float getHour(){
+		return hour;
+	}
+	public float getWeek(){
+		return week;
+	}
 	public void render(Batch batch) {
 		for (Villager villager : villagers) {
 			villager.render(batch);
