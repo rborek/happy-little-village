@@ -1,22 +1,22 @@
 package game.ritual.input;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
-import game.ritual.gems.GemSlots;
+import game.ritual.gems.RitualAltar;
 
 public class InputHandler implements InputProcessor {
-    private GemSlots gemSlots;
+    private RitualAltar ritualAltar;
     private GemBag gemBag;
     private Gem selectedGem;
     boolean enabled = true;
 
-    public InputHandler(GemSlots gemSlots, GemBag gemBag) {
-        this.gemSlots = gemSlots;
+    public InputHandler(RitualAltar ritualAltar, GemBag gemBag) {
+        this.ritualAltar = ritualAltar;
         this.gemBag = gemBag;
     }
 
@@ -47,7 +47,7 @@ public class InputHandler implements InputProcessor {
 
     private void dropGem(float mouseX, float mouseY) {
         if (selectedGem != null) {
-            gemSlots.add(selectedGem, mouseX, mouseY);
+            ritualAltar.add(selectedGem, mouseX, mouseY);
             selectedGem = null;
         }
 
@@ -58,9 +58,9 @@ public class InputHandler implements InputProcessor {
     }
 
     private void removeFromSlots(float mouseX, float mouseY) {
-        int index = gemSlots.removeGem(mouseX, mouseY);
+        int index = ritualAltar.removeGem(mouseX, mouseY);
         if (index != -1) {
-            GemColour colour = gemSlots.getColour(index);
+            GemColour colour = ritualAltar.getColour(index);
             if (colour != null) {
                 gemBag.add(colour);
             }
@@ -70,7 +70,10 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+
+        }
+        return true;
     }
 
     @Override

@@ -10,7 +10,7 @@ import game.ritual.rituals.Ritual;
 
 import java.util.ArrayList;
 
-public class GemSlots extends GameObject {
+public class RitualAltar extends GameObject {
     private Gem[] gems;
     private GemBag gemBag;
     private Rectangle[] slots;
@@ -21,7 +21,7 @@ public class GemSlots extends GameObject {
     private static final int paddingY = 67;
     private static final int slotSize = 64;
 
-    public GemSlots(GemBag gemBag, float xPos, float yPos, int rows, int cols) {
+    public RitualAltar(GemBag gemBag, float xPos, float yPos, int rows, int cols) {
         super(new Texture("altar/altar1.png"), xPos, yPos);
 //        height *= rows;
 //        height += spacing * rows - 1;
