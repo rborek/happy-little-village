@@ -55,6 +55,7 @@ public class RitualAltar extends GameObject {
         gainRitual(new ToExplorerRitual());
         gainRitual(new ToFarmerRitual());
         gainRitual(new ToMinerRitual());
+        gainRitual(new RemoveVillagerRitual());
     }
 
 
@@ -109,6 +110,7 @@ public class RitualAltar extends GameObject {
     public void useGems() {
         for (Ritual ritual : rituals) {
             if (ritual.attempt(gems)) {
+                System.out.println(ritual.getID());
                 break;
             }
         }

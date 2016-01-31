@@ -11,7 +11,8 @@ Colors: Red, green, blue, yellow                Starting amount: 5 of each colou
 | ------------- | -------- |
 | (if we have time) 2Red 2Blue | Increased happiness by a flat 15 of total bar |
 | // 1Yellow  1Blue  1Green  1Red | Additional villager |
-| // 1Red  2Green | get 10 more food (higher production of food)  |
+| //  Null, null  | Remove villager |
+| // 1Red  1green, null , 1green | get 10 more food (higher production of food)  |
 | //2Blue  2Green | water increases by flat 15 of total bar) |
 | // 4Yellow | convert random citizen into a miner |
 | //4Green | convert random citizen into a farmer |

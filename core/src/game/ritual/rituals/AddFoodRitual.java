@@ -18,7 +18,7 @@ public class AddFoodRitual extends Ritual {
 
 	@Override
 	protected void commence() {
-		village.addFood(10);
+		village.addFood(25);
 	}
 
 }

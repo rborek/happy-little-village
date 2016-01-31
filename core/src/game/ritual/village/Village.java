@@ -35,9 +35,10 @@ public class Village {
 	}
 
 	public boolean convertCitizen(VillagerRole role) {
-		for (int k = 0; k < villagers.size(); k++) {
-			if (villagers.get(k).getRole().equals(VillagerRole.CITIZEN)) {
-				villagers.get(k).setRole(role);
+		for (int i = 0; i < villagers.size(); i++) {
+			System.out.println(villagers.get(i).getRole());
+			if (villagers.get(i).getRole() == VillagerRole.CITIZEN) {
+				villagers.get(i).setRole(role);
 				return true;
 			}
 		}
@@ -173,9 +174,11 @@ public class Village {
 	}
 
 	public void removeVillager() {
-		Random random = new Random();
-		random.nextInt(villagers.size());
-		villagers.remove(random);
+		if (villagers.size() > 0) {
+			Random random = new Random();
+			int randomInt = random.nextInt(villagers.size());
+			villagers.remove(randomInt);
+		}
 	}
 
 	public Villager getVillager(int a) {
