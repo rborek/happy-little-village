@@ -23,6 +23,7 @@ public class GameHandler {
 	private MessageBox messageBox;
 	private GemSummary gemSummary;
 	private boolean intro = true;
+	private GodMessage godMessage;
 
 	public GameHandler() {
 		init();
@@ -51,8 +52,13 @@ public class GameHandler {
 
 	public void unpause() {
 		if (messageBox instanceof WeekSummary) {
-			messageBox = new GemSummary(gemBag,village, this);
-			((GemSummary)messageBox).gemMined();
+			messageBox = new GemSummary(gemBag, village, this);
+			((GemSummary) messageBox).gemMined();
+
+		} else if (messageBox instanceof GemSummary) {
+			messageBox = new GodMessage(gemBag, village, this);
+			((GodMessage) messageBox).checkRitual();
+			System.out.println("printed");
 
 		} else if (messageBox instanceof MessageBox) {
 			messageBox = new WeekSummary(village, this);
