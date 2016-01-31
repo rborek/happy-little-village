@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import game.ritual.rituals.MonthlyRitual;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,6 +14,7 @@ public class Village {
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
+	private MonthlyRitual monthlyRitual;
 	private float food = 0;
 	private float consumedFood = 0;
 	private float gatheredFood = 0;
@@ -21,7 +23,7 @@ public class Village {
 	private float gatheredWater = 0;
 	private VillageInformation info;
 	private float hoursLeft;
-	private float weekLeft;
+	private float weeksLeft;
 	private float week;
 	private boolean isNextWeek = false;
 	private int villagerAdded = 0;
@@ -33,8 +35,12 @@ public class Village {
 		food = 100;
 		water = 100;
 		hoursLeft = MAX_HOURS;
-		weekLeft = 4;
+		weeksLeft = 4;
 		week = 0;
+	}
+
+	public void setWeeksLeft(int weeks) {
+		weeksLeft = weeks;
 	}
 	
 	public boolean convertCitizen(VillagerRole role) {
@@ -110,14 +116,14 @@ public class Village {
 		}
 		isNextWeek = false;
 		consume(delta);
-		info.setResources((int) food, (int) water, villagers.size(), (int) hoursLeft, (int) week, (int) weekLeft);
+		info.setResources((int) food, (int) water, villagers.size(), (int) hoursLeft, (int) week, (int) weeksLeft);
 		timePass(delta);
 	}
 
 	private void timePass(float delta) {
 		hoursLeft -= (float) (delta * 1.4);
 		if (hoursLeft <= 0) {
-			weekLeft -= 1;
+			weeksLeft -= 1;
 			week += 1;
 			hoursLeft = MAX_HOURS;
 			isNextWeek = true;
