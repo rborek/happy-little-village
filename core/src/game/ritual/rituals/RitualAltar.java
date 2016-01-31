@@ -55,6 +55,7 @@ public class RitualAltar extends GameObject {
         gainRitual(new ToExplorerRitual());
         gainRitual(new ToFarmerRitual());
         gainRitual(new ToMinerRitual());
+        gainRitual(new RemoveVillagerRitual());
     }
 
 
