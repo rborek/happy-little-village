@@ -54,6 +54,7 @@ public class GameHandler {
 	public void unpause() {
 		if (messageBox instanceof WeekSummary) {
 			messageBox = new NewGem(gemBag,village, this);
+			((NewGem)messageBox).gemMined();
 
 		} else if (messageBox instanceof MessageBox) {
 			messageBox = new WeekSummary(village, this);

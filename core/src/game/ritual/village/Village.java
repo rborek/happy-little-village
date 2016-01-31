@@ -9,11 +9,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Village {
-<<<<<<< HEAD
 	private static final int MAX_HOURS = 3;
-=======
-	private static final int MAX_HOURS = 120;
->>>>>>> ccb2b063e4fa47bb42e1db8ff63863097ad68b35
+	
 	private ArrayList<Villager> villagers;
 	private float food = 0;
 	private float consumedFood = 0;
@@ -27,6 +24,7 @@ public class Village {
 	private float week;
 	private boolean isNextWeek = false;
 	private int villagerAdded = 0;
+	
 
 	public Village() {
 		this.villagers = new ArrayList<Villager>();
@@ -37,7 +35,7 @@ public class Village {
 		weekLeft = 4;
 		week = 0;
 	}
-
+	
 	public boolean convertCitizen(VillagerRole role) {
 		for (int i = 0; i < villagers.size(); i++) {
 			System.out.println(villagers.get(i).getRole());
@@ -189,6 +187,16 @@ public class Village {
 
 	public Villager getVillager(int a) {
 		return villagers.get(a);
+	}
+	public int getNumberOf(VillagerRole a){
+		int count =0;
+		for(Villager villager : villagers){
+			if(villager.getRole().equals(a)){
+				count++;
+			}
+		}
+		return count;
+		
 	}
 
 	public int getSize() {
