@@ -22,13 +22,14 @@ public class GameHandler {
 	private Texture scroll = new Texture("scroll/scroll.png");
 	private boolean paused = false;
 	private MessageBox message;
+
 	public GameHandler() {
 		init();
 	}
 
 	public void init() {
-		gemBag = new GemBag(1280-420-36-32, 30+35-12);
-		ritualAltar = new RitualAltar(gemBag, 1280-400-48-30, 720-400-40-12, 2, 2);
+		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
+		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, 2, 2);
 		ritualAltar.add(new Gem(GemColour.RED));
 		ritualAltar.add(new Gem(GemColour.BLUE));
 		ritualAltar.add(new Gem(GemColour.YELLOW));
@@ -40,15 +41,15 @@ public class GameHandler {
 		inputHandler = new InputHandler(ritualAltar, gemBag);
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
-		message = new MessageBox(new Texture("scroll/Summary.png"),20,300);
+		message = new MessageBox(new Texture("scroll/Summary.png"), 20, 300);
 	}
 
 	// game logic goes here
 	public void update(float delta) {
 		if (!paused) {
 			village.update(delta);
-			if(village.weekPass()){
-				paused =true;
+			if (village.weekPass()) {
+				paused = true;
 			}
 		} else {
 			if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
@@ -65,10 +66,9 @@ public class GameHandler {
 		ritualAltar.render(batch);
 		gemBag.render(batch);
 		inputHandler.renderSelectedGem(batch);
-		if(paused){
+		if (paused) {
 			message.render(batch);
 		}
 	}
 
 }
-
