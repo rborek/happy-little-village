@@ -10,15 +10,14 @@ Colors: Red, green, blue, yellow                Starting amount: 5 of each colou
 | Combinations  | Function |
 | ------------- | -------- |
 | (if we have time) 2Red 2Blue | Increased happiness by a flat 15 of total bar |
-| 1Yellow  1Blue  1Green  1Red | Additional villager |
-| 2Yellow  2Green | Increased rate of mining by 5 (higher production of gems)(if you have a miner) |
-| 1Red  2Green | Increased rate of farming by 5 (higher production of food) (if you have a farmer) |
-| 2Blue  2Green | Addition of river (water increases by flat 15 of total bar) |
-| 4Yellow | convert random citizen into a miner |
-| 4Green | convert random citizen into a farmer |
-| 4Blue | convert random citizen into an explorer |
-| 3Red 1Yellow | Increase chance of explorer finding set piece by 15% |
-| 1Red 3Green | Gain 15 water, lose 20 food |
+| // 1Yellow  1Blue  1Green  1Red | Additional villager |
+| 1Red  2Green | get more food (higher production of food)  |
+| //2Blue  2Green | water increases by flat 15 of total bar) |
+| // 4Yellow | convert random citizen into a miner |
+| //4Green | convert random citizen into a farmer |
+| //4Blue | convert random citizen into an explorer |
+| ??3Red 1Yellow | Increase chance of explorer finding set piece by 15% |
+| //1Red 3Green | Gain 15 water, lose 20 food |
 | 3Blue 1 Green | Gain 15 food, lose 20 water |
 
 abstract class:
