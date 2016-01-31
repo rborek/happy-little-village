@@ -41,7 +41,7 @@ public class GameHandler {
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
 		messageBox = new MessageBox(new Texture("scroll/Summary.png"), 20, 300);
-		messageBox.setvillage(village);
+		messageBox.setVillage(village);
 		introduction = new MessageBox(new Texture("scroll/Summary.png"), 20, 300,
 				"This is the game's Instruction:\n"
 				+ "Just kidding\n");
