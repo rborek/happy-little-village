@@ -20,7 +20,7 @@ public class Village {
 
 	public Village() {
 		this.villagers = new ArrayList<Villager>();
-		info = new VillageInformation(new Texture("villagers/VillageInfo.png"), 0, 0);
+		info = new VillageInformation(new Texture("villagers/info_menu.png"), 60, 10);
 		food = 100;
 		water = 100;
 		hour = 168;
