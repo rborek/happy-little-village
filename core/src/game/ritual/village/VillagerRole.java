@@ -10,7 +10,7 @@ public enum VillagerRole {
 		case MINER:
 			return 0.2f;
 		case FARMER:
-			return 1;
+			return 0.1f;
 		case EXPLORER:
 			return 0.15f;
 		default:

@@ -24,7 +24,6 @@ public class GameHandler {
 	private boolean paused = true;
 	private MessageBox messageBox;
 	private MessageBox introduction;
-	private MessageBox messagePointer;
 	private boolean intro = true;
 
 	public GameHandler() {
@@ -42,12 +41,10 @@ public class GameHandler {
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
 		messageBox = new MessageBox(new Texture("scroll/Summary.png"), 20, 300);
+		messageBox.setvillage(village);
 		introduction = new MessageBox(new Texture("scroll/Summary.png"), 20, 300,
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n Fusce ullamcorper rutrum purus, vel auctor sapien tincidunt vel.\n"
-						+ " Proin felis massa, venenatis ut imperdiet in, scelerisque a ex. Donec eget mauris enim.\n"
-						+ " In nec est vel risus ultricies placerat.\n"
-						+ " Cras vulputate, enim at semper volutpat, libero sem euismod justo, gravida lobortis nulla nunc id nunc.\n"
-						+ " Suspendisse lacinia felis odio, vel mollis velit sodales id. Maecenas id erat rhoncus, vehicula augue sit amet, suscipit nulla.");
+				"This is the game's Instruction:\n"
+				+ "Just kidding\n");
 	}
 
 	// game logic goes here
@@ -55,6 +52,7 @@ public class GameHandler {
 		if (!paused) {
 			if (village.isNextWeek()) {
 				paused = true;
+				village.gatheredFood();
 			}
 			village.update(delta);
 		} else {

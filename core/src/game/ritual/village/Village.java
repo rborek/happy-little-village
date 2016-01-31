@@ -12,7 +12,10 @@ public class Village {
 	private static final int MAX_HOURS = 168;
 	private ArrayList<Villager> villagers;
 	private float food = 0;
+	private float consumedFood = 0;
+	private float gatheredFood = 0;
 	private float water = 0;
+	private float consumedWater = 0;
 	private VillageInformation info;
 	private float hoursLeft;
 	private float weekLeft;
@@ -46,11 +49,13 @@ public class Village {
 			consumeFood += villager.getRole().foodConsumption();
 		}
 		food -= consumeFood * delta;
+		consumedFood = consumeFood*delta;
 
 		for (Villager villager : villagers) {
 			consumeWater += villager.getRole().foodConsumption();
 		}
 		water -= consumeWater * delta;
+		consumedWater = consumeWater*delta;
 	}
 
 	public void addFood(float x) {
@@ -59,6 +64,17 @@ public class Village {
 
 	public void addWater(float y) {
 		water += y;
+	}
+
+	public void gatheredFood() {
+		float food = 0;
+		for (Villager villager : villagers) {
+			if (villager.getRole().equals(VillagerRole.FARMER)) {
+				food += 20;
+			}
+		}
+		addFood(food);
+		gatheredFood = food;
 	}
 
 	public void removeFood(float x) {
@@ -94,12 +110,15 @@ public class Village {
 	public boolean isNextWeek() {
 		return isNextWeek;
 	}
-	public float getHoursLeft(){
+
+	public float getHoursLeft() {
 		return hoursLeft;
 	}
-	public float getWeek(){
+
+	public float getWeek() {
 		return week;
 	}
+
 	public void render(Batch batch) {
 		for (Villager villager : villagers) {
 			villager.render(batch);
@@ -168,5 +187,26 @@ public class Village {
 	// set the ArrayList of villagers
 	public void setVillage(ArrayList<Villager> a) {
 		villagers = a;
+	}
+
+	public int getFood() {
+		return (int) food;
+	}
+
+	public int getGatheredFood(){
+		return (int) gatheredFood;
+	}
+	public int getWater() {
+		return (int) water;
+	}
+
+	public int getPop() {
+		return villagers.size();
+	}
+	public int getConsumedFood(){
+		return (int) consumedFood;
+	}
+	public int getConsumedWater(){
+		return (int) consumedWater;
 	}
 }
