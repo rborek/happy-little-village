@@ -27,12 +27,12 @@ public class GameHandler {
 	}
 
 	public void init() {
-		gemSlots = new GemSlots(1280-400-35-40, 720-400-40, 2, 2);
-		gemSlots.add(new Gem(GemColour.RED));
-        gemSlots.add(new Gem(GemColour.BLUE));
-        gemSlots.add(new Gem(GemColour.YELLOW));
-        gemSlots.add(new Gem(GemColour.GREEN));
 		gemBag = new GemBag(1280-420-25-40, 30+40);
+		gemSlots = new GemSlots(gemBag, 1280-400-35-40, 720-400-40, 2, 2);
+		gemSlots.add(new Gem(GemColour.RED));
+		gemSlots.add(new Gem(GemColour.BLUE));
+		gemSlots.add(new Gem(GemColour.YELLOW));
+		gemSlots.add(new Gem(GemColour.GREEN));
 		village = new Village();
 		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
 		village.addVillager(new Villager(VillagerRole.CITIZEN, village));

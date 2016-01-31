@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class GemSlots extends GameObject {
     private Gem[] gems;
+    private GemBag gemBag;
     private Rectangle[] slots;
     private ArrayList<Ritual> rituals;
     private static final int spacingX = 136;
@@ -20,7 +21,7 @@ public class GemSlots extends GameObject {
     private static final int paddingY = 67;
     private static final int slotSize = 64;
 
-    public GemSlots(float xPos, float yPos, int rows, int cols) {
+    public GemSlots(GemBag gemBag, float xPos, float yPos, int rows, int cols) {
         super(new Texture("altar/altar1.png"), xPos, yPos);
 //        height *= rows;
 //        height += spacing * rows - 1;
@@ -28,6 +29,7 @@ public class GemSlots extends GameObject {
 //        width += spacing * cols - 1;
         gems = new Gem[rows * cols];
         slots = new Rectangle[rows * cols];
+        this.gemBag = gemBag;
         slots[0] = new Rectangle(paddingX, paddingY + 64 + spacingY, 64, 64);
         slots[1] = new Rectangle(paddingX + 64 + spacingX, paddingY + 64 + spacingY, 64, 64);
         slots[2] = new Rectangle(paddingX, paddingY, 64, 64);
@@ -36,6 +38,10 @@ public class GemSlots extends GameObject {
             slots[i].x += position.x;
             slots[i].y += position.y;
         }
+    }
+
+    public void setGemBag(GemBag gemBag) {
+        this.gemBag = gemBag;
     }
 
     @Override
@@ -89,6 +95,9 @@ public class GemSlots extends GameObject {
     public void add(Gem gem, float x, float y) {
         for (int i = 0; i < slots.length; i++) {
             if (slots[i].contains(x, y)) {
+                if (gems[i] != null) {
+                    gemBag.add(gems[i].getColour());
+                }
                 gems[i] = gem;
             }
         }
@@ -100,7 +109,6 @@ public class GemSlots extends GameObject {
             return gems[index].getColour();
         }
         return null;
-
     }
 
     private void removeAllGems() {

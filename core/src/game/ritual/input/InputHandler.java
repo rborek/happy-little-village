@@ -46,7 +46,7 @@ public class InputHandler implements InputProcessor {
     }
 
     private void dropGem(float mouseX, float mouseY) {
-
+        gemSlots.add(selectedGem, mouseX, mouseY);
         selectedGem = null;
 
     }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import game.ritual.GameObject;
 
 public class Gem {
-	GemColour colour;
+	private GemColour colour;
 	private final static Texture[] gemTextures = {new Texture("gems/gem_red.png"), new Texture("gems/gem_blue.png"),
 			new Texture("gems/gem_green.png"), new Texture("gems/gem_yellow.png")};
 
