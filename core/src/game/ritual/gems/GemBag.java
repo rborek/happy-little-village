@@ -1,12 +1,17 @@
 package game.ritual.gems;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import game.ritual.GameObject;
 import game.ritual.rituals.RitualAltar;
 
 public class GemBag extends GameObject {
+    private BitmapFont font;
     private RitualAltar gemSlot;
     private Texture[] gemTextures = Gem.getArrayOfTextures();
     private static final int slotSize = 64;
@@ -17,6 +22,9 @@ public class GemBag extends GameObject {
     public GemBag(float xPos, float yPos) {
         super(new Texture("gems/gem_bag.png"), xPos, yPos);
         gemAmounts = new int[GemColour.values().length];
+        for (int i = 0; i < gemAmounts.length; i++) {
+            gemAmounts[i] = 5;
+        }
         slots[0] = new Rectangle(42, 54, slotSize, slotSize);
         slots[1] = new Rectangle(135, 54, slotSize, slotSize);
         slots[2] = new Rectangle(231, 54, slotSize, slotSize);
@@ -25,6 +33,11 @@ public class GemBag extends GameObject {
             slots[i].x += position.x;
             slots[i].y += position.y;
         }
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.borderColor = Color.BLACK;
+        parameter.borderWidth = 1;
+        font = generator.generateFont(parameter);
     }
 
     public void add(GemColour colour) {
@@ -47,6 +60,9 @@ public class GemBag extends GameObject {
         batch.draw(texture, position.x, position.y);
         for (int i = 0; i < gemTextures.length; i++) {
             batch.draw(gemTextures[i], slots[i].x, slots[i].y);
+        }
+        for (int i = 0; i < gemTextures.length; i++) {
+            font.draw(batch, "" + gemAmounts[i], slots[i].x + 50, slots[i].y + 16);
         }
     }
 

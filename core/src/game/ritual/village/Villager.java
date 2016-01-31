@@ -60,7 +60,6 @@ public class Villager extends GameObject {
 
 	@Override
 	public void render(Batch batch) {
-		System.out.println(isMovingRight());
 		batch.draw(texture, position.x, position.y, width, height, 0, 0, (int)width, (int)height, isMovingRight(), false);
 	}
 

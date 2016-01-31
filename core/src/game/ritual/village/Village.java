@@ -137,7 +137,7 @@ public class Village {
 
 	private int randomY() {
 		Random random = new Random();
-		return random.nextInt(588) + 180 - 48;
+		return random.nextInt(400) + 180;
 	}
 
 	public void addVillager(VillagerRole role) {

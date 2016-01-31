@@ -16,6 +16,7 @@ import game.ritual.village.VillagerRole;
 public class GameHandler {
 	private Village village;
 	private RitualAltar ritualAltar;
+	private Texture background = new Texture("scroll/background.png");
 	private GemBag gemBag;
 	private InputHandler inputHandler;
 	private Gem gem;
@@ -30,10 +31,6 @@ public class GameHandler {
 	public void init() {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
 		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, 2, 2);
-		ritualAltar.add(new Gem(GemColour.RED));
-		ritualAltar.add(new Gem(GemColour.BLUE));
-		ritualAltar.add(new Gem(GemColour.YELLOW));
-		ritualAltar.add(new Gem(GemColour.GREEN));
 		village = new Village();
 		for (int i = 0; i < 7; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
@@ -61,6 +58,7 @@ public class GameHandler {
 
 	// rendering goes here
 	public void render(Batch batch) {
+		batch.draw(background, 0, 0);
 		village.render(batch);
 		batch.draw(scroll, 1280 - 550, -12);
 		ritualAltar.render(batch);

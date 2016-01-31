@@ -92,9 +92,10 @@ public class RitualAltar extends GameObject {
     public void useGems() {
         for (Ritual ritual : rituals) {
             if (ritual.attempt(gems)) {
-               removeAllGems();
+                break;
             }
         }
+        removeAllGems();
     }
 
     public void add(Gem gem) {
