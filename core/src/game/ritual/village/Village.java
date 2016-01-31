@@ -16,6 +16,7 @@ public class Village {
 	private float hour;
 	private float weekLeft;
 	private float week;
+	private boolean isNextWeek = false;
 
 	public Village() {
 		this.villagers = new ArrayList<Villager>();
@@ -74,22 +75,24 @@ public class Village {
 		for (Villager villager : villagers) {
 			villager.update(delta);
 		}
+		isNextWeek = false;
 		consume(delta);
 		info.setResources((int) food, (int) water, villagers.size(), (int) hour, (int) week, (int) weekLeft);
 		timePass(delta);
 	}
 
 	private void timePass(float delta) {
-		hour += (float) (delta * 1.4);
-		if (hour >= 10) {
+		hour -= (float) (delta * 1.4);
+		if (hour <= 0) {
 			weekLeft -= 1;
 			week += 1;
-			hour = 0;
+			hour = 168;
+			isNextWeek = true;
 		}
 	}
 
-	public boolean weekPass() {
-		return hour >= 10;
+	public boolean isNextWeek() {
+		return isNextWeek;
 	}
 
 	public void render(Batch batch) {

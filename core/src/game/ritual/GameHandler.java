@@ -47,10 +47,10 @@ public class GameHandler {
 	// game logic goes here
 	public void update(float delta) {
 		if (!paused) {
-			village.update(delta);
-			if (village.weekPass()) {
+			if (village.isNextWeek()) {
 				paused = true;
 			}
+			village.update(delta);
 		} else {
 			if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 				paused = false;

@@ -55,7 +55,6 @@ public class Villager extends GameObject {
 		} else {
 			move(delta);
 		}
-
 	}
 
 	public Vector2 getDestination() {
