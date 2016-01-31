@@ -71,6 +71,7 @@ public class GameHandler {
 			if (village.isNextWeek()) {
 				pause();
 				village.gatheredFood();
+				village.gatheredWater();
 			}
 			village.update(delta);
 

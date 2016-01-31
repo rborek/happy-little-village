@@ -31,16 +31,16 @@ public class NewGem extends MessageBox {
 	public void gemMined() {
 		for (int i = 0; i < village.getNumberOf(VillagerRole.MINER); i++) {
 			if (gemBag.gainRandomGem().equals(GemColour.RED)) {
-				RED++;
+				RED += 5;
 			}
 			if (gemBag.gainRandomGem().equals(GemColour.YELLOW)) {
-				YELLOW++;
+				YELLOW += 5;
 			}
 			if (gemBag.gainRandomGem().equals(GemColour.BLUE)) {
-				BLUE++;
+				BLUE += 5;
 			}
 			if (gemBag.gainRandomGem().equals(GemColour.GREEN)) {
-				GREEN++;
+				GREEN += 5;
 			}
 		}
 	}
