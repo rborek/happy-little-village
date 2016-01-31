@@ -11,6 +11,8 @@ import game.ritual.GameObject;
 import game.ritual.GameScreen;
 import game.ritual.rituals.RitualAltar;
 
+import java.util.Random;
+
 public class GemBag extends GameObject {
     private BitmapFont font;
     private RitualAltar gemSlot;
@@ -76,6 +78,12 @@ public class GemBag extends GameObject {
         return gemAmounts[colour.ordinal()];
     }
 
+    public GemColour gainRandomGem() {
+        Random random = new Random();
+        GemColour gemColour = GemColour.values()[(random.nextInt(GemColour.values().length))];
+        add(gemColour);
+        return gemColour;
+    }
 
     public void remove(GemColour colour) {
         gemAmounts[colour.ordinal()]--;

@@ -2,7 +2,8 @@ package game.ritual.gems;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import game.ritual.GameObject;
+
+
 
 public class Gem {
 	private GemColour colour;
@@ -17,7 +18,6 @@ public class Gem {
 		batch.draw(getTexture(), xPos, yPos);
 	}
 
-	
 	public GemColour getColour(){
 		return colour;
 	}
