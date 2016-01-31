@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import game.ritual.GameObject;
+import game.ritual.rituals.RitualAltar;
 
 public class GemBag extends GameObject {
     private RitualAltar gemSlot;

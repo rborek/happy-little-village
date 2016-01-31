@@ -1,4 +1,4 @@
-package game.ritual.gems;
+package game.ritual.rituals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import game.ritual.GameObject;
+import game.ritual.gems.Gem;
+import game.ritual.gems.GemBag;
+import game.ritual.gems.GemColour;
 import game.ritual.rituals.Ritual;
 
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ public class RitualAltar extends GameObject {
     private Gem[] gems;
     private GemBag gemBag;
     private Rectangle[] slots;
-    private ArrayList<Ritual> rituals;
+    private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
     private static final int spacingX = 136;
     private static final int spacingY = 121;
     private static final int paddingX = 60;
@@ -60,8 +63,6 @@ public class RitualAltar extends GameObject {
             }
         }
     }
-
-
 
     public int removeGem(float x, float y) {
         for (int i = 0; i < slots.length; i++) {
