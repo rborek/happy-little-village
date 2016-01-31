@@ -17,6 +17,7 @@ public class RitualAltar extends GameObject {
     private Gem[] gems;
     private GemBag gemBag;
     private Rectangle[] slots;
+    private Texture button = new Texture("scroll/button.png");
     private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
     private static final int spacingX = 136;
     private static final int spacingY = 121;
@@ -85,6 +86,7 @@ public class RitualAltar extends GameObject {
     @Override
     public void render(Batch batch) {
         batch.draw(texture, position.x, position.y);
+        batch.draw(button, position.x + (width / 2) - (button.getWidth() / 2), position.y + 30);
         for (int i = 0; i < gems.length; i++) {
             if (gems[i] != null) {
                 batch.draw(gems[i].getTexture(), slots[i].x+ 8, slots[i].y + 8);
