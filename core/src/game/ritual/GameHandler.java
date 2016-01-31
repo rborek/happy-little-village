@@ -8,6 +8,7 @@ import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
 import game.ritual.gems.RitualAltar;
 import game.ritual.input.InputHandler;
+import game.ritual.rituals.Ritual;
 import game.ritual.village.Village;
 import game.ritual.village.Villager;
 import game.ritual.village.VillagerRole;
@@ -41,6 +42,7 @@ public class GameHandler {
 		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
 		village.addVillager(new Villager(VillagerRole.CITIZEN, village));
 		inputHandler = new InputHandler(ritualAltar, gemBag);
+		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
 	}
 

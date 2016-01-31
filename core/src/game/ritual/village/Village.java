@@ -107,6 +107,10 @@ public class Village {
 		villagers.add(a);
 	}
 
+	public void addVillager(VillagerRole role) {
+		villagers.add(new Villager(role, this));
+	}
+
 	public void removeVillager(Villager a) {
 		villagers.remove(a);
 	}

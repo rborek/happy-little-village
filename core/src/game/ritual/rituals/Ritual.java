@@ -5,11 +5,11 @@ import game.ritual.gems.GemColour;
 import game.ritual.village.Village;
 
 public abstract class Ritual {
-    private static Village village;
-    private GemColour[] gemCombination;
+    protected static Village village;
+    protected GemColour[] gemCombination;
 
-    public Ritual(GemColour[] gemCombination) {
-        this.gemCombination = gemCombination;
+    public Ritual() {
+        gemCombination = getCombination();
     }
 
     public boolean attempt(Gem[] gems) {
@@ -32,6 +32,8 @@ public abstract class Ritual {
         }
         return false;
     }
+
+    protected abstract GemColour[] getCombination();
 
     protected abstract void commence();
 
