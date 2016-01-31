@@ -11,10 +11,7 @@ public class DesktopLauncher {
 		config.height = 720;
 		config.fullscreen = false;
 		config.resizable = false;
-<<<<<<< HEAD
-=======
 		config.useGL30 = true;
->>>>>>> cee354a86b19cca94dc28a9511f27423696004f2
 		new LwjglApplication(new RitualGame(), config);
 	}
 }
