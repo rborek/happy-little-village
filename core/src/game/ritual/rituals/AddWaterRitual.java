@@ -7,12 +7,12 @@ import game.ritual.village.Villager;
 public class AddWaterRitual extends Ritual {
 	
 	public AddWaterRitual() {
-		id = 5;
+		id = 4;
 	}
 	
 	@Override
 	protected GemColour[] getCombination() {
-		return new GemColour[] { GemColour.RED, GemColour.YELLOW, GemColour.BLUE };
+		return new GemColour[] { GemColour.BLUE, GemColour.BLUE, GemColour.GREEN, GemColour.GREEN };
 	}
 
 	@Override
