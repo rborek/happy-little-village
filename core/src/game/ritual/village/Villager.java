@@ -56,7 +56,6 @@ public class Villager extends GameObject {
 				Random r = new Random();
 				restTimer = r.nextFloat() * 3 + 1;
 			}
-
 		} else {
 			move(delta);
 		}
@@ -66,7 +65,8 @@ public class Villager extends GameObject {
 	public Vector2 getDestination() {
 		return destination;
 	}
-	public VillagerRole getRole(){
+
+	public VillagerRole getRole() {
 		return role;
 	}
 }
