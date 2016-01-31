@@ -93,7 +93,13 @@ public class RitualAltar extends GameObject {
         }
     }
 
-
+    public void removeRitual(Ritual ritual) {
+        for (int i = 0; i < rituals.size(); i++) {
+            if (ritual.getID() == rituals.get(i).getID()) {
+                rituals.remove(i);
+            }
+        }
+    }
 
     public Gem pickUpGem(float x, float y) {
         for (int i = 0; i < slots.length; i++) {

@@ -32,6 +32,7 @@ public class Village {
 	public MonthlyRitual getMonthlyRitual(){
 		return monthlyRitual;
 	}
+
 	public void checkRitual(){
 
 	}
@@ -231,6 +232,7 @@ public class Village {
 	public Villager getVillager(int a) {
 		return villagers.get(a);
 	}
+
 	public int getNumberOf(VillagerRole a){
 		int count =0;
 		for(Villager villager : villagers){

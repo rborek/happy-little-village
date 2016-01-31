@@ -64,8 +64,8 @@ public class VillageInformation extends GameObject {
 		batch.draw(texture, position.x, position.y);
 		resourceFont.draw(batch, "" + food, position.x + 80, position.y + 90);
 		batch.draw(foodTexture, position.x + 20, 65);
-		resourceFont.draw(batch, "" + water, position.x + 180, position.y + 90);
-		batch.draw(waterTexture, position.x + 120, 70);
+		resourceFont.draw(batch, "" + water, position.x + 190, position.y + 90);
+		batch.draw(waterTexture, position.x + 140, 70);
 		statusFont.draw(batch, "Population: " + pop, position.x + 240, position.y + 120);
 		statusFont.draw(batch, "Hours: " + hour, position.x + 240, 80);
 		statusFont.draw(batch, "Weeks elapsed: " + week, position.x + 400, 120);
