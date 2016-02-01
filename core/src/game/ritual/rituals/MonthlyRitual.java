@@ -38,7 +38,7 @@ public class MonthlyRitual extends Ritual {
     public GemColour[] getColours() {
         return gemCombination;
     }
-
+    
     private void generateRandom(int numGems) {
         gemCombination = new GemColour[numGems];
         Random random = new Random();

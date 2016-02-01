@@ -12,35 +12,42 @@ public class GodMessage extends MessageBox {
 	private int timesPerformed;
 	private int timesToDo;
 	private String message;
+
 	protected GodMessage(Texture texture, float xPos, float yPos) {
 		super(texture, xPos, yPos);
 		// TODO Auto-generated constructor stub
 	}
+
 	protected GodMessage(GemBag gemBag, Village village, GameHandler gameHandler) {
 		super("", gameHandler);
 		this.gemBag = gemBag;
 		this.village = village;
-		title = " Gem Message";
+		title = " God Message";
 	}
-	public void checkRitual(){
-		if(village.getMonthlyRitual().isComplete()){
-			text = " You have completed monthly ritual of this month";
-		}
-		else{
-			text = " Complete monthly ritual before the time runs out";
+
+	public boolean checkRitual() {
+		if (village.getMonthlyRitual().isComplete()) {
+			message = " You have completed monthly ritual of this month";
+			return true;
+		} else {
+			message = " Complete monthly ritual before the time runs out";
 			timesToDo = village.getMonthlyRitual().getTimesToDo();
 			timesPerformed = village.getMonthlyRitual().getTimesPerformed();
-
+			return false;
 		}
 	}
+	public void stateRitual() {
+		message += " \n                    is the ritual";
+		village.getMonthlyRitual().getColours();
+
+	}
+
 	@Override
 	public void render(Batch batch) {
 		super.render(batch);
-		font.draw(batch,text, position.x + 70, position.y + 250);
-		font.draw(batch,"weeks left to complete monthly ritual:" + timesToDo, position.x + 70, position.y + 275);
-		
+		font.draw(batch,message, position.x + 70, position.y + 275);
+		font.draw(batch, "weeks left to complete monthly ritual:" + timesToDo, position.x + 70, position.y + 275);
 
 	}
-	
 
 }

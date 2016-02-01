@@ -57,7 +57,11 @@ public class GameHandler {
 
 		} else if (messageBox instanceof GemSummary) {
 			messageBox = new GodMessage(gemBag, village, this);
-			((GodMessage) messageBox).checkRitual();
+			if(((GodMessage) messageBox).checkRitual()){
+				ritualAltar.removeRitual(village.getMonthlyRitual());
+				village.newMonthlyRitual();
+				((GodMessage)messageBox).stateRitual();
+			}
 			System.out.println("printed");
 
 		} else if (messageBox instanceof MessageBox) {
