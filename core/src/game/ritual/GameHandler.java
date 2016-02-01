@@ -57,7 +57,6 @@ public class GameHandler {
 		inputHandler.disable();
 	}
 
-<<<<<<< HEAD
 		public void unpause() {
 			if (messageBox instanceof WeekSummary) {
 				messageBox = new GemSummary(gemBag, village, this);
@@ -72,22 +71,6 @@ public class GameHandler {
 				}
 				((GodMessage)messageBox).stateRitual();
 				System.out.println("printed");
-=======
-	public void unpause() {
-		if (messageBox instanceof WeekSummary) {
-			messageBox = new GemSummary(gemBag, village, this);
-			((GemSummary) messageBox).gemMined();
-
-		} else if (messageBox instanceof GemSummary) {
-			messageBox = new GodMessage(gemBag, village, this);
-			if (((GodMessage) messageBox).checkRitual()) {
-				ritualAltar.removeRitual(village.getMonthlyRitual());
-				village.newMonthlyRitual();
-				((GodMessage) messageBox).stateRitual();
-			}
-			System.out.println("printed");
->>>>>>> 4169d4432369c1cf0c646cb91665e03657a169bd
-
 			} else if (messageBox instanceof MessageBox) {
 				messageBox = new WeekSummary(village, this);
 				paused = false;
