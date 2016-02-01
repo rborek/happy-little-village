@@ -1,7 +1,8 @@
-package game.ritual;
+package game.ritual.messages;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+import game.ritual.GameHandler;
 import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
 import game.ritual.messages.MessageBox;
@@ -16,12 +17,12 @@ public class GemSummary extends MessageBox {
 	private int GREEN;
 	private int YELLOW;
 
-	protected GemSummary(GameHandler gameHandler) {
+	public GemSummary(GameHandler gameHandler) {
 		super(null, gameHandler);
 		// TODO Auto-generated constructor stub
 	}
 
-	protected GemSummary(GemBag gemBag, Village village, GameHandler gameHandler) {
+	public GemSummary(GemBag gemBag, Village village, GameHandler gameHandler) {
 		super("", gameHandler);
 		this.gemBag = gemBag;
 		this.village = village;

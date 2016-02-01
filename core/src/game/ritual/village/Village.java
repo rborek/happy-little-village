@@ -156,6 +156,7 @@ public class Village {
 	private void timePass(float delta) {
 		hoursLeft -= (float) (delta * 1.4);
 		if (hoursLeft <= 0) {
+			villagerRemoved = 0;
 			weeksLeft -= 1;
 			week += 1;
 			hoursLeft = MAX_HOURS;
@@ -239,6 +240,7 @@ public class Village {
 			effects.add(new VillagerDeathEffect(villagers.get(randomInt)));
 			deadVillagers.add(villagers.get(randomInt));
 			villagers.remove(randomInt);
+			villagerRemoved++;
 			return true;
 		}
 		return false;
@@ -257,6 +259,10 @@ public class Village {
 		}
 		return count;
 
+	}
+
+	public int getVillagerRemoved() {
+		return villagerRemoved;
 	}
 
 	public int getSize() {

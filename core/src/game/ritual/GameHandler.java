@@ -3,15 +3,14 @@ package game.ritual;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
-import game.ritual.messages.GameOver;
-import game.ritual.messages.GodMessage;
-import game.ritual.messages.MessageBox;
-import game.ritual.messages.WeekSummary;
+import game.ritual.messages.*;
 import game.ritual.rituals.RitualAltar;
 import game.ritual.input.InputHandler;
 import game.ritual.rituals.Ritual;
+import game.ritual.rituals.RitualBook;
 import game.ritual.village.Village;
 import game.ritual.village.VillagerRole;
 
@@ -24,16 +23,22 @@ public class GameHandler {
 	private Gem gem;
 	private Texture scroll = new Texture("scroll/scroll.png");
 	private boolean paused;
+	private BookIcon miniBook = new BookIcon(this);
 	private MessageBox messageBox;
 	private GemSummary gemSummary;
+	private boolean bookOpen;
 	private boolean intro = true;
 	private GodMessage godMessage;
 	private boolean GameOver = false;
-	private game.ritual.messages.GameOver gameOverMessage;
+
+
+	private RitualBook ritualBook = new RitualBook(70, 160);
+	private GameOver gameOverMessage;
 
 	public GameHandler() {
 		init();
 	}
+
 
 	public void init() {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
@@ -46,7 +51,7 @@ public class GameHandler {
 		messageBox = new MessageBox("  Welcome to your happy little village!\n Efficiently maintain your villagers'\n happiness"
 				+ " by giving them food and\n water! Combine gems from your bag \n to gain or sacrifice different \n resources and villagers! You can\n combine"
 				+ "a maximum of 4 gems\n of any kind! ", this);
-		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox);
+		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox, ritualBook, miniBook);
 		gameOverMessage = new GameOver(this);
 		Ritual.setVillage(village);
 		ritualAltar.gainRitual(village.getMonthlyRitual());
@@ -106,7 +111,6 @@ public class GameHandler {
 			}
 			village.update(delta);
 			ritualAltar.update(delta);
-
 		}
 
 	}
@@ -114,6 +118,15 @@ public class GameHandler {
 	public Village getVillage() {
 		return village;
 	}
+
+	public void openBook() {
+		bookOpen = true;
+	}
+
+	public void closeBook() {
+		bookOpen = false;
+	}
+
 
 	// rendering goes here
 	public void render(Batch batch) {
@@ -123,7 +136,11 @@ public class GameHandler {
 			batch.draw(scroll, 1280 - 550, -12);
 			ritualAltar.render(batch);
 			gemBag.render(batch);
+			miniBook.render(batch);
 			inputHandler.renderSelectedGem(batch);
+			if (bookOpen) {
+				ritualBook.render(batch);
+			}
 			if (paused) {
 				messageBox.render(batch);
 			}

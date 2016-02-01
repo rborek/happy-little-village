@@ -44,7 +44,7 @@ public class WeekSummary extends MessageBox {
 		
 		font.draw(batch, "Population:"+ village.getPop(), position.x+100, position.y+200);
 		font.draw(batch, "Villagers Created:"+ village.getVillagerAdded(), position.x+100, position.y+175);
-		font.draw(batch, "Villagers Lost:"+ (village.getPop()-village.getVillagerAdded()), position.x+100, position.y+150);
+		font.draw(batch, "Villagers Lost:"+ (village.getVillagerRemoved()), position.x+100, position.y+150);
 
 	}
 	

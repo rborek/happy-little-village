@@ -5,24 +5,31 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+import com.badlogic.gdx.math.Rectangle;
+import game.ritual.BookIcon;
 import game.ritual.messages.MessageBox;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
 import game.ritual.rituals.RitualAltar;
+import game.ritual.rituals.RitualBook;
 
 public class InputHandler implements InputProcessor {
 	private RitualAltar ritualAltar;
 	private GemBag gemBag;
 	private Gem selectedGem;
+	private RitualBook ritualBook;
 	private MessageBox messageBox;
+	private BookIcon miniBook;
 	boolean enabled = true;
 
 
-	public InputHandler(RitualAltar ritualAltar, GemBag gemBag, MessageBox messageBox) {
+	public InputHandler(RitualAltar ritualAltar, GemBag gemBag, MessageBox messageBox, RitualBook ritualBook, BookIcon miniBook) {
 		this.ritualAltar = ritualAltar;
 		this.gemBag = gemBag;
 		this.messageBox = messageBox;
+		this.ritualBook = ritualBook;
+		this.miniBook = miniBook;
 	}
 	public void renderSelectedGem(Batch batch) {
 		if (selectedGem != null) {
@@ -30,6 +37,10 @@ public class InputHandler implements InputProcessor {
 			float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 			selectedGem.render(batch, mouseX - 32, mouseY - 32);
 		}
+	}
+
+	private void tryToOpenBook(float mouseX, float mouseY) {
+		miniBook.open(mouseX, mouseY);
 	}
 
 	public void enable() {
@@ -91,6 +102,10 @@ public class InputHandler implements InputProcessor {
 		return true;
 	}
 
+	public void tryToTurnPages(float x, float y) {
+		ritualBook.click(x, y);
+	}
+
 	@Override
 	public boolean keyUp(int keycode) {
 		return false;
@@ -107,6 +122,8 @@ public class InputHandler implements InputProcessor {
 		float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 		System.out.println("Mouse position: " + mouseX + ", " + mouseY);
 		if (enabled) {
+			tryToOpenBook(mouseX, mouseY);
+			tryToTurnPages(mouseX, mouseY);
 			removeFromSlots(mouseX, mouseY);
 			pickUpGem(mouseX, mouseY);
 		} else {
