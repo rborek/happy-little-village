@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Village {
-	private static final int MAX_HOURS = 168;
+	private static final int MAX_HOURS = 1;
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -24,17 +24,19 @@ public class Village {
 	private VillageInformation info;
 	private float hoursLeft;
 	private float weeksLeft;
-	private float week;
+	private int week;
 	private boolean isNextWeek = false;
 	private int villagerAdded = 0;
-	private int villagerRemived =0;
-	
-	public MonthlyRitual getMonthlyRitual(){
+	private int villagerRemived = 0;
+
+	public MonthlyRitual getMonthlyRitual() {
 		return monthlyRitual;
 	}
-	public void checkRitual(){
 
+	public void newMonthlyRitual() {
+		monthlyRitual = new MonthlyRitual(4, 2 + week / 2, this);
 	}
+
 	public Village() {
 		this.villagers = new ArrayList<Villager>();
 		info = new VillageInformation(new Texture("villagers/info_menu.png"), 60, 10);
@@ -48,7 +50,7 @@ public class Village {
 	public void setWeeksLeft(int weeks) {
 		weeksLeft = weeks;
 	}
-	
+
 	public boolean convertCitizen(VillagerRole role) {
 		for (int i = 0; i < villagers.size(); i++) {
 			System.out.println(villagers.get(i).getRole());
@@ -106,7 +108,7 @@ public class Village {
 		addFood(food);
 		gatheredFood = food;
 	}
-	
+
 	public void gatheredWater() {
 		float water = 0;
 		for (Villager villager : villagers) {
@@ -242,15 +244,16 @@ public class Village {
 	public Villager getVillager(int a) {
 		return villagers.get(a);
 	}
-	public int getNumberOf(VillagerRole a){
-		int count =0;
-		for(Villager villager : villagers){
-			if(villager.getRole().equals(a)){
+
+	public int getNumberOf(VillagerRole a) {
+		int count = 0;
+		for (Villager villager : villagers) {
+			if (villager.getRole().equals(a)) {
 				count++;
 			}
 		}
 		return count;
-		
+
 	}
 
 	public int getSize() {

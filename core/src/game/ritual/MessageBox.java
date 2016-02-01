@@ -79,8 +79,6 @@ public class MessageBox extends GameObject {
 
     @Override
     public void render(Batch batch) {
-
-
         batch.draw(texture, position.x, position.y);
         batch.draw(continueButton, continueX, continueY);
         font.draw(batch, clickToContinue, continueX + 28, continueY + 27);
