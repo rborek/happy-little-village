@@ -78,8 +78,17 @@ public class GameHandler {
 
 	// game logic goes here
 	public void update(float delta) {
-		if (village.getSize() <= 0 || village.getFood() <=0 || village.getWater() <=0 ||(!village.getMonthlyRitual().isComplete() && village.getWeeksleft()<0) ) {
-			
+		if (village.getSize() <= 0) {
+			gameOverMessage.setReason(0);
+			GameOver = true;	
+		} else if (village.getFood() <= -50) {
+			gameOverMessage.setReason(1);
+			GameOver = true;
+		} else if (village.getWater() <= -50) {
+			gameOverMessage.setReason(2);
+			GameOver = true;
+		} else if ((!village.getMonthlyRitual().isComplete() && village.getWeeksleft() < 0)) {
+			gameOverMessage.setReason(3);
 			GameOver = true;
 		}
 		if (!paused && GameOver == false) {
@@ -111,8 +120,7 @@ public class GameHandler {
 			if (paused) {
 				messageBox.render(batch);
 			}
-		}
-		else{
+		} else {
 			batch.draw(background, 0, 0);
 			village.render(batch);
 			batch.draw(scroll, 1280 - 550, -12);
@@ -121,6 +129,6 @@ public class GameHandler {
 			inputHandler.renderSelectedGem(batch);
 			gameOverMessage.render(batch);
 		}
-	}	
+	}
 
 }
