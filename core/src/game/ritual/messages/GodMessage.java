@@ -1,8 +1,9 @@
-package game.ritual;
+package game.ritual.messages;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+import game.ritual.GameHandler;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
@@ -17,12 +18,12 @@ public class GodMessage extends MessageBox {
 	private Texture[] gems;
 
 
-	protected GodMessage(Texture texture, float xPos, float yPos) {
+	public GodMessage(Texture texture, float xPos, float yPos) {
 		super(texture, xPos, yPos);
 		// TODO Auto-generated constructor stub
 	}
 
-	protected GodMessage(GemBag gemBag, Village village, GameHandler gameHandler) {
+	public GodMessage(GemBag gemBag, Village village, GameHandler gameHandler) {
 		super("", gameHandler);
 		this.gemBag = gemBag;
 		this.village = village;
@@ -72,7 +73,7 @@ public class GodMessage extends MessageBox {
 		}
 		int howMany = village.getMonthlyRitual().getTimesToDo() - village.getMonthlyRitual().getTimesPerformed();
 		font.draw(batch, "Number of times to complete: " + howMany, position.x + 70, position.y + 335);
-		font.draw(batch, "Weeks left to complete monthly ritual:" + timesToDo, position.x + 70, position.y + 340);
+		font.draw(batch, "Weeks left to complete monthly ritual:" + timesToDo, position.x + 70, position.y + 390);
 
 	}
 

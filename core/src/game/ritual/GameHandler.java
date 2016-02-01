@@ -5,6 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
+import game.ritual.messages.GameOver;
+import game.ritual.messages.GodMessage;
+import game.ritual.messages.MessageBox;
+import game.ritual.messages.WeekSummary;
 import game.ritual.rituals.RitualAltar;
 import game.ritual.input.InputHandler;
 import game.ritual.rituals.Ritual;
@@ -25,7 +29,7 @@ public class GameHandler {
 	private boolean intro = true;
 	private GodMessage godMessage;
 	private boolean GameOver = false;
-	private GameOver gameOverMessage;
+	private game.ritual.messages.GameOver gameOverMessage;
 
 	public GameHandler() {
 		init();

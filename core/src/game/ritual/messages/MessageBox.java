@@ -1,4 +1,4 @@
-package game.ritual;
+package game.ritual.messages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 
+import game.ritual.GameHandler;
+import game.ritual.GameObject;
 import game.ritual.village.Village;
 import game.ritual.village.VillageInformation;
 
@@ -22,7 +24,7 @@ public class MessageBox extends GameObject {
     protected float continueX;
     protected float continueY;
 
-    protected MessageBox(Texture texture, float xPos, float yPos) {
+    public MessageBox(Texture texture, float xPos, float yPos) {
         super(texture, xPos, yPos);
         font = new BitmapFont();
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
@@ -35,7 +37,7 @@ public class MessageBox extends GameObject {
     }
 
     // for the instruction
-    protected MessageBox(String instruction, GameHandler gameHandler) {
+    public MessageBox(String instruction, GameHandler gameHandler) {
         super(new Texture("scroll/Summary.png"), 70, 160);
         font = new BitmapFont();
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));

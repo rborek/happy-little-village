@@ -1,10 +1,10 @@
 package game.ritual;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
+import game.ritual.messages.MessageBox;
 import game.ritual.village.Village;
 import game.ritual.village.VillagerRole;
 

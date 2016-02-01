@@ -1,16 +1,16 @@
-package game.ritual;
+package game.ritual.messages;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 
+import game.ritual.GameHandler;
 import game.ritual.village.Village;
 
 public class WeekSummary extends MessageBox {
 	private Village village;
 	
 	
-	protected WeekSummary(Village village, GameHandler gameHandler) {
+	public WeekSummary(Village village, GameHandler gameHandler) {
 		super("", gameHandler);
 		this.village = village;
 		title = "Resource Summary";
@@ -34,13 +34,13 @@ public class WeekSummary extends MessageBox {
 	public void render( Batch batch){
 		super.render(batch);
 		//batch.draw(texture,position.x,position.y);
-		font.draw(batch, "Food Consumed:"+ village.getConsumedFood(), position.x+100, position.y+400);
-		font.draw(batch, "Food Gathered:"+ village.getGatheredFood(), position.x+100, position.y+375);		
-		font.draw(batch, "Food Total:"+ village.getFood(), position.x+100, position.y+350);
+		font.draw(batch, "Food Consumed:"+ village.getConsumedFood(), position.x+100, position.y+440);
+		font.draw(batch, "Food Gathered:"+ village.getGatheredFood(), position.x+100, position.y+400);
+		font.draw(batch, "Food Total:"+ village.getFood(), position.x+100, position.y+360);
 		
-		font.draw(batch, "Water Consumed:"+ village.getConsumedWater(), position.x+100, position.y+275);
-		font.draw(batch, "Water Gathered:"+ village.getGatheredWater(), position.x+100, position.y+300);
-		font.draw(batch, "Water Total:"+ village.getWater(), position.x+100, position.y+250);
+		font.draw(batch, "Water Consumed:"+ village.getConsumedWater(), position.x+100, position.y+320);
+		font.draw(batch, "Water Gathered:"+ village.getGatheredWater(), position.x+100, position.y+260);
+		font.draw(batch, "Water Total:"+ village.getWater(), position.x+100, position.y+220);
 		
 		font.draw(batch, "Population:"+ village.getPop(), position.x+100, position.y+200);
 		font.draw(batch, "Villagers Created:"+ village.getVillagerAdded(), position.x+100, position.y+175);

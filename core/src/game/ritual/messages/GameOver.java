@@ -1,14 +1,12 @@
-package game.ritual;
+package game.ritual.messages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import game.ritual.gems.GemBag;
-import game.ritual.village.Village;
+import game.ritual.GameHandler;
 
 public class GameOver extends MessageBox {
 	private String message;
@@ -16,7 +14,7 @@ public class GameOver extends MessageBox {
 	private BitmapFont gameOverFont;
 
 
-	protected GameOver(GameHandler gameHandler) {
+	public GameOver(GameHandler gameHandler) {
 		super("", gameHandler);
 		title = " GAME OVER ";
 		message = "";
