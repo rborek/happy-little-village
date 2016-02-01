@@ -13,8 +13,8 @@ public class RitualBook extends GameObject {
 
     public RitualBook(float xPos, float yPos) {
         super(new Texture("scroll/book1.png"), xPos, yPos);
-        leftArrow = new Rectangle(xPos + 75, yPos + 20, 70, 35);
-        rightArrow = new Rectangle(xPos + 495, yPos + 20, 70, 35);
+        leftArrow = new Rectangle(xPos + 75, yPos + 20, 70, 45);
+        rightArrow = new Rectangle(xPos + 495, yPos + 20, 70, 45);
     }
 
     public void click(float x, float y) {

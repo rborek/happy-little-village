@@ -30,18 +30,19 @@ public class GemSummary extends MessageBox {
 	}
 
 	public void gemMined() {
-		for (int i = 0; i < village.getNumberOf(VillagerRole.MINER); i++) {
-			if (gemBag.gainRandomGem().equals(GemColour.RED)) {
-				RED += 3;
+		for (int i = 0; i < village.getNumberOf(VillagerRole.MINER) * 3; i++) {
+			GemColour g = gemBag.gainRandomGem();
+			if (g.equals(GemColour.RED)) {
+				RED += 1;
 			}
-			if (gemBag.gainRandomGem().equals(GemColour.YELLOW)) {
-				YELLOW += 3;
+			if (g.equals(GemColour.YELLOW)) {
+				YELLOW += 1;
 			}
-			if (gemBag.gainRandomGem().equals(GemColour.BLUE)) {
-				BLUE += 3;
+			if (g.equals(GemColour.BLUE)) {
+				BLUE += 1;
 			}
-			if (gemBag.gainRandomGem().equals(GemColour.GREEN)) {
-				GREEN += 3;
+			if (g.equals(GemColour.GREEN)) {
+				GREEN += 1;
 			}
 		}
 	}
@@ -49,10 +50,10 @@ public class GemSummary extends MessageBox {
 	@Override
 	public void render(Batch batch) {
 		super.render(batch);
-		font.draw(batch, "The amount of mined red gem is:" + RED, position.x + 70, position.y + 250);
-		font.draw(batch, "The amount of mined blue gem is:" + YELLOW, position.x + 70, position.y + 280);
-		font.draw(batch, "The amount of mined green gem is:" + GREEN, position.x + 70, position.y + 310);
-		font.draw(batch, "The amount of mined yellow gem is:" + BLUE, position.x + 70, position.y + 340);
+		font.draw(batch, "Red gems mined \n" + RED, position.x + 190, position.y + 430);
+		font.draw(batch, "Yellow gems mined \n" + YELLOW, position.x + 190, position.y + 340);
+		font.draw(batch, "Green gems mined \n" + GREEN, position.x + 190, position.y + 250);
+		font.draw(batch, "Blue gems mined \n" + BLUE, position.x + 190, position.y + 160);
 
 	}
 

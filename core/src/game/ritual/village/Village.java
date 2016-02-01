@@ -40,8 +40,8 @@ public class Village {
 	public Village() {
 		this.villagers = new ArrayList<Villager>();
 		info = new VillageInformation(new Texture("villagers/info_menu.png"), 60, 10);
-		food = 100;
-		water = 100;
+		food = 50;
+		water = 50;
 		hoursLeft = MAX_HOURS;
 		weeksLeft = 5;
 		week = 0;

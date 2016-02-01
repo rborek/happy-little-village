@@ -30,11 +30,10 @@ public class GameHandler {
 	private boolean intro = true;
 	private GodMessage godMessage;
 	private boolean GameOver = false;
-
-
 	private RitualBook ritualBook = new RitualBook(70, 160);
 	private GameOver gameOverMessage;
-
+	private boolean win = false;
+	private WinMessage winMessage;
 	public GameHandler() {
 		init();
 	}
@@ -53,6 +52,7 @@ public class GameHandler {
 				+ "a maximum of 4 gems\n of any kind! ", this);
 		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox, ritualBook, miniBook);
 		gameOverMessage = new GameOver(this);
+		winMessage = new WinMessage(this);
 		Ritual.setVillage(village);
 		ritualAltar.gainRitual(village.getMonthlyRitual());
 		Gdx.input.setInputProcessor(inputHandler);
@@ -65,24 +65,24 @@ public class GameHandler {
 		inputHandler.disable();
 	}
 
-		public void unpause() {
-			if (messageBox instanceof WeekSummary) {
-				messageBox = new GemSummary(gemBag, village, this);
-				((GemSummary) messageBox).gemMined();
+	public void unpause() {
+		if (messageBox instanceof WeekSummary) {
+			messageBox = new GemSummary(gemBag, village, this);
+			((GemSummary) messageBox).gemMined();
 
-			} else if (messageBox instanceof GemSummary) {
-				messageBox = new GodMessage(gemBag, village, this);
-				if(((GodMessage) messageBox).checkRitual()){
-					ritualAltar.removeRitual(village.getMonthlyRitual());
-					village.newMonthlyRitual();
-					ritualAltar.gainRitual(village.getMonthlyRitual());
-				}
-				((GodMessage)messageBox).stateRitual();
-				System.out.println("printed");
-			} else if (messageBox instanceof MessageBox) {
-				messageBox = new WeekSummary(village, this);
-				paused = false;
-				inputHandler.enable();
+		} else if (messageBox instanceof GemSummary) {
+			messageBox = new GodMessage(gemBag, village, this);
+			if (((GodMessage) messageBox).checkRitual()) {
+				ritualAltar.removeRitual(village.getMonthlyRitual());
+				village.newMonthlyRitual();
+				ritualAltar.gainRitual(village.getMonthlyRitual());
+			}
+			((GodMessage) messageBox).stateRitual();
+			System.out.println("printed");
+		} else if (messageBox instanceof MessageBox) {
+			messageBox = new WeekSummary(village, this);
+			paused = false;
+			inputHandler.enable();
 
 		}
 
@@ -90,20 +90,35 @@ public class GameHandler {
 
 	// game logic goes here
 	public void update(float delta) {
-		if (village.getSize() <= 0) {
-			gameOverMessage.setReason(0);
-			GameOver = true;	
-		} else if (village.getFood() <= -50) {
-			gameOverMessage.setReason(1);
-			GameOver = true;
-		} else if (village.getWater() <= -50) {
-			gameOverMessage.setReason(2);
-			GameOver = true;
-		} else if ((!village.getMonthlyRitual().isComplete() && village.getWeeksleft() < 0)) {
-			gameOverMessage.setReason(3);
-			GameOver = true;
+		if (win == false) {
+			if (village.getSize() <= 0) {
+				gameOverMessage.setCondition(0);
+				GameOver = true;
+			} else if (village.getFood() <= 0) {
+				gameOverMessage.setCondition(1);
+				GameOver = true;
+			} else if (village.getWater() <= 0) {
+				gameOverMessage.setCondition(2);
+				GameOver = true;
+			} else if ((!village.getMonthlyRitual().isComplete() && village.getWeeksleft() < 0)) {
+				gameOverMessage.setCondition(3);
+				GameOver = true;
+			}
 		}
-		if (!paused && GameOver == false) {
+		if (GameOver == false) {
+			if (village.getSize() >= 15) {
+				winMessage.setCondition(1);
+				win = true;
+			} else if (village.getFood() >= 150) {
+				winMessage.setCondition(0);
+				win = true;
+			} else if (village.getWater() >= 150) {
+				winMessage.setCondition(2);
+				win = true;
+			}
+		}
+
+		if (!paused && GameOver == false && win == false) {
 			if (village.isNextWeek()) {
 				pause();
 				village.gatheredFood();
@@ -130,7 +145,7 @@ public class GameHandler {
 
 	// rendering goes here
 	public void render(Batch batch) {
-		if (!GameOver) {
+		if (!GameOver && !win) {
 			batch.draw(background, 0, 0);
 			village.render(batch);
 			batch.draw(scroll, 1280 - 550, -12);
@@ -144,7 +159,7 @@ public class GameHandler {
 			if (paused) {
 				messageBox.render(batch);
 			}
-		} else {
+		} else if (GameOver && !win) {
 			batch.draw(background, 0, 0);
 			village.render(batch);
 			batch.draw(scroll, 1280 - 550, -12);
@@ -152,6 +167,14 @@ public class GameHandler {
 			gemBag.render(batch);
 			inputHandler.renderSelectedGem(batch);
 			gameOverMessage.render(batch);
+		} else if (!GameOver && win){
+			batch.draw(background, 0, 0);
+			village.render(batch);
+			batch.draw(scroll, 1280 - 550, -12);
+			ritualAltar.render(batch);
+			gemBag.render(batch);
+			inputHandler.renderSelectedGem(batch);
+			winMessage.render(batch);
 		}
 	}
 

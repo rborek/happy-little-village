@@ -73,7 +73,7 @@ public class GodMessage extends MessageBox {
 		}
 		int howMany = village.getMonthlyRitual().getTimesToDo() - village.getMonthlyRitual().getTimesPerformed();
 		font.draw(batch, "Number of times to complete: " + howMany, position.x + 70, position.y + 335);
-		font.draw(batch, "Weeks left to complete monthly ritual:" + timesToDo, position.x + 70, position.y + 390);
+		font.draw(batch, "Weeks left to complete monthly ritual: " + timesToDo, position.x + 70, position.y + 390);
 
 	}
 
