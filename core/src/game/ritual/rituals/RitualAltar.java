@@ -17,6 +17,8 @@ public class RitualAltar extends GameObject {
     private Gem[] gems;
     private GemBag gemBag;
     private Rectangle[] slots;
+    private Texture[] animation = {new Texture("altar/altar2.png"), new Texture("altar/altar3.png"),
+            new Texture("altar/altar4.png"), new Texture("altar/altar3.png"), new Texture("altar/altar2.png")};
     private Texture button = new Texture("scroll/button.png");
     private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
     private static final int spacingX = 136;
@@ -24,6 +26,8 @@ public class RitualAltar extends GameObject {
     private static final int paddingX = 60;
     private static final int paddingY = 67;
     private static final int slotSize = 64;
+    private boolean animating = false;
+    private float timer = 0;
 
     public RitualAltar(GemBag gemBag, float xPos, float yPos, int rows, int cols) {
         super(new Texture("altar/altar1.png"), xPos, yPos);
@@ -77,6 +81,16 @@ public class RitualAltar extends GameObject {
 
     @Override
     public void update(float delta) {
+        if (animating) {;
+            int frame = (int) ((timer * 8) % animation.length);
+            texture = animation[frame];
+            timer += delta;
+            if (timer * 8 >= 5) {
+                animating = false;
+                timer = 0;
+                texture = new Texture("altar/altar1.png");
+            }
+        }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             useGems();
         }
@@ -114,10 +128,15 @@ public class RitualAltar extends GameObject {
         return null;
     }
 
+    public void startAnimating() {
+        animating = true;
+    }
+
     public void useGems() {
         for (Ritual ritual : rituals) {
             if (ritual.attempt(gems)) {
                 System.out.println(ritual.getID());
+                startAnimating();
                 break;
             }
         }

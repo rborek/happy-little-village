@@ -6,6 +6,9 @@ Colors: Red, green, blue, yellow                Starting amount: 5 of each colou
 | God Rituals | 
 
 
+Welcome to your happy little village! Your task is to maintain your villagers' happiness by providing food and water! Make sure to be efficient with your gems or you will be punished! 
+Combine gems inside your bag on the bottom right into the altar to gain or sacrifice various resources! Click the button to combine a maximum of 4 gems of any kind! 
+
 | Combinations  | Function |
 | ------------- | -------- |
 | (if we have time) 2Red 2Blue | Increased happiness by a flat 25 of total bar |
