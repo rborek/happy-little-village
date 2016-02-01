@@ -28,6 +28,7 @@ public class GodMessage extends MessageBox {
 	public boolean checkRitual() {
 		if (village.getMonthlyRitual().isComplete()) {
 			message = " You have completed monthly ritual of this month";
+			village.setWeeksLeft(4);
 			return true;
 		} else {
 			message = " Complete monthly ritual before the time runs out";
@@ -36,6 +37,7 @@ public class GodMessage extends MessageBox {
 			return false;
 		}
 	}
+
 	public void stateRitual() {
 		message += " \n                    is the ritual";
 		village.getMonthlyRitual().getColours();
@@ -45,7 +47,7 @@ public class GodMessage extends MessageBox {
 	@Override
 	public void render(Batch batch) {
 		super.render(batch);
-		font.draw(batch,message, position.x + 70, position.y + 275);
+		font.draw(batch, message, position.x + 70, position.y + 275);
 		font.draw(batch, "weeks left to complete monthly ritual:" + timesToDo, position.x + 70, position.y + 275);
 
 	}

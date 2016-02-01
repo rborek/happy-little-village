@@ -24,6 +24,8 @@ public class GameHandler {
 	private GemSummary gemSummary;
 	private boolean intro = true;
 	private GodMessage godMessage;
+	private boolean GameOver = false;
+	private GameOver gameOverMessage;
 
 	public GameHandler() {
 		init();
@@ -39,6 +41,7 @@ public class GameHandler {
 		gemSummary = new GemSummary(this);
 		messageBox = new MessageBox("This is the game's Instruction:\n" + "Just kidding\n", this);
 		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox);
+		gameOverMessage = new GameOver(this);
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
 		pause();
@@ -57,10 +60,10 @@ public class GameHandler {
 
 		} else if (messageBox instanceof GemSummary) {
 			messageBox = new GodMessage(gemBag, village, this);
-			if(((GodMessage) messageBox).checkRitual()){
+			if (((GodMessage) messageBox).checkRitual()) {
 				ritualAltar.removeRitual(village.getMonthlyRitual());
 				village.newMonthlyRitual();
-				((GodMessage)messageBox).stateRitual();
+				((GodMessage) messageBox).stateRitual();
 			}
 			System.out.println("printed");
 
@@ -75,14 +78,17 @@ public class GameHandler {
 
 	// game logic goes here
 	public void update(float delta) {
-		if (!paused) {
+		if (village.getSize() <= 0 || village.getFood() <=0 || village.getWater() <=0 ||(!village.getMonthlyRitual().isComplete() && village.getWeeksleft()<0) ) {
+			
+			GameOver = true;
+		}
+		if (!paused && GameOver == false) {
 			if (village.isNextWeek()) {
 				pause();
 				village.gatheredFood();
 				village.gatheredWater();
 			}
 			village.update(delta);
-
 		}
 
 	}
@@ -93,16 +99,26 @@ public class GameHandler {
 
 	// rendering goes here
 	public void render(Batch batch) {
-		batch.draw(background, 0, 0);
-		village.render(batch);
-		batch.draw(scroll, 1280 - 550, -12);
-		ritualAltar.render(batch);
-		gemBag.render(batch);
-		inputHandler.renderSelectedGem(batch);
-		if (paused) {
-			messageBox.render(batch);
+		if (!GameOver) {
+			batch.draw(background, 0, 0);
+			village.render(batch);
+			batch.draw(scroll, 1280 - 550, -12);
+			ritualAltar.render(batch);
+			gemBag.render(batch);
+			inputHandler.renderSelectedGem(batch);
+			if (paused) {
+				messageBox.render(batch);
+			}
 		}
-
-	}
+		else{
+			batch.draw(background, 0, 0);
+			village.render(batch);
+			batch.draw(scroll, 1280 - 550, -12);
+			ritualAltar.render(batch);
+			gemBag.render(batch);
+			inputHandler.renderSelectedGem(batch);
+			gameOverMessage.render(batch);
+		}
+	}	
 
 }
