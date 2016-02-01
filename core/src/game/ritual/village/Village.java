@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Village {
-	private static final int MAX_HOURS = 20;
+	private static final int MAX_HOURS = 15;
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();

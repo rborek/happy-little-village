@@ -34,17 +34,17 @@ public class WeekSummary extends MessageBox {
 	public void render( Batch batch){
 		super.render(batch);
 		//batch.draw(texture,position.x,position.y);
-		font.draw(batch, "Food Consumed:"+ village.getConsumedFood(), position.x+100, position.y+440);
-		font.draw(batch, "Food Gathered:"+ village.getGatheredFood(), position.x+100, position.y+400);
-		font.draw(batch, "Food Total:"+ village.getFood(), position.x+100, position.y+360);
+		font.draw(batch, "Food Consumed: "+ village.getConsumedFood(), position.x+200, position.y+430);
+		font.draw(batch, "Food Gathered: "+ village.getGatheredFood(), position.x+200, position.y+390);
+		font.draw(batch, "Food Total: "+ village.getFood(), position.x+200, position.y+350);
 		
-		font.draw(batch, "Water Consumed:"+ village.getConsumedWater(), position.x+100, position.y+320);
-		font.draw(batch, "Water Gathered:"+ village.getGatheredWater(), position.x+100, position.y+260);
-		font.draw(batch, "Water Total:"+ village.getWater(), position.x+100, position.y+220);
+		font.draw(batch, "Water Consumed: "+ village.getConsumedWater(), position.x+200, position.y+310);
+		font.draw(batch, "Water Gathered: "+ village.getGatheredWater(), position.x+200, position.y+270);
+		font.draw(batch, "Water Total: "+ village.getWater(), position.x+200, position.y+230);
 		
-		font.draw(batch, "Population:"+ village.getPop(), position.x+100, position.y+200);
-		font.draw(batch, "Villagers Created:"+ village.getVillagerAdded(), position.x+100, position.y+175);
-		font.draw(batch, "Villagers Lost:"+ (village.getPop()-village.getVillagerAdded()), position.x+100, position.y+150);
+		font.draw(batch, "Population: "+ village.getPop(), position.x+200, position.y+190);
+		font.draw(batch, "Villagers Created: "+ village.getVillagerAdded(), position.x+200, position.y+150);
+		font.draw(batch, "Villagers Lost: "+ (village.getPop()-village.getVillagerAdded()), position.x+200, position.y+110);
 
 	}
 	
