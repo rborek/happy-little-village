@@ -37,7 +37,10 @@ public class GameHandler {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
 		gemSummary = new GemSummary(this);
-		messageBox = new MessageBox("This is the game's Instruction:\n" + "Just kidding\n", this);
+		messageBox = new MessageBox("Welcome to your happy little village!\n Your task is to maintain your villagers' happiness\n"
+				+ " by providing food and water! Make sure to\n be efficient with your gems or you will be punished! \nCombine gems inside your bag on the bottom right into "
+				+ "the\n altar to gain or sacrifice various resources! Click the button to combine \n"
+				+ "a maximum of 4 gems of any kind! ", this);
 		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox);
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(inputHandler);
