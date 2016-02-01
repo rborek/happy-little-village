@@ -45,7 +45,7 @@ public class MessageBox extends GameObject {
         parameter.borderWidth = 1;
         font = generator.generateFont(parameter);
         this.text = instruction;
-        title = "Introduction";
+        title = "Instructions";
         this.gameHandler = gameHandler;
 
         setButtonPos();

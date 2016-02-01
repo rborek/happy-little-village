@@ -39,10 +39,13 @@ public class GameHandler {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
 		gemSummary = new GemSummary(this);
-		messageBox = new MessageBox("This is the game's Instruction:\n" + "Just kidding\n", this);
+		messageBox = new MessageBox("Welcome to your happy little village!\n Efficiently maintain your villagers'\n happiness"
+				+ " by giving them food and\n water! Combine gems from your bag to\n gain or sacrifice different resources and\n villagers! You can combine "
+				+ "a maximum of 4 gems\n of any kind! ", this);
 		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox);
 		gameOverMessage = new GameOver(this);
 		Ritual.setVillage(village);
+		ritualAltar.gainRitual(village.getMonthlyRitual());
 		Gdx.input.setInputProcessor(inputHandler);
 		pause();
 
@@ -53,24 +56,24 @@ public class GameHandler {
 		inputHandler.disable();
 	}
 
-	public void unpause() {
-		if (messageBox instanceof WeekSummary) {
-			messageBox = new GemSummary(gemBag, village, this);
-			((GemSummary) messageBox).gemMined();
+		public void unpause() {
+			if (messageBox instanceof WeekSummary) {
+				messageBox = new GemSummary(gemBag, village, this);
+				((GemSummary) messageBox).gemMined();
 
-		} else if (messageBox instanceof GemSummary) {
-			messageBox = new GodMessage(gemBag, village, this);
-			if (((GodMessage) messageBox).checkRitual()) {
-				ritualAltar.removeRitual(village.getMonthlyRitual());
-				village.newMonthlyRitual();
-				((GodMessage) messageBox).stateRitual();
-			}
-			System.out.println("printed");
-
-		} else if (messageBox instanceof MessageBox) {
-			messageBox = new WeekSummary(village, this);
-			paused = false;
-			inputHandler.enable();
+			} else if (messageBox instanceof GemSummary) {
+				messageBox = new GodMessage(gemBag, village, this);
+				if(((GodMessage) messageBox).checkRitual()){
+					ritualAltar.removeRitual(village.getMonthlyRitual());
+					village.newMonthlyRitual();
+					ritualAltar.gainRitual(village.getMonthlyRitual());
+				}
+				((GodMessage)messageBox).stateRitual();
+				System.out.println("printed");
+			} else if (messageBox instanceof MessageBox) {
+				messageBox = new WeekSummary(village, this);
+				paused = false;
+				inputHandler.enable();
 
 		}
 
