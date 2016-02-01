@@ -31,16 +31,16 @@ public class GemSummary extends MessageBox {
 	public void gemMined() {
 		for (int i = 0; i < village.getNumberOf(VillagerRole.MINER); i++) {
 			if (gemBag.gainRandomGem().equals(GemColour.RED)) {
-				RED += 5;
+				RED += 3;
 			}
 			if (gemBag.gainRandomGem().equals(GemColour.YELLOW)) {
-				YELLOW += 5;
+				YELLOW += 3;
 			}
 			if (gemBag.gainRandomGem().equals(GemColour.BLUE)) {
-				BLUE += 5;
+				BLUE += 3;
 			}
 			if (gemBag.gainRandomGem().equals(GemColour.GREEN)) {
-				GREEN += 5;
+				GREEN += 3;
 			}
 		}
 	}

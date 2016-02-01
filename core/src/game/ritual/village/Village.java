@@ -67,7 +67,18 @@ public class Village {
 		float consumeFood = 0;
 		float consumeWater = 0;
 		for (Villager villager : villagers) {
+			if (villager.getRole().equals(VillagerRole.FARMER)) {
+				consumeFood += 1.05*(villager.getRole().foodConsumption());
+				consumeWater += 1.10*(villager.getRole().waterConsumption());
+			} else if (villager.getRole().equals(VillagerRole.EXPLORER)) {
+				consumeFood += 1.15*(villager.getRole().foodConsumption()); 
+				consumeWater += 1.20*(villager.getRole().waterConsumption());
+			} else if (villager.getRole().equals(VillagerRole.MINER)) {
+				consumeFood += 1.25*(villager.getRole().foodConsumption()); 
+				consumeWater += 1.30*(villager.getRole().waterConsumption());
+			} else {
 			consumeFood += villager.getRole().foodConsumption();
+			}
 		}
 		food -= consumeFood * delta;
 		consumedFood += consumeFood * delta;
@@ -91,7 +102,7 @@ public class Village {
 		float food = 0;
 		for (Villager villager : villagers) {
 			if (villager.getRole().equals(VillagerRole.FARMER)) {
-				food += 20;
+				food += 7;
 			}
 		}
 		addFood(food);
@@ -102,7 +113,7 @@ public class Village {
 		float water = 0;
 		for (Villager villager : villagers) {
 			if (villager.getRole().equals(VillagerRole.EXPLORER)) {
-				water += 20;
+				water += 10;
 			}
 			addWater(water);
 			gatheredWater = water;
