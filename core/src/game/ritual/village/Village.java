@@ -50,6 +50,9 @@ public class Village {
 	public void setWeeksLeft(int weeks) {
 		weeksLeft = weeks;
 	}
+	public int getWeeksleft(){
+		return (int) weeksLeft;
+	}
 
 	public boolean convertCitizen(VillagerRole role) {
 		for (int i = 0; i < villagers.size(); i++) {

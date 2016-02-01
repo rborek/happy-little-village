@@ -31,7 +31,12 @@ public class GodMessage extends MessageBox {
 
 	public boolean checkRitual() {
 		if (village.getMonthlyRitual().isComplete()) {
+<<<<<<< HEAD
 			message = " You have completed monthly ritual of this month.\n";
+=======
+			message = " You have completed monthly ritual of this month";
+			village.setWeeksLeft(4);
+>>>>>>> 4169d4432369c1cf0c646cb91665e03657a169bd
 			return true;
 		} else {
 			message = " Complete the monthly ritual \n before the time runs out!";
@@ -40,6 +45,7 @@ public class GodMessage extends MessageBox {
 			return false;
 		}
 	}
+
 	public void stateRitual() {
 		System.out.println("CALLLLEED");
 		message += " \n\n              is the ritual";
@@ -56,6 +62,7 @@ public class GodMessage extends MessageBox {
 	public void render(Batch batch) {
 		super.render(batch);
 		font.draw(batch, message, position.x + 70, position.y + 275);
+<<<<<<< HEAD
 		if (gems[0] != null) {
 			batch.draw(gems[0], 200, 300);
 		}
@@ -69,6 +76,9 @@ public class GodMessage extends MessageBox {
 			batch.draw(gems[3], 240, 260);
 		}
 		//font.draw(batch, "weeks left to complete monthly ritual:" + timesToDo, position.x + 70, position.y + 275);
+=======
+		font.draw(batch, "weeks left to complete monthly ritual:" + timesToDo, position.x + 70, position.y + 275);
+>>>>>>> 4169d4432369c1cf0c646cb91665e03657a169bd
 
 	}
 
