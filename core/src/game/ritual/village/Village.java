@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Village {
-	private static final int MAX_HOURS = 168;
+	private static final int MAX_HOURS = 10;
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -27,7 +27,7 @@ public class Village {
 	private int week;
 	private boolean isNextWeek = false;
 	private int villagerAdded = 0;
-	private int villagerRemived = 0;
+	private int villagerRemoved = 0;
 
 	public MonthlyRitual getMonthlyRitual() {
 		return monthlyRitual;
@@ -43,7 +43,7 @@ public class Village {
 		food = 100;
 		water = 100;
 		hoursLeft = MAX_HOURS;
-		weeksLeft = 4;
+		weeksLeft = 5;
 		week = 0;
 	}
 

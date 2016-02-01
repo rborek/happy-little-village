@@ -45,6 +45,7 @@ public class GameHandler {
 		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox);
 		gameOverMessage = new GameOver(this);
 		Ritual.setVillage(village);
+		ritualAltar.gainRitual(village.getMonthlyRitual());
 		Gdx.input.setInputProcessor(inputHandler);
 		pause();
 
@@ -55,24 +56,24 @@ public class GameHandler {
 		inputHandler.disable();
 	}
 
-	public void unpause() {
-		if (messageBox instanceof WeekSummary) {
-			messageBox = new GemSummary(gemBag, village, this);
-			((GemSummary) messageBox).gemMined();
+		public void unpause() {
+			if (messageBox instanceof WeekSummary) {
+				messageBox = new GemSummary(gemBag, village, this);
+				((GemSummary) messageBox).gemMined();
 
-		} else if (messageBox instanceof GemSummary) {
-			messageBox = new GodMessage(gemBag, village, this);
-			if (((GodMessage) messageBox).checkRitual()) {
-				ritualAltar.removeRitual(village.getMonthlyRitual());
-				village.newMonthlyRitual();
-				((GodMessage) messageBox).stateRitual();
-			}
-			System.out.println("printed");
-
-		} else if (messageBox instanceof MessageBox) {
-			messageBox = new WeekSummary(village, this);
-			paused = false;
-			inputHandler.enable();
+			} else if (messageBox instanceof GemSummary) {
+				messageBox = new GodMessage(gemBag, village, this);
+				if(((GodMessage) messageBox).checkRitual()){
+					ritualAltar.removeRitual(village.getMonthlyRitual());
+					village.newMonthlyRitual();
+					ritualAltar.gainRitual(village.getMonthlyRitual());
+				}
+				((GodMessage)messageBox).stateRitual();
+				System.out.println("printed");
+			} else if (messageBox instanceof MessageBox) {
+				messageBox = new WeekSummary(village, this);
+				paused = false;
+				inputHandler.enable();
 
 		}
 
