@@ -70,7 +70,9 @@ public class GodMessage extends MessageBox {
 		if (gems[3] != null) {
 			batch.draw(gems[3], 240, 260);
 		}
-		font.draw(batch, "weeks left to complete monthly ritual:" + timesToDo, position.x + 70, position.y + 275);
+		int howMany = village.getMonthlyRitual().getTimesToDo() - village.getMonthlyRitual().getTimesPerformed();
+		font.draw(batch, "Number of times to complete: " + howMany, position.x + 70, position.y + 335);
+		font.draw(batch, "Weeks left to complete monthly ritual:" + timesToDo, position.x + 70, position.y + 340);
 
 	}
 

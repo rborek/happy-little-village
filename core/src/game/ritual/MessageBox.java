@@ -16,7 +16,7 @@ public class MessageBox extends GameObject {
     protected BitmapFont font;
     protected String text;
     protected String title;
-    protected Texture continueButton = new Texture("scroll/button.png");
+    protected Texture continueButton = new Texture("scroll/toContinue.png");
     protected String clickToContinue = "CONTINUE";
     protected boolean click = false;
     protected float continueX;
@@ -27,7 +27,7 @@ public class MessageBox extends GameObject {
         font = new BitmapFont();
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 36;
+        parameter.size = 72;
         parameter.borderColor = Color.BLACK;
         parameter.borderWidth = 1;
         font = generator.generateFont(parameter);
@@ -53,7 +53,7 @@ public class MessageBox extends GameObject {
 
     private void setButtonPos() {
         continueX = position.x + 250;
-        continueY = position.y + 35;
+        continueY = position.y + 45;
     }
 
     @Override
@@ -81,11 +81,11 @@ public class MessageBox extends GameObject {
     public void render(Batch batch) {
         batch.draw(texture, position.x, position.y);
         batch.draw(continueButton, continueX, continueY);
-        font.draw(batch, clickToContinue, continueX + 28, continueY + 27);
+//        font.draw(batch, clickToContinue, continueX + 28, continueY + 27);
         if (text != null) {
-            font.draw(batch, text, continueX, continueY + 300);
+            font.draw(batch, text, continueX - 180, continueY + 340);
         }
-        font.draw(batch, title, continueX, continueY + 400);
+//        font.draw(batch, title, continueX, continueY + 400);
     }
 
 }

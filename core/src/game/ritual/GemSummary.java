@@ -49,9 +49,9 @@ public class GemSummary extends MessageBox {
 	public void render(Batch batch) {
 		super.render(batch);
 		font.draw(batch, "The amount of mined red gem is:" + RED, position.x + 70, position.y + 250);
-		font.draw(batch, "The amount of mined blue gem is:" + YELLOW, position.x + 70, position.y + 275);
-		font.draw(batch, "The amount of mined green gem is:" + GREEN, position.x + 70, position.y + 300);
-		font.draw(batch, "The amount of mined yellow gem is:" + BLUE, position.x + 70, position.y + 325);
+		font.draw(batch, "The amount of mined blue gem is:" + YELLOW, position.x + 70, position.y + 280);
+		font.draw(batch, "The amount of mined green gem is:" + GREEN, position.x + 70, position.y + 310);
+		font.draw(batch, "The amount of mined yellow gem is:" + BLUE, position.x + 70, position.y + 340);
 
 	}
 

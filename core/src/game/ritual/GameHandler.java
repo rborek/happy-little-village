@@ -39,8 +39,8 @@ public class GameHandler {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
 		gemSummary = new GemSummary(this);
-		messageBox = new MessageBox("Welcome to your happy little village!\n Efficiently maintain your villagers'\n happiness"
-				+ " by giving them food and\n water! Combine gems from your bag to\n gain or sacrifice different resources and\n villagers! You can combine "
+		messageBox = new MessageBox("  Welcome to your happy little village!\n Efficiently maintain your villagers'\n happiness"
+				+ " by giving them food and\n water! Combine gems from your bag \n to gain or sacrifice different \n resources and villagers! You can\n combine"
 				+ "a maximum of 4 gems\n of any kind! ", this);
 		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox);
 		gameOverMessage = new GameOver(this);
