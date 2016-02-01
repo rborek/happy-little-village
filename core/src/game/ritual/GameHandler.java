@@ -82,6 +82,7 @@ public class GameHandler {
 				village.gatheredWater();
 			}
 			village.update(delta);
+			ritualAltar.update(delta);
 
 		}
 
