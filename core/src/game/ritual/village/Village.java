@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Village {
-	private static final int MAX_HOURS = 84;
+	private static final int MAX_HOURS = 10;
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -50,7 +50,8 @@ public class Village {
 	public void setWeeksLeft(int weeks) {
 		weeksLeft = weeks;
 	}
-	public int getWeeksleft(){
+
+	public int getWeeksleft() {
 		return (int) weeksLeft;
 	}
 
@@ -71,24 +72,26 @@ public class Village {
 		float consumeWater = 0;
 		for (Villager villager : villagers) {
 			if (villager.getRole().equals(VillagerRole.FARMER)) {
-				consumeFood += 1.05*(villager.getRole().foodConsumption());
-				consumeWater += 1.10*(villager.getRole().waterConsumption());
+				consumeFood += 1.05 * (villager.getRole().foodConsumption());
+				consumeWater += 1.10 * (villager.getRole().waterConsumption());
 			} else if (villager.getRole().equals(VillagerRole.EXPLORER)) {
-				consumeFood += 1.15*(villager.getRole().foodConsumption()); 
-				consumeWater += 1.20*(villager.getRole().waterConsumption());
+				consumeFood += 1.15 * (villager.getRole().foodConsumption());
+				consumeWater += 1.20 * (villager.getRole().waterConsumption());
 			} else if (villager.getRole().equals(VillagerRole.MINER)) {
-				consumeFood += 1.25*(villager.getRole().foodConsumption()); 
-				consumeWater += 1.30*(villager.getRole().waterConsumption());
+				consumeFood += 1.25 * (villager.getRole().foodConsumption());
+				consumeWater += 1.30 * (villager.getRole().waterConsumption());
 			} else {
-			consumeFood += villager.getRole().foodConsumption();
+				consumeFood += villager.getRole().foodConsumption();
 			}
 		}
+		consumeFood /= 2;
 		food -= consumeFood * delta;
 		consumedFood += consumeFood * delta;
 
 		for (Villager villager : villagers) {
 			consumeWater += villager.getRole().foodConsumption();
 		}
+		consumeWater /= 2;
 		water -= consumeWater * delta;
 		consumedWater += consumeWater * delta;
 	}
@@ -149,12 +152,12 @@ public class Village {
 		}
 		isNextWeek = false;
 		consume(delta);
-		info.setResources((int) food, (int) water, villagers.size(), (int) hoursLeft, (int) week, (int) weeksLeft);
+		info.setResources((int) food, (int) water, villagers.size(), (int) hoursLeft, week, (int) weeksLeft);
 		timePass(delta);
 	}
 
 	private void timePass(float delta) {
-		hoursLeft -= (float) (delta * 1.4);
+		hoursLeft -= (float) (delta * 0.2);
 		if (hoursLeft <= 0) {
 			villagerRemoved = 0;
 			weeksLeft -= 1;

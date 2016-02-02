@@ -4,14 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 
-
 public class Gem {
 	private GemColour colour;
 	private final static Texture[] gemTextures = {new Texture("gems/gem_red.png"), new Texture("gems/gem_blue.png"),
 			new Texture("gems/gem_green.png"), new Texture("gems/gem_yellow.png")};
 	private final static Texture[] smallGemTextures = {new Texture("gems/mini_gem_red.png"), new Texture("gems/mini_gem_blue.png"),
 			new Texture("gems/mini_gem_green.png"), new Texture("gems/mini_gem_yellow.png")};
-
 
 
 	public Gem(GemColour colour) {
@@ -22,7 +20,7 @@ public class Gem {
 		batch.draw(getTexture(), xPos, yPos);
 	}
 
-	public GemColour getColour(){
+	public GemColour getColour() {
 		return colour;
 	}
 
@@ -39,5 +37,4 @@ public class Gem {
 	}
 
 
-	
 }

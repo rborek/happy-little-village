@@ -11,27 +11,27 @@ public abstract class GameObject {
 	protected float width;
 	protected Texture texture;
 	SpriteBatch batch;
-	
-	protected GameObject(Texture texture, float xPos, float yPos){
+
+	protected GameObject(Texture texture, float xPos, float yPos) {
 		this.texture = texture;
 		this.position = new Vector2(xPos, yPos);
-        width = texture.getWidth();
-        height = texture.getHeight();
+		width = texture.getWidth();
+		height = texture.getHeight();
 	}
 
-	protected GameObject(Texture texture, float xPos, float yPos, int width, int height){
+	protected GameObject(Texture texture, float xPos, float yPos, int width, int height) {
 		this.texture = texture;
 		this.position = new Vector2(xPos, yPos);
 		this.width = width;
 		this.height = height;
 	}
-	
+
 	public abstract void update(float delta);
 
 	public void render(Batch batch) {
 		batch.draw(texture, position.x, position.y, width, height);
 	}
-	
+
 	public float getWidth() {
 		return width;
 	}
@@ -48,7 +48,5 @@ public abstract class GameObject {
 		return texture;
 	}
 
-	
-	
-	
+
 }

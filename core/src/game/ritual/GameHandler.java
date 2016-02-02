@@ -3,13 +3,13 @@ package game.ritual;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Rectangle;
+import game.ritual.gems.GemBook;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
-import game.ritual.messages.*;
-import game.ritual.rituals.RitualAltar;
 import game.ritual.input.InputHandler;
+import game.ritual.messages.*;
 import game.ritual.rituals.Ritual;
+import game.ritual.rituals.RitualAltar;
 import game.ritual.rituals.RitualBook;
 import game.ritual.village.Village;
 import game.ritual.village.VillagerRole;
@@ -23,7 +23,7 @@ public class GameHandler {
 	private Gem gem;
 	private Texture scroll = new Texture("scroll/scroll.png");
 	private boolean paused;
-	private BookIcon miniBook = new BookIcon(this);
+	private GemBook miniBook = new GemBook(this);
 	private MessageBox messageBox;
 	private GemSummary gemSummary;
 	private boolean bookOpen;
@@ -34,6 +34,7 @@ public class GameHandler {
 	private GameOver gameOverMessage;
 	private boolean win = false;
 	private WinMessage winMessage;
+
 	public GameHandler() {
 		init();
 	}
@@ -43,7 +44,7 @@ public class GameHandler {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
 		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, 2, 2);
 		village = new Village();
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 2; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
 		gemSummary = new GemSummary(this);
@@ -167,7 +168,7 @@ public class GameHandler {
 			gemBag.render(batch);
 			inputHandler.renderSelectedGem(batch);
 			gameOverMessage.render(batch);
-		} else if (!GameOver && win){
+		} else if (!GameOver && win) {
 			batch.draw(background, 0, 0);
 			village.render(batch);
 			batch.draw(scroll, 1280 - 550, -12);

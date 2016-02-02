@@ -4,13 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-
 import game.ritual.GameHandler;
 
 public class WinMessage extends MessageBox {
 	private String message;
 	private String[] condition;
-	public WinMessage (GameHandler gameHandler){
+
+	public WinMessage(GameHandler gameHandler) {
 		super("", gameHandler);
 		message = "";
 		condition = new String[3];
@@ -23,11 +23,13 @@ public class WinMessage extends MessageBox {
 		parameter.borderColor = Color.BLACK;
 		parameter.borderWidth = 1;
 		font = generator.generateFont(parameter);
-		
+
 	}
-	public void setCondition(int a){
+
+	public void setCondition(int a) {
 		message = condition[a];
 	}
+
 	@Override
 	public void render(Batch batch) {
 		super.render(batch);

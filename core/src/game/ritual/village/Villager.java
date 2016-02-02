@@ -1,31 +1,29 @@
 package game.ritual.village;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-
 import game.ritual.GameObject;
+
+import java.util.Random;
 
 public class Villager extends GameObject {
 	private VillagerRole role;
-	private final static Texture[][] villagerTextures = { { new Texture("villagers/citizen/citizen.png"),
+	private final static Texture[][] villagerTextures = {{new Texture("villagers/citizen/citizen.png"),
 			new Texture("villagers/citizen/citizen_left_1.png"), new Texture("villagers/citizen/citizen_left_2.png"),
-			new Texture("villagers/citizen/citizen_left_3.png"), new Texture("villagers/citizen/citizen_left_2.png") },
-			{ new Texture("villagers/miner/miner.png"), new Texture("villagers/miner/miner_left_1.png"),
+			new Texture("villagers/citizen/citizen_left_3.png"), new Texture("villagers/citizen/citizen_left_2.png")},
+			{new Texture("villagers/miner/miner.png"), new Texture("villagers/miner/miner_left_1.png"),
 					new Texture("villagers/miner/miner_left_2.png"),
 					new Texture("villagers/miner/miner_left_3.png"),
-					new Texture("villagers/miner/miner_left_2.png") },
-			{ new Texture("villagers/farmer/farmer.png"), new Texture("villagers/farmer/farmer_left_1.png"),
+					new Texture("villagers/miner/miner_left_2.png")},
+			{new Texture("villagers/farmer/farmer.png"), new Texture("villagers/farmer/farmer_left_1.png"),
 					new Texture("villagers/farmer/farmer_left_2.png"),
 					new Texture("villagers/farmer/farmer_left_3.png"),
-					new Texture("villagers/farmer/farmer_left_2.png") },
-			{ new Texture("villagers/explorer/explorer.png"), new Texture("villagers/explorer/explorer_left_1.png"),
+					new Texture("villagers/farmer/farmer_left_2.png")},
+			{new Texture("villagers/explorer/explorer.png"), new Texture("villagers/explorer/explorer_left_1.png"),
 					new Texture("villagers/explorer/explorer_left_2.png"),
 					new Texture("villagers/explorer/explorer_left_3.png"),
-					new Texture("villagers/explorer/explorer_left_2.png") } };
+					new Texture("villagers/explorer/explorer_left_2.png")}};
 	private Village village;
 	private Vector2 destination;
 	private float speed = 120; // magnitude of the villager

@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 
@@ -39,11 +38,11 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		gameHandler.update(delta);
 		float time = dayTime - gameHandler.getVillage().getHoursLeft();
-		float percentage  = (time / dayTime);
+		float percentage = (time / dayTime);
 		float skyAlpha = getSkyAlpha(percentage * 100) + 0.2f;
 		sunPos.x = percentage * 640;
 		sunPos.y = 485 + skyAlpha * 125f;
-		Gdx.gl30.glClearColor(0, 191/255f * skyAlpha, 255/255f * skyAlpha, 1);
+		Gdx.gl30.glClearColor(0, 191 / 255f * skyAlpha, 255 / 255f * skyAlpha, 1);
 		Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(sun, sunPos.x, sunPos.y);
@@ -52,7 +51,7 @@ public class GameScreen implements Screen {
 	}
 
 	private float getSkyAlpha(float x) {
-		return (float) (Math.sqrt((50f*50f)-(float)Math.pow(x-50, 2))/50f);
+		return (float) (Math.sqrt((50f * 50f) - (float) Math.pow(x - 50, 2)) / 50f);
 	}
 
 	@Override
@@ -80,7 +79,7 @@ public class GameScreen implements Screen {
 
 	}
 
-	public static ShaderProgram createDefaultShader () {
+	public static ShaderProgram createDefaultShader() {
 		String vertexShader = "#version 330 core\n"
 				+ "in vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
 				+ "in vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
@@ -113,7 +112,8 @@ public class GameScreen implements Screen {
 				+ "}";
 
 		ShaderProgram shader = new ShaderProgram(vertexShader, fragmentShader);
-		if (shader.isCompiled() == false) throw new IllegalArgumentException("Error compiling shader: " + shader.getLog());
+		if (shader.isCompiled() == false)
+			throw new IllegalArgumentException("Error compiling shader: " + shader.getLog());
 		return shader;
 	}
 }
