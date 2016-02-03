@@ -10,15 +10,17 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import game.ritual.input.InputHandler;
 
 public class GameScreen implements Screen {
-	private static final int WIDTH = 1280;
-	private static final int HEIGHT = 720;
-	private Texture sun = new Texture("scroll/sun.png");
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
+	private Texture sun = new Texture(Gdx.files.internal("scroll/sun.png"), true);
 	private Vector2 sunPos = new Vector2();
 	private RitualGame game;
 	private int dayTime;
 	private GameHandler gameHandler;
+	private InputHandler inputHandler;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport viewport;
@@ -32,7 +34,10 @@ public class GameScreen implements Screen {
 		viewport = new FitViewport(WIDTH, HEIGHT, camera);
 		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
-		gameHandler = new GameHandler();
+		inputHandler = new InputHandler(this);
+		gameHandler = new GameHandler(inputHandler);
+		inputHandler.linkTo(gameHandler);
+		Gdx.input.setInputProcessor(inputHandler);
 		dayTime = gameHandler.getVillage().getMaxHours();
 	}
 
@@ -54,6 +59,11 @@ public class GameScreen implements Screen {
 		batch.draw(sun, sunPos.x, sunPos.y);
 		gameHandler.render(batch);
 		batch.end();
+	}
+
+	public Vector2 getRealScreenPos(float mouseX, float mouseY) {
+		Vector2 pos = new Vector2(mouseX, mouseY);
+		return viewport.unproject(pos);
 	}
 
 	private float getSkyAlpha(float x) {

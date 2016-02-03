@@ -1,5 +1,6 @@
 package game.ritual.gems;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import game.ritual.GameHandler;
@@ -10,7 +11,7 @@ public class GemBook extends GameObject {
 	boolean opened = false;
 
 	public GemBook(GameHandler gameHandler) {
-		super(new Texture("scroll/small_book.png"), 675, 50);
+		super(new Texture(Gdx.files.internal("scroll/small_book.png"), true), 675, 50);
 		this.gameHandler = gameHandler;
 	}
 

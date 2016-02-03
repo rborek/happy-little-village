@@ -1,5 +1,6 @@
 package game.ritual.village;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -9,9 +10,9 @@ import java.util.Random;
 
 public class Villager extends GameObject {
 	private VillagerRole role;
-	private final static Texture[][] villagerTextures = {{new Texture("villagers/citizen/citizen.png"),
-			new Texture("villagers/citizen/citizen_left_1.png"), new Texture("villagers/citizen/citizen_left_2.png"),
-			new Texture("villagers/citizen/citizen_left_3.png"), new Texture("villagers/citizen/citizen_left_2.png")},
+	private final static Texture[][] villagerTextures = {{new Texture(Gdx.files.internal("villagers/citizen/citizen.png"), true),
+			new Texture(Gdx.files.internal("villagers/citizen/citizen_left_1.png"), true), new Texture(Gdx.files.internal("villagers/citizen/citizen_left_2.png"), true),
+			new Texture(Gdx.files.internal("villagers/citizen/citizen_left_3.png"), true), new Texture(Gdx.files.internal("villagers/citizen/citizen_left_2.png"), true)},
 			{new Texture("villagers/miner/miner.png"), new Texture("villagers/miner/miner_left_1.png"),
 					new Texture("villagers/miner/miner_left_2.png"),
 					new Texture("villagers/miner/miner_left_3.png"),

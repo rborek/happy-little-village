@@ -29,19 +29,25 @@ public class MessageBox extends GameObject {
 		parameter.size = 72;
 		parameter.borderColor = Color.BLACK;
 		parameter.borderWidth = 1;
+		parameter.genMipMaps = true;
+		parameter.magFilter = Texture.TextureFilter.MipMapLinearLinear;
+		parameter.minFilter = Texture.TextureFilter.MipMapLinearLinear;
 		font = generator.generateFont(parameter);
 		setButtonPos();
 	}
 
 	// for the instruction
 	public MessageBox(String instruction, GameHandler gameHandler) {
-		super(new Texture("scroll/Summary.png"), 70, 160);
+		super(new Texture(Gdx.files.internal("scroll/Summary.png"), true), 70, 160);
 		font = new BitmapFont();
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = 36;
 		parameter.borderColor = Color.BLACK;
 		parameter.borderWidth = 1;
+		parameter.genMipMaps = true;
+		parameter.magFilter = Texture.TextureFilter.MipMapLinearLinear;
+		parameter.minFilter = Texture.TextureFilter.MipMapLinearLinear;
 		font = generator.generateFont(parameter);
 		this.text = instruction;
 		title = "";

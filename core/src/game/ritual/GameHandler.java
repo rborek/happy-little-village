@@ -35,10 +35,31 @@ public class GameHandler {
 	private boolean win = false;
 	private WinMessage winMessage;
 
-	public GameHandler() {
-		init();
+	public RitualAltar getRitualAltar() {
+		return ritualAltar;
 	}
 
+	public GemBag getGemBag() {
+		return gemBag;
+	}
+
+	public MessageBox getMessageBox() {
+		return messageBox;
+	}
+
+	public RitualBook getRitualBook() {
+		return ritualBook;
+	}
+
+	public GemBook getMiniBook() {
+		return miniBook;
+	}
+
+
+	public GameHandler(InputHandler inputHandler) {
+		this.inputHandler = inputHandler;
+		init();
+	}
 
 	public void init() {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
@@ -51,12 +72,10 @@ public class GameHandler {
 		messageBox = new MessageBox("  Welcome to your happy little village!\n Efficiently maintain your villagers'\n happiness"
 				+ " by giving them food and\n water! Combine gems from your bag \n to gain or sacrifice different \n resources and villagers! You can\n combine"
 				+ "a maximum of 4 gems\n of any kind! ", this);
-		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox, ritualBook, miniBook);
 		gameOverMessage = new GameOver(this);
 		winMessage = new WinMessage(this);
 		Ritual.setVillage(village);
 		ritualAltar.gainRitual(village.getMonthlyRitual());
-		Gdx.input.setInputProcessor(inputHandler);
 		pause();
 
 	}

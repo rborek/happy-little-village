@@ -1,6 +1,7 @@
 package game.ritual.village;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -22,8 +23,8 @@ public class VillageInformation extends GameObject {
 	private Texture waterTexture = new Texture("scroll/water.png");
 	private Texture popTexture;
 
-	protected VillageInformation(Texture texture, float xPos, float yPos) {
-		super(texture, xPos, yPos);
+	protected VillageInformation(float xPos, float yPos) {
+		super(new Texture(Gdx.files.internal("villagers/info_menu.png"), true), xPos, yPos);
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.borderColor = Color.BLACK;

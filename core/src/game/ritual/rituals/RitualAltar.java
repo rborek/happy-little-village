@@ -16,7 +16,7 @@ public class RitualAltar extends GameObject {
 	private Gem[] gems;
 	private GemBag gemBag;
 	private Rectangle[] slots;
-	private Texture[] animation = {new Texture("altar/altar2.png"), new Texture("altar/altar3.png"),
+	private Texture[] animation = {new Texture(Gdx.files.internal("altar/altar2.png")), new Texture("altar/altar3.png"),
 			new Texture("altar/altar4.png"), new Texture("altar/altar3.png"), new Texture("altar/altar2.png")};
 	private Texture button = new Texture("scroll/button.png");
 	private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
@@ -29,7 +29,7 @@ public class RitualAltar extends GameObject {
 	private float timer = 0;
 
 	public RitualAltar(GemBag gemBag, float xPos, float yPos, int rows, int cols) {
-		super(new Texture("altar/altar1.png"), xPos, yPos);
+		super(new Texture(Gdx.files.internal("altar/altar1.png"), true), xPos, yPos);
 //        height *= rows;
 //        height += spacing * rows - 1;
 //        width *= cols;

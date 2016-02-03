@@ -16,14 +16,14 @@ public class GemBag extends GameObject {
 	private BitmapFont font;
 	private RitualAltar gemSlot;
 	private Texture[] gemTextures = Gem.getArrayOfTextures();
-	private Texture inactiveGem = new Texture("gems/gem_grey.png");
+	private Texture inactiveGem = new Texture(Gdx.files.internal("gems/gem_grey.png"), true);
 	private static final int slotSize = 64;
 	private Rectangle[] slots = new Rectangle[4];
 	private int[] gemAmounts = new int[GemColour.values().length];
 
 
 	public GemBag(float xPos, float yPos) {
-		super(new Texture("gems/gem_bag.png"), xPos, yPos);
+		super(new Texture(Gdx.files.internal("gems/gem_bag.png"), true), xPos, yPos);
 		gemAmounts = new int[GemColour.values().length];
 		for (int i = 0; i < gemAmounts.length; i++) {
 			gemAmounts[i] = 10;
@@ -40,7 +40,11 @@ public class GemBag extends GameObject {
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.borderColor = Color.BLACK;
 		parameter.borderWidth = 1;
+		parameter.genMipMaps = true;
+		parameter.magFilter = Texture.TextureFilter.MipMapLinearLinear;
+		parameter.minFilter = Texture.TextureFilter.MipMapLinearLinear;
 		font = generator.generateFont(parameter);
+		texture.setFilter(Texture.TextureFilter.MipMapLinearLinear,Texture.TextureFilter.MipMapLinearLinear);
 	}
 
 	public void add(GemColour colour) {
