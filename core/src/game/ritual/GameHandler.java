@@ -3,7 +3,6 @@ package game.ritual;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Rectangle;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
 import game.ritual.messages.*;
@@ -34,6 +33,7 @@ public class GameHandler {
 	private GameOver gameOverMessage;
 	private boolean win = false;
 	private WinMessage winMessage;
+
 	public GameHandler() {
 		init();
 	}
@@ -49,12 +49,12 @@ public class GameHandler {
 		gemSummary = new GemSummary(this);
 		messageBox = new MessageBox("  Welcome to your happy little village!\n Efficiently maintain your villagers'\n happiness"
 				+ " by giving them food and\n water! Combine gems from your bag \n to gain or sacrifice different \n resources and villagers! You can\n combine"
-				+ "a maximum of 4 gems\n of any kind! ", this);
+				+ " a maximum of 4 gems\n of any kind! ", this);
 		inputHandler = new InputHandler(ritualAltar, gemBag, messageBox, ritualBook, miniBook);
 		gameOverMessage = new GameOver(this);
 		winMessage = new WinMessage(this);
 		Ritual.setVillage(village);
-		ritualAltar.gainRitual(village.getMonthlyRitual());
+		ritualAltar.gainRitual(village.getWeeklyRitual());
 		Gdx.input.setInputProcessor(inputHandler);
 		pause();
 
@@ -73,9 +73,9 @@ public class GameHandler {
 		} else if (messageBox instanceof GemSummary) {
 			messageBox = new GodMessage(gemBag, village, this);
 			if (((GodMessage) messageBox).checkRitual()) {
-				ritualAltar.removeRitual(village.getMonthlyRitual());
+				ritualAltar.removeRitual(village.getWeeklyRitual());
 				village.newMonthlyRitual();
-				ritualAltar.gainRitual(village.getMonthlyRitual());
+				ritualAltar.gainRitual(village.getWeeklyRitual());
 			}
 			((GodMessage) messageBox).stateRitual();
 			System.out.println("printed");
@@ -100,7 +100,7 @@ public class GameHandler {
 			} else if (village.getWater() <= 0) {
 				gameOverMessage.setCondition(2);
 				GameOver = true;
-			} else if ((!village.getMonthlyRitual().isComplete() && village.getWeeksleft() < 0)) {
+			} else if ((!village.getWeeklyRitual().isComplete() && village.getWeeksleft() < 0)) {
 				gameOverMessage.setCondition(3);
 				GameOver = true;
 			}
@@ -119,7 +119,7 @@ public class GameHandler {
 		}
 
 		if (!paused && GameOver == false && win == false) {
-			if (village.isNextWeek()) {
+			if (village.isNextDay()) {
 				pause();
 				village.gatheredFood();
 				village.gatheredWater();
@@ -145,14 +145,14 @@ public class GameHandler {
 
 	// rendering goes here
 	public void render(Batch batch) {
+		batch.draw(background, 0, 0);
+		village.render(batch);
+		batch.draw(scroll, 1280 - 550, -12);
+		ritualAltar.render(batch);
+		gemBag.render(batch);
+		inputHandler.renderSelectedGem(batch);
+		miniBook.render(batch);
 		if (!GameOver && !win) {
-			batch.draw(background, 0, 0);
-			village.render(batch);
-			batch.draw(scroll, 1280 - 550, -12);
-			ritualAltar.render(batch);
-			gemBag.render(batch);
-			miniBook.render(batch);
-			inputHandler.renderSelectedGem(batch);
 			if (bookOpen) {
 				ritualBook.render(batch);
 			}
@@ -160,20 +160,8 @@ public class GameHandler {
 				messageBox.render(batch);
 			}
 		} else if (GameOver && !win) {
-			batch.draw(background, 0, 0);
-			village.render(batch);
-			batch.draw(scroll, 1280 - 550, -12);
-			ritualAltar.render(batch);
-			gemBag.render(batch);
-			inputHandler.renderSelectedGem(batch);
 			gameOverMessage.render(batch);
 		} else if (!GameOver && win){
-			batch.draw(background, 0, 0);
-			village.render(batch);
-			batch.draw(scroll, 1280 - 550, -12);
-			ritualAltar.render(batch);
-			gemBag.render(batch);
-			inputHandler.renderSelectedGem(batch);
 			winMessage.render(batch);
 		}
 	}

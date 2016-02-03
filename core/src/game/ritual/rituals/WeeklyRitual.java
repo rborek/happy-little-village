@@ -5,12 +5,12 @@ import game.ritual.village.Village;
 
 import java.util.Random;
 
-public class MonthlyRitual extends Ritual {
+public class WeeklyRitual extends Ritual {
     private Village village;
     private int timesPerformed;
     private int timesToDo;
 
-    public MonthlyRitual(int numGems, int timesToDo, Village village) {
+    public WeeklyRitual(int numGems, int timesToDo, Village village) {
         super();
         id = 1337;
         generateRandom(numGems);

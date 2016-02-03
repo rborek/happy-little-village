@@ -31,14 +31,14 @@ public class GodMessage extends MessageBox {
 	}
 
 	public boolean checkRitual() {
-		if (village.getMonthlyRitual().isComplete()) {
+		if (village.getWeeklyRitual().isComplete()) {
 			message = " You have completed monthly ritual of this month.\n";
-			village.setWeeksLeft(4);
+			village.setDaysLeft(4);
 			return true;
 		} else {
 			message = " Complete the monthly ritual \n before the time runs out!";
-			timesToDo = village.getMonthlyRitual().getTimesToDo();
-			timesPerformed = village.getMonthlyRitual().getTimesPerformed();
+			timesToDo = village.getWeeklyRitual().getTimesToDo();
+			timesPerformed = village.getWeeklyRitual().getTimesPerformed();
 			return false;
 		}
 	}
@@ -46,7 +46,7 @@ public class GodMessage extends MessageBox {
 	public void stateRitual() {
 		System.out.println("CALLLLEED");
 		message += " \n\n              is the ritual";
-		GemColour[] colours = village.getMonthlyRitual().getColours();
+		GemColour[] colours = village.getWeeklyRitual().getColours();
 		Texture[] textures = Gem.getArrayOfMiniTextures();
 		gems = new Texture[colours.length];
 		for (int i = 0; i < gems.length; i++) {
@@ -71,7 +71,7 @@ public class GodMessage extends MessageBox {
 		if (gems[3] != null) {
 			batch.draw(gems[3], 240, 260);
 		}
-		int howMany = village.getMonthlyRitual().getTimesToDo() - village.getMonthlyRitual().getTimesPerformed();
+		int howMany = village.getWeeklyRitual().getTimesToDo() - village.getWeeklyRitual().getTimesPerformed();
 		font.draw(batch, "Number of times to complete: " + howMany, position.x + 70, position.y + 335);
 		font.draw(batch, "Weeks left to complete monthly ritual: " + timesToDo, position.x + 70, position.y + 390);
 

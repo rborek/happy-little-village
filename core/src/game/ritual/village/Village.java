@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import game.ritual.rituals.MonthlyRitual;
+import game.ritual.rituals.WeeklyRitual;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,7 +14,7 @@ public class Village {
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
-	private MonthlyRitual monthlyRitual = new MonthlyRitual(4, 4, this);
+	private WeeklyRitual weeklyRitual = new WeeklyRitual(4, 4, this);
 	private float food = 0;
 	private float consumedFood = 0;
 	private float gatheredFood = 0;
@@ -23,18 +23,18 @@ public class Village {
 	private float gatheredWater = 0;
 	private VillageInformation info;
 	private float hoursLeft;
-	private float weeksLeft;
-	private int week;
-	private boolean isNextWeek = false;
+	private float daysLeft;
+	private int day;
+	private boolean isNextDay = false;
 	private int villagerAdded = 0;
 	private int villagerRemoved = 0;
 
-	public MonthlyRitual getMonthlyRitual() {
-		return monthlyRitual;
+	public WeeklyRitual getWeeklyRitual() {
+		return weeklyRitual;
 	}
 
 	public void newMonthlyRitual() {
-		monthlyRitual = new MonthlyRitual(4, 2 + week / 2, this);
+		weeklyRitual = new WeeklyRitual(4, 2 + day / 2, this);
 	}
 
 	public Village() {
@@ -43,15 +43,15 @@ public class Village {
 		food = 50;
 		water = 50;
 		hoursLeft = MAX_HOURS;
-		weeksLeft = 5;
-		week = 0;
+		daysLeft = 5;
+		day = 0;
 	}
 
-	public void setWeeksLeft(int weeks) {
-		weeksLeft = weeks;
+	public void setDaysLeft(int weeks) {
+		daysLeft = weeks;
 	}
 	public int getWeeksleft(){
-		return (int) weeksLeft;
+		return (int) daysLeft;
 	}
 
 	public boolean convertCitizen(VillagerRole role) {
@@ -147,9 +147,9 @@ public class Village {
 				i--;
 			}
 		}
-		isNextWeek = false;
+		isNextDay = false;
 		consume(delta);
-		info.setResources((int) food, (int) water, villagers.size(), (int) hoursLeft, (int) week, (int) weeksLeft);
+		info.setResources((int) food, (int) water, villagers.size(), (int) hoursLeft, (int) day, (int) daysLeft);
 		timePass(delta);
 	}
 
@@ -157,24 +157,24 @@ public class Village {
 		hoursLeft -= (float) (delta * 1.4);
 		if (hoursLeft <= 0) {
 			villagerRemoved = 0;
-			weeksLeft -= 1;
-			week += 1;
+			daysLeft -= 1;
+			day += 1;
 			hoursLeft = MAX_HOURS;
-			isNextWeek = true;
+			isNextDay = true;
 			villagerAdded = 0;
 		}
 	}
 
-	public boolean isNextWeek() {
-		return isNextWeek;
+	public boolean isNextDay() {
+		return isNextDay;
 	}
 
 	public float getHoursLeft() {
 		return hoursLeft;
 	}
 
-	public float getWeek() {
-		return week;
+	public float getDay() {
+		return day;
 	}
 
 	public void render(Batch batch) {
