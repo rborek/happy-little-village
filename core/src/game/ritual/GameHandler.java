@@ -79,7 +79,6 @@ public class GameHandler {
 				ritualAltar.gainRitual(village.getMonthlyRitual());
 			}
 			((GodMessage) messageBox).stateRitual();
-			System.out.println("printed");
 		} else if (messageBox instanceof MessageBox) {
 			messageBox = new WeekSummary(village, this);
 			paused = false;

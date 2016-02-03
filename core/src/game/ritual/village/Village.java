@@ -25,6 +25,7 @@ public class Village {
 	private float hoursLeft;
 	private float weeksLeft;
 	private int week;
+	private Random randomGenerator = new Random();
 	private boolean isNextWeek = false;
 	private int villagerAdded = 0;
 	private int villagerRemoved = 0;
@@ -57,7 +58,6 @@ public class Village {
 
 	public boolean convertCitizen(VillagerRole role) {
 		for (int i = 0; i < villagers.size(); i++) {
-			System.out.println(villagers.get(i).getRole());
 			if (villagers.get(i).getRole() == VillagerRole.CITIZEN) {
 				villagers.get(i).setRole(role);
 				effects.add(new VillagerEvolveEffect(villagers.get(i)));
@@ -222,13 +222,11 @@ public class Village {
 	}
 
 	private int randomX() {
-		Random random = new Random();
-		return random.nextInt(680) + 10;
+		return randomGenerator.nextInt(680) + 10;
 	}
 
 	private int randomY() {
-		Random random = new Random();
-		return random.nextInt(400) + 180;
+		return randomGenerator.nextInt(400) + 180;
 	}
 
 	public void addVillager(VillagerRole role) {
@@ -238,8 +236,7 @@ public class Village {
 
 	public boolean removeVillager() {
 		if (villagers.size() > 0) {
-			Random random = new Random();
-			int randomInt = random.nextInt(villagers.size());
+			int randomInt = randomGenerator.nextInt(villagers.size());
 			effects.add(new VillagerDeathEffect(villagers.get(randomInt)));
 			deadVillagers.add(villagers.get(randomInt));
 			villagers.remove(randomInt);

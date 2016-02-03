@@ -5,9 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import game.ritual.GameHandler;
 import game.ritual.GameObject;
 
-/**
- * Created by Ryan on 1/31/2016.
- */
 public class GemBook extends GameObject {
 	GameHandler gameHandler;
 	boolean opened = false;
@@ -17,7 +14,7 @@ public class GemBook extends GameObject {
 		this.gameHandler = gameHandler;
 	}
 
-	public void open(float x, float y) {
+	public void toggle(float x, float y) {
 		Rectangle r = new Rectangle(position.x, position.y, width, height);
 		if (r.contains(x, y)) {
 			if (!opened) {

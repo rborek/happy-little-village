@@ -134,7 +134,6 @@ public class RitualAltar extends GameObject {
 	public void useGems() {
 		for (Ritual ritual : rituals) {
 			if (ritual.attempt(gems)) {
-				System.out.println(ritual.getID());
 				startAnimating();
 				break;
 			}
@@ -159,7 +158,6 @@ public class RitualAltar extends GameObject {
 
 	public GemColour getColour(int index) {
 		if (gems[index] != null) {
-			System.out.println("not null");
 			return gems[index].getColour();
 		}
 		return null;

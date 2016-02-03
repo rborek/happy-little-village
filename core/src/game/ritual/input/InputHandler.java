@@ -39,7 +39,7 @@ public class InputHandler implements InputProcessor {
 	}
 
 	private void tryToOpenBook(float mouseX, float mouseY) {
-		miniBook.open(mouseX, mouseY);
+		miniBook.toggle(mouseX, mouseY);
 	}
 
 	public void enable() {

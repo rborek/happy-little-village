@@ -37,18 +37,15 @@ public class Villager extends GameObject {
 		this.village = village;
 		position = village.getEmptyPosition();
 		this.role = role;
-		destination = village.getEmptyPosition();
 		velocity = new Vector2(0, 0);
+		generateNewDestination();
 	}
 
 	public boolean isMovingRight() {
 		return position.x < destination.x;
 	}
 
-	private void move(float delta) {
-		int frame = (int) (walkTimer * 5 % 4) + 1;
-		texture = villagerTextures[role.ordinal()][frame];
-		walkTimer += delta;
+	private void calculateVelocity() {
 		float x = destination.x - position.x;
 		float y = destination.y - position.y;
 		float ratio = Math.abs(x / y);
@@ -57,7 +54,15 @@ public class Villager extends GameObject {
 		velocity.x = velocity.y * ratio;
 		int xDir = (int) Math.signum(x);
 		int yDir = (int) Math.signum(y);
-		position.add(velocity.x * delta * xDir, velocity.y * delta * yDir);
+		velocity.x *= xDir;
+		velocity.y *= yDir;
+	}
+
+	private void move(float delta) {
+		int frame = (int) (walkTimer * 5 % 4) + 1;
+		texture = villagerTextures[role.ordinal()][frame];
+		walkTimer += delta;
+		position.add(velocity.x * delta, velocity.y * delta);
 	}
 
 	private boolean arrive() {
@@ -76,13 +81,18 @@ public class Villager extends GameObject {
 			texture = villagerTextures[role.ordinal()][0];
 			restTimer -= delta;
 			if (restTimer <= 0) {
-				destination = village.getEmptyPosition();
+				generateNewDestination();
 				Random r = new Random();
 				restTimer = r.nextFloat() * 3 + 1;
 			}
 		} else {
 			move(delta);
 		}
+	}
+
+	public void generateNewDestination() {
+		destination = village.getEmptyPosition();
+		calculateVelocity();
 	}
 
 	public Vector2 getDestination() {

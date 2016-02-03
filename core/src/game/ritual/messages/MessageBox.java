@@ -62,7 +62,6 @@ public class MessageBox extends GameObject {
 
 	public void checkClick(float x, float y) {
 		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
-		System.out.println(continueX + ", " + continueY);
 		if (r.contains(x, y)) {
 			gameHandler.unpause();
 		}

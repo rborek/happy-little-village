@@ -44,7 +44,6 @@ public class GemBag extends GameObject {
 	}
 
 	public void add(GemColour colour) {
-		System.out.println(gemAmounts[0]);
 		gemAmounts[colour.ordinal()]++;
 	}
 
