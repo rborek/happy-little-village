@@ -140,9 +140,8 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		float mouseX = Gdx.input.getX();
-		float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-		dropGem(mouseX, mouseY);
+		Vector2 realPos = screen.getRealScreenPos(screenX, screenY);
+		dropGem(realPos.x, realPos.y);
 		return true;
 	}
 
