@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen implements Screen {
 	private static final int WIDTH = 1280;
@@ -18,13 +20,17 @@ public class GameScreen implements Screen {
 	private int dayTime;
 	private GameHandler gameHandler;
 	private SpriteBatch batch;
-	private OrthographicCamera camera = new OrthographicCamera(1280, 720);
+	private OrthographicCamera camera;
+	private Viewport viewport;
 
 	public GameScreen(RitualGame game) {
 		this.game = game;
 		batch = new SpriteBatch(1000, createDefaultShader());
-		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+		camera = new OrthographicCamera();
+		camera.position.set(WIDTH / 2f, HEIGHT / 2f, 0);
 		camera.update();
+		viewport = new FitViewport(WIDTH, HEIGHT, camera);
+		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
 		gameHandler = new GameHandler();
 		dayTime = gameHandler.getVillage().getMaxHours();
@@ -56,7 +62,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-
+		viewport.update(width, height);
 	}
 
 	@Override
