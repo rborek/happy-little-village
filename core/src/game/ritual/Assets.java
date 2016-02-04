@@ -27,14 +27,12 @@ public class Assets {
 	}
 
 	private static void loadTextures(FileHandle dir, TextureParameter param) {
-		if (dir.isDirectory()) {
-			for (FileHandle file : dir.list()) {
-				if (file.isDirectory()) {
-					loadTextures(file, param);
-				} else {
-					System.out.println("loading " + file);
-					manager.load(file.toString(), Texture.class, param);
-				}
+		for (FileHandle file : dir.list()) {
+			if (file.isDirectory()) {
+				loadTextures(file, param);
+			} else {
+				System.out.println("loading " + file);
+				manager.load(file.toString(), Texture.class, param);
 			}
 		}
 	}
