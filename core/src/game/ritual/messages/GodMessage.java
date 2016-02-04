@@ -2,7 +2,6 @@ package game.ritual.messages;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-
 import game.ritual.GameHandler;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;

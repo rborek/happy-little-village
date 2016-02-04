@@ -4,13 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
-
-import com.badlogic.gdx.math.Rectangle;
-import game.ritual.BookIcon;
-import game.ritual.messages.MessageBox;
+import game.ritual.gems.GemBook;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
 import game.ritual.gems.GemColour;
+import game.ritual.messages.MessageBox;
 import game.ritual.rituals.RitualAltar;
 import game.ritual.rituals.RitualBook;
 
@@ -20,17 +18,18 @@ public class InputHandler implements InputProcessor {
 	private Gem selectedGem;
 	private RitualBook ritualBook;
 	private MessageBox messageBox;
-	private BookIcon miniBook;
+	private GemBook miniBook;
 	boolean enabled = true;
 
 
-	public InputHandler(RitualAltar ritualAltar, GemBag gemBag, MessageBox messageBox, RitualBook ritualBook, BookIcon miniBook) {
+	public InputHandler(RitualAltar ritualAltar, GemBag gemBag, MessageBox messageBox, RitualBook ritualBook, GemBook miniBook) {
 		this.ritualAltar = ritualAltar;
 		this.gemBag = gemBag;
 		this.messageBox = messageBox;
 		this.ritualBook = ritualBook;
 		this.miniBook = miniBook;
 	}
+
 	public void renderSelectedGem(Batch batch) {
 		if (selectedGem != null) {
 			float mouseX = Gdx.input.getX();
@@ -50,13 +49,15 @@ public class InputHandler implements InputProcessor {
 	public void disable() {
 		enabled = false;
 	}
-	
+
 	public void setMessageBox(MessageBox message) {
 		this.messageBox = message;
 	}
-	private void checkContinue(float mouseX, float mouseY){
+
+	private void checkContinue(float mouseX, float mouseY) {
 		messageBox.checkClick(mouseX, mouseY);
 	}
+
 	private void pickUpGem(float mouseX, float mouseY) {
 		if (selectedGem == null) {
 			Gem potentialGem = gemBag.pickUpGem(mouseX, mouseY);
@@ -126,7 +127,7 @@ public class InputHandler implements InputProcessor {
 			removeFromSlots(mouseX, mouseY);
 			pickUpGem(mouseX, mouseY);
 		} else {
-			 checkContinue(mouseX,mouseY);
+			checkContinue(mouseX, mouseY);
 		}
 		return true;
 	}

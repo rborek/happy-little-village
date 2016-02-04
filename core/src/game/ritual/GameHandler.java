@@ -3,12 +3,13 @@ package game.ritual;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import game.ritual.gems.GemBook;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
-import game.ritual.messages.*;
-import game.ritual.rituals.RitualAltar;
 import game.ritual.input.InputHandler;
+import game.ritual.messages.*;
 import game.ritual.rituals.Ritual;
+import game.ritual.rituals.RitualAltar;
 import game.ritual.rituals.RitualBook;
 import game.ritual.village.Village;
 import game.ritual.village.VillagerRole;
@@ -22,7 +23,7 @@ public class GameHandler {
 	private Gem gem;
 	private Texture scroll = new Texture("scroll/scroll.png");
 	private boolean paused;
-	private BookIcon miniBook = new BookIcon(this);
+	private GemBook miniBook = new GemBook(this);
 	private MessageBox messageBox;
 	private GemSummary gemSummary;
 	private boolean bookOpen;
@@ -100,7 +101,7 @@ public class GameHandler {
 			} else if (village.getWater() <= 0) {
 				gameOverMessage.setCondition(2);
 				GameOver = true;
-			} else if ((!village.getWeeklyRitual().isComplete() && village.getWeeksleft() < 0)) {
+			} else if ((!village.getWeeklyRitual().isComplete() && village.getDaysLeft() < 0)) {
 				gameOverMessage.setCondition(3);
 				GameOver = true;
 			}

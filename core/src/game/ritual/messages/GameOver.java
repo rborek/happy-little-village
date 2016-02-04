@@ -3,7 +3,6 @@ package game.ritual.messages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import game.ritual.GameHandler;
@@ -30,7 +29,8 @@ public class GameOver extends MessageBox {
 		parameter.borderWidth = 1;
 		font = generator.generateFont(parameter);
 	}
-	public void setCondition( int a){
+
+	public void setCondition(int a) {
 		message = condition[a];
 	}
 

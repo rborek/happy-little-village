@@ -1,36 +1,35 @@
 package game.ritual.village;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-
 import game.ritual.GameObject;
+
+import java.util.Random;
 
 public class Villager extends GameObject {
 	private VillagerRole role;
-	private final static Texture[][] villagerTextures = { { new Texture("villagers/citizen/citizen.png"),
+	private final static Texture[][] villagerTextures = {{new Texture("villagers/citizen/citizen.png"),
 			new Texture("villagers/citizen/citizen_left_1.png"), new Texture("villagers/citizen/citizen_left_2.png"),
-			new Texture("villagers/citizen/citizen_left_3.png"), new Texture("villagers/citizen/citizen_left_2.png") },
-			{ new Texture("villagers/miner/miner.png"), new Texture("villagers/miner/miner_left_1.png"),
+			new Texture("villagers/citizen/citizen_left_3.png"), new Texture("villagers/citizen/citizen_left_2.png")},
+			{new Texture("villagers/miner/miner.png"), new Texture("villagers/miner/miner_left_1.png"),
 					new Texture("villagers/miner/miner_left_2.png"),
 					new Texture("villagers/miner/miner_left_3.png"),
-					new Texture("villagers/miner/miner_left_2.png") },
-			{ new Texture("villagers/farmer/farmer.png"), new Texture("villagers/farmer/farmer_left_1.png"),
+					new Texture("villagers/miner/miner_left_2.png")},
+			{new Texture("villagers/farmer/farmer.png"), new Texture("villagers/farmer/farmer_left_1.png"),
 					new Texture("villagers/farmer/farmer_left_2.png"),
 					new Texture("villagers/farmer/farmer_left_3.png"),
-					new Texture("villagers/farmer/farmer_left_2.png") },
-			{ new Texture("villagers/explorer/explorer.png"), new Texture("villagers/explorer/explorer_left_1.png"),
+					new Texture("villagers/farmer/farmer_left_2.png")},
+			{new Texture("villagers/explorer/explorer.png"), new Texture("villagers/explorer/explorer_left_1.png"),
 					new Texture("villagers/explorer/explorer_left_2.png"),
 					new Texture("villagers/explorer/explorer_left_3.png"),
-					new Texture("villagers/explorer/explorer_left_2.png") } };
+					new Texture("villagers/explorer/explorer_left_2.png")}};
 	private Village village;
 	private Vector2 destination;
 	private float speed = 120; // magnitude of the villager
 	private Vector2 velocity; // velocity of the villager
 	private float restTimer = 2;
+	private boolean resting = false;
 	private float walkTimer = 0;
 
 	// subtract delta from restTimer
@@ -62,7 +61,7 @@ public class Villager extends GameObject {
 		position.add(velocity.x * delta * xDir, velocity.y * delta * yDir);
 	}
 
-	private boolean arrive() {
+	private boolean arrivedAtDestination() {
 		return Math.abs(position.x - destination.x) < 10 && Math.abs(position.y - destination.y) < 10;
 	}
 
@@ -74,16 +73,20 @@ public class Villager extends GameObject {
 
 	@Override
 	public void update(float delta) {
-		if (arrive()) {
+		if (resting) {
 			texture = villagerTextures[role.ordinal()][0];
 			restTimer -= delta;
 			if (restTimer <= 0) {
 				destination = village.getEmptyPosition();
 				Random r = new Random();
 				restTimer = r.nextFloat() * 3 + 1;
+				resting = false;
 			}
 		} else {
 			move(delta);
+			if (arrivedAtDestination()) {
+				resting = true;
+			}
 		}
 	}
 
