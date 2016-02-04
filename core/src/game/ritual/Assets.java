@@ -15,7 +15,7 @@ public class Assets {
 	}
 
 	private static void loadUI(TextureParameter param) {
-		FileHandle handle = Gdx.files.internal("ui");
+		FileHandle handle = Gdx.files.internal("ui/");
 		for (FileHandle file: handle.list()) {
 			manager.load(file.toString(), Texture.class, param);
 			System.out.println("loaded " + file);
@@ -24,7 +24,7 @@ public class Assets {
 	}
 
 	private static void loadGems(TextureParameter param) {
-		FileHandle handle = Gdx.files.internal("gems");
+		FileHandle handle = Gdx.files.internal("gems/");
 		for (FileHandle file: handle.list()) {
 			manager.load(file.toString(), Texture.class, param);
 			System.out.println("loaded " + file);
@@ -33,7 +33,7 @@ public class Assets {
 	}
 
 	private static void loadVillagers(TextureParameter param) {
-		FileHandle handle = Gdx.files.internal("villagers");
+		FileHandle handle = Gdx.files.internal("villagers/");
 		for (FileHandle directory: handle.list()) {
 			for (FileHandle file : directory.list()) {
 				manager.load(file.toString(), Texture.class, param);
