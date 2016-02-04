@@ -10,7 +10,6 @@ public abstract class GameObject {
 	protected Vector2 position;
 	protected float width;
 	protected Texture texture;
-	SpriteBatch batch;
 
 	protected GameObject(Texture texture, float xPos, float yPos) {
 		this.texture = texture;

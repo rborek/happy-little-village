@@ -27,6 +27,7 @@ public class GameScreen implements Screen {
 
 	public GameScreen(RitualGame game) {
 		this.game = game;
+		Assets.load();
 		batch = new SpriteBatch(1000, createDefaultShader());
 		camera = new OrthographicCamera();
 		camera.position.set(WIDTH / 2f, HEIGHT / 2f, 0);

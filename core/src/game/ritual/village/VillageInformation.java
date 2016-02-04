@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import game.ritual.Assets;
 import game.ritual.GameObject;
 
 public class VillageInformation extends GameObject {
@@ -19,8 +20,8 @@ public class VillageInformation extends GameObject {
 	private int weeksLeft;
 	private int week;
 	// add file to constructors
-	private Texture foodTexture = new Texture("ui/food.png");
-	private Texture waterTexture = new Texture("ui/water.png");
+	private Texture foodTexture = Assets.getTexture("ui/food.png");
+	private Texture waterTexture = Assets.getTexture("ui/water.png");
 	private Texture popTexture;
 
 	protected VillageInformation(float xPos, float yPos) {
@@ -36,11 +37,11 @@ public class VillageInformation extends GameObject {
 	}
 
 	public void setResources(int food, int water, int pop, int hour, int week, int weekLeft) {
-		this.food = food;
-		this.water = water;
+		this.food = (int) Math.ceil(food);
+		this.water = (int) Math.ceil(water);
 		this.pop = pop;
-		this.hour = hour;
-		this.week = week;
+		this.hour = (int) Math.ceil(hour);
+		this.week = (int) Math.ceil(week);
 		this.weeksLeft = weekLeft;
 	}
 
@@ -70,7 +71,7 @@ public class VillageInformation extends GameObject {
 		statusFont.draw(batch, "Population: " + pop, position.x + 250, position.y + 115);
 		statusFont.draw(batch, "Hours: " + hour, position.x + 250, 80);
 		statusFont.draw(batch, "Weeks elapsed: " + week, position.x + 405, 120);
-		statusFont.draw(batch, "Weeks left: " + weeksLeft, position.x + 405, 80);
+		statusFont.draw(batch, "Days left: " + weeksLeft, position.x + 405, 80);
 	}
 
 }

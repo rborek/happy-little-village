@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Village {
-    private static final int MAX_HOURS = 12;
+    private static final int MAX_HOURS = 24;
     private ArrayList<Villager> villagers;
     private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
     private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -32,8 +32,8 @@ public class Village {
     public Village() {
         this.villagers = new ArrayList<Villager>();
         info = new VillageInformation(60, 10);
-        food = 50;
-        water = 50;
+        food = 300;
+        water = 300;
         hoursLeft = MAX_HOURS;
         daysLeft = 5;
         day = 0;
@@ -56,11 +56,11 @@ public class Village {
     }
 
     public boolean convertCitizen(VillagerRole role) {
-        for (int i = 0; i < villagers.size(); i++) {
-            System.out.println(villagers.get(i).getRole());
-            if (villagers.get(i).getRole() == VillagerRole.CITIZEN) {
-                villagers.get(i).setRole(role);
-                effects.add(new VillagerEvolveEffect(villagers.get(i)));
+        for (Villager villager : villagers) {
+            System.out.println(villager.getRole());
+            if (villager.getRole() == VillagerRole.CITIZEN) {
+                villager.setRole(role);
+                effects.add(new VillagerEvolveEffect(villager));
                 return true;
             }
         }
@@ -150,7 +150,7 @@ public class Village {
         }
         isNextDay = false;
         consume(delta);
-        info.setResources((int) food, (int) water, villagers.size(), (int) hoursLeft, day, (int) daysLeft);
+        info.setResources((int) food, (int) water, villagers.size(), (int) Math.ceil(hoursLeft), day, (int) daysLeft);
         timePass(delta);
     }
 
@@ -283,11 +283,11 @@ public class Village {
     }
 
     public int getFood() {
-        return (int) food;
+        return (int) Math.ceil(food);
     }
 
     public int getWater() {
-        return (int) water;
+        return (int) Math.ceil(water);
     }
 
     public int getGatheredFood() {
