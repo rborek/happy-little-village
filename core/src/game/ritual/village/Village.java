@@ -31,7 +31,7 @@ public class Village {
 
     public Village() {
         this.villagers = new ArrayList<Villager>();
-        info = new VillageInformation(new Texture("villagers/info_menu.png"), 60, 10);
+        info = new VillageInformation(60, 10);
         food = 50;
         water = 50;
         hoursLeft = MAX_HOURS;

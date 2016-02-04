@@ -15,7 +15,7 @@ public class MessageBox extends GameObject {
 	protected BitmapFont font;
 	protected String text;
 	protected String title;
-	protected Texture continueButton = new Texture("scroll/toContinue.png");
+	protected Texture continueButton = new Texture("ui/continue_button.png");
 	protected String clickToContinue = "CONTINUE";
 	protected boolean click = false;
 	protected float continueX;
@@ -29,19 +29,25 @@ public class MessageBox extends GameObject {
 		parameter.size = 72;
 		parameter.borderColor = Color.BLACK;
 		parameter.borderWidth = 1;
+		parameter.genMipMaps = true;
+		parameter.magFilter = Texture.TextureFilter.MipMapLinearLinear;
+		parameter.minFilter = Texture.TextureFilter.MipMapLinearLinear;
 		font = generator.generateFont(parameter);
 		setButtonPos();
 	}
 
 	// for the instruction
 	public MessageBox(String instruction, GameHandler gameHandler) {
-		super(new Texture("scroll/Summary.png"), 70, 160);
+		super(new Texture(Gdx.files.internal("ui/parchment.png"), true), 70, 160);
 		font = new BitmapFont();
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = 36;
 		parameter.borderColor = Color.BLACK;
 		parameter.borderWidth = 1;
+		parameter.genMipMaps = true;
+		parameter.magFilter = Texture.TextureFilter.MipMapLinearLinear;
+		parameter.minFilter = Texture.TextureFilter.MipMapLinearLinear;
 		font = generator.generateFont(parameter);
 		this.text = instruction;
 		title = "";
@@ -62,7 +68,6 @@ public class MessageBox extends GameObject {
 
 	public void checkClick(float x, float y) {
 		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
-		System.out.println(continueX + ", " + continueY);
 		if (r.contains(x, y)) {
 			gameHandler.unpause();
 		}

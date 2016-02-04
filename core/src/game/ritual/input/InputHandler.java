@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
+import game.ritual.GameHandler;
+import game.ritual.GameScreen;
 import game.ritual.gems.GemBook;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
@@ -13,6 +16,7 @@ import game.ritual.rituals.RitualAltar;
 import game.ritual.rituals.RitualBook;
 
 public class InputHandler implements InputProcessor {
+	private GameScreen screen;
 	private RitualAltar ritualAltar;
 	private GemBag gemBag;
 	private Gem selectedGem;
@@ -22,24 +26,27 @@ public class InputHandler implements InputProcessor {
 	boolean enabled = true;
 
 
-	public InputHandler(RitualAltar ritualAltar, GemBag gemBag, MessageBox messageBox, RitualBook ritualBook, GemBook miniBook) {
-		this.ritualAltar = ritualAltar;
-		this.gemBag = gemBag;
-		this.messageBox = messageBox;
-		this.ritualBook = ritualBook;
-		this.miniBook = miniBook;
+	public InputHandler(GameScreen screen) {
+		this.screen = screen;
+	}
+
+	public void linkTo(GameHandler gameHandler) {
+		this.ritualAltar = gameHandler.getRitualAltar();
+		this.gemBag = gameHandler.getGemBag();
+		this.messageBox = gameHandler.getMessageBox();
+		this.ritualBook = gameHandler.getRitualBook();
+		this.miniBook = gameHandler.getMiniBook();
 	}
 
 	public void renderSelectedGem(Batch batch) {
 		if (selectedGem != null) {
-			float mouseX = Gdx.input.getX();
-			float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-			selectedGem.render(batch, mouseX - 32, mouseY - 32);
+			Vector2 realPos = screen.getRealScreenPos(Gdx.input.getX(), Gdx.input.getY());
+			selectedGem.render(batch, realPos.x - 32, realPos.y - 32);
 		}
 	}
 
 	private void tryToOpenBook(float mouseX, float mouseY) {
-		miniBook.open(mouseX, mouseY);
+		miniBook.toggle(mouseX, mouseY);
 	}
 
 	public void enable() {
@@ -119,24 +126,22 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		float mouseX = Gdx.input.getX();
-		float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+		Vector2 realPos = screen.getRealScreenPos(screenX, screenY);
 		if (enabled) {
-			tryToOpenBook(mouseX, mouseY);
-			tryToTurnPages(mouseX, mouseY);
-			removeFromSlots(mouseX, mouseY);
-			pickUpGem(mouseX, mouseY);
+			tryToOpenBook(realPos.x, realPos.y);
+			tryToTurnPages(realPos.x, realPos.y);
+			removeFromSlots(realPos.x, realPos.y);
+			pickUpGem(realPos.x, realPos.y);
 		} else {
-			checkContinue(mouseX, mouseY);
+			checkContinue(realPos.x, realPos.y);
 		}
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		float mouseX = Gdx.input.getX();
-		float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-		dropGem(mouseX, mouseY);
+		Vector2 realPos = screen.getRealScreenPos(screenX, screenY);
+		dropGem(realPos.x, realPos.y);
 		return true;
 	}
 

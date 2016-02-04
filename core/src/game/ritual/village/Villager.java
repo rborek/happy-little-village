@@ -1,5 +1,6 @@
 package game.ritual.village;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -9,9 +10,9 @@ import java.util.Random;
 
 public class Villager extends GameObject {
 	private VillagerRole role;
-	private final static Texture[][] villagerTextures = {{new Texture("villagers/citizen/citizen.png"),
-			new Texture("villagers/citizen/citizen_left_1.png"), new Texture("villagers/citizen/citizen_left_2.png"),
-			new Texture("villagers/citizen/citizen_left_3.png"), new Texture("villagers/citizen/citizen_left_2.png")},
+	private final static Texture[][] villagerTextures = {{new Texture(Gdx.files.internal("villagers/citizen/citizen.png"), true),
+			new Texture(Gdx.files.internal("villagers/citizen/citizen_left_1.png"), true), new Texture(Gdx.files.internal("villagers/citizen/citizen_left_2.png"), true),
+			new Texture(Gdx.files.internal("villagers/citizen/citizen_left_3.png"), true), new Texture(Gdx.files.internal("villagers/citizen/citizen_left_2.png"), true)},
 			{new Texture("villagers/miner/miner.png"), new Texture("villagers/miner/miner_left_1.png"),
 					new Texture("villagers/miner/miner_left_2.png"),
 					new Texture("villagers/miner/miner_left_3.png"),
@@ -38,18 +39,15 @@ public class Villager extends GameObject {
 		this.village = village;
 		position = village.getEmptyPosition();
 		this.role = role;
-		destination = village.getEmptyPosition();
 		velocity = new Vector2(0, 0);
+		generateNewDestination();
 	}
 
 	public boolean isMovingRight() {
 		return position.x < destination.x;
 	}
 
-	private void move(float delta) {
-		int frame = (int) (walkTimer * 5 % 4) + 1;
-		texture = villagerTextures[role.ordinal()][frame];
-		walkTimer += delta;
+	private void calculateVelocity() {
 		float x = destination.x - position.x;
 		float y = destination.y - position.y;
 		float ratio = Math.abs(x / y);
@@ -58,7 +56,15 @@ public class Villager extends GameObject {
 		velocity.x = velocity.y * ratio;
 		int xDir = (int) Math.signum(x);
 		int yDir = (int) Math.signum(y);
-		position.add(velocity.x * delta * xDir, velocity.y * delta * yDir);
+		velocity.x *= xDir;
+		velocity.y *= yDir;
+	}
+
+	private void move(float delta) {
+		int frame = (int) (walkTimer * 5 % 4) + 1;
+		texture = villagerTextures[role.ordinal()][frame];
+		walkTimer += delta;
+		position.add(velocity.x * delta, velocity.y * delta);
 	}
 
 	private boolean arrivedAtDestination() {
@@ -77,7 +83,7 @@ public class Villager extends GameObject {
 			texture = villagerTextures[role.ordinal()][0];
 			restTimer -= delta;
 			if (restTimer <= 0) {
-				destination = village.getEmptyPosition();
+				generateNewDestination();
 				Random r = new Random();
 				restTimer = r.nextFloat() * 3 + 1;
 				resting = false;
@@ -88,6 +94,11 @@ public class Villager extends GameObject {
 				resting = true;
 			}
 		}
+	}
+
+	public void generateNewDestination() {
+		destination = village.getEmptyPosition();
+		calculateVelocity();
 	}
 
 	public Vector2 getDestination() {

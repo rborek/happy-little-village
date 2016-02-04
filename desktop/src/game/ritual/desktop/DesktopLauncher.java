@@ -10,8 +10,8 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height = 720;
 		config.fullscreen = false;
-		config.resizable = false;
 		config.title = "Happy Little Village";
+		config.resizable = true;
 		config.useGL30 = true;
 		new LwjglApplication(new RitualGame(), config);
 	}

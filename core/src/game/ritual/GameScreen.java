@@ -8,25 +8,36 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import game.ritual.input.InputHandler;
 
 public class GameScreen implements Screen {
-	private static final int WIDTH = 1280;
-	private static final int HEIGHT = 720;
-	private Texture sun = new Texture("scroll/sun.png");
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
+	private Texture sun = new Texture(Gdx.files.internal("bg/sun.png"), true);
 	private Vector2 sunPos = new Vector2();
 	private RitualGame game;
 	private int dayTime;
 	private GameHandler gameHandler;
+	private InputHandler inputHandler;
 	private SpriteBatch batch;
-	private OrthographicCamera camera = new OrthographicCamera(1280, 720);
+	private OrthographicCamera camera;
+	private Viewport viewport;
 
 	public GameScreen(RitualGame game) {
 		this.game = game;
 		batch = new SpriteBatch(1000, createDefaultShader());
-		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+		camera = new OrthographicCamera();
+		camera.position.set(WIDTH / 2f, HEIGHT / 2f, 0);
 		camera.update();
+		viewport = new FitViewport(WIDTH, HEIGHT, camera);
+		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
-		gameHandler = new GameHandler();
+		inputHandler = new InputHandler(this);
+		gameHandler = new GameHandler(inputHandler);
+		inputHandler.linkTo(gameHandler);
+		Gdx.input.setInputProcessor(inputHandler);
 		dayTime = gameHandler.getVillage().getMaxHours();
 	}
 
@@ -50,13 +61,18 @@ public class GameScreen implements Screen {
 		batch.end();
 	}
 
+	public Vector2 getRealScreenPos(float mouseX, float mouseY) {
+		Vector2 pos = new Vector2(mouseX, mouseY);
+		return viewport.unproject(pos);
+	}
+
 	private float getSkyAlpha(float x) {
 		return (float) (Math.sqrt((50f * 50f) - (float) Math.pow(x - 50, 2)) / 50f);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-
+		viewport.update(width, height);
 	}
 
 	@Override

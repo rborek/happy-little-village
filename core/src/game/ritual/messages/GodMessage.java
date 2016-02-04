@@ -43,7 +43,6 @@ public class GodMessage extends MessageBox {
 	}
 
 	public void stateRitual() {
-		System.out.println("CALLLLEED");
 		message += " \n\n              is the ritual";
 		GemColour[] colours = village.getWeeklyRitual().getColours();
 		Texture[] textures = Gem.getArrayOfMiniTextures();
