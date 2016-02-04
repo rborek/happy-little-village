@@ -17,11 +17,11 @@ import game.ritual.village.VillagerRole;
 public class GameHandler {
 	private Village village;
 	private RitualAltar ritualAltar;
-	private Texture background = new Texture("scroll/background.png");
+	private Texture background = new Texture("bg/background.png");
 	private GemBag gemBag;
 	private InputHandler inputHandler;
 	private Gem gem;
-	private Texture scroll = new Texture("scroll/scroll.png");
+	private Texture scroll = new Texture("ui/scroll.png");
 	private boolean paused;
 	private GemBook miniBook = new GemBook(this);
 	private MessageBox messageBox;

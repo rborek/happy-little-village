@@ -19,8 +19,8 @@ public class VillageInformation extends GameObject {
 	private int weeksLeft;
 	private int week;
 	// add file to constructors
-	private Texture foodTexture = new Texture("scroll/food.png");
-	private Texture waterTexture = new Texture("scroll/water.png");
+	private Texture foodTexture = new Texture("ui/food.png");
+	private Texture waterTexture = new Texture("ui/water.png");
 	private Texture popTexture;
 
 	protected VillageInformation(float xPos, float yPos) {

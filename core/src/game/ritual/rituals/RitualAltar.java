@@ -18,7 +18,7 @@ public class RitualAltar extends GameObject {
 	private Rectangle[] slots;
 	private Texture[] animation = {new Texture(Gdx.files.internal("altar/altar2.png")), new Texture("altar/altar3.png"),
 			new Texture("altar/altar4.png"), new Texture("altar/altar3.png"), new Texture("altar/altar2.png")};
-	private Texture button = new Texture("scroll/button.png");
+	private Texture button = new Texture("altar/button.png");
 	private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
 	private static final int spacingX = 136;
 	private static final int spacingY = 121;

@@ -15,7 +15,7 @@ public class MessageBox extends GameObject {
 	protected BitmapFont font;
 	protected String text;
 	protected String title;
-	protected Texture continueButton = new Texture("scroll/toContinue.png");
+	protected Texture continueButton = new Texture("ui/continue_button.png");
 	protected String clickToContinue = "CONTINUE";
 	protected boolean click = false;
 	protected float continueX;
@@ -38,7 +38,7 @@ public class MessageBox extends GameObject {
 
 	// for the instruction
 	public MessageBox(String instruction, GameHandler gameHandler) {
-		super(new Texture(Gdx.files.internal("scroll/Summary.png"), true), 70, 160);
+		super(new Texture(Gdx.files.internal("ui/parchment.png"), true), 70, 160);
 		font = new BitmapFont();
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

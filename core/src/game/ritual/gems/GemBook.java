@@ -11,7 +11,7 @@ public class GemBook extends GameObject {
 	boolean opened = false;
 
 	public GemBook(GameHandler gameHandler) {
-		super(new Texture(Gdx.files.internal("scroll/small_book.png"), true), 675, 50);
+		super(new Texture(Gdx.files.internal("ui/small_book.png"), true), 675, 50);
 		this.gameHandler = gameHandler;
 	}
 
@@ -21,11 +21,11 @@ public class GemBook extends GameObject {
 			if (!opened) {
 				gameHandler.openBook();
 				opened = true;
-				texture = new Texture("scroll/small_book_open.png");
+				texture = new Texture("ui/small_book_open.png");
 			} else {
 				gameHandler.closeBook();
 				opened = false;
-				texture = new Texture("scroll/small_book.png");
+				texture = new Texture("ui/small_book.png");
 			}
 
 		}
