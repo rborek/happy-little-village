@@ -2,17 +2,18 @@ package game.ritual.rituals;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import game.ritual.Assets;
 import game.ritual.GameObject;
 
 public class RitualBook extends GameObject {
-	private final Texture[] pages = {new Texture("ui/book1.png"),
-			new Texture(("ui/book2.png")), new Texture("ui/book3.png")};
+	private final Texture[] pages = {Assets.getTexture("ui/book1.png"),
+			Assets.getTexture(("ui/book2.png")), Assets.getTexture("ui/book3.png")};
 	private int pageNumber = 1;
 	private Rectangle leftArrow;
 	private Rectangle rightArrow;
 
 	public RitualBook(float xPos, float yPos) {
-		super(new Texture("ui/book1.png"), xPos, yPos);
+		super(Assets.getTexture("ui/book1.png"), xPos, yPos);
 		leftArrow = new Rectangle(xPos + 75, yPos + 20, 70, 45);
 		rightArrow = new Rectangle(xPos + 495, yPos + 20, 70, 45);
 	}

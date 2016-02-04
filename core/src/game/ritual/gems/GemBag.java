@@ -17,7 +17,7 @@ public class GemBag extends GameObject {
 	private BitmapFont font;
 	private RitualAltar gemSlot;
 	private Texture[] gemTextures = Gem.getArrayOfTextures();
-	private Texture inactiveGem = new Texture(Gdx.files.internal("gems/gem_grey.png"), true);
+	private Texture inactiveGem = Assets.getTexture("gems/gem_grey.png");
 	private static final int slotSize = 64;
 	private Rectangle[] slots = new Rectangle[4];
 	private int[] gemAmounts = new int[GemColour.values().length];

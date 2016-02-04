@@ -25,7 +25,7 @@ public class VillageInformation extends GameObject {
 	private Texture popTexture;
 
 	protected VillageInformation(float xPos, float yPos) {
-		super(new Texture(Gdx.files.internal("villagers/info_menu.png"), true), xPos, yPos);
+		super(Assets.getTexture("villagers/info_menu.png"), xPos, yPos);
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.borderColor = Color.BLACK;

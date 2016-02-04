@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import game.ritual.Assets;
 import game.ritual.GameObject;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
@@ -16,9 +17,8 @@ public class RitualAltar extends GameObject {
 	private Gem[] gems;
 	private GemBag gemBag;
 	private Rectangle[] slots;
-	private Texture[] animation = {new Texture(Gdx.files.internal("altar/altar2.png")), new Texture("altar/altar3.png"),
-			new Texture("altar/altar4.png"), new Texture("altar/altar3.png"), new Texture("altar/altar2.png")};
-	private Texture button = new Texture("altar/button.png");
+	private Texture[] animation = Assets.getTextures("altar/altar1.png", "altar/altar2.png", "altar/altar3.png", "altar/altar2.png", "altar/altar1.png");
+	private Texture button = Assets.getTexture("altar/button.png");
 	private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
 	private static final int spacingX = 136;
 	private static final int spacingY = 121;
@@ -29,7 +29,7 @@ public class RitualAltar extends GameObject {
 	private float timer = 0;
 
 	public RitualAltar(GemBag gemBag, float xPos, float yPos, int rows, int cols) {
-		super(new Texture(Gdx.files.internal("altar/altar1.png"), true), xPos, yPos);
+		super(Assets.getTexture("altar/altar1.png"), xPos, yPos);
 //        height *= rows;
 //        height += spacing * rows - 1;
 //        width *= cols;

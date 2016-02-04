@@ -15,7 +15,7 @@ import game.ritual.input.InputHandler;
 public class GameScreen implements Screen {
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 720;
-	private Texture sun = new Texture(Gdx.files.internal("bg/sun.png"), true);
+	private Texture sun = new Texture(Gdx.files.internal("textures/bg/sun.png"), true);
 	private Vector2 sunPos = new Vector2();
 	private RitualGame game;
 	private int dayTime;

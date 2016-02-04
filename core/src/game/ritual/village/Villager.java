@@ -11,21 +11,14 @@ import java.util.Random;
 
 public class Villager extends GameObject {
 	private VillagerRole role;
-	private final static Texture[][] villagerTextures = {{Assets.getTexture("villagers/citizen/citizen.png"),
-			new Texture(Gdx.files.internal("villagers/citizen/citizen_left_1.png"), true), new Texture(Gdx.files.internal("villagers/citizen/citizen_left_2.png"), true),
-			new Texture(Gdx.files.internal("villagers/citizen/citizen_left_3.png"), true), new Texture(Gdx.files.internal("villagers/citizen/citizen_left_2.png"), true)},
-			{new Texture("villagers/miner/miner.png"), new Texture("villagers/miner/miner_left_1.png"),
-					new Texture("villagers/miner/miner_left_2.png"),
-					new Texture("villagers/miner/miner_left_3.png"),
-					new Texture("villagers/miner/miner_left_2.png")},
-			{new Texture("villagers/farmer/farmer.png"), new Texture("villagers/farmer/farmer_left_1.png"),
-					new Texture("villagers/farmer/farmer_left_2.png"),
-					new Texture("villagers/farmer/farmer_left_3.png"),
-					new Texture("villagers/farmer/farmer_left_2.png")},
-			{new Texture("villagers/explorer/explorer.png"), new Texture("villagers/explorer/explorer_left_1.png"),
-					new Texture("villagers/explorer/explorer_left_2.png"),
-					new Texture("villagers/explorer/explorer_left_3.png"),
-					new Texture("villagers/explorer/explorer_left_2.png")}};
+	private final static Texture[][] villagerTextures = {Assets.getTextures("villagers/citizen/citizen.png", "villagers/citizen/citizen_left_1.png",
+			"villagers/citizen/citizen_left_2.png","villagers/citizen/citizen_left_3.png", "villagers/citizen/citizen_left_2.png"),
+			Assets.getTextures("villagers/miner/miner.png", "villagers/miner/miner_left_1.png",
+					"villagers/miner/miner_left_2.png","villagers/miner/miner_left_3.png", "villagers/miner/miner_left_2.png"),
+			Assets.getTextures("villagers/farmer/farmer.png", "villagers/farmer/farmer_left_1.png",
+					"villagers/farmer/farmer_left_2.png","villagers/farmer/farmer_left_3.png", "villagers/farmer/farmer_left_2.png"),
+			Assets.getTextures("villagers/explorer/explorer.png", "villagers/explorer/explorer_left_1.png",
+					"villagers/explorer/explorer_left_2.png","villagers/explorer/explorer_left_3.png", "villagers/explorer/explorer_left_2.png")};
 	private Village village;
 	private Vector2 destination;
 	private float speed = 120; // magnitude of the villager

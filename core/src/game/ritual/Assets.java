@@ -11,36 +11,32 @@ public class Assets {
 	private static final AssetManager manager = new AssetManager();
 
 	public static Texture getTexture(String name) {
-		return manager.get(name, Texture.class);
+		return manager.get("textures/" + name, Texture.class);
 	}
 
-	private static void loadUI(TextureParameter param) {
-		FileHandle handle = Gdx.files.internal("ui/");
-		for (FileHandle file: handle.list()) {
-			manager.load(file.toString(), Texture.class, param);
-			System.out.println("loaded " + file);
+	public static Texture[] getTextures(String... strings) {
+		Texture[] textures = new Texture[strings.length];
+		for (int i = 0; i < strings.length; i++) {
+			textures[i] = manager.get("textures/" + strings[i], Texture.class);
 		}
-		System.out.println("done loading ui!");
+		return textures;
 	}
 
-	private static void loadGems(TextureParameter param) {
-		FileHandle handle = Gdx.files.internal("gems/");
-		for (FileHandle file: handle.list()) {
-			manager.load(file.toString(), Texture.class, param);
-			System.out.println("loaded " + file);
-		}
-		System.out.println("done loading gems!");
+	private static void loadTextures(TextureParameter param) {
+		loadTextures(Gdx.files.internal("textures"), param);
 	}
 
-	private static void loadVillagers(TextureParameter param) {
-		FileHandle handle = Gdx.files.internal("villagers/");
-		for (FileHandle directory: handle.list()) {
-			for (FileHandle file : directory.list()) {
-				manager.load(file.toString(), Texture.class, param);
-				System.out.println("loaded " + file);
+	private static void loadTextures(FileHandle dir, TextureParameter param) {
+		if (dir.isDirectory()) {
+			for (FileHandle file : dir.list()) {
+				if (file.isDirectory()) {
+					loadTextures(file, param);
+				} else {
+					System.out.println("loading " + file);
+					manager.load(file.toString(), Texture.class, param);
+				}
 			}
 		}
-		System.out.println("done loading villagers!");
 	}
 
 	public static void load() {
@@ -48,9 +44,7 @@ public class Assets {
 		param.genMipMaps = true;
 		param.minFilter = TextureFilter.MipMapLinearLinear;
 		param.magFilter = TextureFilter.MipMapLinearLinear;
-		loadUI(param);
-		loadVillagers(param);
-		loadGems(param);
+		loadTextures(param);
 		manager.finishLoading();
 	}
 

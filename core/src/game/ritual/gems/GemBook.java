@@ -3,6 +3,7 @@ package game.ritual.gems;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import game.ritual.Assets;
 import game.ritual.GameHandler;
 import game.ritual.GameObject;
 
@@ -11,7 +12,7 @@ public class GemBook extends GameObject {
 	boolean opened = false;
 
 	public GemBook(GameHandler gameHandler) {
-		super(new Texture(Gdx.files.internal("ui/small_book.png"), true), 675, 50);
+		super(Assets.getTexture("ui/small_book.png"), 675, 50);
 		this.gameHandler = gameHandler;
 	}
 
@@ -21,11 +22,11 @@ public class GemBook extends GameObject {
 			if (!opened) {
 				gameHandler.openBook();
 				opened = true;
-				texture = new Texture("ui/small_book_open.png");
+				texture = Assets.getTexture("ui/small_book_open.png");
 			} else {
 				gameHandler.closeBook();
 				opened = false;
-				texture = new Texture("ui/small_book.png");
+				texture = Assets.getTexture("ui/small_book.png");
 			}
 
 		}
