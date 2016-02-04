@@ -18,8 +18,18 @@ public class Assets {
 		FileHandle handle = Gdx.files.internal("ui");
 		for (FileHandle file: handle.list()) {
 			manager.load(file.toString(), Texture.class, param);
+			System.out.println("loaded " + file);
 		}
 		System.out.println("done loading ui!");
+	}
+
+	private static void loadGems(TextureParameter param) {
+		FileHandle handle = Gdx.files.internal("gems");
+		for (FileHandle file: handle.list()) {
+			manager.load(file.toString(), Texture.class, param);
+			System.out.println("loaded " + file);
+		}
+		System.out.println("done loading gems!");
 	}
 
 	private static void loadVillagers(TextureParameter param) {
@@ -27,6 +37,7 @@ public class Assets {
 		for (FileHandle directory: handle.list()) {
 			for (FileHandle file : directory.list()) {
 				manager.load(file.toString(), Texture.class, param);
+				System.out.println("loaded " + file);
 			}
 		}
 		System.out.println("done loading villagers!");
@@ -39,6 +50,7 @@ public class Assets {
 		param.magFilter = TextureFilter.MipMapLinearLinear;
 		loadUI(param);
 		loadVillagers(param);
+		loadGems(param);
 		manager.finishLoading();
 	}
 

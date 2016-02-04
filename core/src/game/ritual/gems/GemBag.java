@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
+import game.ritual.Assets;
 import game.ritual.GameObject;
 import game.ritual.rituals.RitualAltar;
 
@@ -23,7 +24,7 @@ public class GemBag extends GameObject {
 
 
 	public GemBag(float xPos, float yPos) {
-		super(new Texture(Gdx.files.internal("gems/gem_bag.png"), true), xPos, yPos);
+		super(Assets.getTexture("ui/gem_bag.png"), xPos, yPos);
 		gemAmounts = new int[GemColour.values().length];
 		for (int i = 0; i < gemAmounts.length; i++) {
 			gemAmounts[i] = 10;
