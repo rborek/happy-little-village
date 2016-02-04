@@ -1,23 +1,35 @@
 package game.ritual;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 
 public class Assets {
 	private static final AssetManager manager = new AssetManager();
-	private static final String[] ui = new String[]{"food.png", "water.png"};
 
 	public static Texture getTexture(String name) {
 		return manager.get(name, Texture.class);
 	}
 
 	private static void loadUI(TextureParameter param) {
-		for (String s : ui) {
-			manager.load("ui/" + s, Texture.class, param);
+		FileHandle handle = Gdx.files.internal("ui");
+		for (FileHandle file: handle.list()) {
+			manager.load(file.toString(), Texture.class, param);
 		}
-		System.out.println("done loading!");
+		System.out.println("done loading ui!");
+	}
+
+	private static void loadVillagers(TextureParameter param) {
+		FileHandle handle = Gdx.files.internal("villagers");
+		for (FileHandle directory: handle.list()) {
+			for (FileHandle file : directory.list()) {
+				manager.load(file.toString(), Texture.class, param);
+			}
+		}
+		System.out.println("done loading villagers!");
 	}
 
 	public static void load() {
@@ -26,6 +38,7 @@ public class Assets {
 		param.minFilter = TextureFilter.MipMapLinearLinear;
 		param.magFilter = TextureFilter.MipMapLinearLinear;
 		loadUI(param);
+		loadVillagers(param);
 		manager.finishLoading();
 	}
 

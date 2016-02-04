@@ -4,13 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import game.ritual.Assets;
 import game.ritual.GameObject;
 
 import java.util.Random;
 
 public class Villager extends GameObject {
 	private VillagerRole role;
-	private final static Texture[][] villagerTextures = {{new Texture(Gdx.files.internal("villagers/citizen/citizen.png"), true),
+	private final static Texture[][] villagerTextures = {{Assets.getTexture("villagers/citizen/citizen.png"),
 			new Texture(Gdx.files.internal("villagers/citizen/citizen_left_1.png"), true), new Texture(Gdx.files.internal("villagers/citizen/citizen_left_2.png"), true),
 			new Texture(Gdx.files.internal("villagers/citizen/citizen_left_3.png"), true), new Texture(Gdx.files.internal("villagers/citizen/citizen_left_2.png"), true)},
 			{new Texture("villagers/miner/miner.png"), new Texture("villagers/miner/miner_left_1.png"),
