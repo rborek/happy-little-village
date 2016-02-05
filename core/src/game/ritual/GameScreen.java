@@ -48,6 +48,9 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		if (delta > 0.5f) {
+			delta = 0.01667f;
+		}
 		gameHandler.update(delta);
 		float time = dayTime - gameHandler.getVillage().getHoursLeft();
 		float percentage = (time / dayTime);
