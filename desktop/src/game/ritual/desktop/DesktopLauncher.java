@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height = 720;
 		config.fullscreen = false;
-		config.backgroundFPS = 10;
+		config.backgroundFPS = 60;
 		config.title = "Happy Little Village";
 		config.resizable = true;
 		config.useGL30 = true;

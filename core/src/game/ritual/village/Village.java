@@ -31,7 +31,7 @@ public class Village {
     private boolean isNextDay = false;
     private int villagerAdded = 0;
     private int villagerRemoved = 0;
-    private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
+    private static Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
         protected Rectangle newObject () {
             return new Rectangle();

@@ -3,7 +3,9 @@ package game.ritual.village;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
 import game.ritual.Assets;
 import game.ritual.GameObject;
 import game.ritual.Line;
@@ -21,6 +23,12 @@ public class Villager extends GameObject {
                     "villagers/farmer/farmer_left_2.png", "villagers/farmer/farmer_left_3.png", "villagers/farmer/farmer_left_2.png"),
             Assets.getTextures("villagers/explorer/explorer.png", "villagers/explorer/explorer_left_1.png",
                     "villagers/explorer/explorer_left_2.png", "villagers/explorer/explorer_left_3.png", "villagers/explorer/explorer_left_2.png")};
+    private static Pool<Line> linePool = new Pool<Line>() {
+        @Override
+        protected Line newObject () {
+            return new Line();
+        }
+    };
     private static ArrayList<Line> obstacles = new ArrayList<Line>() {
         {
             // house
@@ -95,7 +103,7 @@ public class Villager extends GameObject {
     }
 
     private boolean arrivedAtDestination() {
-        return Math.abs(position.x - destination.x) < 10 && Math.abs(position.y - destination.y) < 10;
+        return (Math.abs(position.x - destination.x) < 10 && Math.abs(position.y - destination.y) < 10);
     }
 
     @Override
@@ -129,14 +137,16 @@ public class Villager extends GameObject {
 
     public void generateNewDestination() {
         destination = village.getEmptyPosition();
-        Line path = new Line(position, destination);
+        Line path = linePool.obtain();
+        path.set(position, destination);
         for (int i = 0; i < obstacles.size(); i++) {
             if (path.intersects(obstacles.get(i))) {
                 destination = village.getEmptyPosition();
-                path =  new Line(position, destination);
+                path.set(position, destination);
                 i = -1;
             }
         }
+        linePool.free(path);
         calculateVelocity();
     }
 

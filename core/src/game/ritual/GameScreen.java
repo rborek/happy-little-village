@@ -48,7 +48,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		if (delta > 0.5f) {
+		if (delta > 0.1f) {
 			delta = 0.01667f;
 		}
 		gameHandler.update(delta);
