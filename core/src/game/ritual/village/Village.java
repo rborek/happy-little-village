@@ -2,8 +2,10 @@ package game.ritual.village;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import game.ritual.Line;
 import game.ritual.rituals.WeeklyRitual;
 
 import java.util.ArrayList;
@@ -32,8 +34,8 @@ public class Village {
     public Village() {
         this.villagers = new ArrayList<Villager>();
         info = new VillageInformation(60, 10);
-        food = 300;
-        water = 300;
+        food = 9999;
+        water = 9999;
         hoursLeft = MAX_HOURS;
         daysLeft = 5;
         day = 0;
@@ -43,7 +45,7 @@ public class Village {
         return weeklyRitual;
     }
 
-    public void newMonthlyRitual() {
+    public void newWeeklyRitual() {
         weeklyRitual = new WeeklyRitual(4, 2 + day / 2, this);
     }
 
@@ -57,7 +59,6 @@ public class Village {
 
     public boolean convertCitizen(VillagerRole role) {
         for (Villager villager : villagers) {
-            System.out.println(villager.getRole());
             if (villager.getRole() == VillagerRole.CITIZEN) {
                 villager.setRole(role);
                 effects.add(new VillagerEvolveEffect(villager));
@@ -191,12 +192,15 @@ public class Village {
         info.render(batch);
     }
 
+
+
     // return a position that does not overlap current villagers
     public Vector2 getEmptyPosition() {
         Rectangle newPosition = new Rectangle(randomX(), randomY(), 0, 0);
         Rectangle test; // position of the current villager
         Rectangle test2;// destination of the current villager
         Rectangle[] forbidden = new Rectangle[villagers.size() * 2];
+
         int count = 0;
         for (Villager villager : villagers) {
             newPosition.setWidth(villager.getWidth());
@@ -210,9 +214,10 @@ public class Village {
             forbidden[count] = test2;
             count++;
         }
-        for (int k = 0; k < forbidden.length; k++) {
-            if (newPosition.overlaps(forbidden[k])) {
+        for (int i = 0; i < forbidden.length; i++) {
+            if (newPosition.overlaps(forbidden[i])) {
                 newPosition.setPosition(randomX(), randomY());
+                i = -1;
             }
         }
         return new Vector2(newPosition.x, newPosition.y);
@@ -220,7 +225,7 @@ public class Village {
 
     private int randomX() {
         Random random = new Random();
-        return random.nextInt(680) + 10;
+        return random.nextInt(685) + 5;
     }
 
     private int randomY() {

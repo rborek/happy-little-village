@@ -3,16 +3,17 @@ package game.ritual;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import game.ritual.gems.GemBook;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
-import game.ritual.gems.GemColour;
 import game.ritual.input.InputHandler;
 import game.ritual.messages.*;
 import game.ritual.rituals.Ritual;
 import game.ritual.rituals.RitualAltar;
 import game.ritual.rituals.RitualBook;
 import game.ritual.village.Village;
+import game.ritual.village.Villager;
 import game.ritual.village.VillagerRole;
 
 public class GameHandler {
@@ -35,6 +36,8 @@ public class GameHandler {
 	private GameOver gameOverMessage;
 	private boolean win = false;
 	private WinMessage winMessage;
+	private ShapeRenderer shapeRenderer = new ShapeRenderer();
+	private boolean DEBUG = false;
 
 	public RitualAltar getRitualAltar() {
 		return ritualAltar;
@@ -66,7 +69,7 @@ public class GameHandler {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
 		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, 2, 2);
 		village = new Village();
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 50; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
 		gemSummary = new GemSummary(this);
@@ -96,7 +99,7 @@ public class GameHandler {
 			messageBox = new GodMessage(gemBag, village, this);
 			if (((GodMessage) messageBox).checkRitual()) {
 				ritualAltar.removeRitual(village.getWeeklyRitual());
-				village.newMonthlyRitual();
+				village.newWeeklyRitual();
 				ritualAltar.gainRitual(village.getWeeklyRitual());
 			}
 			((GodMessage) messageBox).stateRitual();
@@ -127,7 +130,7 @@ public class GameHandler {
 			}
 		}
 		if (gameOver == false) {
-			if (village.getSize() >= 15) {
+			if (village.getSize() >= 100) {
 				winMessage.setCondition(1);
 				win = true;
 			}
@@ -178,6 +181,11 @@ public class GameHandler {
 			gameOverMessage.render(batch);
 		} else if (!gameOver && win){
 			winMessage.render(batch);
+		}
+		if (DEBUG) {
+			shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+			Villager.renderLines(shapeRenderer);
+			shapeRenderer.end();
 		}
 	}
 

@@ -1,6 +1,7 @@
 package game.ritual.village;
 
 import com.badlogic.gdx.graphics.Texture;
+import game.ritual.Assets;
 
 public class VillagerEvolveEffect extends VillagerEffect {
 	public VillagerEvolveEffect(Villager villager) {
@@ -9,15 +10,11 @@ public class VillagerEvolveEffect extends VillagerEffect {
 
 	@Override
 	protected Texture[] getFrames() {
-		return new Texture[]{
-				new Texture("villagers/evolve/evolve_sprite_1.png"),
-				new Texture("villagers/evolve/evolve_sprite_2.png"),
-				new Texture("villagers/evolve/evolve_sprite_3.png"),
-				new Texture("villagers/evolve/evolve_sprite_4.png"),
-				new Texture("villagers/evolve/evolve_sprite_5.png"),
-				new Texture("villagers/evolve/evolve_sprite_6.png"),
-				new Texture("villagers/evolve/evolve_sprite_7.png")
-		};
+		String[] files = new String[7];
+		for (int i = 1; i < 8; i++) {
+			files[i - 1] = "villagers/evolve/evolve_sprite_" + i + ".png";
+		}
+		return Assets.getTextures(files);
 	}
 
 

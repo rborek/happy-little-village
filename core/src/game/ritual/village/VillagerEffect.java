@@ -1,6 +1,7 @@
 package game.ritual.village;
 
 import com.badlogic.gdx.graphics.Texture;
+import game.ritual.Assets;
 import game.ritual.GameObject;
 
 public abstract class VillagerEffect extends GameObject {
@@ -10,7 +11,7 @@ public abstract class VillagerEffect extends GameObject {
 	protected boolean done = false;
 
 	public VillagerEffect(Villager villager) {
-		super(new Texture("villagers/evolve/evolve_sprite_1.png"), villager.getPosition().x, villager.getPosition().y);
+		super(Assets.getTexture("villagers/evolve/evolve_sprite_1.png"), villager.getPosition().x, villager.getPosition().y);
 		position = villager.getPosition();
 		this.villager = villager;
 		frames = getFrames();

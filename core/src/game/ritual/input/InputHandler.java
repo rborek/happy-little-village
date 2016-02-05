@@ -127,6 +127,7 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector2 realPos = screen.getRealScreenPos(screenX, screenY);
+		System.out.println("Mouse click at " + realPos);
 		if (enabled) {
 			tryToOpenBook(realPos.x, realPos.y);
 			tryToTurnPages(realPos.x, realPos.y);

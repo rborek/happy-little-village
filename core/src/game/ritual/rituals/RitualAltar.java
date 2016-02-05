@@ -87,7 +87,7 @@ public class RitualAltar extends GameObject {
 			if (timer * 8 >= 5) {
 				animating = false;
 				timer = 0;
-				texture = new Texture("altar/altar1.png");
+				texture = animation[0];
 			}
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
