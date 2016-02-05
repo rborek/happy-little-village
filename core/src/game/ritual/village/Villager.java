@@ -44,15 +44,13 @@ public class Villager extends GameObject {
             add(new Line(472, 527, 327, 530));
             add(new Line(327, 530, 299, 480));
             add(new Line(299, 480, 299, 423));
-
-
         }
     };
     private Village village;
     private Vector2 destination;
     private float speed = 120; // magnitude of the villager
     private Vector2 velocity; // velocity of the villager
-    private float restTimer = 2;
+    private float restTimer = getNewRestDuration();
     private boolean resting = false;
     private float walkTimer = 0;
 
@@ -113,8 +111,7 @@ public class Villager extends GameObject {
             restTimer -= delta;
             if (restTimer <= 0) {
                 generateNewDestination();
-                Random r = new Random();
-                restTimer = r.nextFloat() * 3 + 1;
+                restTimer = getNewRestDuration();
                 resting = false;
             }
         } else {
@@ -125,12 +122,16 @@ public class Villager extends GameObject {
         }
     }
 
+    private float getNewRestDuration() {
+        Random r = new Random();
+        return r.nextFloat() * 4;
+    }
+
     public void generateNewDestination() {
         destination = village.getEmptyPosition();
         Line path = new Line(position, destination);
         for (int i = 0; i < obstacles.size(); i++) {
             if (path.intersects(obstacles.get(i))) {
-//                System.out.println("fk");
                 destination = village.getEmptyPosition();
                 path =  new Line(position, destination);
                 i = -1;

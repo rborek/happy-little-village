@@ -37,7 +37,7 @@ public class GameHandler {
 	private boolean win = false;
 	private WinMessage winMessage;
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
-	private boolean DEBUG = false;
+	private boolean DEBUG = true;
 
 	public RitualAltar getRitualAltar() {
 		return ritualAltar;
@@ -69,7 +69,7 @@ public class GameHandler {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
 		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, 2, 2);
 		village = new Village();
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 2000; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
 		gemSummary = new GemSummary(this);
@@ -130,7 +130,7 @@ public class GameHandler {
 			}
 		}
 		if (gameOver == false) {
-			if (village.getSize() >= 100) {
+			if (village.getSize() < -1) {
 				winMessage.setCondition(1);
 				win = true;
 			}
@@ -176,16 +176,17 @@ public class GameHandler {
 			}
 			if (paused) {
 				messageBox.render(batch);
+			} else {
+				if (DEBUG) {
+					shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+					Villager.renderLines(shapeRenderer);
+					shapeRenderer.end();
+				}
 			}
 		} else if (gameOver && !win) {
 			gameOverMessage.render(batch);
 		} else if (!gameOver && win){
 			winMessage.render(batch);
-		}
-		if (DEBUG) {
-			shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-			Villager.renderLines(shapeRenderer);
-			shapeRenderer.end();
 		}
 	}
 
