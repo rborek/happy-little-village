@@ -8,6 +8,7 @@ import game.ritual.gems.GemBook;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
 import game.ritual.input.InputHandler;
+import game.ritual.menu.MenuItem;
 import game.ritual.messages.*;
 import game.ritual.rituals.Ritual;
 import game.ritual.rituals.RitualAltar;
@@ -60,7 +61,6 @@ public class GameHandler {
 		return miniBook;
 	}
 
-
 	public GameHandler(InputHandler inputHandler) {
 		this.inputHandler = inputHandler;
 		init();
@@ -70,10 +70,11 @@ public class GameHandler {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
 		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, 2, 2);
 		village = new Village();
-		for (int i = 0; i < 500; i++) {
+		for (int i = 0; i < 25; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
-		gemSummary = new GemSummary(this);
+		gemSummary = new GemSummary(gemBag, village, this);
+		// TODO Duke - Change this to Instructions and make Instructions
 		messageBox = new MessageBox("  Welcome to your happy little village!\n Efficiently maintain your villagers'\n happiness"
 				+ " by giving them food and\n water! Combine gems from your bag \n to gain or sacrifice different \n resources and villagers! You can\n combine"
 				+ " a maximum of 4 gems\n of any kind! ", this);
@@ -95,7 +96,6 @@ public class GameHandler {
 		if (messageBox instanceof WeekSummary) {
 			messageBox = new GemSummary(gemBag, village, this);
 			((GemSummary) messageBox).gemMined();
-
 		} else if (messageBox instanceof GemSummary) {
 			messageBox = new GodMessage(gemBag, village, this);
 			if (((GodMessage) messageBox).checkRitual()) {
@@ -108,7 +108,6 @@ public class GameHandler {
 			messageBox = new WeekSummary(village, this);
 			paused = false;
 			inputHandler.enable();
-
 		}
 
 	}

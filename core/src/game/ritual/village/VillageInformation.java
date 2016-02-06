@@ -25,6 +25,8 @@ public class VillageInformation extends GameObject {
 	private Texture popTexture;
 
 	protected VillageInformation(float xPos, float yPos) {
+		// TODO Duke
+		// take in Village and set
 		super(Assets.getTexture("villagers/info_menu.png"), xPos, yPos);
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -37,24 +39,14 @@ public class VillageInformation extends GameObject {
 	}
 
 	public void setResources(int food, int water, int pop, int hour, int week, int weekLeft) {
+		// TODO Duke
+		// change to updateResources, take no parameters
 		this.food = (int) Math.ceil(food);
 		this.water = (int) Math.ceil(water);
 		this.pop = pop;
 		this.hour = (int) Math.ceil(hour);
 		this.week = (int) Math.ceil(week);
 		this.weeksLeft = weekLeft;
-	}
-
-	public int getFood() {
-		return food;
-	}
-
-	public int getWater() {
-		return water;
-	}
-
-	public int getPop() {
-		return pop;
 	}
 
 	@Override

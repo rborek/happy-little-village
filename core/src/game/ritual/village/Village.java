@@ -165,14 +165,22 @@ public class Village {
     private void timePass(float delta) {
         hoursLeft -= (float) (delta * 0.2);
         if (hoursLeft <= 0) {
-            villagerRemoved = 0;
-            daysLeft -= 1;
-            day += 1;
-            hoursLeft = MAX_HOURS;
-            isNextDay = true;
-            villagerAdded = 0;
+            dayPass();
         }
     }
+
+	public void dayPass() {
+		villagerRemoved = 0;
+		daysLeft -= 1;
+		day += 1;
+		hoursLeft = MAX_HOURS;
+		isNextDay = true;
+		villagerAdded = 0;
+	}
+
+	public void mineGems() {
+		// TODO Duke - move the mining from GemSummary to here
+	}
 
     public boolean isNextDay() {
         return isNextDay;

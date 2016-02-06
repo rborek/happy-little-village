@@ -15,11 +15,6 @@ public class GemSummary extends MessageBox {
 	private int GREEN;
 	private int YELLOW;
 
-	public GemSummary(GameHandler gameHandler) {
-		super(null, gameHandler);
-		// TODO Auto-generated constructor stub
-	}
-
 	public GemSummary(GemBag gemBag, Village village, GameHandler gameHandler) {
 		super("", gameHandler);
 		this.gemBag = gemBag;
@@ -28,6 +23,7 @@ public class GemSummary extends MessageBox {
 	}
 
 	public void gemMined() {
+		// TODO Duke - move mining to Village
 		for (int i = 0; i < village.getNumberOf(VillagerRole.MINER) * 3; i++) {
 			GemColour g = gemBag.gainRandomGem();
 			if (g.equals(GemColour.RED)) {

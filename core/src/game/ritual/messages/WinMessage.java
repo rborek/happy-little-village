@@ -11,6 +11,7 @@ public class WinMessage extends MessageBox {
 	private String[] condition;
 
 	public WinMessage(GameHandler gameHandler) {
+		// TODO Duke - don't worry about this
 		super("", gameHandler);
 		message = "";
 		condition = new String[3];

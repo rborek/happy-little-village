@@ -12,20 +12,20 @@ import game.ritual.GameHandler;
 import game.ritual.GameObject;
 import game.ritual.menu.MenuItem;
 
+// TODO Duke - make abstract
 public class MessageBox extends GameObject implements MenuItem {
 	protected GameHandler gameHandler;
 	protected BitmapFont font;
 	protected String text;
 	protected String title;
 	protected Texture continueButton = Assets.getTexture("ui/continue_button.png");
-	protected String clickToContinue = "CONTINUE";
-	protected boolean click = false;
 	protected float continueX;
 	protected float continueY;
 
 	// for the instruction
 	public MessageBox(String instruction, GameHandler gameHandler) {
 		super(Assets.getTexture("ui/parchment.png"), 70, 160);
+		this.gameHandler = gameHandler;
 		font = new BitmapFont();
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -38,8 +38,6 @@ public class MessageBox extends GameObject implements MenuItem {
 		font = generator.generateFont(parameter);
 		this.text = instruction;
 		title = "";
-		this.gameHandler = gameHandler;
-
 		setButtonPos();
 	}
 
@@ -53,23 +51,13 @@ public class MessageBox extends GameObject implements MenuItem {
 		// TODO Auto-generated method stub
 	}
 
-	public void unclick() {
-		click = false;
-	}
-
-	public boolean getClick() {
-		return click;
-	}
-
 	@Override
 	public void render(Batch batch) {
 		batch.draw(texture, position.x, position.y);
 		batch.draw(continueButton, continueX, continueY);
-//        font.draw(batch, clickToContinue, continueX + 28, continueY + 27);
 		if (text != null) {
 			font.draw(batch, text, continueX - 180, continueY + 340);
 		}
-//        font.draw(batch, title, continueX, continueY + 400);
 	}
 
 	@Override

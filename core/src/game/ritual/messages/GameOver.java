@@ -9,7 +9,9 @@ import game.ritual.GameHandler;
 
 public class GameOver extends MessageBox {
 	private String message;
-	private String[] condition;
+	private static String[] condition = new String[]{
+			" No more villagers are left!", " Your villagers died of hunger!",
+			" Your villagers died of thirst!", " You didn't complete the monthly ritual on time!"};
 	private BitmapFont gameOverFont;
 
 
@@ -17,11 +19,6 @@ public class GameOver extends MessageBox {
 		super("", gameHandler);
 		title = " GAME OVER ";
 		message = "";
-		condition = new String[4];
-		condition[0] = " No more villagers are left!";
-		condition[1] = " Your villagers died of hunger!";
-		condition[2] = " Your villagers died of thirst!";
-		condition[3] = " You didn't complete the monthly ritual on time!";
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = 36;
