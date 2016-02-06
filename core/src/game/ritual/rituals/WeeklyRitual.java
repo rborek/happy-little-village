@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class WeeklyRitual extends Ritual {
     private Village village;
+    private static Random random = new Random();
     private int timesPerformed;
     private int timesToDo;
 
@@ -42,7 +43,6 @@ public class WeeklyRitual extends Ritual {
     
     private void generateRandom(int numGems) {
         gemCombination = new GemColour[numGems];
-        Random random = new Random();
         for (int i = 0; i < numGems; i++) {
             gemCombination[i] = GemColour.values()[random.nextInt(GemColour.values().length)];
         }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
@@ -17,6 +18,7 @@ public class GameScreen implements Screen {
 	public static final int HEIGHT = 720;
 	private Texture sun = new Texture(Gdx.files.internal("textures/bg/sun.png"), true);
 	private Vector2 sunPos = new Vector2();
+	private Vector2 screenPos = new Vector2();
 	private RitualGame game;
 	private int dayTime;
 	private GameHandler gameHandler;
@@ -24,6 +26,7 @@ public class GameScreen implements Screen {
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport viewport;
+	private BitmapFont font = new BitmapFont();
 
 	public GameScreen(RitualGame game) {
 		this.game = game;
@@ -62,12 +65,13 @@ public class GameScreen implements Screen {
 		batch.begin();
 		batch.draw(sun, sunPos.x, sunPos.y);
 		gameHandler.render(batch);
+		font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(), 0, 12);
 		batch.end();
 	}
 
 	public Vector2 getRealScreenPos(float mouseX, float mouseY) {
-		Vector2 pos = new Vector2(mouseX, mouseY);
-		return viewport.unproject(pos);
+		screenPos.set(mouseX, mouseY);
+		return viewport.unproject(screenPos);
 	}
 
 	private float getSkyAlpha(float x) {

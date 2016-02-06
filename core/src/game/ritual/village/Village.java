@@ -1,19 +1,17 @@
 package game.ritual.village;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
-import game.ritual.Line;
 import game.ritual.rituals.WeeklyRitual;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Village {
-    private static final int MAX_HOURS = 24;
+    private static final int MAX_HOURS = 999;
     private ArrayList<Villager> villagers;
     private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
     private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -31,7 +29,8 @@ public class Village {
     private boolean isNextDay = false;
     private int villagerAdded = 0;
     private int villagerRemoved = 0;
-    private static Pool<Rectangle> rectPool = new Pool<Rectangle>() {
+	private static Random random = new Random();
+	private static Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
         protected Rectangle newObject () {
             return new Rectangle();
@@ -76,6 +75,7 @@ public class Village {
     }
 
     public void consume(float delta) {
+//        return;
         float consumeFood = 0;
         float consumeWater = 0;
         for (Villager villager : villagers) {
@@ -187,7 +187,8 @@ public class Village {
     }
 
     public void render(Batch batch) {
-        for (Villager villager : villagers) {
+	    Collections.sort(villagers);
+	    for (Villager villager : villagers) {
             villager.render(batch);
         }
         for (Villager villager : deadVillagers) {
@@ -240,12 +241,10 @@ public class Village {
     }
 
     private int randomX() {
-        Random random = new Random();
         return random.nextInt(685) + 5;
     }
 
     private int randomY() {
-        Random random = new Random();
         return random.nextInt(400) + 180;
     }
 

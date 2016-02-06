@@ -11,9 +11,10 @@ import game.ritual.GameObject;
 import game.ritual.Line;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
-public class Villager extends GameObject {
+public class Villager extends GameObject implements Comparable<Villager> {
     private VillagerRole role;
     private final static Texture[][] villagerTextures = {Assets.getTextures("villagers/citizen/citizen.png", "villagers/citizen/citizen_left_1.png",
             "villagers/citizen/citizen_left_2.png", "villagers/citizen/citizen_left_3.png", "villagers/citizen/citizen_left_2.png"),
@@ -161,4 +162,16 @@ public class Villager extends GameObject {
     public void setRole(VillagerRole a) {
         role = a;
     }
+
+    @Override
+    public int compareTo(Villager other) {
+        if (this.position.y > other.position.y) {
+            return -1;
+        } else if (this.position.y == other.position.y) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
 }
