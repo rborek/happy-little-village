@@ -37,7 +37,7 @@ public class GameHandler {
 	private boolean win = false;
 	private WinMessage winMessage;
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 
 	public RitualAltar getRitualAltar() {
 		return ritualAltar;
@@ -69,7 +69,7 @@ public class GameHandler {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
 		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, 2, 2);
 		village = new Village();
-		for (int i = 0; i < 2000; i++) {
+		for (int i = 0; i < 50; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
 		gemSummary = new GemSummary(this);

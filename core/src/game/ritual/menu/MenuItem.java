@@ -2,16 +2,9 @@ package game.ritual.menu;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 
-public abstract class MenuItem {
+public interface MenuItem {
 
-    public boolean interact(float mouseX, float mouseY) {
-        return false;
-    }
-
-    public void render(Batch batch) {
-
-    }
-
+    public boolean interact(float mouseX, float mouseY);
     public abstract void use();
 
 }

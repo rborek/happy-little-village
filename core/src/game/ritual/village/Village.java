@@ -203,40 +203,40 @@ public class Village {
 
     // return a position that does not overlap current villagers
     public Vector2 getEmptyPosition() {
-        Rectangle newPosition = rectPool.obtain();
-        newPosition.set(randomX(), randomY(), 0, 0);
-        Rectangle test; // position of the current villager
-        Rectangle test2;// destination of the current villager
-        Rectangle[] forbidden = new Rectangle[villagers.size() * 2];
-
-        int count = 0;
-        for (Villager villager : villagers) {
-            newPosition.setWidth(villager.getWidth());
-            newPosition.setHeight(villager.getHeight());
-            test = rectPool.obtain();
-            test.set(villager.getPosition().x, villager.getPosition().y, villager.getWidth(),
-                    villager.getHeight());
-            forbidden[count] = test;
-            count++;
-            test2 = rectPool.obtain();
-            test2.set(villager.getDestination().x, villager.getDestination().y, villager.getWidth(),
-                    villager.getHeight());
-            forbidden[count] = test2;
-            count++;
-            rectPool.free(test);
-            rectPool.free(test2);
-        }
-        newPosition.setPosition(randomX(), randomY());
+//        Rectangle newPosition = rectPool.obtain();
+//        newPosition.set(randomX(), randomY(), 0, 0);
+//        Rectangle test; // position of the current villager
+//        Rectangle test2;// destination of the current villager
+//        Rectangle[] forbidden = new Rectangle[villagers.size() * 2];
+//
+//        int count = 0;
+//        for (Villager villager : villagers) {
+//            newPosition.setWidth(villager.getWidth());
+//            newPosition.setHeight(villager.getHeight());
+//            test = rectPool.obtain();
+//            test.set(villager.getPosition().x, villager.getPosition().y, villager.getWidth(),
+//                    villager.getHeight());
+//            forbidden[count] = test;
+//            count++;
+//            test2 = rectPool.obtain();
+//            test2.set(villager.getDestination().x, villager.getDestination().y, villager.getWidth(),
+//                    villager.getHeight());
+//            forbidden[count] = test2;
+//            count++;
+//            rectPool.free(test);
+//            rectPool.free(test2);
+//        }
+//        newPosition.setPosition(randomX(), randomY());
 //        for (int i = 0; i < forbidden.length; i++) {
 //            if (newPosition.overlaps(forbidden[i])) {
 //                newPosition.setPosition(randomX(), randomY());
 //                i = -1;
 //            }
 //        }
-        float xPos = newPosition.x;
-        float yPos = newPosition.y;
-        rectPool.free(newPosition);
-        return new Vector2(xPos, yPos);
+//        float xPos = newPosition.x;
+//        float yPos = newPosition.y;
+//        rectPool.free(newPosition);
+        return new Vector2(randomX(), randomY());
     }
 
     private int randomX() {
