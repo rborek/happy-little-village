@@ -62,7 +62,7 @@ public class InputHandler implements InputProcessor {
 	}
 
 	private void checkContinue(float mouseX, float mouseY) {
-		messageBox.checkClick(mouseX, mouseY);
+		messageBox.interact(mouseX, mouseY);
 	}
 
 	private void pickUpGem(float mouseX, float mouseY) {

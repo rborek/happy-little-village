@@ -26,18 +26,19 @@ public class GameHandler {
 	private Texture scroll = Assets.getTexture("ui/scroll.png");
 	private boolean paused;
 	private GemBook miniBook = new GemBook(this);
-	private MessageBox messageBox;
-	private GemSummary gemSummary;
 	private boolean bookOpen;
-	private boolean intro = true;
-	private GodMessage godMessage;
-	private boolean gameOver = false;
 	private RitualBook ritualBook = new RitualBook(70, 160);
-	private GameOver gameOverMessage;
-	private boolean win = false;
 	private WinMessage winMessage;
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
 	private boolean DEBUG = false;
+	// all menuitems is put here
+	private MessageBox messageBox;
+	private GemSummary gemSummary;
+	private GodMessage godMessage;
+	private GameOver gameOverMessage;
+	private boolean win = false;
+	private boolean intro = true;
+	private boolean gameOver = false;
 
 	public RitualAltar getRitualAltar() {
 		return ritualAltar;

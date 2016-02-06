@@ -10,8 +10,9 @@ import com.badlogic.gdx.math.Rectangle;
 import game.ritual.Assets;
 import game.ritual.GameHandler;
 import game.ritual.GameObject;
+import game.ritual.menu.MenuItem;
 
-public class MessageBox extends GameObject {
+public class MessageBox extends GameObject implements MenuItem {
 	protected GameHandler gameHandler;
 	protected BitmapFont font;
 	protected String text;
@@ -21,21 +22,6 @@ public class MessageBox extends GameObject {
 	protected boolean click = false;
 	protected float continueX;
 	protected float continueY;
-
-	public MessageBox(Texture texture, float xPos, float yPos) {
-		super(texture, xPos, yPos);
-		font = new BitmapFont();
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.size = 72;
-		parameter.borderColor = Color.BLACK;
-		parameter.borderWidth = 1;
-		parameter.genMipMaps = true;
-		parameter.magFilter = Texture.TextureFilter.MipMapLinearLinear;
-		parameter.minFilter = Texture.TextureFilter.MipMapLinearLinear;
-		font = generator.generateFont(parameter);
-		setButtonPos();
-	}
 
 	// for the instruction
 	public MessageBox(String instruction, GameHandler gameHandler) {
@@ -67,13 +53,6 @@ public class MessageBox extends GameObject {
 		// TODO Auto-generated method stub
 	}
 
-	public void checkClick(float x, float y) {
-		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
-		if (r.contains(x, y)) {
-			gameHandler.unpause();
-		}
-	}
-
 	public void unclick() {
 		click = false;
 	}
@@ -93,4 +72,13 @@ public class MessageBox extends GameObject {
 //        font.draw(batch, title, continueX, continueY + 400);
 	}
 
+	@Override
+	public boolean interact(float mouseX, float mouseY) {
+		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
+		if (r.contains(mouseX, mouseY)) {
+			gameHandler.unpause();
+			return true;
+		}
+		return false;
+	}
 }

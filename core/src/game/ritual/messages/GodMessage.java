@@ -17,11 +17,6 @@ public class GodMessage extends MessageBox {
 	private Texture[] gems;
 
 
-	public GodMessage(Texture texture, float xPos, float yPos) {
-		super(texture, xPos, yPos);
-		// TODO Auto-generated constructor stub
-	}
-
 	public GodMessage(GemBag gemBag, Village village, GameHandler gameHandler) {
 		super("", gameHandler);
 		this.gemBag = gemBag;

@@ -15,14 +15,6 @@ public class WeekSummary extends MessageBox {
 		title = "Resource Summary";
 	}
 
-	@Override
-	public void checkClick(float x, float y) {
-		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
-		//System.out.println(continueX + ", " + continueY);
-		if (r.contains(x, y)) {
-			gameHandler.unpause();
-		}
-	}
 
 	@Override
 	public void update(float delta) {
