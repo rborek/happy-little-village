@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+import game.ritual.gems.GemBag;
+import game.ritual.gems.GemColour;
 import game.ritual.rituals.WeeklyRitual;
 
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.Collections;
 import java.util.Random;
 
 public class Village {
-    private static final int MAX_HOURS = 999;
+    private static final int MAX_HOURS = 2;
     private ArrayList<Villager> villagers;
     private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
     private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -22,9 +24,9 @@ public class Village {
     private float water = 0;
     private float consumedWater = 0;
     private float gatheredWater = 0;
-    private VillageInformation info;
+    private VillageInformation villageInformation;
     private float hoursLeft;
-    private float daysLeft;
+    private  float daysLeft;
     private int day;
     private boolean isNextDay = false;
     private int villagerAdded = 0;
@@ -36,15 +38,18 @@ public class Village {
             return new Rectangle();
         }
     };
+    private int[] gemMined= new int[4];
+    private GemBag gemBag;
 
-    public Village() {
+    public Village(GemBag gemBag) {
         this.villagers = new ArrayList<Villager>();
-        info = new VillageInformation(60, 10);
         food = 9999;
         water = 9999;
         hoursLeft = MAX_HOURS;
         daysLeft = 5;
         day = 0;
+        this.gemBag = gemBag;
+        villageInformation = new VillageInformation(this, 60, 10);
     }
 
     public WeeklyRitual getWeeklyRitual() {
@@ -158,7 +163,7 @@ public class Village {
         }
         isNextDay = false;
         consume(delta);
-        info.setResources((int) food, (int) water, villagers.size(), (int) Math.ceil(hoursLeft), day, (int) daysLeft);
+
         timePass(delta);
     }
 
@@ -176,12 +181,24 @@ public class Village {
 		hoursLeft = MAX_HOURS;
 		isNextDay = true;
 		villagerAdded = 0;
-	}
+        mineGems();
+    }
 
 	public void mineGems() {
-		// TODO Duke - move the mining from GemSummary to here
-	}
-
+        // reset the gem from previous week
+        for(int resetGem : gemMined){
+            resetGem =0;
+        }
+        //get a random gemColour and store it in gemMined according to its ordinal
+        for (int i = 0; i < getNumberOf(VillagerRole.MINER) * 3; i++) {
+            GemColour g = gemBag.gainRandomGem();
+            gemMined[g.ordinal()]++;
+            System.out.println(gemMined[g.ordinal()]);
+        }
+    }
+    public int[] getMinedGems(){
+        return gemMined;
+    }
     public boolean isNextDay() {
         return isNextDay;
     }
@@ -205,7 +222,7 @@ public class Village {
         for (VillagerEffect villagerEffect : effects) {
             villagerEffect.render(batch);
         }
-        info.render(batch);
+        villageInformation.render(batch);
     }
 
 

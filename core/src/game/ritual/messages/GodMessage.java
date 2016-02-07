@@ -20,7 +20,7 @@ public class GodMessage extends MessageBox {
 		super("", gameHandler);
 		this.gemBag = gemBag;
 		this.village = village;
-		title = " God Message";
+		title = "God Message";
 	}
 
 	public boolean checkRitual() {
@@ -29,7 +29,7 @@ public class GodMessage extends MessageBox {
 			village.setDaysLeft(4);
 			return true;
 		} else {
-			text = " Complete the monthly ritual \n before the time runs out!";
+			//text = " Complete the monthly ritual \n before the time runs out!";
 			timesToDo = village.getWeeklyRitual().getTimesToDo();
 			timesPerformed = village.getWeeklyRitual().getTimesPerformed();
 			return false;

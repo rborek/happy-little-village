@@ -12,8 +12,8 @@ import game.ritual.GameHandler;
 import game.ritual.GameObject;
 import game.ritual.menu.MenuItem;
 
-// TODO Duke - make abstract
-public class MessageBox extends GameObject implements MenuItem {
+
+public abstract class  MessageBox extends GameObject implements MenuItem {
 	protected GameHandler gameHandler;
 	protected BitmapFont font;
 	protected String text;

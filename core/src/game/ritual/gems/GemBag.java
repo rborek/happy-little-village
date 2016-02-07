@@ -25,7 +25,7 @@ public class GemBag extends GameObject {
 
 	public GemBag(float xPos, float yPos) {
 		super(Assets.getTexture("ui/gem_bag.png"), xPos, yPos);
-		gemAmounts = new int[GemColour.values().length];
+		//gemAmounts = new int[GemColour.values().length];
 		for (int i = 0; i < gemAmounts.length; i++) {
 			gemAmounts[i] = 25;
 		}

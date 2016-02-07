@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 import game.ritual.gems.GemBook;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
@@ -41,6 +42,7 @@ public class GameHandler {
 	private boolean intro = true;
 	private boolean gameOver = false;
 
+
 	public RitualAltar getRitualAltar() {
 		return ritualAltar;
 	}
@@ -49,16 +51,15 @@ public class GameHandler {
 		return gemBag;
 	}
 
-	public MessageBox getMessageBox() {
-		return messageBox;
-	}
-
 	public RitualBook getRitualBook() {
 		return ritualBook;
 	}
 
 	public GemBook getMiniBook() {
 		return miniBook;
+	}
+	public MessageBox getMessageBox(){
+		return messageBox;
 	}
 
 	public GameHandler(InputHandler inputHandler) {
@@ -69,15 +70,11 @@ public class GameHandler {
 	public void init() {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
 		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, 2, 2);
-		village = new Village();
+		village = new Village(gemBag);
 		for (int i = 0; i < 25; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
-		gemSummary = new GemSummary(gemBag, village, this);
-		// TODO Duke - Change this to Instructions and make Instructions
-		messageBox = new MessageBox("  Welcome to your happy little village!\n Efficiently maintain your villagers'\n happiness"
-				+ " by giving them food and\n water! Combine gems from your bag \n to gain or sacrifice different \n resources and villagers! You can\n combine"
-				+ " a maximum of 4 gems\n of any kind! ", this);
+		messageBox = new Introduction(this);
 		gameOverMessage = new GameOver(this);
 		winMessage = new WinMessage(this);
 		Ritual.setVillage(village);
@@ -95,26 +92,27 @@ public class GameHandler {
 	public void unpause() {
 		if (messageBox instanceof WeekSummary) {
 			messageBox = new GemSummary(gemBag, village, this);
-			((GemSummary) messageBox).gemMined();
 		} else if (messageBox instanceof GemSummary) {
 			messageBox = new GodMessage(gemBag, village, this);
 			if (((GodMessage) messageBox).checkRitual()) {
+				//TODO change this messy code
 				ritualAltar.removeRitual(village.getWeeklyRitual());
 				village.newWeeklyRitual();
 				ritualAltar.gainRitual(village.getWeeklyRitual());
 			}
 			((GodMessage) messageBox).stateRitual();
-		} else if (messageBox instanceof MessageBox) {
-			messageBox = new WeekSummary(village, this);
-			paused = false;
 			inputHandler.enable();
 		}
-
+		if (messageBox instanceof Introduction) {
+			messageBox = new WeekSummary(village, this);
+			paused = false;
+			//inputHandler.enable();
+		}
 	}
 
 	// game logic goes here
 	public void update(float delta) {
-		if (win == false) {
+		if (!win) {
 			if (village.getSize() <= 0) {
 				gameOverMessage.setCondition(0);
 				gameOver = true;
@@ -129,7 +127,7 @@ public class GameHandler {
 				gameOver = true;
 			}
 		}
-		if (gameOver == false) {
+		if (!gameOver) {
 			if (village.getSize() < -1) {
 				winMessage.setCondition(1);
 				win = true;
@@ -147,19 +145,6 @@ public class GameHandler {
 		}
 
 	}
-
-	public Village getVillage() {
-		return village;
-	}
-
-	public void openBook() {
-		bookOpen = true;
-	}
-
-	public void closeBook() {
-		bookOpen = false;
-	}
-
 
 	// rendering goes here
 	public void render(Batch batch) {
@@ -189,5 +174,19 @@ public class GameHandler {
 			winMessage.render(batch);
 		}
 	}
+
+
+	public Village getVillage() {
+		return village;
+	}
+
+	public void openBook() {
+		bookOpen = true;
+	}
+
+	public void closeBook() {
+		bookOpen = false;
+	}
+
 
 }
