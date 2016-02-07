@@ -90,9 +90,6 @@ public class RitualAltar extends GameObject {
 				texture = animation[0];
 			}
 		}
-		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			useGems();
-		}
 	}
 
 	@Override
