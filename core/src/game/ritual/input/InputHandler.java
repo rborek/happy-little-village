@@ -23,7 +23,7 @@ public class InputHandler implements InputProcessor {
 	private RitualBook ritualBook;
 	private MessageBox messageBox;
 	private GemBook miniBook;
-	boolean enabled = true;
+	private GameHandler gameHandler;
 
 
 	public InputHandler(GameScreen screen) {
@@ -36,6 +36,7 @@ public class InputHandler implements InputProcessor {
 		this.messageBox = gameHandler.getMessageBox();
 		this.ritualBook = gameHandler.getRitualBook();
 		this.miniBook = gameHandler.getMiniBook();
+		this.gameHandler = gameHandler;
 	}
 
 	public void renderSelectedGem(Batch batch) {
@@ -47,18 +48,6 @@ public class InputHandler implements InputProcessor {
 
 	private void tryToOpenBook(float mouseX, float mouseY) {
 		miniBook.toggle(mouseX, mouseY);
-	}
-
-	public void enable() {
-		enabled = true;
-	}
-
-	public void disable() {
-		enabled = false;
-	}
-
-	public void setMessageBox(MessageBox message) {
-		this.messageBox = message;
 	}
 
 	private void checkContinue(float mouseX, float mouseY) {
@@ -128,13 +117,13 @@ public class InputHandler implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector2 realPos = screen.getRealScreenPos(screenX, screenY);
 		System.out.println("Mouse click at " + realPos);
-		if (enabled) {
+		if (gameHandler.isPaused()) {
+			checkContinue(realPos.x, realPos.y);
+		} else {
 			tryToOpenBook(realPos.x, realPos.y);
 			tryToTurnPages(realPos.x, realPos.y);
 			removeFromSlots(realPos.x, realPos.y);
 			pickUpGem(realPos.x, realPos.y);
-		} else {
-			checkContinue(realPos.x, realPos.y);
 		}
 		return true;
 	}

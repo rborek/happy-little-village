@@ -13,7 +13,7 @@ import game.ritual.GameObject;
 import game.ritual.menu.MenuItem;
 
 
-public abstract class  MessageBox extends GameObject implements MenuItem {
+public abstract class MessageBox extends GameObject implements MenuItem {
 	protected GameHandler gameHandler;
 	protected BitmapFont font;
 	protected String text;

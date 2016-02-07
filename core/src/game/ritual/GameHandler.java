@@ -4,12 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
-import game.ritual.gems.GemBook;
 import game.ritual.gems.Gem;
 import game.ritual.gems.GemBag;
+import game.ritual.gems.GemBook;
 import game.ritual.input.InputHandler;
-import game.ritual.menu.MenuItem;
 import game.ritual.messages.*;
 import game.ritual.rituals.Ritual;
 import game.ritual.rituals.RitualAltar;
@@ -58,7 +56,8 @@ public class GameHandler {
 	public GemBook getMiniBook() {
 		return miniBook;
 	}
-	public MessageBox getMessageBox(){
+
+	public MessageBox getMessageBox() {
 		return messageBox;
 	}
 
@@ -84,9 +83,12 @@ public class GameHandler {
 
 	}
 
+	public boolean isPaused() {
+		return paused;
+	}
+
 	public void pause() {
 		paused = true;
-		inputHandler.disable();
 	}
 
 	public void unpause() {
@@ -104,7 +106,6 @@ public class GameHandler {
 		} else {
 			messageBox = new WeekSummary(village, this);
 			paused = false;
-			inputHandler.enable();
 		}
 	}
 
@@ -168,7 +169,7 @@ public class GameHandler {
 			}
 		} else if (gameOver && !win) {
 			gameOverMessage.render(batch);
-		} else if (!gameOver && win){
+		} else if (!gameOver && win) {
 			winMessage.render(batch);
 		}
 	}

@@ -3,9 +3,7 @@ package game.ritual.messages;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import game.ritual.GameHandler;
 import game.ritual.gems.GemBag;
-import game.ritual.gems.GemColour;
 import game.ritual.village.Village;
-import game.ritual.village.VillagerRole;
 
 public class GemSummary extends MessageBox {
 	private GemBag gemBag;

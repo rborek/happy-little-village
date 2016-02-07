@@ -56,7 +56,7 @@ public class Assets {
 	public static void load() {
 		TextureParameter param = new TextureParameter();
 		param.genMipMaps = true;
-		param.minFilter = TextureFilter.MipMapLinearNearest;
+		param.minFilter = TextureFilter.MipMapLinearLinear;
 		param.magFilter = TextureFilter.Linear;
 		loadTextures(param);
 		manager.finishLoading();
