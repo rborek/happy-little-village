@@ -101,12 +101,10 @@ public class GameHandler {
 				ritualAltar.gainRitual(village.getWeeklyRitual());
 			}
 			((GodMessage) messageBox).stateRitual();
-			inputHandler.enable();
-		}
-		if (messageBox instanceof Introduction) {
+		} else {
 			messageBox = new WeekSummary(village, this);
 			paused = false;
-			//inputHandler.enable();
+			inputHandler.enable();
 		}
 	}
 
