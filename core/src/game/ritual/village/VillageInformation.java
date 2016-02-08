@@ -56,12 +56,12 @@ public class VillageInformation extends GameObject {
 	@Override
 	public void render(Batch batch) {
 		batch.draw(texture, position.x, position.y);
-		resourceFont.draw(batch, "" + villagers.getFood(), position.x + 80, position.y + 90);
 		batch.draw(foodTexture, position.x + 20, 65);
-		resourceFont.draw(batch, "" + villagers.getWater(), position.x + 190, position.y + 90);
 		batch.draw(waterTexture, position.x + 140, 70);
-		statusFont.draw(batch, "Population: " + villagers.getPop(), position.x + 250, 120);
-		statusFont.draw(batch, "Hours: " + (int) Math.ceil(villagers.getHoursLeft()), position.x + 250, 80);
+		resourceFont.draw(batch, "" + villagers.getFood(), position.x + 80, position.y + 90);
+		resourceFont.draw(batch, "" + villagers.getWater(), position.x + 190, position.y + 90);
+		statusFont.draw(batch, "Pop: " + villagers.getPop(), position.x + 300, 120);
+		statusFont.draw(batch, "Hours: " + (int) Math.ceil(villagers.getHoursLeft()), position.x + 300, 80);
 		statusFont.draw(batch, "Days elapsed: " + (int) Math.ceil(villagers.getDay()), position.x + 405, 120);
 		statusFont.draw(batch, "Days left: " + villagers.getDaysLeft(), position.x + 405, 80);
 	}

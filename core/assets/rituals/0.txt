@@ -1,0 +1,3 @@
+01 Blue 02 Blue 03 Blue 04 Blue
+food +40
+water -25

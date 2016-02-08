@@ -1,0 +1,2 @@
+01 Green 02 Green 04 Red
+food +25

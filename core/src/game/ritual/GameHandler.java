@@ -96,7 +96,7 @@ public class GameHandler {
 			messageBox = new GemSummary(gemBag, village, this);
 		} else if (messageBox instanceof GemSummary) {
 			messageBox = new GodMessage(gemBag, village, this);
-			if (((GodMessage) messageBox).checkRitual()) {
+			if (((GodMessage) messageBox).checkRitual()) { 
 				//TODO change this messy code
 				ritualAltar.removeRitual(village.getWeeklyRitual());
 				village.newWeeklyRitual();

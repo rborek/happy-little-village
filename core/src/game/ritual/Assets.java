@@ -7,6 +7,11 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Assets {
 	private static final AssetManager manager = new AssetManager();
 
@@ -24,6 +29,25 @@ public class Assets {
 		return textures;
 	}
 
+	//returns a textfile from rituals. Takes full path as parameter
+	public static BufferedReader getRitual(String path){
+		BufferedReader ritual = null;
+		try{
+			ritual = new BufferedReader(new FileReader(path));
+		}
+		catch(FileNotFoundException ex) {
+			System.out.println(
+					"Unable to open file with path '" +
+							path + "'");
+		}
+		/*catch(IOException ex) {
+			System.out.println(
+					"Error reading file with path '"
+							+ path + "'");
+
+		}*/
+		return ritual;
+	}
 	// returns an array of textures given a folder/prefix
 	public static Texture[] getTextures(String prefix) {
 		FileHandle dir = Gdx.files.internal("prefix");
