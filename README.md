@@ -1,4 +1,5 @@
-Write stuff here!
+#In order to run the desktop build, set your project's working directory to android/assets
+
 Colors: Red, green, blue, yellow                Starting amount: 5 of each colour              Starting bars: 100 for each of happiness,food, and water levels 
 
 | To do: | 
@@ -22,10 +23,3 @@ Combine gems inside your bag on the bottom right into the altar to gain or sacri
 | ??3Red 1Yellow | Increase chance of explorer finding set piece by 15% |
 | //1Red 3Green | Gain 40 water, lose 25 food |
 | //3Blue 1 Green | Gain 40 food, lose 25 water |
-
-abstract class:
-
-array of gem colors
-
-commence
-village. (...)
