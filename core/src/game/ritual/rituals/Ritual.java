@@ -6,12 +6,14 @@ import game.ritual.village.Village;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public abstract class Ritual {
 	public int id;
 	protected static Village village;
 	protected GemColour[] gemCombination;
-	String[][] recipe = new String[3][3];
+	GemColour[][] recipe = new GemColour[3][3];
+	protected  static ArrayList<Ritual> a ;
 
 	public Ritual() {
 		gemCombination = getCombination();
@@ -38,7 +40,7 @@ public abstract class Ritual {
 				i++;
 			}
 			else{
-				recipe[x][y]= ""+parse[i];
+				recipe[x][y]= GemColour.valueOf(parse[i]);
 				i++;
 			}
 		}
