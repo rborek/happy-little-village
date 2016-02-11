@@ -72,7 +72,7 @@ public class GemBag extends GameObject {
 			}
 		}
 		for (int i = 0; i < gemTextures.length; i++) {
-			font.draw(batch, "" + gemAmounts[i], slots[i].x + 50, slots[i].y + 16);
+			font.draw(batch, "" + gemAmounts[i], slots[i].x + 40, slots[i].y + 16);
 		}
 	}
 

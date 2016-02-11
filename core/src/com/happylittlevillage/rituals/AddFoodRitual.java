@@ -4,11 +4,6 @@ import com.happylittlevillage.gems.GemColour;
 
 public class AddFoodRitual extends Ritual {
 
-	public AddFoodRitual() {
-		id = 1;
-
-	}
-
 	@Override
 	protected GemColour[] getCombination() {
 		return new GemColour[]{GemColour.GREEN, GemColour.GREEN, null, GemColour.RED};

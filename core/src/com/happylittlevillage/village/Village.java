@@ -41,8 +41,8 @@ public class Village {
 
 	public Village(GemBag gemBag) {
 		this.villagers = new ArrayList<Villager>();
-		food = 9999;
-		water = 9999;
+		food = 5000;
+		water = 5000;
 		hoursLeft = MAX_HOURS;
 		daysLeft = 5;
 		day = 0;

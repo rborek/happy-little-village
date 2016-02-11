@@ -5,10 +5,6 @@ import com.happylittlevillage.village.VillagerRole;
 
 public class ToExplorerRitual extends Ritual {
 
-	public ToExplorerRitual() {
-		id = 6;
-	}
-
 	@Override
 	protected GemColour[] getCombination() {
 		return new GemColour[]{GemColour.BLUE, GemColour.BLUE, GemColour.BLUE, GemColour.BLUE};

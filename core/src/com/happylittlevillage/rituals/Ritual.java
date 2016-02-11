@@ -4,47 +4,25 @@ import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.village.Village;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Ritual {
-	public int id;
+	private String name;
 	protected static Village village;
 	protected GemColour[] gemCombination;
-	GemColour[][] recipe = new GemColour[3][3];
-	protected  static ArrayList<Ritual> a ;
+	private GemColour[][] recipe;
+	private RitualEffect[] effects;
+	protected static ArrayList<Ritual> rituals;
 
 	public Ritual() {
 		gemCombination = getCombination();
+		// TODO
 	}
 
-	//Call file from Assests.getRitual. Read the first line and return positions of gem to recipe
-	public Ritual(BufferedReader a){
-		String text ="";
-		try {
-			text = a.readLine();
-		}
-		catch(IOException ex) {
-			System.out.println(
-					"Error reading file with path");
-		}
-		String[] parse = text.split(" ");
-		int x=0;
-		int y=0;
-		int i=0;
-		while(i<parse.length){
-			if (i%2==0){
-				x=(int)parse[i].charAt(0);
-				y=(int)parse[i].charAt(1);
-				i++;
-			}
-			else{
-				recipe[x][y]= GemColour.valueOf(parse[i]);
-				i++;
-			}
-		}
+	public Ritual(String file) {
+		// TODO
 	}
+
 	public boolean attempt(Gem[] gems) {
 		GemColour[] gemsToUse = new GemColour[gems.length];
 		for (int i = 0; i < gems.length; i++) {
@@ -70,14 +48,24 @@ public abstract class Ritual {
 
 	protected abstract GemColour[] getCombination();
 
+	/** Returns the recipe of GemColours for the ritual in a 2D array */
+	public GemColour[][] getRecipe() {
+		return recipe;
+	}
+
+	/** Returns the effects of the ritual in an array */
+	public RitualEffect[] getEffects() {
+		return effects;
+	}
+
 	protected abstract void commence();
 
 	public static void setVillage(Village village) {
 		Ritual.village = village;
 	}
 
-	public int getID() {
-		return id;
+	public String getName() {
+		return name;
 	}
 
 }

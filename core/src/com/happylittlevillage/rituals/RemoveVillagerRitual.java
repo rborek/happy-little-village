@@ -4,10 +4,6 @@ import com.happylittlevillage.gems.GemColour;
 
 public class RemoveVillagerRitual extends Ritual {
 
-	public RemoveVillagerRitual() {
-		id = 5;
-	}
-
 	@Override
 	protected GemColour[] getCombination() {
 		return new GemColour[]{null, GemColour.YELLOW, GemColour.GREEN, null};

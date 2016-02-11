@@ -30,14 +30,10 @@ public class RitualAltar extends GameObject implements MenuItem {
 	private boolean animating = false;
 	private float timer = 0;
 
-	public RitualAltar(GemBag gemBag, float xPos, float yPos, int rows, int cols) {
+	public RitualAltar(GemBag gemBag, float xPos, float yPos) {
 		super(Assets.getTexture("altar/altar1.png"), xPos, yPos);
-//        height *= rows;
-//        height += spacing * rows - 1;
-//        width *= cols;
-//        width += spacing * cols - 1;
-		gems = new Gem[rows * cols];
-		slots = new Rectangle[rows * cols];
+		gems = new Gem[4];
+		slots = new Rectangle[4];
 		this.gemBag = gemBag;
 		slots[0] = new Rectangle(paddingX, paddingY + 64 + spacingY, 64, 64);
 		slots[1] = new Rectangle(paddingX + 64 + spacingX, paddingY + 64 + spacingY, 64, 64);
@@ -66,12 +62,12 @@ public class RitualAltar extends GameObject implements MenuItem {
 
 
 	public boolean gainRitual(Ritual ritual) {
-		int ritualID = ritual.getID();
-		for (Ritual ritualToCheck : rituals) {
-			if (ritualID == ritualToCheck.getID()) {
-				return false;
-			}
-		}
+//		String ritualName = ritual.getName();
+//		for (Ritual ritualToCheck : rituals) {
+//			if (ritualName.equals(ritualToCheck.getName())) {
+//				return false;
+//			}
+//		}
 		rituals.add(ritual);
 		return true;
 
@@ -108,7 +104,7 @@ public class RitualAltar extends GameObject implements MenuItem {
 
 	public void removeRitual(Ritual ritual) {
 		for (int i = 0; i < rituals.size(); i++) {
-			if (ritual.getID() == rituals.get(i).getID()) {
+			if (ritual.getName().equals(rituals.get(i).getName())) {
 				rituals.remove(i);
 			}
 		}
@@ -131,6 +127,10 @@ public class RitualAltar extends GameObject implements MenuItem {
 		animating = true;
 	}
 
+	// TODO Duke - use ritual.getRecipe() and ritual.getEffects()
+	// add each successful Ritual's effects to an arrayList of RitualEffects
+	//
+	// once it is done checking, call affectVillage(village) from every RitualEffect
 	public void useGems() {
 		for (Ritual ritual : rituals) {
 			if (ritual.attempt(gems)) {

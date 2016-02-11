@@ -5,10 +5,6 @@ import com.happylittlevillage.village.VillagerRole;
 
 public class ToFarmerRitual extends Ritual {
 
-	public ToFarmerRitual() {
-		id = 7;
-	}
-
 	@Override
 	protected GemColour[] getCombination() {
 		return new GemColour[]{GemColour.GREEN, GemColour.GREEN, GemColour.GREEN, GemColour.GREEN};

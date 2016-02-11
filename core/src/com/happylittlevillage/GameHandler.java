@@ -68,9 +68,9 @@ public class GameHandler {
 
 	public void init() {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
-		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, 2, 2);
+		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12);
 		village = new Village(gemBag);
-		for (int i = 0; i < 25; i++) {
+		for (int i = 0; i < 100; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
 		messageBox = new Introduction(this);
@@ -127,6 +127,10 @@ public class GameHandler {
 			} else if ((!village.getWeeklyRitual().isComplete() && village.getDaysLeft() < 0)) {
 				gameOverMessage.setCondition(3);
 				gameOver = true;
+			}
+			if (gameOver) {
+				messageBox = gameOverMessage;
+				pause();
 			}
 		}
 		if (!gameOver) {

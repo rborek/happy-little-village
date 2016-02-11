@@ -13,7 +13,6 @@ public class WeeklyRitual extends Ritual {
 
     public WeeklyRitual(int numGems, int timesToDo, Village village) {
         super();
-        id = 1337;
         generateRandom(numGems);
         this.village = village;
         this.timesToDo = timesToDo;
