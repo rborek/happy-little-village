@@ -56,11 +56,11 @@ public class Assets {
 	}
 
 	public static BitmapFont getFont(int size) {
-		if (fonts.containsKey(new Integer(size))) {
-			return fonts.get(new Integer(size));
+		if (fonts.containsKey(size)) {
+			return fonts.get(size);
 		} else {
 			BitmapFont font = generateFont(size);
-			fonts.put(new Integer(size), font);
+			fonts.put(size, font);
 			return font;
 		}
 	}
