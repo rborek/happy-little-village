@@ -10,8 +10,6 @@ import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
 
 public class VillageInformation extends GameObject {
-	private BitmapFont resourceFont;
-	private BitmapFont statusFont;
 	private int food;
 	private int water;
 	private int pop;
@@ -28,14 +26,6 @@ public class VillageInformation extends GameObject {
 	protected VillageInformation(Village villagers,float xPos, float yPos) {
 		super(Assets.getTexture("villagers/info_menu.png"), xPos, yPos);
 		setResources(villagers);
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.borderColor = Color.BLACK;
-		parameter.borderWidth = 1;
-		parameter.size = 36;
-		resourceFont = generator.generateFont(parameter);
-		parameter.size = 30;
-		statusFont = generator.generateFont(parameter);
 		this.villagers = villagers;
 	}
 
@@ -58,12 +48,12 @@ public class VillageInformation extends GameObject {
 		batch.draw(texture, position.x, position.y);
 		batch.draw(foodTexture, position.x + 20, 65);
 		batch.draw(waterTexture, position.x + 140, 70);
-		resourceFont.draw(batch, "" + villagers.getFood(), position.x + 80, position.y + 90);
-		resourceFont.draw(batch, "" + villagers.getWater(), position.x + 190, position.y + 90);
-		statusFont.draw(batch, "Pop: " + villagers.getPop(), position.x + 300, 120);
-		statusFont.draw(batch, "Hours: " + (int) Math.ceil(villagers.getHoursLeft()), position.x + 300, 80);
-		statusFont.draw(batch, "Days elapsed: " + (int) Math.ceil(villagers.getDay()), position.x + 405, 120);
-		statusFont.draw(batch, "Days left: " + villagers.getDaysLeft(), position.x + 405, 80);
+		Assets.getFont(36).draw(batch, "" + villagers.getFood(), position.x + 80, position.y + 90);
+		Assets.getFont(36).draw(batch, "" + villagers.getWater(), position.x + 190, position.y + 90);
+		Assets.getFont(30).draw(batch, "Pop: " + villagers.getPop(), position.x + 300, 120);
+		Assets.getFont(30).draw(batch, "Hours: " + (int) Math.ceil(villagers.getHoursLeft()), position.x + 300, 80);
+		Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(villagers.getDay()), position.x + 405, 120);
+		Assets.getFont(30).draw(batch, "Days left: " + villagers.getDaysLeft(), position.x + 405, 80);
 	}
 
 }

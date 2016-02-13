@@ -1,11 +1,7 @@
 package com.happylittlevillage.gems;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
@@ -14,7 +10,6 @@ import com.happylittlevillage.rituals.RitualAltar;
 import java.util.Random;
 
 public class GemBag extends GameObject {
-	private BitmapFont font;
 	private RitualAltar gemSlot;
 	private Texture[] gemTextures = Gem.getArrayOfTextures();
 	private Texture inactiveGem = Assets.getTexture("gems/gem_grey.png");
@@ -36,15 +31,6 @@ public class GemBag extends GameObject {
 			slots[i].x += position.x;
 			slots[i].y += position.y;
 		}
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.borderColor = Color.BLACK;
-		parameter.borderWidth = 1;
-		parameter.genMipMaps = true;
-		parameter.magFilter = Texture.TextureFilter.MipMapLinearLinear;
-		parameter.minFilter = Texture.TextureFilter.MipMapLinearLinear;
-		font = generator.generateFont(parameter);
-		texture.setFilter(Texture.TextureFilter.MipMapLinearLinear,Texture.TextureFilter.MipMapLinearLinear);
 	}
 
 	public void add(GemColour colour) {
@@ -72,7 +58,7 @@ public class GemBag extends GameObject {
 			}
 		}
 		for (int i = 0; i < gemTextures.length; i++) {
-			font.draw(batch, "" + gemAmounts[i], slots[i].x + 40, slots[i].y + 16);
+			Assets.getFont(24).draw(batch, "" + gemAmounts[i], slots[i].x + 30, slots[i].y + 16);
 		}
 	}
 

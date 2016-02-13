@@ -14,8 +14,8 @@ import com.happylittlevillage.menu.MenuItem;
 
 
 public abstract class MessageBox extends GameObject implements MenuItem {
-	protected GameHandler gameHandler;
 	protected BitmapFont font;
+	protected GameHandler gameHandler;
 	protected String text;
 	protected String title;
 	protected Texture continueButton = Assets.getTexture("ui/continue_button.png");
@@ -26,16 +26,6 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	public MessageBox(String instruction, GameHandler gameHandler) {
 		super(Assets.getTexture("ui/parchment.png"), 70, 160);
 		this.gameHandler = gameHandler;
-		font = new BitmapFont();
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.size = 36;
-		parameter.borderColor = Color.BLACK;
-		parameter.borderWidth = 1;
-		parameter.genMipMaps = true;
-		parameter.magFilter = Texture.TextureFilter.MipMapLinearLinear;
-		parameter.minFilter = Texture.TextureFilter.MipMapLinearLinear;
-		font = generator.generateFont(parameter);
 		this.text = instruction;
 		title = "";
 		setButtonPos();
@@ -53,6 +43,7 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 
 	@Override
 	public void render(Batch batch) {
+		font = Assets.getFont(36);
 		batch.draw(texture, position.x, position.y);
 		batch.draw(continueButton, continueX, continueY);
 		if (text != null) {

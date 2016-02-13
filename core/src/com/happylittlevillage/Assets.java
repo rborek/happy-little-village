@@ -4,16 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.HashMap;
 
 public class Assets {
 	private static final AssetManager manager = new AssetManager();
+	private static final HashMap<Integer, BitmapFont> fonts = new HashMap<Integer, BitmapFont>();
 
 	// returns the texture of a given file path
 	public static Texture getTexture(String path) {
@@ -27,6 +28,41 @@ public class Assets {
 			textures[i] = manager.get("textures/" + paths[i], Texture.class);
 		}
 		return textures;
+	}
+
+	public static void updateFonts() {
+		Object[] keys = fonts.keySet().toArray();
+		for (int i = 0; i < keys.length; i++) {
+			BitmapFont font = generateFont(((Integer) keys[i]).intValue());
+			fonts.put((Integer)keys[i], font);
+		}
+	}
+
+	private static BitmapFont generateFont(int size) {
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		float scale = 1.0f * Gdx.graphics.getWidth() / GameScreen.WIDTH * Gdx.graphics.getHeight() / GameScreen.HEIGHT;
+		if (scale < 1) {
+			scale = 1;
+		}
+		parameter.borderColor = Color.BLACK;
+		parameter.borderWidth = 1.5f * scale;
+		parameter.minFilter = Texture.TextureFilter.Linear;
+		parameter.magFilter = Texture.TextureFilter.Linear;
+		parameter.size = (int) Math.round(size * scale);
+		BitmapFont font = generator.generateFont(parameter);
+		font.getData().setScale(1 / scale);
+		return font;
+	}
+
+	public static BitmapFont getFont(int size) {
+		if (fonts.containsKey(new Integer(size))) {
+			return fonts.get(new Integer(size));
+		} else {
+			BitmapFont font = generateFont(size);
+			fonts.put(new Integer(size), font);
+			return font;
+		}
 	}
 
 	// returns an array of textures given a folder/prefix

@@ -14,7 +14,7 @@ public class RitualBook extends GameObject {
 
 	public RitualBook(float xPos, float yPos) {
 		super(Assets.getTexture("ui/book1.png"), xPos, yPos);
-		leftArrow = new Rectangle(xPos, yPos + 20, 70, 45);
+		leftArrow = new Rectangle(xPos + 30, yPos + 20, 70, 45);
 		rightArrow = new Rectangle(xPos + 495, yPos + 20, 70, 45);
 	}
 

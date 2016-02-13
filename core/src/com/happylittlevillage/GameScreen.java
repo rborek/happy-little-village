@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.happylittlevillage.input.InputHandler;
 
@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
 		camera = new OrthographicCamera();
 		camera.position.set(WIDTH / 2f, HEIGHT / 2f, 0);
 		camera.update();
-		viewport = new FitViewport(WIDTH, HEIGHT, camera);
+		viewport = new StretchViewport(WIDTH, HEIGHT, camera);
 		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
 		inputHandler = new InputHandler(this);
@@ -87,6 +87,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		viewport.update(width, height);
+		Assets.updateFonts();
 	}
 
 	@Override
