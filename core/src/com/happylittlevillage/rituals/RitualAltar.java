@@ -1,7 +1,5 @@
 package com.happylittlevillage.rituals;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -32,7 +30,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     private float timer = 0;
     private Gem[][] grid;
     private int[][] bonus;
-    private int[][] bonusAdd;
+    private int[][] addToBonus;
     private Rectangle[][] slots2;
     private ArrayList<RitualEffect[]> ritualEffects =new ArrayList<RitualEffect[]>();
     private Village village;
@@ -42,7 +40,7 @@ public class RitualAltar extends GameObject implements MenuItem {
         // rows then columns
         grid = new Gem[4][4]; // the new ritualAltar to work with
         bonus = new int[4][4];
-        bonusAdd = new int[4][4];
+        addToBonus = new int[4][4];
         slots2 = new Rectangle[4][4]; // new rectangle to work with
         //
         gems = new Gem[4];
@@ -142,23 +140,22 @@ public class RitualAltar extends GameObject implements MenuItem {
 
     // TODO Duke - use ritual.getRecipe() and ritual.getEffects()
     // add each successful Ritual's effects to an arrayList of RitualEffects
-    //
     // once it is done checking, call affectVillage(village) from every RitualEffect
     //the rule is to check from left to right, downward.
     public void useGems2() {
-        for (int i = 0; i < grid.length; i++) { //row i
-            for (int j = 0; j < grid[0].length; j++) { //column j
-                if (grid[i][j] != null) { // change from null to 0
+        for (int gridRow = 0; gridRow < grid.length; gridRow++) { //row gridRow
+            for (int gridColumn = 0; gridColumn < grid[0].length; gridColumn++) { //column gridColumn
+                if (grid[gridRow][gridColumn] != null) { // change from null to 0
                     //iterate through all known grid recipe
-                    for (int z = 0; z < rituals.size(); z++) {
+                    for (int ritualNumber = 0; ritualNumber < rituals.size(); ritualNumber++) {
                         // iterate through the first row of a recipe
-                        for (int w = 0; w < rituals.get(z).getRecipe()[0].length; w++) {
+                        for (int firstRecipePosition = 0; firstRecipePosition < rituals.get(ritualNumber).getRecipe()[0].length; firstRecipePosition++) {
                             // get the first non-null colour
-                            if (rituals.get(z).getRecipe()[0][w] != null) {
+                            if (rituals.get(ritualNumber).getRecipe()[0][firstRecipePosition] != null) {
                                 //check if the first row's non-null colour matches with the grid
-                                if (grid[i][j].getColour().equals(rituals.get(z).getRecipe()[0][w])) {
+                                if (grid[gridRow][gridColumn].getColour().equals(rituals.get(ritualNumber).getRecipe()[0][firstRecipePosition])) {
                                     //start to specifically check one recipe
-                                    compareRecipe(z, i, j, w);
+                                    compareRecipe(ritualNumber, gridRow, gridColumn, firstRecipePosition);
                                     break;
                                 } else {
                                     break;
@@ -184,43 +181,47 @@ public class RitualAltar extends GameObject implements MenuItem {
         }
     }
 
-    private void compareRecipe(int z, int i, int j, int w) {
-        GemColour[][] check = rituals.get(z).getRecipe(); // param @check just to shorten the path
+    // compareRecipe compare the recipe according to @param ritualNumber,
+    // having the position of @param gridRow and @param gridColumn
+    // and the @param firstRecipePosition that the grid encounters
+    private void compareRecipe(int ritualNumber, int gridRow, int gridColumn, int firstRecipePosition) {
+        GemColour[][] check = rituals.get(ritualNumber).getRecipe(); // check: just to shorten the path
         boolean match = true;
-        //reset the bonusAdd
+        //reset the addToBonus
         for (int a = 0; a < bonus.length; a++) {
             for (int b = 0; b < bonus[0].length; b++) {
-                bonusAdd[a][b] = 0;
+                addToBonus[a][b] = 0;
             }
         }
         checkMatch:
         {
-            for (int a = 0; a < check.length; a++) { // the length of recipe-row
-                for (int b = 0; b < check[0].length; b++) { // the width of recipe-column
-                    if (check[a][b] != null) { // for every non-void value of recipe.
-                        if ((i + a) > 3 || (j + b - w) > 3 || (j + b - w) < 0) {
+            for (int recipeRow = 0; recipeRow < check.length; recipeRow++) { // the length of recipe-row
+                for (int recipeColumn = 0; recipeColumn < check[0].length; recipeColumn++) { // the width of recipe-column
+                    if (check[recipeRow][recipeColumn] != null) { // for every non-void value of recipe.
+                        if ((gridRow + recipeRow) > 3 || (gridColumn + recipeColumn - firstRecipePosition) > 3 || (gridColumn + recipeColumn - firstRecipePosition) < 0) {
                             match = false;
                             break checkMatch;
-                        } else if (grid[i + a][j + b - w].getColour().equals(check[a][b])) {
+                        } else if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour().equals(check[recipeRow][recipeColumn])) {
                             match = false;
                             break checkMatch;
                         } else {//if the position passes these 2 conditions +1 for the use of that matched position
-                            bonusAdd[i + a][j + b - w]++;
+                            addToBonus[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition]++;
                         }
                     }
                 }
             }
         }
         if (match) {
-            for (int c = 0; c < bonus.length; c++) { // add bonus position to bonus
+            // add bonus position to bonus
+            for (int c = 0; c < bonus.length; c++) {
                 for (int d = 0; d < bonus[0].length; d++) {
-                    if (bonusAdd[c][d] != 0) {
-                        bonus[c][d] += bonusAdd[c][d];
+                    if (addToBonus[c][d] != 0) {
+                        bonus[c][d] += addToBonus[c][d];
                     }
                 }
             }
             //add each effect to the arrayList of ritualEffects
-            ritualEffects.add(rituals.get(z).getEffects());
+            ritualEffects.add(rituals.get(ritualNumber).getEffects());
         }
     }
 
