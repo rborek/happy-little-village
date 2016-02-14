@@ -15,6 +15,8 @@ import java.util.HashMap;
 public class Assets {
 	private static final AssetManager manager = new AssetManager();
 	private static final HashMap<Integer, BitmapFont> fonts = new HashMap<Integer, BitmapFont>();
+	private static FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
+	private static FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
 	// returns the texture of a given file path
 	public static Texture getTexture(String path) {
@@ -33,14 +35,13 @@ public class Assets {
 	public static void updateFonts() {
 		Object[] keys = fonts.keySet().toArray();
 		for (int i = 0; i < keys.length; i++) {
-			BitmapFont font = generateFont(((Integer) keys[i]).intValue());
+			BitmapFont font = generateFont((Integer)keys[i]);
+			fonts.get((Integer)keys[i]).dispose(); // without explicitly disposing, the font will stay in memory
 			fonts.put((Integer)keys[i], font);
 		}
 	}
 
 	private static BitmapFont generateFont(int size) {
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		float scale = 1.0f * Gdx.graphics.getWidth() / GameScreen.WIDTH * Gdx.graphics.getHeight() / GameScreen.HEIGHT;
 		if (scale < 1) {
 			scale = 1;
@@ -104,6 +105,6 @@ public class Assets {
 	}
 
 	public static void dispose() {
-
+		
 	}
 }
