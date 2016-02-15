@@ -142,10 +142,6 @@ public class RitualAltar extends GameObject implements MenuItem {
         animating = true;
     }
 
-    // TODO Duke - use ritual.getRecipe() and ritual.getEffects()
-    // add each successful Ritual's effects to an arrayList of RitualEffects
-    // once it is done checking, call affectVillage(village) from every RitualEffect
-    //the rule is to check from left to right, downward.
     public void useGems2() {
         for (int gridRow = 0; gridRow < grid.length; gridRow++) { //row gridRow
             for (int gridColumn = 0; gridColumn < grid[0].length; gridColumn++) { //column gridColumn
@@ -185,14 +181,13 @@ public class RitualAltar extends GameObject implements MenuItem {
         }
     }
 
-    // compareRecipe compare the recipe according to @param ritualNumber,
-    // having the position of @param gridRow and @param gridColumn
-    // and the @param firstRecipePosition that the grid encounters
+    // compareRecipe compare the recipe according to ritualNumber,
+    // having the position of gridRow and  gridColumn
+    // and the  firstRecipePosition that the grid encounters
     private void compareRecipe(int ritualNumber, int gridRow, int gridColumn, int firstRecipePosition) {
         GemColour[][] check = rituals.get(ritualNumber).getRecipe(); // check: just to shorten the path
         boolean match = true;
         ArrayList<Point> addToLightUpGrid = new ArrayList<Point>();
-        Point addPoint = new Point(0,0);
         //reset addToBonus
         for (int a = 0; a < bonus.length; a++) {
             for (int b = 0; b < bonus[0].length; b++) {
@@ -227,8 +222,7 @@ public class RitualAltar extends GameObject implements MenuItem {
                     if (addToBonus[c][d] != 0) {
                         bonus[c][d] += addToBonus[c][d];
                         //set x y coordinates for addPoint then add it to addToLightUpGrid which will then be added to the final LightUpGrid
-                        addPoint.setLocation(c,d);
-                        addToLightUpGrid.add(addPoint);
+                        addToLightUpGrid.add(new Point(c,d));
                     }
                 }
             }
