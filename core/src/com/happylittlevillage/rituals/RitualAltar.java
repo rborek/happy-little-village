@@ -11,6 +11,7 @@ import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.menu.MenuItem;
 import com.happylittlevillage.village.Village;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class RitualAltar extends GameObject implements MenuItem {
@@ -28,12 +29,15 @@ public class RitualAltar extends GameObject implements MenuItem {
     private static final int slotSize = 64;
     private boolean animating = false;
     private float timer = 0;
+    //var for the grid
     private Gem[][] grid;
     private int[][] bonus;
     private int[][] addToBonus;
     private Rectangle[][] slots2;
     private ArrayList<RitualEffect[]> ritualEffects =new ArrayList<RitualEffect[]>();
     private Village village;
+    private ArrayList<ArrayList<Point>> lightUpGrid = new ArrayList<ArrayList<Point>>();
+
 
     public RitualAltar(GemBag gemBag, float xPos, float yPos) {
         super(Assets.getTexture("altar/altar1.png"), xPos, yPos);
@@ -187,12 +191,17 @@ public class RitualAltar extends GameObject implements MenuItem {
     private void compareRecipe(int ritualNumber, int gridRow, int gridColumn, int firstRecipePosition) {
         GemColour[][] check = rituals.get(ritualNumber).getRecipe(); // check: just to shorten the path
         boolean match = true;
-        //reset the addToBonus
+        ArrayList<Point> addToLightUpGrid = new ArrayList<Point>();
+        Point addPoint = new Point(0,0);
+        //reset addToBonus
         for (int a = 0; a < bonus.length; a++) {
             for (int b = 0; b < bonus[0].length; b++) {
                 addToBonus[a][b] = 0;
             }
         }
+        //reset addToLightUpGrid
+        addToLightUpGrid.clear();
+
         checkMatch:
         {
             for (int recipeRow = 0; recipeRow < check.length; recipeRow++) { // the length of recipe-row
@@ -217,9 +226,14 @@ public class RitualAltar extends GameObject implements MenuItem {
                 for (int d = 0; d < bonus[0].length; d++) {
                     if (addToBonus[c][d] != 0) {
                         bonus[c][d] += addToBonus[c][d];
+                        //set x y coordinates for addPoint then add it to addToLightUpGrid which will then be added to the final LightUpGrid
+                        addPoint.setLocation(c,d);
+                        addToLightUpGrid.add(addPoint);
                     }
                 }
             }
+            //add used position to lightUpGrid for rendering
+            lightUpGrid.add(addToLightUpGrid);
             //add each effect to the arrayList of ritualEffects
             ritualEffects.add(rituals.get(ritualNumber).getEffects());
         }
