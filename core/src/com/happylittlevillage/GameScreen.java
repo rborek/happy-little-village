@@ -17,6 +17,8 @@ import com.happylittlevillage.input.InputHandler;
 public class GameScreen implements Screen {
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 720;
+	private int lastResHeight;
+	private int lastResWidth;
 	private Texture sun = new Texture(Gdx.files.internal("textures/bg/sun.png"), true);
 	private Vector2 sunPos = new Vector2();
 	private Vector2 screenPos = new Vector2();
@@ -86,18 +88,20 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		viewport.update(width, height);
-		Assets.updateFonts();
+		if (width != lastResWidth || height != lastResHeight) {
+			viewport.update(width, height);
+			Assets.updateFonts();
+			lastResWidth = width;
+			lastResHeight = height;
+		}
 	}
 
 	@Override
 	public void pause() {
-
 	}
 
 	@Override
 	public void resume() {
-
 	}
 
 	@Override
@@ -107,7 +111,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-
 	}
 
 	public static ShaderProgram createDefaultShader() {
