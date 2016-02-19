@@ -26,10 +26,9 @@ public class GodMessage extends MessageBox {
 	public boolean checkRitual() {
 		if (village.getWeeklyRitual().isComplete()) {
 			text = " You have completed the weekly ritual.\n";
-			village.setDaysLeft(4);
+			village.setDaysLeft(7);
 			return true;
 		} else {
-			//text = " Complete the monthly ritual \n before the time runs out!";
 			timesToDo = village.getWeeklyRitual().getTimesToDo();
 			timesPerformed = village.getWeeklyRitual().getTimesPerformed();
 			return false;

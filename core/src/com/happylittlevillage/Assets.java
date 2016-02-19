@@ -9,10 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.happylittlevillage.gems.Gem;
-import com.happylittlevillage.gems.GemColour;
 
-import java.io.*;
 import java.util.HashMap;
 
 public class Assets {
@@ -105,6 +102,7 @@ public class Assets {
 		param.magFilter = TextureFilter.Linear;
 		loadTextures(param);
 		manager.finishLoading();
+		Ritual.load();
 	}
 
 	public static void dispose() {

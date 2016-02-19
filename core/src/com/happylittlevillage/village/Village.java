@@ -44,7 +44,7 @@ public class Village {
 		food = 5000;
 		water = 5000;
 		hoursLeft = MAX_HOURS;
-		daysLeft = 5;
+		daysLeft = 7;
 		day = 0;
 		this.gemBag = gemBag;
 		villageInformation = new VillageInformation(this, 60, 10);
