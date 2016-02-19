@@ -172,6 +172,7 @@ public class GameHandler {
 					Villager.renderLines(shapeRenderer);
 					shapeRenderer.end();
 				}
+
 			}
 		} else {
 			messageBox.render(batch);

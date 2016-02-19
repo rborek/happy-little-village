@@ -37,6 +37,7 @@ public class InputHandler implements InputProcessor {
 		this.ritualBook = gameHandler.getRitualBook();
 		this.miniBook = gameHandler.getMiniBook();
 		this.gameHandler = gameHandler;
+
 	}
 
 	public void renderSelectedGem(Batch batch) {
