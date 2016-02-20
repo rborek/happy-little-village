@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Created by User on 18/02/16.
  */
-public class Miscellanous implements Screen,InputProcessor {
+public class Miscellaneous implements Screen,InputProcessor {
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
     protected HappyLittleVillage happyLittleVillage;
@@ -32,7 +32,7 @@ public class Miscellanous implements Screen,InputProcessor {
     protected Vector2 realPos = new Vector2();
 
 
-    public Miscellanous(HappyLittleVillage happyLittleVillage){
+    public Miscellaneous(HappyLittleVillage happyLittleVillage){
         this.happyLittleVillage = happyLittleVillage;
         camera = new OrthographicCamera();
         camera.position.set(WIDTH / 2f, HEIGHT / 2f, 0);
@@ -43,6 +43,7 @@ public class Miscellanous implements Screen,InputProcessor {
         batch.setProjectionMatrix(camera.combined);
         Gdx.input.setInputProcessor(this);
     }
+
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -63,7 +64,6 @@ public class Miscellanous implements Screen,InputProcessor {
         realPos.set(getRealScreenPos(screenX, screenY));
         return true;
     }
-
 
     public Vector2 getRealScreenPos(float mouseX, float mouseY) {
         screenPos.set(mouseX, mouseY);
@@ -90,8 +90,8 @@ public class Miscellanous implements Screen,InputProcessor {
     }
 
     @Override
-    public void show() {
-
+    public void show(){
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override

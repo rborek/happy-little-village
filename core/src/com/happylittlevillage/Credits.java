@@ -1,19 +1,12 @@
 package com.happylittlevillage;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.happylittlevillage.HappyLittleVillage;
 
 /**
  * Created by User on 18/02/16.
  */
-public class Credits extends  Miscellanous {
+public class Credits extends Miscellaneous {
     private Texture backButton = new Texture(Gdx.files.internal("textures/bg/backButton.png"), true);
     private Rectangle backButtonPosition = new Rectangle(700, 100, backButton.getWidth(), backButton.getHeight());
 

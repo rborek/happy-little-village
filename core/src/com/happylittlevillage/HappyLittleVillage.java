@@ -25,6 +25,7 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
     public void setMenu() {
         if (mainMenu == null) {
             mainMenu = new MainMenu(this);
+            System.out.println("Already setMenu in Screen");
         }
         setScreen(mainMenu);
     }
@@ -34,6 +35,7 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
             options = new Options(this);
         }
         setScreen(options);
+        System.out.println("Already setOptions in Screen");
     }
 
     public void setCredits() {
@@ -41,6 +43,7 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
             credits = new Credits(this);
         }
         setScreen(credits);
+        System.out.println("Already setCredits");
     }
 
 

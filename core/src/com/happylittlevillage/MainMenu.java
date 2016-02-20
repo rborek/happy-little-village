@@ -1,15 +1,13 @@
 package com.happylittlevillage;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by User on 18/02/16.
  */
-public class MainMenu extends Miscellanous {
+public class MainMenu extends Miscellaneous {
     private Texture optionsButton = new Texture(Gdx.files.internal("textures/bg/optionsButton.png"), true);
     private Texture startButton = new Texture(Gdx.files.internal("textures/bg/startButton.png"), true);
     private Texture creditsButton = new Texture(Gdx.files.internal("textures/bg/creditsButton.png"), true);
@@ -27,17 +25,24 @@ public class MainMenu extends Miscellanous {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        super.touchDown(screenX,screenY,pointer,button); // set the realPos
+        super.touchDown(screenX, screenY, pointer, button); // set the realPos
         System.out.println(realPos);
         if (creditsButtonPosition.contains(realPos)) {
-            System.out.print("YES");
             happyLittleVillage.setCredits();
+            return true;
         } else if (startButtonPosition.contains(realPos)) {
             happyLittleVillage.setGameScreen();
-        } else if (optionsButtonPosition.contains(realPos)) {
+            return true;
+        } else
+            System.out.println("Before Loop");
+        if (optionsButtonPosition.contains(realPos)) {
             happyLittleVillage.setOptions();
+            return true;
+        } else {
+            System.out.println("not contain");
         }
-        return true;
+        System.out.println("After Loop");
+        return false;
     }
 
     @Override
@@ -52,7 +57,7 @@ public class MainMenu extends Miscellanous {
 
     @Override
     public void resize(int width, int height) {
-        super.resize(width,height);
+        super.resize(width, height);
     }
 
 
