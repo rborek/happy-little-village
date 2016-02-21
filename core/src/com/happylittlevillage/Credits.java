@@ -17,7 +17,6 @@ public class Credits extends Miscellaneous {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX,screenY,pointer,button); // set the realPos
-        System.out.println(realPos);
         if(backButtonPosition.contains(realPos)){
             happyLittleVillage.setMenu();
         }
@@ -27,8 +26,9 @@ public class Credits extends Miscellaneous {
     public void render(float delta) {
         batch.begin();
         batch.draw(backGround,0,0);
-        batch.draw(backButton,700,100);
+        batch.draw(backButton,800,100);
         batch.end();
+
     }
 
     @Override

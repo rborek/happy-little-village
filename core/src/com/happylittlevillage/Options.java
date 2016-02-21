@@ -8,11 +8,13 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class Options extends Miscellaneous {
     private Texture backButton = new Texture(Gdx.files.internal("textures/bg/backButton.png"), true);
-    private float xPos =20;
-    private float yPos =20;
+    private float xPos =800;
+    private float yPos =400;
     private Rectangle backButtonPosition = new Rectangle(700, 100, backButton.getWidth(), backButton.getHeight());
     private Texture buttonScale = new Texture(Gdx.files.internal("textures/bg/buttonScale.png"), true);
     private Rectangle buttonScalePosition = new Rectangle(20, 20, buttonScale.getWidth(), buttonScale.getHeight());
+    private Texture bar = new Texture(Gdx.files.internal("textures/bg/bar.png"),true);
+    private Rectangle barPosition = new Rectangle(800, 400, bar.getWidth(), bar.getHeight());
 
     public Options(HappyLittleVillage happyLittleVillage){
         super(happyLittleVillage);
@@ -23,13 +25,11 @@ public class Options extends Miscellaneous {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX,screenY,pointer,button); // set the realPos
-//        System.out.println(realPos);
-        if(buttonScalePosition.contains(realPos)){
-            setPosition();
+        if(barPosition.contains(realPos)){
+            xPos = realPos.x;
         }
         if(backButtonPosition.contains(realPos)){
             happyLittleVillage.setMenu();
-            System.out.println("Already pass in return to MainMenu in Screen");
         }
 
         return true;
@@ -43,8 +43,9 @@ public class Options extends Miscellaneous {
     public void render(float delta) {
         batch.begin();
         batch.draw(backGround,0,0);
-        batch.draw(backButton,700,100);
-        batch.draw(buttonScale,xPos,yPos);
+        batch.draw(backButton,800,100);
+        batch.draw(bar,800,400);
+        batch.draw(buttonScale,xPos,yPos+5);
         batch.end();
     }
 

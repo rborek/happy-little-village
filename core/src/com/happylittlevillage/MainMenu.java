@@ -34,14 +34,12 @@ public class MainMenu extends Miscellaneous {
             happyLittleVillage.setGameScreen();
             return true;
         } else
-            System.out.println("Before Loop");
         if (optionsButtonPosition.contains(realPos)) {
             happyLittleVillage.setOptions();
             return true;
         } else {
             System.out.println("not contain");
         }
-        System.out.println("After Loop");
         return false;
     }
 
