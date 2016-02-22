@@ -36,9 +36,9 @@ public class Assets {
 	public static void updateFonts() {
 		Object[] keys = fonts.keySet().toArray();
 		for (int i = 0; i < keys.length; i++) {
-			BitmapFont font = generateFont((Integer)keys[i]);
-			fonts.get((Integer)keys[i]).dispose(); // without explicitly disposing, the font will stay in memory
-			fonts.put((Integer)keys[i], font);
+			BitmapFont font = generateFont((Integer) keys[i]);
+			fonts.get((Integer) keys[i]).dispose(); // without explicitly disposing, the font will stay in memory
+			fonts.put((Integer) keys[i], font);
 		}
 	}
 
@@ -96,15 +96,15 @@ public class Assets {
 		}
 	}
 
-	public static void loadMenuTextures(){
+	public static void loadMenuTextures() {
 		TextureParameter param = new TextureParameter();
 		param.genMipMaps = true;
 		param.minFilter = TextureFilter.MipMapLinearLinear;
 		param.magFilter = TextureFilter.Linear;
 		FileHandle dir = Gdx.files.internal("textures/bg");
 		System.out.println(dir.isDirectory());
-		for(FileHandle file : dir.list()){
-			System.out.println("loading"+file);
+		for (FileHandle file : dir.list()) {
+			System.out.println("loading " + file);
 			manager.load(file.toString(), Texture.class, param);
 		}
 		manager.finishLoading();
@@ -121,7 +121,7 @@ public class Assets {
 	}
 
 	public static void dispose() {
-		
+
 	}
 
 }
