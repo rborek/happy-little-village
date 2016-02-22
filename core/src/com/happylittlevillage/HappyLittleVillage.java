@@ -24,10 +24,10 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
     }
 
     public void setMenu() {
+        Assets.loadMenuTextures();
         if (mainMenu == null) {
             mainMenu = new MainMenu(this);
         }
-        Assets.loadMenuTextures();
         setScreen(mainMenu);
     }
 
