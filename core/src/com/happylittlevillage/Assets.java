@@ -96,6 +96,20 @@ public class Assets {
 		}
 	}
 
+	public static void loadMenuTextures(){
+		TextureParameter param = new TextureParameter();
+		param.genMipMaps = true;
+		param.minFilter = TextureFilter.MipMapLinearLinear;
+		param.magFilter = TextureFilter.Linear;
+		FileHandle dir = Gdx.files.internal("textures/bg");
+		System.out.println(dir.isDirectory());
+		for(FileHandle file : dir.list()){
+			System.out.println("loading"+file);
+			manager.load(file.toString(), Texture.class, param);
+		}
+		manager.finishLoading();
+	}
+
 	public static void load() {
 		TextureParameter param = new TextureParameter();
 		param.genMipMaps = true;

@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
  * Created by User on 18/02/16.
  */
 public class MainMenu extends Miscellaneous {
-    private Texture optionsButton = new Texture(Gdx.files.internal("textures/bg/optionsButton.png"), true);
+    private Texture optionsButton = Assets.getTexture("bg/optionsButton.png");
     private Texture startButton = new Texture(Gdx.files.internal("textures/bg/startButton.png"), true);
     private Texture creditsButton = new Texture(Gdx.files.internal("textures/bg/creditsButton.png"), true);
     private Texture[] buttons = {optionsButton, startButton, creditsButton};
@@ -16,11 +16,9 @@ public class MainMenu extends Miscellaneous {
     private Rectangle optionsButtonPosition = new Rectangle(800, 300, optionsButton.getWidth(), optionsButton.getHeight());
     private Rectangle creditsButtonPosition = new Rectangle(800, 100, creditsButton.getWidth(), creditsButton.getHeight());
 
-
     public MainMenu(HappyLittleVillage happyLittleVillage) {
         super(happyLittleVillage);
         backGround = new Texture(Gdx.files.internal("textures/bg/menu.png"), true);
-
     }
 
     @Override

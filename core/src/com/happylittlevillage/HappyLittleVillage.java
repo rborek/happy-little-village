@@ -13,6 +13,7 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
     public void create() {
          setMenu();
 
+
     }
 
     public void setGameScreen() {
@@ -26,6 +27,7 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
         if (mainMenu == null) {
             mainMenu = new MainMenu(this);
         }
+        Assets.loadMenuTextures();
         setScreen(mainMenu);
     }
 
