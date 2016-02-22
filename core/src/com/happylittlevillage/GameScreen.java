@@ -19,7 +19,7 @@ public class GameScreen implements Screen {
 	public static final int HEIGHT = 720;
 	private int lastResHeight;
 	private int lastResWidth;
-	private Texture sun = new Texture(Gdx.files.internal("textures/bg/sun.png"), true);
+	private Texture sun;
 	private Vector2 sunPos = new Vector2();
 	private Vector2 screenPos = new Vector2();
 	private HappyLittleVillage game;
@@ -35,6 +35,7 @@ public class GameScreen implements Screen {
 	public GameScreen(HappyLittleVillage game) {
 		this.game = game;
 		Assets.load();
+		sun = Assets.getTexture("bg/sun.png");
 		if (Gdx.app.getType() == Application.ApplicationType.Android) {
 			batch = new SpriteBatch();
 		} else {
