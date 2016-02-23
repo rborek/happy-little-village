@@ -101,12 +101,7 @@ public class Assets {
 		param.genMipMaps = true;
 		param.minFilter = TextureFilter.MipMapLinearLinear;
 		param.magFilter = TextureFilter.Linear;
-		FileHandle dir = Gdx.files.internal("textures/bg");
-		System.out.println(dir.isDirectory());
-		for (FileHandle file : dir.list()) {
-			System.out.println("loading " + file);
-			manager.load(file.toString(), Texture.class, param);
-		}
+		loadTextures(new FileHandle("textures/menu"), param);
 		manager.finishLoading();
 	}
 

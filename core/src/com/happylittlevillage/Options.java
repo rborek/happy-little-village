@@ -5,18 +5,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Options extends Miscellaneous {
-	private Texture backButton = new Texture(Gdx.files.internal("textures/bg/backButton.png"), true);
 	private float xPos = 800;
 	private float yPos = 400;
-	private Rectangle backButtonPosition = new Rectangle(700, 100, backButton.getWidth(), backButton.getHeight());
-	private Texture buttonScale = new Texture(Gdx.files.internal("textures/bg/buttonScale.png"), true);
-	private Rectangle buttonScalePosition = new Rectangle(20, 20, buttonScale.getWidth(), buttonScale.getHeight());
-	private Texture bar = new Texture(Gdx.files.internal("textures/bg/bar.png"), true);
-	private Rectangle barPosition = new Rectangle(800, 400 - 20, bar.getWidth(), bar.getHeight() + 40);
+	private Texture backButton;
+	private Rectangle backButtonPosition;
+	private Texture buttonScale;
+	private Rectangle buttonScalePosition;
+	private Texture bar;
+	private Rectangle barPosition;
 
 	public Options(HappyLittleVillage happyLittleVillage) {
 		super(happyLittleVillage);
-		background = new Texture(Gdx.files.internal("textures/bg/options.png"), true);
+		background = Assets.getTexture("menu/options.png");
+		backButton = Assets.getTexture("menu/backButton.png");
+		backButtonPosition = new Rectangle(700, 100, backButton.getWidth(), backButton.getHeight());
+		buttonScale = Assets.getTexture("menu/buttonScale.png");
+		buttonScalePosition = new Rectangle(20, 20, buttonScale.getWidth(), buttonScale.getHeight());
+		bar = Assets.getTexture("menu/bar.png");
+		barPosition = new Rectangle(800, 400 - 20, bar.getWidth(), bar.getHeight() + 40);
 	}
 
 	@Override

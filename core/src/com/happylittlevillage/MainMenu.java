@@ -5,17 +5,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
 public class MainMenu extends Miscellaneous {
-	private Texture optionsButton = Assets.getTexture("bg/optionsButton.png");
-	private Texture startButton = new Texture(Gdx.files.internal("textures/bg/startButton.png"), true);
-	private Texture creditsButton = new Texture(Gdx.files.internal("textures/bg/creditsButton.png"), true);
-	private Texture[] buttons = {optionsButton, startButton, creditsButton};
-	private Rectangle startButtonPosition = new Rectangle(800, 500, startButton.getWidth(), startButton.getHeight());
-	private Rectangle optionsButtonPosition = new Rectangle(800, 300, optionsButton.getWidth(), optionsButton.getHeight());
-	private Rectangle creditsButtonPosition = new Rectangle(800, 100, creditsButton.getWidth(), creditsButton.getHeight());
-
+	private Texture optionsButton;
+	private Texture startButton;
+	private Texture creditsButton;
+	private Rectangle startButtonPosition;
+	private Rectangle optionsButtonPosition;
+	private Rectangle creditsButtonPosition;
 	public MainMenu(HappyLittleVillage happyLittleVillage) {
 		super(happyLittleVillage);
-		background = new Texture(Gdx.files.internal("textures/bg/menu.png"), true);
+		startButton = Assets.getTexture("menu/startButton.png");
+		creditsButton = Assets.getTexture("menu/creditsButton.png");
+		optionsButton = Assets.getTexture("menu/optionsButton.png");
+		optionsButtonPosition = new Rectangle(800, 300, optionsButton.getWidth(), optionsButton.getHeight());
+		startButtonPosition = new Rectangle(800, 500, startButton.getWidth(), startButton.getHeight());
+		creditsButtonPosition = new Rectangle(800, 100, creditsButton.getWidth(), creditsButton.getHeight());
+		background = Assets.getTexture("menu/menu.png");
 	}
 
 	@Override
