@@ -1,0 +1,3 @@
+addVillager
+00 YELLOW 01 GREEN 10 RED 11 BLUE
+villager +1

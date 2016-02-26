@@ -1,0 +1,5 @@
+removeAVillager
+00 RED 01 YELLOW 10 YELLOW 11 RED
+villager -1
+food +50
+happiness -25
