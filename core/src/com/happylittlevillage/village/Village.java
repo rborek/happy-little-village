@@ -31,6 +31,7 @@ public class Village {
 	private int villagerRemoved = 0;
 	private static Random random = new Random();
 	private float villagerToSpawn= 0;
+	private int villagerQueue = 0;
 //	private static Pool<Rectangle> rectPool = new Pool<Rectangle>() {
 //		@Override
 //		protected Rectangle newObject() {
@@ -165,8 +166,13 @@ public class Village {
 		isNextDay = false;
 		consume(delta);
 		timePass(delta);
+		//decrement time of spawning
 		if(villagerToSpawn>0){
-			setVillagerToSpawn(delta);
+			villagerToSpawn= villagerToSpawn -delta;
+		}
+		//if enough time pass call the rest of the villagers needed to be spawn
+		else{
+			queueSpawn();
 		}
 	}
 
@@ -176,17 +182,31 @@ public class Village {
 			dayPass();
 		}
 	}
-	private void setVillagerToSpawn(float delta){
-		villagerToSpawn= villagerToSpawn -delta;
-	}
-	public void addVillager(VillagerRole role) {
-		if(villagerToSpawn<=0){
-			villagers.add(new Villager(role, this));
-			villagerAdded += 1;
-			villagerToSpawn=2;
-		}
 
+	public void addVillager(VillagerRole role) {
+		if(villagerQueue==0){
+			if(villagerToSpawn<=0) {
+				villagers.add(new Villager(role, this));
+				villagerAdded += 1;
+				villagerToSpawn = (float) 0.5;
+			}
+			else{
+				villagerQueue++;
+			}
+		}
+		else{
+			villagerQueue++;
+		}
 	}
+	private void queueSpawn(){
+		if(villagerQueue!=0){
+			villagers.add(new Villager(VillagerRole.CITIZEN,this));
+			villagerAdded += 1;
+			villagerToSpawn = (float) 0.5;
+			villagerQueue--;
+		}
+	}
+
 
 	public void dayPass() {
 		villagerRemoved = 0;

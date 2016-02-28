@@ -148,7 +148,7 @@ public class GameHandler {
 			}
 			village.update(delta);
 			ritualAltar.update(delta);
-			village.addVillager(VillagerRole.CITIZEN);
+
 		}
 
 	}
