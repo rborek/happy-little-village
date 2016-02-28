@@ -33,6 +33,7 @@ public class GemBook extends GameObject {
 				gameHandler.openBook();
 				open = true;
 				texture = Assets.getTexture("ui/small_book_open.png");
+
 			} else {
 				gameHandler.closeBook();
 				open = false;

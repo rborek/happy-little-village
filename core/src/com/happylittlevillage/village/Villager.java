@@ -69,7 +69,8 @@ public class Villager extends GameObject implements Comparable<Villager> {
 	public Villager(VillagerRole role, Village village) {
 		super(villagerTextures[role.ordinal()][0], 0, 0);
 		this.village = village;
-		position = new Vector2((float) Math.random() * 500, 195);
+//		position = new Vector2((float) Math.random() * 500, 195);
+		position = new Vector2(300,300);
 		this.role = role;
 		velocity = new Vector2(0, 0);
 		generateNewDestination();

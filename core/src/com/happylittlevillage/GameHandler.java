@@ -70,7 +70,7 @@ public class GameHandler {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
 		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12);
 		village = new Village(gemBag);
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			village.addVillager(VillagerRole.CITIZEN);
 		}
 		messageBox = new Introduction(this);
@@ -140,7 +140,7 @@ public class GameHandler {
 			}
 		}
 
-		if (!paused && gameOver == false && win == false) {
+		if (!paused && !gameOver && !win) {
 			if (village.isNextDay()) {
 				pause();
 				village.gatheredFood();
@@ -148,6 +148,7 @@ public class GameHandler {
 			}
 			village.update(delta);
 			ritualAltar.update(delta);
+			village.addVillager(VillagerRole.CITIZEN);
 		}
 
 	}
