@@ -52,16 +52,17 @@ public class RitualAltar extends GameObject implements MenuItem {
         grid = new Gem[4][4]; // the new ritualAltar to work with
 
         slots2 = new Rectangle[4][4]; //Slots 2 is only for UI. What goes on in the background is handled by grid
+
+        int paddingColumn = 240;
         for (int k = 0; k < 4; k++) { // row
-            int paddingCollum = 280;
             int paddingRow = spacing;
             for (int h = 0; h < 4; h++) { //column
-                slots2[k][h] = new Rectangle(paddingRow + 802, spacing + paddingCollum + 265, slotSize2, slotSize2);
+                slots2[k][h] = new Rectangle(paddingRow + 802, spacing + paddingColumn + 265, slotSize2, slotSize2);
                 paddingRow += 80;
             }
-            paddingCollum -= 80;
-
+            paddingColumn -= 80;
         }
+        //print out position of the slots
         for(int k = 0; k <4; k++){
             for(int i =0;i<4;i++){
                 System.out.println("Slots2 Position At"+k+i);
