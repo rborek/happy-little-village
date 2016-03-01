@@ -1,4 +1,4 @@
 addFood
 00 YELLOW 10 RED 20 RED
-food +100
-happiness -25
+FOOD +100
+HAPPINESS -25

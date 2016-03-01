@@ -18,6 +18,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     private Gem[] gems;
     private GemBag gemBag;
     private Rectangle[] slots;
+    // gonna replace animation with different picture
     private Texture[] animation = Assets.getTextures("altar/altar1.png", "altar/altar2.png", "altar/altar3.png", "altar/altar2.png", "altar/altar1.png");
     private Texture button = Assets.getTexture("altar/button.png");
     private Rectangle commenceButton;
@@ -27,25 +28,47 @@ public class RitualAltar extends GameObject implements MenuItem {
     private static final int paddingX = 60;
     private static final int paddingY = 67;
     private static final int slotSize = 64;
+    //new measurements
+    private static final int slotSize2 = 80;
+    private static final int spacing = 40;
+
+
     private boolean animating = false;
     private float timer = 0;
     //var for the grid
-    private Gem[][] grid;
+    private Gem[][] grid; // background stuff
     private int[][] bonus;
     private int[][] addToBonus;
-    private Rectangle[][] slots2;
-    private ArrayList<RitualEffect[]> ritualEffects =new ArrayList<RitualEffect[]>();
+    private Rectangle[][] slots2; // render and UI stuff
+    private ArrayList<RitualEffect[]> ritualEffects = new ArrayList<RitualEffect[]>();
     private Village village;
     private ArrayList<ArrayList<Point>> lightUpGrid = new ArrayList<ArrayList<Point>>();
 
 
     public RitualAltar(GemBag gemBag, float xPos, float yPos) {
-        super(Assets.getTexture("altar/altar1.png"), xPos, yPos);
-        // rows then columns
-        grid = new Gem[4][4]; // the new ritualAltar to work with
+        super(Assets.getTexture("altar/newRitual.png"), xPos, yPos);
         bonus = new int[4][4];
         addToBonus = new int[4][4];
-        slots2 = new Rectangle[4][4]; // new rectangle to work with
+        grid = new Gem[4][4]; // the new ritualAltar to work with
+
+        slots2 = new Rectangle[4][4]; //Slots 2 is only for UI. What goes on in the background is handled by grid
+        for (int k = 0; k < 4; k++) { // row
+            int paddingCollum = 280;
+            int paddingRow = spacing;
+            for (int h = 0; h < 4; h++) { //column
+                slots2[k][h] = new Rectangle(paddingRow + 802, spacing + paddingCollum + 265, slotSize2, slotSize2);
+                paddingRow += 80;
+            }
+            paddingCollum -= 80;
+
+        }
+        for(int k = 0; k <4; k++){
+            for(int i =0;i<4;i++){
+                System.out.println("Slots2 Position At"+k+i);
+                System.out.println(slots2[k][i].x );
+                System.out.println(slots2[k][i].y );
+            }
+        }
         //
         gems = new Gem[4];
         slots = new Rectangle[4];
@@ -59,6 +82,7 @@ public class RitualAltar extends GameObject implements MenuItem {
             slots[i].y += position.y;
         }
         commenceButton = new Rectangle(position.x + (width / 2) - (button.getWidth() / 2), position.y, button.getWidth(), button.getHeight() + 30);
+
         gainStartingRituals();
     }
 
@@ -110,10 +134,13 @@ public class RitualAltar extends GameObject implements MenuItem {
     public void render(Batch batch) {
         batch.draw(texture, position.x, position.y);
         batch.draw(button, position.x + (width / 2) - (button.getWidth() / 2), position.y + 30);
-        for (int i = 0; i < gems.length; i++) {
-            if (gems[i] != null) {
-                batch.draw(gems[i].getTexture(), slots[i].x + 8, slots[i].y + 8);
+        for (int i = 0; i < grid.length; i++) {
+            for(int k = 0; k < grid[0].length;k++){
+                if (grid[i][k] != null) {
+                    batch.draw(grid[i][k].getTexture(), slots2[i][k].x, + slots2[i][k].y);
+                }
             }
+
         }
     }
 
@@ -126,14 +153,17 @@ public class RitualAltar extends GameObject implements MenuItem {
     }
 
     public Gem pickUpGem(float x, float y) {
-        for (int i = 0; i < slots.length; i++) {
-            if (slots[i].contains(x, y)) {
-                if (gems[i] != null) {
-                    Gem gemToReturn = gems[i];
-                    gems[i] = null;
-                    return gemToReturn;
+        for (int i = 0; i < slots2.length; i++) {
+            for(int k = 0; k < slots2[0].length;k++){
+                if (slots2[i][k].contains(x, y)) {
+                    if (grid[i][k] != null) {
+                        Gem gemToReturn = gems[i];
+                        grid[i][k] = null;
+                        return gemToReturn;
+                    }
                 }
             }
+
         }
         return null;
     }
@@ -167,7 +197,7 @@ public class RitualAltar extends GameObject implements MenuItem {
             }
         }
         //call affectVillage for all rituals
-        for(int count2 = 0; count2 < ritualEffects.size(); count2++) {
+        for (int count2 = 0; count2 < ritualEffects.size(); count2++) {
             for (int count = 0; count < ritualEffects.get(count2).length; count++) {
                 ritualEffects.get(count2)[count].affectVillage(village);
             }
@@ -222,7 +252,7 @@ public class RitualAltar extends GameObject implements MenuItem {
                     if (addToBonus[c][d] != 0) {
                         bonus[c][d] += addToBonus[c][d];
                         //set x y coordinates for addPoint then add it to addToLightUpGrid which will then be added to the final LightUpGrid
-                        addToLightUpGrid.add(new Point(c,d));
+                        addToLightUpGrid.add(new Point(c, d));
                     }
                 }
             }
@@ -246,15 +276,18 @@ public class RitualAltar extends GameObject implements MenuItem {
     }
 
     public boolean add(Gem gem, float x, float y) {
-        Rectangle gemBounds = new Rectangle(x - 32, y - 32, 64, 64);
-        for (int i = 0; i < slots.length; i++) {
-            if (slots[i].overlaps(gemBounds)) {
-                if (gems[i] != null) {
-                    gemBag.add(gems[i].getColour());
+        Rectangle gemBounds = new Rectangle(x - spacing, y - spacing, slotSize2, slotSize2);
+        for (int i = 0; i < 4; i++) {
+            for (int k = 0; k < 4; k++) {
+                if (slots2[i][k].overlaps(gemBounds)) {
+                    if (grid[i][k] != null) {
+                        gemBag.add(gems[i].getColour());
+                    }
+                    grid[i][k] = gem;
+                    return true;
                 }
-                gems[i] = gem;
-                return true;
             }
+
         }
         return false;
     }
@@ -276,7 +309,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     @Override
     public boolean interact(float mouseX, float mouseY) {
         if (commenceButton.contains(mouseX, mouseY)) {
-            useGems();
+            useGems2();
             return true;
         }
         return false;

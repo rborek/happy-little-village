@@ -1,6 +1,7 @@
 package com.happylittlevillage.rituals;
 
 import com.happylittlevillage.village.Village;
+import com.happylittlevillage.village.VillagerRole;
 
 public class RitualEffect {
 	private VillageModifier modifier;
@@ -12,7 +13,30 @@ public class RitualEffect {
 	}
 
 	public void affectVillage(Village village) {
-		// TODO
+		switch (modifier){
+			case FOOD:
+				village.addFood(amount);
+				break;
+			case VILLAGER:
+				int k =0;
+				while( k < amount){
+					village.addVillager(VillagerRole.CITIZEN);
+				}
+				break;
+			case HAPPINESS:
+				village.addWater(amount);
+				break;
+			case FARMER:
+				village.convertCitizen(VillagerRole.FARMER);
+				break;
+			case EXPLORER:
+				village.convertCitizen(VillagerRole.EXPLORER);
+				break;
+			case  MINER:
+				village.convertCitizen(VillagerRole.MINER);
+				break;
+
+		}
 	}
 
 }
