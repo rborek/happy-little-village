@@ -70,7 +70,8 @@ public class InputHandler implements InputProcessor {
 
 	private void dropGem(float mouseX, float mouseY) {
 		if (selectedGem != null) {
-			if (!ritualAltar.add(selectedGem, mouseX, mouseY)) {
+			//if it's not added to any of the gem
+			if (!ritualAltar.place(selectedGem, mouseX, mouseY)) {
 				gemBag.add(selectedGem.getColour());
 			}
 			selectedGem = null;
@@ -86,7 +87,6 @@ public class InputHandler implements InputProcessor {
 		if (selectedGem == null) {
 			Gem potentialGem = ritualAltar.pickUpGem(mouseX, mouseY);
 			if (potentialGem != null) {
-				System.out.println("PAASSSSSSSSSSSSED");
 				selectedGem = potentialGem;
 			}
 

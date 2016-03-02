@@ -3,6 +3,7 @@ package com.happylittlevillage.rituals;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
 import com.happylittlevillage.gems.Gem;
@@ -15,7 +16,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class RitualAltar extends GameObject implements MenuItem {
-    private Gem[] gems;
     private GemBag gemBag;
     private Rectangle[] slots;
     // gonna replace animation with different picture
@@ -50,9 +50,9 @@ public class RitualAltar extends GameObject implements MenuItem {
         this.village = village;
         bonus = new int[4][4];
         addToBonus = new int[4][4];
-        grid = new Gem[4][4]; // the new ritualAltar to work with
+        grid = new Gem[4][4]; // the new ritualAltar, background stuff
 
-        slots2 = new Rectangle[4][4]; //Slots 2 is only for UI. What goes on in the background is handled by grid
+        slots2 = new Rectangle[4][4]; // only for UI. What goes on in the background is handled by grid
 
         int paddingColumn = 240;
         for (int k = 0; k < 4; k++) { // row
@@ -71,7 +71,6 @@ public class RitualAltar extends GameObject implements MenuItem {
 //                System.out.println(slots2[k][i].y );
 //            }
 //        }
-        gems = new Gem[4];
         slots = new Rectangle[4];
         this.gemBag = gemBag;
         slots[0] = new Rectangle(paddingX, paddingY + 64 + spacingY, 64, 64);
@@ -266,45 +265,65 @@ public class RitualAltar extends GameObject implements MenuItem {
     }
 
 
-    public void useGems() {
-        for (Ritual ritual : rituals) {
-            if (ritual.attempt(gems)) {
-                startAnimating();
-                break;
-            }
-        }
-        removeAllGems();
+//    public void useGems() {
+//        for (Ritual ritual : rituals) {
+//            if (ritual.attempt()) {
+//                startAnimating();
+//                break;
+//            }
+//        }
+//        removeAllGems();
+//
+//    }
 
-    }
-
-    public boolean add(Gem gem, float x, float y) {
+    public boolean place(Gem gem, float x, float y) {
+        //x and y is the mouse's position but also the center of gem
         Rectangle gemBounds = new Rectangle(x - spacing, y - spacing, slotSize2, slotSize2);
+        //centerGrid contains center of overlapped grids
+        double distance;
+        double minDistance = 100; // very arbitrary number
+        int gridRow = 0;
+        int gridCol = 0;
+        Vector2 center = new Vector2();
         for (int i = 0; i < 4; i++) {
             for (int k = 0; k < 4; k++) {
                 if (slots2[i][k].overlaps(gemBounds)) {
-                    if (grid[i][k] != null) {
-                        gemBag.add(gems[i].getColour());
+                    slots2[i][k].getCenter(center);
+                    distance = Math.sqrt(Math.pow(center.x - x, 2) + Math.pow(center.y - y, 2));
+                    System.out.println("distance from grid"+i+k+ "to center "+x+" "+y+" is: "+distance);
+                    if (minDistance > distance) {
+                        minDistance = distance;
+                        gridRow = i;
+                        gridCol = k;
                     }
-                    grid[i][k] = gem;
-                    return true;
                 }
             }
-
+        }
+        //if the minDistance is changed- something overlap
+        if(minDistance != 100){
+            if (grid[gridRow][gridCol] != null) {
+                gemBag.add(grid[gridRow][gridCol].getColour());
+            }
+            grid[gridRow][gridCol] = gem;
+            return true;
         }
         return false;
     }
 
 
-    public GemColour getColour(int index) {
-        if (gems[index] != null) {
-            return gems[index].getColour();
+    public GemColour getColour(int row, int col) {
+        if (grid[row][col] != null) {
+            return grid[row][col].getColour();
         }
         return null;
     }
 
     private void removeAllGems() {
-        for (int i = 0; i < gems.length; i++) {
-            gems[i] = null;
+        for (int i = 0; i < grid.length; i++) {
+            for (int k = 0; k < grid[0].length; k++) {
+                grid[i][k] = null;
+            }
+
         }
     }
 
