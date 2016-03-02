@@ -31,18 +31,19 @@ public class Ritual { // to be non-abstract
 		int width = 0;
 		int height = 0;
 		for (int i = 0; i < combinationLine.length; i += 2) {
-			if (Character.getNumericValue(combinationLine[i].charAt(0)) > width) {
-				width = Character.getNumericValue(combinationLine[i].charAt(0));
+			if (Character.getNumericValue(combinationLine[i].charAt(0)) > height) {
+				height = Character.getNumericValue(combinationLine[i].charAt(0));
 			}
-			if (Character.getNumericValue(combinationLine[i].charAt(1)) > height) {
-				height = Character.getNumericValue(combinationLine[i].charAt(1));
+			if (Character.getNumericValue(combinationLine[i].charAt(1)) > width) {
+				width = Character.getNumericValue(combinationLine[i].charAt(1));
 			}
 		}
 		recipe = new GemColour[height + 1][width + 1];
 		// places each GemColour into the appropriate row/col in the recipe
+
 		for (int i = 0; i < combinationLine.length; i += 2) {
-			int col = Character.getNumericValue(combinationLine[i].charAt(0));
-			int row = Character.getNumericValue(combinationLine[i].charAt(1));
+			int row = Character.getNumericValue(combinationLine[i].charAt(0));
+			int col = Character.getNumericValue(combinationLine[i].charAt(1));
 			recipe[row][col] = GemColour.valueOf(combinationLine[i + 1].trim());
 		}
 		int numEffects = 0;

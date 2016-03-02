@@ -217,22 +217,27 @@ public class RitualAltar extends GameObject implements MenuItem {
         }
         //reset addToLightUpGrid
         addToLightUpGrid.clear();
-        System.out.println("Start checkMatch with recipe:" + ritualNumber);
+        System.out.println("Start checkMatch with recipe:" + rituals.get(ritualNumber).getName());
         checkMatch:
         {
             for (int recipeRow = 0; recipeRow < check.length; recipeRow++) { // the length of recipe-row
                 for (int recipeColumn = 0; recipeColumn < check[0].length; recipeColumn++) { // the width of recipe-column
                     if (check[recipeRow][recipeColumn] != null) { // for every non-void value of recipe.
+                        //Recipe is out of bound
                         if ((gridRow + recipeRow) > 3 || (gridColumn + recipeColumn - firstRecipePosition) > 3 || (gridColumn + recipeColumn - firstRecipePosition) < 0) {
                             match = false;
                             System.out.println("OUT OF BOUND");
                             break checkMatch;
-                        } else if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null || !grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour().equals(check[recipeRow][recipeColumn])) {
+                        }
+                        //Grid does not match the recipe
+                        else if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null || !grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour().equals(check[recipeRow][recipeColumn])) {
                             match = false;
                             if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null) {
                                 System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn);
                             } else {
-                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn + "colour grid is:" + grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour() + "colour check is:" + check[recipeRow][recipeColumn]);
+                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn +
+                                        "colour check is:" + check[recipeRow][recipeColumn]+ " colour grid is:" + grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour()
+                                        + " At "+ (gridRow+recipeRow)+ (gridColumn + recipeColumn - firstRecipePosition) );
                             }
                             break checkMatch;
                         } else {//if the position passes these 2 conditions +1 for the use of that matched position
