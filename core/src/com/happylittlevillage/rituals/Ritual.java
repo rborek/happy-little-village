@@ -16,10 +16,9 @@ public class Ritual { // to be non-abstract
 	private RitualEffect[] effects;
 	private static HashMap<String, Ritual> rituals = new HashMap<String, Ritual>();
 
-	public Ritual() {
-		gemCombination = getCombination();
-	}
+	Ritual(){
 
+	}
 	private Ritual(String[] file) {
 		// the first line of the file contains the ritual's name
 		name = file[0];
@@ -40,7 +39,6 @@ public class Ritual { // to be non-abstract
 			}
 		}
 		recipe = new GemColour[height + 1][width + 1];
-
 		// places each GemColour into the appropriate row/col in the recipe
 		for (int i = 0; i < combinationLine.length; i += 2) {
 			int col = Character.getNumericValue(combinationLine[i].charAt(0));
@@ -68,15 +66,24 @@ public class Ritual { // to be non-abstract
 	}
 
 	public static void load() {
-		FileHandle dir = Gdx.files.internal("rituals");
+		FileHandle dir = Gdx.files.internal("ritual");
 		for (FileHandle file : dir.list()) {
 			addRitual(file);
 		}
+
 	}
 
 	public static void addRitual(FileHandle fileHandle) {
 		Ritual ritual = new Ritual(fileHandle.readString().split("\r\n"));
 		rituals.put(ritual.getName(), ritual);
+		System.out.println(ritual.getName());
+
+//		for(int k = 0; k < ritual.getRecipe().length;k++){
+//			for(int i = 0; i < ritual.getRecipe()[0].length;i++){
+//				System.out.println(""+k+i+ritual.getRecipe()[k][i]);
+//			}
+//		}
+
 	}
 
 	public static Ritual getRitual(String ritualName) {
@@ -109,9 +116,6 @@ public class Ritual { // to be non-abstract
 		return true;
 	}
 
-	protected GemColour[] getCombination() {
-		return null;
-	}
 
 	/**
 	 * Returns the recipe of GemColours for the ritual in a 2D array

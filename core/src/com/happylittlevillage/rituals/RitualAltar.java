@@ -45,8 +45,9 @@ public class RitualAltar extends GameObject implements MenuItem {
     private ArrayList<ArrayList<Point>> lightUpGrid = new ArrayList<ArrayList<Point>>();
 
 
-    public RitualAltar(GemBag gemBag, float xPos, float yPos) {
+    public RitualAltar(GemBag gemBag, float xPos, float yPos, Village village) {
         super(Assets.getTexture("altar/newRitual.png"), xPos, yPos);
+        this.village = village;
         bonus = new int[4][4];
         addToBonus = new int[4][4];
         grid = new Gem[4][4]; // the new ritualAltar to work with
@@ -63,14 +64,13 @@ public class RitualAltar extends GameObject implements MenuItem {
             paddingColumn -= 80;
         }
         //print out position of the slots
-        for(int k = 0; k <4; k++){
-            for(int i =0;i<4;i++){
-                System.out.println("Slots2 Position At"+k+i);
-                System.out.println(slots2[k][i].x );
-                System.out.println(slots2[k][i].y );
-            }
-        }
-        //
+//        for(int k = 0; k <4; k++){
+//            for(int i =0;i<4;i++){
+//                System.out.println("Slots2 Position At"+k+i);
+//                System.out.println(slots2[k][i].x );
+//                System.out.println(slots2[k][i].y );
+//            }
+//        }
         gems = new Gem[4];
         slots = new Rectangle[4];
         this.gemBag = gemBag;
@@ -83,31 +83,16 @@ public class RitualAltar extends GameObject implements MenuItem {
             slots[i].y += position.y;
         }
         commenceButton = new Rectangle(position.x + (width / 2) - (button.getWidth() / 2), position.y, button.getWidth(), button.getHeight() + 30);
-
-        gainStartingRituals();
-    }
-
-    private void gainStartingRituals() {
-        gainRitual(new AddFoodRitual());
-        gainRitual(new AddFoodLoseWaterRitual());
-        gainRitual(new AddFoodLoseWaterRitual());
-        gainRitual(new AddVillagerRitual());
-        gainRitual(new AddWaterRemoveFoodRitual());
-        gainRitual(new AddWaterRitual());
-        gainRitual(new ToExplorerRitual());
-        gainRitual(new ToFarmerRitual());
-        gainRitual(new ToMinerRitual());
-        gainRitual(new RemoveVillagerRitual());
+        rituals.add(Ritual.getRitual("addHappiness"));
+        rituals.add(Ritual.getRitual("addFood"));
+        rituals.add(Ritual.getRitual("addVillager"));
+        rituals.add(Ritual.getRitual("convertExplorer"));
+        rituals.add(Ritual.getRitual("convertFarmer"));
+        rituals.add(Ritual.getRitual("convertMiner"));
     }
 
 
     public boolean gainRitual(Ritual ritual) {
-//		String ritualName = ritual.getName();
-//		for (Ritual ritualToCheck : rituals) {
-//			if (ritualName.equals(ritualToCheck.getName())) {
-//				return false;
-//			}
-//		}
         rituals.add(ritual);
         return true;
 
@@ -136,9 +121,9 @@ public class RitualAltar extends GameObject implements MenuItem {
         batch.draw(texture, position.x, position.y);
         batch.draw(button, position.x + (width / 2) - (button.getWidth() / 2), position.y + 30);
         for (int i = 0; i < grid.length; i++) {
-            for(int k = 0; k < grid[0].length;k++){
+            for (int k = 0; k < grid[0].length; k++) {
                 if (grid[i][k] != null) {
-                    batch.draw(grid[i][k].getTexture(), slots2[i][k].x, + slots2[i][k].y);
+                    batch.draw(grid[i][k].getTexture(), slots2[i][k].x, +slots2[i][k].y);
                 }
             }
 
@@ -155,7 +140,7 @@ public class RitualAltar extends GameObject implements MenuItem {
 
     public Gem pickUpGem(float x, float y) {
         for (int i = 0; i < slots2.length; i++) {
-            for(int k = 0; k < slots2[0].length;k++){
+            for (int k = 0; k < slots2[0].length; k++) {
                 if (slots2[i][k].contains(x, y)) {
                     if (grid[i][k] != null) {
                         Gem gemToReturn = gems[i];
@@ -174,21 +159,26 @@ public class RitualAltar extends GameObject implements MenuItem {
     }
 
     public void useGems2() {
+        //print out grid first
+
         for (int gridRow = 0; gridRow < grid.length; gridRow++) { //row gridRow
             for (int gridColumn = 0; gridColumn < grid[0].length; gridColumn++) { //column gridColumn
-                if (grid[gridRow][gridColumn] != null) { // change from null to 0
+                if (grid[gridRow][gridColumn] != null) {
+                    System.out.println("" + gridRow + gridColumn + grid[gridRow][gridColumn].getColour());
                     //iterate through all known grid recipe
                     for (int ritualNumber = 0; ritualNumber < rituals.size(); ritualNumber++) {
                         // iterate through the first row of a recipe
+
                         for (int firstRecipePosition = 0; firstRecipePosition < rituals.get(ritualNumber).getRecipe()[0].length; firstRecipePosition++) {
                             // get the first non-null colour
                             if (rituals.get(ritualNumber).getRecipe()[0][firstRecipePosition] != null) {
                                 //check if the first row's non-null colour matches with the grid
                                 if (grid[gridRow][gridColumn].getColour().equals(rituals.get(ritualNumber).getRecipe()[0][firstRecipePosition])) {
-                                    //start to specifically check one recipe
+                                    //start specifically checking one recipe
                                     compareRecipe(ritualNumber, gridRow, gridColumn, firstRecipePosition);
                                     break;
                                 } else {
+                                    System.out.println("FAILED BEFORE COMPARERECIPE");
                                     break;
                                 }
                             }
@@ -227,7 +217,7 @@ public class RitualAltar extends GameObject implements MenuItem {
         }
         //reset addToLightUpGrid
         addToLightUpGrid.clear();
-
+        System.out.println("Start checkMatch with recipe:" + ritualNumber);
         checkMatch:
         {
             for (int recipeRow = 0; recipeRow < check.length; recipeRow++) { // the length of recipe-row
@@ -235,9 +225,15 @@ public class RitualAltar extends GameObject implements MenuItem {
                     if (check[recipeRow][recipeColumn] != null) { // for every non-void value of recipe.
                         if ((gridRow + recipeRow) > 3 || (gridColumn + recipeColumn - firstRecipePosition) > 3 || (gridColumn + recipeColumn - firstRecipePosition) < 0) {
                             match = false;
+                            System.out.println("OUT OF BOUND");
                             break checkMatch;
-                        } else if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour().equals(check[recipeRow][recipeColumn])) {
+                        } else if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null || !grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour().equals(check[recipeRow][recipeColumn])) {
                             match = false;
+                            if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null) {
+                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn);
+                            } else {
+                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn + "colour grid is:" + grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour() + "colour check is:" + check[recipeRow][recipeColumn]);
+                            }
                             break checkMatch;
                         } else {//if the position passes these 2 conditions +1 for the use of that matched position
                             addToBonus[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition]++;
@@ -309,6 +305,7 @@ public class RitualAltar extends GameObject implements MenuItem {
 
     @Override
     public boolean interact(float mouseX, float mouseY) {
+        pickUpGem(mouseX, mouseY);
         if (commenceButton.contains(mouseX, mouseY)) {
             useGems2();
             return true;

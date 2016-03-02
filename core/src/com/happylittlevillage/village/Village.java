@@ -15,13 +15,13 @@ public class Village {
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
-	private WeeklyRitual weeklyRitual = new WeeklyRitual(4, 4, this);
 	private float food = 0;
 	private float consumedFood = 0;
 	private float gatheredFood = 0;
-	private float water = 0;
-	private float consumedWater = 0;
-	private float gatheredWater = 0;
+	private float happiness = 0;
+	private float consumedHappiness = 0;
+	private float gatheredHappiness = 0;
+	private WeeklyRitual weeklyRitual;
 	private VillageInformation villageInformation;
 	private float hoursLeft;
 	private float daysLeft;
@@ -40,11 +40,17 @@ public class Village {
 //	};
 	private int[] gemsMined = new int[4];
 	private GemBag gemBag;
+	public WeeklyRitual getWeeklyRitual(){
+		return weeklyRitual;
+	}
+	public WeeklyRitual newWeeklyRitual(){
+		return weeklyRitual;
+	}
 
 	public Village(GemBag gemBag) {
 		this.villagers = new ArrayList<Villager>();
 		food = 5000;
-		water = 5000;
+		happiness = 5000;
 		hoursLeft = MAX_HOURS;
 		daysLeft = 7;
 		day = 0;
@@ -52,13 +58,6 @@ public class Village {
 		villageInformation = new VillageInformation(this, 60, 10);
 	}
 
-	public WeeklyRitual getWeeklyRitual() {
-		return weeklyRitual;
-	}
-
-	public void newWeeklyRitual() {
-		weeklyRitual = new WeeklyRitual(4, 2 + day / 2, this);
-	}
 
 	public int getDaysLeft() {
 		return (int) daysLeft;
@@ -82,17 +81,18 @@ public class Village {
 	public void consume(float delta) {
 //        return;
 		float consumeFood = 0;
-		float consumeWater = 0;
+
+		float consumeHappiness = 0;
 		for (Villager villager : villagers) {
 			if (villager.getRole().equals(VillagerRole.FARMER)) {
 				consumeFood += 1.05 * (villager.getRole().foodConsumption());
-				consumeWater += 1.10 * (villager.getRole().waterConsumption());
+				consumeHappiness  += 1.10 * (villager.getRole().happinessConsumption());
 			} else if (villager.getRole().equals(VillagerRole.EXPLORER)) {
 				consumeFood += 1.15 * (villager.getRole().foodConsumption());
-				consumeWater += 1.20 * (villager.getRole().waterConsumption());
+				consumeHappiness  += 1.20 * (villager.getRole().happinessConsumption());
 			} else if (villager.getRole().equals(VillagerRole.MINER)) {
 				consumeFood += 1.25 * (villager.getRole().foodConsumption());
-				consumeWater += 1.30 * (villager.getRole().waterConsumption());
+				consumeHappiness  += 1.30 * (villager.getRole().happinessConsumption());
 			} else {
 				consumeFood += villager.getRole().foodConsumption();
 			}
@@ -102,19 +102,19 @@ public class Village {
 		consumedFood /= 10;
 
 		for (Villager villager : villagers) {
-			consumeWater += villager.getRole().foodConsumption();
+			consumeHappiness  += villager.getRole().foodConsumption();
 		}
-		water -= consumeWater * delta;
-		consumedWater += consumeWater * delta;
-		consumedWater /= 10;
+		happiness -= consumeHappiness  * delta;
+		consumedHappiness += consumeHappiness  * delta;
+		consumedHappiness /= 10;
 	}
 
 	public void addFood(float x) {
 		food += x;
 	}
 
-	public void addWater(float y) {
-		water += y;
+	public void addHappiness(float y) {
+		happiness += y;
 	}
 
 	public void gatheredFood() {
@@ -128,14 +128,14 @@ public class Village {
 		gatheredFood = food;
 	}
 
-	public void gatheredWater() {
-		float water = 0;
+	public void gatheredHappiness() {
+		float happiness = 0;
 		for (Villager villager : villagers) {
 			if (villager.getRole().equals(VillagerRole.EXPLORER)) {
-				water += 10;
+				happiness += 10;
 			}
-			addWater(water);
-			gatheredWater = water;
+			addHappiness(happiness);
+			gatheredHappiness = happiness;
 		}
 	}
 
@@ -144,9 +144,9 @@ public class Village {
 		food = Math.max(0, food);
 	}
 
-	public void removeWater(float x) {
-		water -= x;
-		water = Math.max(0, water);
+	public void removeHappiness(float x) {
+		happiness -= x;
+		happiness = Math.max(0, happiness);
 	}
 
 	public void update(float delta) {
@@ -362,16 +362,16 @@ public class Village {
 		return (int) Math.ceil(food);
 	}
 
-	public int getWater() {
-		return (int) Math.ceil(water);
+	public int getHappiness() {
+		return (int) Math.ceil(happiness);
 	}
 
 	public int getGatheredFood() {
 		return (int) gatheredFood;
 	}
 
-	public int getGatheredWater() {
-		return (int) gatheredWater;
+	public int getGatheredHappiness() {
+		return (int) gatheredHappiness;
 	}
 
 	public int getPop() {
@@ -386,7 +386,7 @@ public class Village {
 		return (int) consumedFood;
 	}
 
-	public int getConsumedWater() {
-		return (int) consumedWater;
+	public int getConsumedHappiness() {
+		return (int) consumedHappiness;
 	}
 }

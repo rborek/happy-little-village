@@ -24,7 +24,7 @@ public class RitualEffect {
 				}
 				break;
 			case HAPPINESS:
-				village.addWater(amount);
+				village.addHappiness(amount);
 				break;
 			case FARMER:
 				village.convertCitizen(VillagerRole.FARMER);

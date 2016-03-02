@@ -1,17 +1,13 @@
 package com.happylittlevillage.village;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
 
 public class VillageInformation extends GameObject {
 	private int food;
-	private int water;
+	private int happiness;
 	private int pop;
 	private int hour;
 	private int dayLeft;
@@ -31,7 +27,7 @@ public class VillageInformation extends GameObject {
 
 	public void setResources(Village villagers) {
 		this.food = (int) Math.ceil(villagers.getFood());
-		this.water = (int) Math.ceil(villagers.getWater());
+		this.happiness = (int) Math.ceil(villagers.getHappiness());
 		this.pop = villagers.getPop();
 		this.hour = (int) Math.ceil(villagers.getHoursLeft());
 		this.day = (int) Math.ceil(villagers.getDay());
@@ -49,7 +45,7 @@ public class VillageInformation extends GameObject {
 		batch.draw(foodTexture, position.x + 20, 65);
 		batch.draw(waterTexture, position.x + 140, 70);
 		Assets.getFont(36).draw(batch, "" + villagers.getFood(), position.x + 80, position.y + 90);
-		Assets.getFont(36).draw(batch, "" + villagers.getWater(), position.x + 190, position.y + 90);
+		Assets.getFont(36).draw(batch, "" + villagers.getHappiness(), position.x + 190, position.y + 90);
 		Assets.getFont(30).draw(batch, "Pop: " + villagers.getPop(), position.x + 300, 120);
 		Assets.getFont(30).draw(batch, "Hours: " + (int) Math.ceil(villagers.getHoursLeft()), position.x + 300, 80);
 		Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(villagers.getDay()), position.x + 405, 120);

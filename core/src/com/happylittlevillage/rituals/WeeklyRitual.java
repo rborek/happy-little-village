@@ -31,7 +31,6 @@ public class WeeklyRitual extends Ritual {
         return timesPerformed;
     }
 
-    @Override
     protected GemColour[] getCombination() {
         return new GemColour[0];
     }
@@ -39,7 +38,7 @@ public class WeeklyRitual extends Ritual {
     public GemColour[] getColours() {
         return gemCombination;
     }
-    
+
     private void generateRandom(int numGems) {
         gemCombination = new GemColour[numGems];
         for (int i = 0; i < numGems; i++) {
