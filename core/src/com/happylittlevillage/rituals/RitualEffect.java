@@ -38,5 +38,10 @@ public class RitualEffect {
 
 		}
 	}
-
+	public VillageModifier getModifier(){
+		return modifier;
+	}
+	public int getAmount(){
+		return amount;
+	}
 }

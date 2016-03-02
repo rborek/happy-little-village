@@ -143,7 +143,7 @@ public class RitualAltar extends GameObject implements MenuItem {
             for (int k = 0; k < slots2[0].length; k++) {
                 if (slots2[i][k].contains(x, y)) {
                     if (grid[i][k] != null) {
-                        Gem gemToReturn = gems[i];
+                        Gem gemToReturn = grid[i][k];
                         grid[i][k] = null;
                         return gemToReturn;
                     }
@@ -178,7 +178,7 @@ public class RitualAltar extends GameObject implements MenuItem {
                                     compareRecipe(ritualNumber, gridRow, gridColumn, firstRecipePosition);
                                     break;
                                 } else {
-                                    System.out.println("FAILED BEFORE COMPARERECIPE");
+//                                    System.out.println("FAILED BEFORE COMPARERECIPE");
                                     break;
                                 }
                             }
@@ -217,7 +217,7 @@ public class RitualAltar extends GameObject implements MenuItem {
         }
         //reset addToLightUpGrid
         addToLightUpGrid.clear();
-        System.out.println("Start checkMatch with recipe:" + rituals.get(ritualNumber).getName());
+//        System.out.println("Start checkMatch with recipe:" + rituals.get(ritualNumber).getName());
         checkMatch:
         {
             for (int recipeRow = 0; recipeRow < check.length; recipeRow++) { // the length of recipe-row
@@ -232,13 +232,13 @@ public class RitualAltar extends GameObject implements MenuItem {
                         //Grid does not match the recipe
                         else if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null || !grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour().equals(check[recipeRow][recipeColumn])) {
                             match = false;
-                            if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null) {
-                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn);
-                            } else {
-                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn +
-                                        "colour check is:" + check[recipeRow][recipeColumn]+ " colour grid is:" + grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour()
-                                        + " At "+ (gridRow+recipeRow)+ (gridColumn + recipeColumn - firstRecipePosition) );
-                            }
+//                            if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null) {
+//                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn);
+//                            } else {
+//                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn +
+//                                        "colour check is:" + check[recipeRow][recipeColumn]+ " colour grid is:" + grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour()
+//                                        + " At "+ (gridRow+recipeRow)+ (gridColumn + recipeColumn - firstRecipePosition) );
+//                            }
                             break checkMatch;
                         } else {//if the position passes these 2 conditions +1 for the use of that matched position
                             addToBonus[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition]++;

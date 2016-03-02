@@ -86,6 +86,7 @@ public class InputHandler implements InputProcessor {
 		if (selectedGem == null) {
 			Gem potentialGem = ritualAltar.pickUpGem(mouseX, mouseY);
 			if (potentialGem != null) {
+				System.out.println("PAASSSSSSSSSSSSED");
 				selectedGem = potentialGem;
 			}
 

@@ -59,9 +59,12 @@ public class Ritual { // to be non-abstract
 		for (int i = 2; i < file.length; i++) {
 			String[] effect = file[i].split(" ");
 			int modifier = Integer.parseInt(effect[1]);
-			if (effect[1].charAt(0) == '-') {
-				modifier *= -1;
-			}
+//			System.out.println("Modifier is:"+modifier);
+//			if (effect[1].charAt(0) == '-') {
+//				modifier *= -1;
+//				System.out.println("Modifier is negative");
+//			}
+//			System.out.println("Modifier is:"+modifier);
 			effects[i-2] = new RitualEffect(VillageModifier.valueOf(effect[0]), modifier);
 		}
 	}
@@ -77,7 +80,8 @@ public class Ritual { // to be non-abstract
 	public static void addRitual(FileHandle fileHandle) {
 		Ritual ritual = new Ritual(fileHandle.readString().split("\r\n"));
 		rituals.put(ritual.getName(), ritual);
-		System.out.println(ritual.getName());
+		System.out.println(ritual.getName()+ritual.getEffects()[0].getModifier().toString()+ritual.getEffects()[0].getAmount());
+
 
 //		for(int k = 0; k < ritual.getRecipe().length;k++){
 //			for(int i = 0; i < ritual.getRecipe()[0].length;i++){
