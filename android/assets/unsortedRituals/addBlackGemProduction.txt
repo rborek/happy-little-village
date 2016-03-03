@@ -1,0 +1,3 @@
+addBlackGemProduction
+00 BLUE 01 BLACK 02 BLUE 11 BLUE
+production blackGem +10

@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class Miscellaneous implements Screen,InputProcessor {
+public class Miscellaneous implements Screen, InputProcessor {
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
     protected HappyLittleVillage happyLittleVillage;
@@ -24,7 +24,7 @@ public class Miscellaneous implements Screen,InputProcessor {
     protected Vector2 realPos = new Vector2();
 
 
-    public Miscellaneous(HappyLittleVillage happyLittleVillage){
+    public Miscellaneous(HappyLittleVillage happyLittleVillage) {
         this.happyLittleVillage = happyLittleVillage;
         camera = new OrthographicCamera();
         camera.position.set(WIDTH / 2f, HEIGHT / 2f, 0);
@@ -61,6 +61,7 @@ public class Miscellaneous implements Screen,InputProcessor {
         screenPos.set(mouseX, mouseY);
         return viewport.unproject(screenPos);
     }
+
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;
@@ -82,7 +83,7 @@ public class Miscellaneous implements Screen,InputProcessor {
     }
 
     @Override
-    public void show(){
+    public void show() {
         Gdx.input.setInputProcessor(this);
     }
 

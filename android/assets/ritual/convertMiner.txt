@@ -1,0 +1,3 @@
+convertMiner
+00 YELLOW 01 GREEN 02 RED 10 RED
+MINER +1

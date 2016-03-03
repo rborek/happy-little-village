@@ -31,19 +31,14 @@ public class WeeklyRitual extends Ritual {
         return timesPerformed;
     }
 
-    @Override
-    protected GemColour[] getCombination() {
-        return new GemColour[0];
-    }
-
-    public GemColour[] getColours() {
-        return gemCombination;
-    }
-    
     private void generateRandom(int numGems) {
+        recipe = new GemColour[numGems][numGems];
         gemCombination = new GemColour[numGems];
         for (int i = 0; i < numGems; i++) {
-            gemCombination[i] = GemColour.values()[random.nextInt(GemColour.values().length)];
+            for (int j = 0; i < numGems; i++) {
+                recipe[i][j] = GemColour.values()[random.nextInt(GemColour.values().length - 1)];
+            }
+
         }
     }
 

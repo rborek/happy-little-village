@@ -18,7 +18,7 @@ public enum VillagerRole {
 		}
 	}
 
-	public float waterConsumption() {
+	public float happinessConsumption() {
 		switch (this) {
 			case CITIZEN:
 				return 0.1f;

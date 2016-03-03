@@ -3,6 +3,8 @@ package com.happylittlevillage.village;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.happylittlevillage.Assets;
@@ -28,6 +30,7 @@ public class Villager extends GameObject implements Comparable<Villager> {
 			return new Line();
 		}
 	};
+
 	private static ArrayList<Line> obstacles = new ArrayList<Line>() {
 		{
 			// house
@@ -61,11 +64,13 @@ public class Villager extends GameObject implements Comparable<Villager> {
 	private boolean resting = false;
 	private float walkTimer = 0;
 
+
 	// subtract delta from restTimer
 	public Villager(VillagerRole role, Village village) {
 		super(villagerTextures[role.ordinal()][0], 0, 0);
 		this.village = village;
-		position = new Vector2((float) Math.random() * 500, 195);
+//		position = new Vector2((float) Math.random() * 500, 195);
+		position = new Vector2(216,300);
 		this.role = role;
 		velocity = new Vector2(0, 0);
 		generateNewDestination();
@@ -138,7 +143,7 @@ public class Villager extends GameObject implements Comparable<Villager> {
 		destination = village.getEmptyPosition();
 		Line path = linePool.obtain();
 		path.set(position, destination);
-		for (int i = 0; i < obstacles.size(); i++) {
+		for (int i = 0; i < obstacles.size(); i++) { //check if it intersects with any bounding lines
 			if (path.intersects(obstacles.get(i))) {
 				destination = village.getEmptyPosition();
 				path.set(position, destination);

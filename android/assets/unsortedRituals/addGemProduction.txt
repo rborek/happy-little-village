@@ -1,0 +1,3 @@
+addGemProduction
+00 YELLOW 10 BLUE 11 BLUE 20 YELLOW
+production GEM +10

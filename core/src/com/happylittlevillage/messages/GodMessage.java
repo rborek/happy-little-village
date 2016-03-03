@@ -13,7 +13,7 @@ public class GodMessage extends MessageBox {
 	private Village village;
 	private int timesPerformed;
 	private int timesToDo;
-	private Texture[] gems;
+	private Texture[][] gems;
 
 
 	public GodMessage(GemBag gemBag, Village village, GameHandler gameHandler) {
@@ -37,11 +37,13 @@ public class GodMessage extends MessageBox {
 
 	public void stateRitual() {
 		text += " \n\n              is the ritual";
-		GemColour[] colours = village.getWeeklyRitual().getColours();
+		GemColour[][] colours = village.getWeeklyRitual().getRecipe();
 		Texture[] textures = Gem.getArrayOfMiniTextures();
-		gems = new Texture[colours.length];
+		gems = new Texture[colours.length][colours[0].length];
 		for (int i = 0; i < gems.length; i++) {
-			gems[i] = textures[colours[i].ordinal()];
+			for (int j = 0; i < gems.length; i++) {
+				gems[i][j] = textures[colours[i][j].ordinal()];
+			}
 		}
 
 	}
@@ -50,17 +52,10 @@ public class GodMessage extends MessageBox {
 	public void render(Batch batch) {
 		super.render(batch);
 		font.draw(batch, text, position.x + 70, position.y + 275);
-		if (gems[0] != null) {
-			batch.draw(gems[0], 200, 300);
-		}
-		if (gems[1] != null) {
-			batch.draw(gems[1], 240, 300);
-		}
-		if (gems[2] != null) {
-			batch.draw(gems[2], 200, 260);
-		}
-		if (gems[3] != null) {
-			batch.draw(gems[3], 240, 260);
+		for (int i = 0; i < gems.length; i++) {
+			for (int j = 0; j < gems[0].length; j++) {
+				if (gems[i][j] != null) batch.draw(gems[i][j], 200 + 40 * i, 300 - 40 * i);
+			}
 		}
 		int howMany = village.getWeeklyRitual().getTimesToDo() - village.getWeeklyRitual().getTimesPerformed();
 		font.draw(batch, "Number of times to complete: " + howMany, position.x + 70, position.y + 335);
