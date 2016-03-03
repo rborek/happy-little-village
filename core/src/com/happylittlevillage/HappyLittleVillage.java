@@ -18,12 +18,25 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 		if (gameScreen == null) {
 			gameScreen = new GameScreen(this);
 		}
+		if (mainMenu != null) {
+			mainMenu.dispose();
+		}
+		mainMenu = null;
+		if (options != null) {
+			options.dispose();
+		}
+		options = null;
+		if (credits != null) {
+			credits.dispose();
+		}
+		credits = null;
+		Assets.unloadDir("textures/menu");
 		setScreen(gameScreen);
 	}
 
 	public void setMenu() {
-		Assets.loadMenuTextures();
 		if (mainMenu == null) {
+			Assets.loadMenuTextures();
 			mainMenu = new MainMenu(this);
 		}
 		setScreen(mainMenu);

@@ -19,7 +19,6 @@ public class Miscellaneous implements Screen,InputProcessor {
     protected SpriteBatch batch;
     protected Vector2 screenPos = new Vector2();
     protected Texture background;
-    protected Texture[] buttons;
     protected int lastResHeight;
     protected int lastResWidth;
     protected Vector2 realPos = new Vector2();
@@ -115,11 +114,10 @@ public class Miscellaneous implements Screen,InputProcessor {
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
+        batch.dispose();
     }
 }

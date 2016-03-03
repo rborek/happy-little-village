@@ -31,7 +31,7 @@ public class GameHandler {
 	private WinMessage winMessage;
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
 	private boolean DEBUG = false;
-	// all menuitems is put here
+	// all menu items are put here
 	private MessageBox messageBox;
 	private GemSummary gemSummary;
 	private GodMessage godMessage;

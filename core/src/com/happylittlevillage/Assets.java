@@ -42,6 +42,15 @@ public class Assets {
 		}
 	}
 
+	public static void unloadDir(String dir) {
+		FileHandle directory = Gdx.files.internal(dir);
+		for (FileHandle file : directory.list()) {
+			System.out.println("disposing file " + file);
+			manager.unload(file.toString());
+		}
+	}
+
+
 	private static BitmapFont generateFont(int size) {
 		float scale = 1.0f * Gdx.graphics.getWidth() / GameScreen.WIDTH * Gdx.graphics.getHeight() / GameScreen.HEIGHT;
 		if (scale < 1) {
@@ -89,7 +98,7 @@ public class Assets {
 		for (FileHandle file : dir.list()) {
 			if (file.isDirectory()) {
 				loadTextures(file, param);
-			} else {
+			} else if (!manager.isLoaded(file.toString())){
 				System.out.println("loading " + file);
 				manager.load(file.toString(), Texture.class, param);
 			}
