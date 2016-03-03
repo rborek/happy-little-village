@@ -7,7 +7,7 @@ import com.happylittlevillage.Assets;
 
 public class Gem {
 	private GemColour colour;
-	private final static Texture[] gemTextures = {Assets.getTexture("gems/test_gem.png"), Assets.getTexture("gems/gem_blue.png"),
+	private final static Texture[] gemTextures = {Assets.getTexture("gems/gem_red.png"), Assets.getTexture("gems/gem_blue.png"),
 			Assets.getTexture("gems/gem_green.png"), Assets.getTexture("gems/gem_yellow.png")};
 	private final static Texture[] smallGemTextures = {Assets.getTexture("gems/mini_gem_red.png"), Assets.getTexture("gems/mini_gem_blue.png"),
 			Assets.getTexture("gems/mini_gem_green.png"), Assets.getTexture("gems/mini_gem_yellow.png")};

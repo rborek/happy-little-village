@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 public class RitualAltar extends GameObject implements MenuItem {
     private GemBag gemBag;
-    private Rectangle[] slots;
     // gonna replace animation with different picture
     private Texture[] animation = Assets.getTextures("altar/altar1.png", "altar/altar2.png", "altar/altar3.png", "altar/altar2.png", "altar/altar1.png");
     private Texture button = Assets.getTexture("altar/button.png");
@@ -31,7 +30,6 @@ public class RitualAltar extends GameObject implements MenuItem {
     //new measurements
     private static final int slotSize2 = 80;
     private static final int spacing = 40;
-
 
     private boolean animating = false;
     private float timer = 0;
@@ -48,6 +46,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     public RitualAltar(GemBag gemBag, float xPos, float yPos, Village village) {
         super(Assets.getTexture("altar/newRitual.png"), xPos, yPos);
         this.village = village;
+        this.gemBag = gemBag;
         bonus = new int[4][4];
         addToBonus = new int[4][4];
         grid = new Gem[4][4]; // the new ritualAltar, background stuff
@@ -71,16 +70,6 @@ public class RitualAltar extends GameObject implements MenuItem {
 //                System.out.println(slots2[k][i].y );
 //            }
 //        }
-        slots = new Rectangle[4];
-        this.gemBag = gemBag;
-        slots[0] = new Rectangle(paddingX, paddingY + 64 + spacingY, 64, 64);
-        slots[1] = new Rectangle(paddingX + 64 + spacingX, paddingY + 64 + spacingY, 64, 64);
-        slots[2] = new Rectangle(paddingX, paddingY, 64, 64);
-        slots[3] = new Rectangle(paddingX + 64 + spacingX, paddingY, 64, 64);
-        for (int i = 0; i < slots.length; i++) {
-            slots[i].x += position.x;
-            slots[i].y += position.y;
-        }
         commenceButton = new Rectangle(position.x + (width / 2) - (button.getWidth() / 2), position.y, button.getWidth(), button.getHeight() + 30);
         rituals.add(Ritual.getRitual("addHappiness"));
         rituals.add(Ritual.getRitual("addFood"));
@@ -163,7 +152,6 @@ public class RitualAltar extends GameObject implements MenuItem {
         for (int gridRow = 0; gridRow < grid.length; gridRow++) { //row gridRow
             for (int gridColumn = 0; gridColumn < grid[0].length; gridColumn++) { //column gridColumn
                 if (grid[gridRow][gridColumn] != null) {
-                    System.out.println("" + gridRow + gridColumn + grid[gridRow][gridColumn].getColour());
                     //iterate through all known grid recipe
                     for (int ritualNumber = 0; ritualNumber < rituals.size(); ritualNumber++) {
                         // iterate through the first row of a recipe
@@ -186,12 +174,15 @@ public class RitualAltar extends GameObject implements MenuItem {
                 }
             }
         }
-        //call affectVillage for all rituals
+        //make rituals work by calling affectVillage on each rituals
+        //count 2 is the index of  rituals
         for (int count2 = 0; count2 < ritualEffects.size(); count2++) {
+            //count is the number of effect in each ritual
             for (int count = 0; count < ritualEffects.get(count2).length; count++) {
                 ritualEffects.get(count2)[count].affectVillage(village);
             }
         }
+        ritualEffects.clear();
         //TODO figure out something to do with bonuses
         //reset bonus
         for (int a = 0; a < bonus.length; a++) {
@@ -199,6 +190,7 @@ public class RitualAltar extends GameObject implements MenuItem {
                 bonus[a][b] = 0;
             }
         }
+        removeAllGems();
     }
 
     // compareRecipe compare the recipe according to ritualNumber,
@@ -231,13 +223,13 @@ public class RitualAltar extends GameObject implements MenuItem {
                         //Grid does not match the recipe
                         else if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null || !grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour().equals(check[recipeRow][recipeColumn])) {
                             match = false;
-//                            if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null) {
-//                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn);
-//                            } else {
-//                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn +
-//                                        "colour check is:" + check[recipeRow][recipeColumn]+ " colour grid is:" + grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour()
-//                                        + " At "+ (gridRow+recipeRow)+ (gridColumn + recipeColumn - firstRecipePosition) );
-//                            }
+                            if (grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition] == null) {
+                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn);
+                            } else {
+                                System.out.println("DOES NOT MATCH AT" + recipeRow + recipeColumn +
+                                        "colour check is:" + check[recipeRow][recipeColumn]+ " colour grid is:" + grid[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition].getColour()
+                                        + " At "+ (gridRow+recipeRow)+ (gridColumn + recipeColumn - firstRecipePosition) );
+                            }
                             break checkMatch;
                         } else {//if the position passes these 2 conditions +1 for the use of that matched position
                             addToBonus[gridRow + recipeRow][gridColumn + recipeColumn - firstRecipePosition]++;
@@ -263,19 +255,6 @@ public class RitualAltar extends GameObject implements MenuItem {
             ritualEffects.add(rituals.get(ritualNumber).getEffects());
         }
     }
-
-
-//    public void useGems() {
-//        for (Ritual ritual : rituals) {
-//            if (ritual.attempt()) {
-//                startAnimating();
-//                break;
-//            }
-//        }
-//        removeAllGems();
-//
-//    }
-
     public boolean place(Gem gem, float x, float y) {
         //x and y is the mouse's position but also the center of gem
         Rectangle gemBounds = new Rectangle(x - spacing, y - spacing, slotSize2, slotSize2);
@@ -290,8 +269,7 @@ public class RitualAltar extends GameObject implements MenuItem {
                 if (slots2[i][k].overlaps(gemBounds)) {
                     slots2[i][k].getCenter(center);
                     distance = Math.sqrt(Math.pow(center.x - x, 2) + Math.pow(center.y - y, 2));
-                    System.out.println("distance from grid"+i+k+ "to center "+x+" "+y+" is: "+distance);
-                    if (minDistance > distance) {
+                   if (minDistance > distance) {
                         minDistance = distance;
                         gridRow = i;
                         gridCol = k;
@@ -302,7 +280,9 @@ public class RitualAltar extends GameObject implements MenuItem {
         //if the minDistance is changed- something overlap
         if(minDistance != 100){
             if (grid[gridRow][gridCol] != null) {
+                System.out.println("Colour is"+grid[gridRow][gridCol].getColour());
                 gemBag.add(grid[gridRow][gridCol].getColour());
+
             }
             grid[gridRow][gridCol] = gem;
             return true;
@@ -319,12 +299,8 @@ public class RitualAltar extends GameObject implements MenuItem {
     }
 
     private void removeAllGems() {
-        for (int i = 0; i < grid.length; i++) {
-            for (int k = 0; k < grid[0].length; k++) {
-                grid[i][k] = null;
-            }
-
-        }
+        for (int i = 0; i < grid.length; i++)
+            for (int k = 0; k < grid[0].length; k++) grid[i][k] = null;
     }
 
     @Override
