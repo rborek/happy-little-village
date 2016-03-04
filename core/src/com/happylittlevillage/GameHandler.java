@@ -16,6 +16,8 @@ import com.happylittlevillage.village.Village;
 import com.happylittlevillage.village.Villager;
 import com.happylittlevillage.village.VillagerRole;
 
+import java.util.ArrayList;
+
 public class GameHandler {
     private Village village;
     private RitualAltar ritualAltar;
@@ -39,50 +41,40 @@ public class GameHandler {
     private boolean win = false;
     private boolean intro = true;
     private boolean gameOver = false;
+    private boolean isTutorial;
+    //maybe make an int stageTutorial to show the steps of Tutorial
+    private boolean finishTutorial = false;
+    private static ArrayList<Line> arrow = new ArrayList<Line>();
+    private TutorialMessage tutorialMessage;
 
-
-    public RitualAltar getRitualAltar() {
-        return ritualAltar;
-    }
-
-    public GemBag getGemBag() {
-        return gemBag;
-    }
-
-    public RitualBook getRitualBook() {
-        return ritualBook;
-    }
-
-    public GemBook getMiniBook() {
-        return miniBook;
-    }
-
-    public MessageBox getMessageBox() {
-        return messageBox;
-    }
-
-    public GameHandler(InputHandler inputHandler) {
+    public GameHandler(InputHandler inputHandler, boolean isTutorial) {
+        this.isTutorial = isTutorial;
         this.inputHandler = inputHandler;
-        init();
+        init(isTutorial);
+
     }
 
-    public void init() {
+    public void init( boolean isTutorial) {
         gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
-        village = new Village(gemBag);
-        ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
-        for (int i = 0; i < 10; i++) {
-
-            village.addVillager(VillagerRole.CITIZEN);
+        if(isTutorial){
+            tutorialMessage = new TutorialMessage("This is one of your villager",this, 0);
+            village = new Village(gemBag, 200, 100, 5);
+            arrow.add(new Line(476, 579, 0, 0));
         }
-        messageBox = new Introduction(this);
+        else{
+            village = new Village(gemBag, 500, 200, 10);
+        }
+        ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
+        messageBox = new Introduction(this, isTutorial);
         gameOverMessage = new GameOver(this);
         winMessage = new WinMessage(this);
         Ritual.setVillage(village);
         ritualAltar.gainRitual(village.getWeeklyRitual());
         Gdx.input.setInputProcessor(inputHandler);
         pause();
-
     }
+
+
 
     public boolean isPaused() {
         return paused;
@@ -146,7 +138,12 @@ public class GameHandler {
             }
             village.update(delta);
             ritualAltar.update(delta);
-
+        }
+        if(isTutorial){
+            if(!finishTutorial){
+                arrow.get(0).x2 = village.getPositionOfARandomVillager().x;
+                arrow.get(0).y2 = village.getPositionOfARandomVillager().y;
+            }
         }
 
     }
@@ -171,6 +168,12 @@ public class GameHandler {
                     Villager.renderLines(shapeRenderer);
                     shapeRenderer.end();
                 }
+                if(isTutorial){
+                    tutorialMessage.render(batch);
+                    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                    arrow.get(0).render(shapeRenderer);
+                    shapeRenderer.end();
+                }
 
             }
         } else {
@@ -190,5 +193,27 @@ public class GameHandler {
     public void closeBook() {
         bookOpen = false;
     }
+
+    public RitualAltar getRitualAltar() {
+        return ritualAltar;
+    }
+
+    public GemBag getGemBag() {
+        return gemBag;
+    }
+
+    public RitualBook getRitualBook() {
+        return ritualBook;
+    }
+
+    public GemBook getMiniBook() {
+        return miniBook;
+    }
+
+    public MessageBox getMessageBox() {
+        return messageBox;
+    }
+
+    public TutorialMessage getTutorialMessage(){return tutorialMessage; }
 
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.happylittlevillage.GameHandler;
 import com.happylittlevillage.GameScreen;
+import com.happylittlevillage.TutorialMessage;
 import com.happylittlevillage.gems.GemBook;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemBag;
@@ -24,6 +25,7 @@ public class InputHandler implements InputProcessor {
 	private MessageBox messageBox;
 	private GemBook miniBook;
 	private GameHandler gameHandler;
+	private TutorialMessage tutorialMessage;
 
 
 	public InputHandler(GameScreen screen) {
@@ -31,12 +33,14 @@ public class InputHandler implements InputProcessor {
 	}
 
 	public void linkTo(GameHandler gameHandler) {
+		this.gameHandler = gameHandler;
 		this.ritualAltar = gameHandler.getRitualAltar();
 		this.gemBag = gameHandler.getGemBag();
 		this.messageBox = gameHandler.getMessageBox();
 		this.ritualBook = gameHandler.getRitualBook();
 		this.miniBook = gameHandler.getMiniBook();
-		this.gameHandler = gameHandler;
+
+		this.tutorialMessage = gameHandler.getTutorialMessage();
 
 	}
 
@@ -129,6 +133,7 @@ public class InputHandler implements InputProcessor {
 			removeFromSlots(realPos.x, realPos.y);
 			pickUpGem(realPos.x, realPos.y);
 			ritualAltar.interact(realPos.x, realPos.y);
+			tutorialMessage.clickContinue(realPos.x, realPos.y);
 		}
 		return true;
 	}

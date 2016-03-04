@@ -42,10 +42,13 @@ public class Village {
     private GemBag gemBag;
 
 
-    public Village(GemBag gemBag) {
+    public Village(GemBag gemBag, float food, float happiness, float startingVillagers) {
         this.villagers = new ArrayList<Villager>();
-        food = 5000;
-        happiness = 5000;
+        this.food = food;
+        this.happiness = happiness;
+        for (int i = 0; i < startingVillagers; i++) {
+            this.addVillager(VillagerRole.CITIZEN);
+        }
         hoursLeft = MAX_HOURS;
         daysLeft = 7;
         day = 0;
@@ -77,7 +80,6 @@ public class Village {
     public void consume(float delta) {
 //        return;
         float consumeFood = 0;
-
         float consumeHappiness = 0;
         for (Villager villager : villagers) {
             if (villager.getRole().equals(VillagerRole.FARMER)) {
@@ -187,6 +189,10 @@ public class Village {
         }
     }
 
+    public Vector2 getPositionOfARandomVillager(){
+        return villagers.get(0).getPosition();
+    }
+
     public void addVillager(VillagerRole role) {
         if (villagerQueue == 0) {
             if (villagerToSpawn <= 0) {
@@ -201,6 +207,7 @@ public class Village {
         }
     }
 
+    // The queue of spawning villagers
     private void queueSpawn() {
         if (villagerQueue != 0) {
             villagers.add(new Villager(VillagerRole.CITIZEN, this));

@@ -16,7 +16,7 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 
 	public void setGameScreen() {
 		if (gameScreen == null) {
-			gameScreen = new GameScreen(this);
+			gameScreen = new GameScreen(this,false);
 		}
 		if (mainMenu != null) {
 			mainMenu.dispose();
@@ -56,5 +56,24 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 		setScreen(credits);
 	}
 
+	public void setTutorialScreen(){
+		if (gameScreen == null) {
+			gameScreen = new GameScreen(this,true);
+		}
+		if (mainMenu != null) {
+			mainMenu.dispose();
+		}
+		mainMenu = null;
+		if (options != null) {
+			options.dispose();
+		}
+		options = null;
+		if (credits != null) {
+			credits.dispose();
+		}
+		credits = null;
+		Assets.unloadDir("textures/menu");
+		setScreen(gameScreen);
+	}
 
 }

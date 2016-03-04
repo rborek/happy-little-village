@@ -31,9 +31,11 @@ public class GameScreen implements Screen {
 	private Viewport viewport;
 	private BitmapFont font = new BitmapFont();
 	private boolean android;
+	private boolean isTutorial = false;
 
-	public GameScreen(HappyLittleVillage game) {
+	public GameScreen(HappyLittleVillage game, boolean isTutorial) {
 		this.game = game;
+		this.isTutorial = isTutorial;
 		Assets.load();
 		sun = Assets.getTexture("bg/sun.png");
 		if (Gdx.app.getType() == Application.ApplicationType.Android) {
@@ -48,7 +50,7 @@ public class GameScreen implements Screen {
 		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
 		inputHandler = new InputHandler(this);
-		gameHandler = new GameHandler(inputHandler);
+		gameHandler = new GameHandler(inputHandler, this.isTutorial);
 		inputHandler.linkTo(gameHandler);
 		Gdx.input.setInputProcessor(inputHandler);
 		dayTime = gameHandler.getVillage().getMaxHours();

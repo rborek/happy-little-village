@@ -18,13 +18,14 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	protected GameHandler gameHandler;
 	protected String text;
 	protected String title;
-	protected Texture continueButton = Assets.getTexture("ui/continue_button.png");
+	protected Texture continueButton;
 	protected float continueX;
 	protected float continueY;
 
 	// for the instruction
 	public MessageBox(String instruction, GameHandler gameHandler) {
 		super(Assets.getTexture("ui/parchment.png"), 70, 160);
+		continueButton = Assets.getTexture("ui/continue_button.png");
 		this.gameHandler = gameHandler;
 		this.text = instruction;
 		title = "";
