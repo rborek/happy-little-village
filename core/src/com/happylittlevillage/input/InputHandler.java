@@ -129,6 +129,17 @@ public class InputHandler implements InputProcessor {
 		}
 		else if (gameHandler.isTutorial()){
 			tutorialMessage.interact(realPos.x,realPos.y);
+			//this restrict player's interaction with the grid only
+			if(tutorialMessage.getIndexTutorial()>=4 && tutorialMessage.getIndexTutorial() <=10){
+				pickUpGem(realPos.x,realPos.y);
+				removeFromSlots(realPos.x, realPos.y);
+				ritualAltar.interact(realPos.x, realPos.y);
+			}
+			//This restrict player's interaction with the book only
+			if(tutorialMessage.getIndexTutorial()== 11 || tutorialMessage.getIndexTutorial() ==12){
+				tryToOpenBook(realPos.x, realPos.y);
+				tryToTurnPages(realPos.x, realPos.y);
+			}
 		}
 		//gamePlay
 		else {

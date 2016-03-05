@@ -148,6 +148,9 @@ public class GameHandler {
                 }
                 tutorialMessage.setAngle(angle,flip);
             }
+            if(tutorialMessage.getIndexTutorial()>=4 && tutorialMessage.getIndexTutorial() <=6){
+                tutorialMessage.update(delta);
+            }
         }
 
     }
