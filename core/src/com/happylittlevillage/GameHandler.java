@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemBag;
 import com.happylittlevillage.gems.GemBook;
@@ -44,22 +45,21 @@ public class GameHandler {
     private boolean isTutorial;
     //maybe make an int stageTutorial to show the steps of Tutorial
     private boolean finishTutorial = false;
-    private static ArrayList<Line> arrow = new ArrayList<Line>();
+    private static ArrayList<Vector2> arrow = new ArrayList<Vector2>();
     private TutorialMessage tutorialMessage;
 
     public GameHandler(InputHandler inputHandler, boolean isTutorial) {
         this.isTutorial = isTutorial;
         this.inputHandler = inputHandler;
         init(isTutorial);
-
     }
 
     public void init( boolean isTutorial) {
         gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
         if(isTutorial){
-            tutorialMessage = new TutorialMessage("This is one of your villager",this, 0);
+            tutorialMessage = new TutorialMessage(this, 0);
             village = new Village(gemBag, 200, 100, 5);
-            arrow.add(new Line(476, 579, 0, 0));
+            arrow.add(new Vector2(476, 579));
         }
         else{
             village = new Village(gemBag, 500, 200, 10);
@@ -140,9 +140,13 @@ public class GameHandler {
             ritualAltar.update(delta);
         }
         if(isTutorial){
-            if(!finishTutorial){
-                arrow.get(0).x2 = village.getPositionOfARandomVillager().x;
-                arrow.get(0).y2 = village.getPositionOfARandomVillager().y;
+            if(tutorialMessage.getIndexTutorial()<=1){
+                double angle = Math.atan((village.getPositionOfARandomVillager().y -arrow.get(0).y)/(village.getPositionOfARandomVillager().x -arrow.get(0).x));
+                boolean flip = false;
+                if(village.getPositionOfARandomVillager().y-arrow.get(0).y < 0 && village.getPositionOfARandomVillager().x - arrow.get(0).x < 0){
+                    flip = true;
+                }
+                tutorialMessage.setAngle(angle,flip);
             }
         }
 
@@ -170,9 +174,6 @@ public class GameHandler {
                 }
                 if(isTutorial){
                     tutorialMessage.render(batch);
-                    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                    arrow.get(0).render(shapeRenderer);
-                    shapeRenderer.end();
                 }
 
             }
@@ -216,4 +217,7 @@ public class GameHandler {
 
     public TutorialMessage getTutorialMessage(){return tutorialMessage; }
 
+    public boolean isTutorial(){
+        return isTutorial;
+    }
 }

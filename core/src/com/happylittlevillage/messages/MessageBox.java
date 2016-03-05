@@ -1,5 +1,6 @@
 package com.happylittlevillage.messages;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,10 +20,17 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	protected String text;
 	protected String title;
 	protected Texture continueButton;
+	protected Texture backButton;
 	protected float continueX;
 	protected float continueY;
 
-	// for the instruction
+	//exclusively for the tutorial
+	public  MessageBox (GameHandler gameHandler){
+		super(Assets.getTexture("ui/tutorialMessageBox.png"), 480,590);
+		this.gameHandler = gameHandler;
+	}
+
+	// for the daily information
 	public MessageBox(String instruction, GameHandler gameHandler) {
 		super(Assets.getTexture("ui/parchment.png"), 70, 160);
 		continueButton = Assets.getTexture("ui/continue_button.png");

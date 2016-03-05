@@ -39,7 +39,6 @@ public class InputHandler implements InputProcessor {
 		this.messageBox = gameHandler.getMessageBox();
 		this.ritualBook = gameHandler.getRitualBook();
 		this.miniBook = gameHandler.getMiniBook();
-
 		this.tutorialMessage = gameHandler.getTutorialMessage();
 
 	}
@@ -127,13 +126,17 @@ public class InputHandler implements InputProcessor {
 		System.out.println("Mouse click at " + realPos);
 		if (gameHandler.isPaused()) {
 			checkContinue(realPos.x, realPos.y);
-		} else {
+		}
+		else if (gameHandler.isTutorial()){
+			tutorialMessage.interact(realPos.x,realPos.y);
+		}
+		//gamePlay
+		else {
 			tryToOpenBook(realPos.x, realPos.y);
 			tryToTurnPages(realPos.x, realPos.y);
 			removeFromSlots(realPos.x, realPos.y);
 			pickUpGem(realPos.x, realPos.y);
 			ritualAltar.interact(realPos.x, realPos.y);
-			tutorialMessage.clickContinue(realPos.x, realPos.y);
 		}
 		return true;
 	}
