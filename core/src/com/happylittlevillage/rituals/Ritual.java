@@ -59,13 +59,10 @@ public class Ritual { // to be non-abstract
         // adds each effect to the effects array
         for (int i = 2; i < file.length; i++) {
             String[] effect = file[i].split(" ");
-            int modifier = Integer.parseInt(effect[1]);
-//			System.out.println("Modifier is:"+modifier);
-//			if (effect[1].charAt(0) == '-') {
-//				modifier *= -1;
-//				System.out.println("Modifier is negative");
-//			}
-//			System.out.println("Modifier is:"+modifier);
+            int modifier = Integer.parseInt(effect[1].substring(1));
+			if (effect[1].charAt(0) == '-') {
+				modifier *= -1;
+			}
             effects[i - 2] = new RitualEffect(VillageModifier.valueOf(effect[0]), modifier);
         }
     }

@@ -110,7 +110,7 @@ public class Assets {
 		param.genMipMaps = true;
 		param.minFilter = TextureFilter.MipMapLinearLinear;
 		param.magFilter = TextureFilter.Linear;
-		loadTextures(new FileHandle("textures/menu"), param);
+		loadTextures(Gdx.files.internal("textures/menu"), param);
 		manager.finishLoading();
 	}
 
