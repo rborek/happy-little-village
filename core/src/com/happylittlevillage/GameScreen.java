@@ -50,7 +50,7 @@ public class GameScreen implements Screen {
 		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
 		inputHandler = new InputHandler(this);
-		gameHandler = new GameHandler(inputHandler, this.isTutorial);
+		gameHandler = new GameHandler(inputHandler, isTutorial);
 		inputHandler.linkTo(gameHandler);
 		Gdx.input.setInputProcessor(inputHandler);
 		dayTime = gameHandler.getVillage().getMaxHours();

@@ -112,7 +112,7 @@ public class RitualAltar extends GameObject implements MenuItem {
         for (int i = 0; i < grid.length; i++) {
             for (int k = 0; k < grid[0].length; k++) {
                 if (grid[i][k] != null) {
-                    batch.draw(grid[i][k].getTexture(), slots2[i][k].x, +slots2[i][k].y);
+                    batch.draw(grid[i][k].getTexture(), slots2[i][k].x, +slots2[i][k].y, 80, 80);
                 }
             }
 

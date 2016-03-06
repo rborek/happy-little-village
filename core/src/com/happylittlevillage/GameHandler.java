@@ -56,13 +56,14 @@ public class GameHandler {
 	public void init(boolean isTutorial) {
 		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
 		if (isTutorial) {
-			tutorialMessage = new TutorialMessage(this, 0);
 			village = new Village(gemBag, 200, 100, 5);
+			ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
+			tutorialMessage = new TutorialMessage(this, ritualAltar);
 			arrow.add(new Vector2(476, 579));
 		} else {
-			village = new Village(gemBag, 99999, 99999, 10000);
+			village = new Village(gemBag, 500, 200, 10);
+			ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
 		}
-		ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
 		messageBox = new Introduction(this, isTutorial);
 		gameOverMessage = new GameOver(this);
 		winMessage = new WinMessage(this);
@@ -137,7 +138,8 @@ public class GameHandler {
 			ritualAltar.update(delta);
 		}
 		if (isTutorial) {
-			if (tutorialMessage.getIndexTutorial() <= 1) {
+			//arrow for screen 0 and 1
+			if (tutorialMessage.getTutorialScreen() <= 1) {
 				double angle = Math.atan((village.getPositionOfARandomVillager().y - arrow.get(0).y) / (village.getPositionOfARandomVillager().x - arrow.get(0).x));
 				boolean flip = false;
 				if (village.getPositionOfARandomVillager().y - arrow.get(0).y < 0 && village.getPositionOfARandomVillager().x - arrow.get(0).x < 0) {
@@ -145,6 +147,8 @@ public class GameHandler {
 				}
 				tutorialMessage.setAngle(angle, flip);
 			}
+			//arrow for screen 4-6
+			tutorialMessage.update(delta);
 		}
 
 	}
@@ -159,6 +163,9 @@ public class GameHandler {
 		inputHandler.renderSelectedGem(batch);
 		miniBook.render(batch);
 		if (!gameOver && !win) {
+			if (isTutorial) {
+				tutorialMessage.render(batch);
+			}
 			if (paused) {
 				messageBox.render(batch);
 			} else if (bookOpen) {
@@ -169,10 +176,6 @@ public class GameHandler {
 					Villager.renderLines(shapeRenderer);
 					shapeRenderer.end();
 				}
-				if (isTutorial) {
-					tutorialMessage.render(batch);
-				}
-
 			}
 		} else {
 			messageBox.render(batch);

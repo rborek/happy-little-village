@@ -17,7 +17,7 @@ public class Gem {
 	}
 
 	public void render(Batch batch, float xPos, float yPos) {
-		batch.draw(getTexture(), xPos, yPos);
+		batch.draw(getTexture(), xPos, yPos, 80, 80);
 	}
 
 	public GemColour getColour() {

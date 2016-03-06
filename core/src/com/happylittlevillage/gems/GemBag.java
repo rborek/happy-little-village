@@ -52,7 +52,7 @@ public class GemBag extends GameObject {
 		batch.draw(texture, position.x, position.y);
 		for (int i = 0; i < gemTextures.length; i++) {
 			if (gemAmounts[i] != 0) {
-				batch.draw(gemTextures[i], slots[i].x, slots[i].y);
+				batch.draw(gemTextures[i], slots[i].x, slots[i].y, 64, 64);
 			} else {
 				batch.draw(inactiveGem, slots[i].x, slots[i].y);
 			}
