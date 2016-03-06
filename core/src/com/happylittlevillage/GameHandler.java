@@ -15,7 +15,6 @@ import com.happylittlevillage.rituals.RitualAltar;
 import com.happylittlevillage.rituals.RitualBook;
 import com.happylittlevillage.village.Village;
 import com.happylittlevillage.village.Villager;
-import com.happylittlevillage.village.VillagerRole;
 
 import java.util.ArrayList;
 
@@ -56,15 +55,15 @@ public class GameHandler {
 
     public void init( boolean isTutorial) {
         gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
+        ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
         if(isTutorial){
-            tutorialMessage = new TutorialMessage(this, 0);
+            tutorialMessage = new TutorialMessage(this, 0, ritualAltar);
             village = new Village(gemBag, 200, 100, 5);
             arrow.add(new Vector2(476, 579));
         }
         else{
             village = new Village(gemBag, 500, 200, 10);
         }
-        ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
         messageBox = new Introduction(this, isTutorial);
         gameOverMessage = new GameOver(this);
         winMessage = new WinMessage(this);
@@ -140,7 +139,8 @@ public class GameHandler {
             ritualAltar.update(delta);
         }
         if(isTutorial){
-            if(tutorialMessage.getIndexTutorial()<=1){
+            //arrow for screen 0 and 1
+            if(tutorialMessage.getTutorialScreen()<=1){
                 double angle = Math.atan((village.getPositionOfARandomVillager().y -arrow.get(0).y)/(village.getPositionOfARandomVillager().x -arrow.get(0).x));
                 boolean flip = false;
                 if(village.getPositionOfARandomVillager().y-arrow.get(0).y < 0 && village.getPositionOfARandomVillager().x - arrow.get(0).x < 0){
@@ -148,7 +148,8 @@ public class GameHandler {
                 }
                 tutorialMessage.setAngle(angle,flip);
             }
-            if(tutorialMessage.getIndexTutorial()>=4 && tutorialMessage.getIndexTutorial() <=6){
+            //arrow for screen 4-6
+            if(tutorialMessage.getTutorialScreen()>=4 && tutorialMessage.getTutorialScreen() <=6){
                 tutorialMessage.update(delta);
             }
         }
