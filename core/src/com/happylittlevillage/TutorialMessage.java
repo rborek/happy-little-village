@@ -24,7 +24,7 @@ public class TutorialMessage extends MessageBox {
     private boolean gemPlaced = false;
     private float moveX = 0;
     private float moveY = 0;
-    private static int[] disableContinueButton = {4, 5, 6, 7};
+    private static int[] disableContinueButton = { 4, 5, 6, 7};
     private static int[] disableBackButton = {0, 4, 5, 6, 7};
     private boolean disableBack = false;
     private boolean disableContinue = false;
@@ -41,8 +41,7 @@ public class TutorialMessage extends MessageBox {
     }
 
 
-    private void switchScreen() {
-        System.out.println("Tutorial Screen is"+tutorialScreen);
+    private void switchText() {
         switch (tutorialScreen) {
             case 0:
                 text = "This is one of your villager";
@@ -59,11 +58,8 @@ public class TutorialMessage extends MessageBox {
             //simple ritual
             case 4:
                 text = "Pick up a yellow gem and put it here";
-                System.out.println(" 4Was called");
-
                 break;
             case 5:
-                System.out.println(" 5 Was called");
                 text = "Pick up a red gem and put it here";
                 break;
             case 6:
@@ -121,12 +117,10 @@ public class TutorialMessage extends MessageBox {
             //point village
             case 0:
                 batch.draw(arrow, position.x - 70, position.y - texture.getHeight() / 2 - 40, arrow.getWidth() / 2, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, angle, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
-                batch.draw(texture, position.x, position.y);
                 batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
                 break;
             //explain types of villagers
             case 1:
-                batch.draw(texture, position.x, position.y);
                 batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
                 batch.draw(backButton, position.x, position.y);
                 supportTexture1 = Assets.getTexture("villagers/explorer/explorer.png");
@@ -148,30 +142,42 @@ public class TutorialMessage extends MessageBox {
                 break;
             //pick up a yellow gem and put it here
             case 4:
-                move = setMovingPosition(delta, 1150, 100, 960, 500);
+                move = setMovingPosition(delta, 1150, 80, 960, 500);
                 moveX -= move.x;
                 moveY -= move.y;
                 // reset move if it passes the destination. This is pretty bad code
-                if (1150 - moveX < 800 || 100 - moveY > 350) {
+                if (1150 - moveX < 800 || 80 - moveY > 350) {
                     moveX = 0;
                     moveY = 0;
                 }
-                batch.draw(arrow, 1150 - moveX, 100 - moveY, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 120, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
-                batch.draw(texture, position.x, position.y);
+                batch.draw(arrow, 1150 - moveX, 80 - moveY, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 120, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
                 break;
             //pick up a red gem and put it here
             case 5 :
-                batch.draw(texture, position.x, position.y);
-                move = setMovingPosition(delta,1075,100,960,400);
+                move = setMovingPosition(delta,875,80,930,360);
                 moveX -= move.x;
                 moveY -= move.y;
                 // reset move if it passes the destination. This is pretty bad code
-                if (1075 - moveX < 800 || 100 - moveY > 250) {
+                if (875 - moveX < 850 || 80 - moveY > 230) {
                     moveX = 0;
                     moveY = 0;
                 }
-                batch.draw(arrow, 1075 - moveX, 100 - moveY, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 120, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
-
+                batch.draw(arrow, 875 - moveX, 80 - moveY, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 70, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
+                break;
+                /// /pick up another red gem and put it here
+            case 6 :
+                move = setMovingPosition(delta,875,80,930,270);
+                moveX -= move.x;
+                moveY -= move.y;
+                // reset move if it passes the destination. This is pretty bad code
+                if (875 - moveX < 850 || 80 - moveY > 180) {
+                    moveX = 0;
+                    moveY = 0;
+                }
+                batch.draw(arrow, 875 - moveX, 80 - moveY, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 65, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
+                break;
+            case 7 :
+                break;
         }
         if(!disableContinue){
             batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
@@ -199,8 +205,8 @@ public class TutorialMessage extends MessageBox {
     }
 
     private Vector2 setMovingPosition(float delta, float startX, float startY, float endX, float endY) {
-        float moveX = (endX - startX) * delta / 2;
-        float moveY = (endY - startY) * delta / 2;
+        float moveX = (endX - startX) * delta / 3;
+        float moveY = (endY - startY) * delta / 3;
         return new Vector2(moveX, moveY);
     }
 
@@ -223,7 +229,6 @@ public class TutorialMessage extends MessageBox {
             }
         }
         if (!disableBack) {
-            System.out.println("Disable going back");
             Rectangle backPosition = new Rectangle(position.x, position.y, backButton.getWidth(), backButton.getHeight());
             if (backPosition.contains(mouseX, mouseY)) {
                 prevScreen();
@@ -244,14 +249,14 @@ public class TutorialMessage extends MessageBox {
         position.x = positionOfEachMessage[positionIndex];
         position.y = positionOfEachMessage[positionIndex + 1];
         tutorialScreen++;
-        switchScreen();
+        switchText();
     }
     private void prevScreen(){
         positionIndex -= 2;
         position.x = positionOfEachMessage[positionIndex];
         position.y = positionOfEachMessage[positionIndex + 1];
         tutorialScreen--;
-        switchScreen();
+        switchText();
     }
 
 }

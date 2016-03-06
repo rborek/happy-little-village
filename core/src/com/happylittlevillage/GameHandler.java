@@ -55,13 +55,14 @@ public class GameHandler {
 
     public void init( boolean isTutorial) {
         gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
-        ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
         if(isTutorial){
-            tutorialMessage = new TutorialMessage(this, 0, ritualAltar);
             village = new Village(gemBag, 200, 100, 5);
+            ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
+            tutorialMessage = new TutorialMessage(this, 0, ritualAltar);
             arrow.add(new Vector2(476, 579));
         }
         else{
+            ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
             village = new Village(gemBag, 500, 200, 10);
         }
         messageBox = new Introduction(this, isTutorial);
