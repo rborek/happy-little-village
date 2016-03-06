@@ -85,12 +85,12 @@ public class TutorialMessage extends MessageBox {
         switch(indexTutorial){
             case 0: batch.draw(arrow, position.x - 20, position.y-texture.getHeight()/2, 0, arrow.getHeight()/2, arrow.getWidth(), arrow.getHeight(), 1, 1, angle, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
                     break;
-            case 1: supportTexture1 = Assets.getTexture("villagers/explorer/explorer.png");
-                    supportTexture2 = Assets.getTexture("villagers/farmer/farmer.png");
-                    supportTexture3 = Assets.getTexture("villagers/miner/miner.png");
-                    batch.draw(supportTexture1, position.x, position.y+30);
-                    batch.draw(supportTexture2, position.x + supportTexture1.getWidth() + 50, position.y + 30);
-                    batch.draw(supportTexture3, position.x + supportTexture2.getWidth() + supportTexture2.getWidth() + 100, position.y + 30);
+            case 1: // supportTexture1 = Assets.getTexture("villagers/explorer/explorer.png");
+                    // supportTexture2 = Assets.getTexture("villagers/farmer/farmer.png");
+                    // supportTexture3 = Assets.getTexture("villagers/miner/miner.png");
+                    // batch.draw(supportTexture1, position.x, position.y+30);
+                    // batch.draw(supportTexture2, position.x + supportTexture1.getWidth() + 50, position.y + 30);
+                    // batch.draw(supportTexture3, position.x + supportTexture2.getWidth() + supportTexture2.getWidth() + 100, position.y + 30);
                     batch.draw(arrow, position.x - 20, position.y-texture.getHeight()/2, 0, arrow.getHeight()/2, arrow.getWidth(), arrow.getHeight(), 1, 1, angle, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
                     break;
             case 2: batch.draw(arrow, 125, 170, 0, arrow.getHeight()/2, arrow.getWidth(), arrow.getHeight(), 1, 1, 270, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);

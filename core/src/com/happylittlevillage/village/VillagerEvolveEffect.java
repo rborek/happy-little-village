@@ -1,6 +1,7 @@
 package com.happylittlevillage.village;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.happylittlevillage.Assets;
 
 public class VillagerEvolveEffect extends VillagerEffect {
@@ -9,12 +10,8 @@ public class VillagerEvolveEffect extends VillagerEffect {
 	}
 
 	@Override
-	protected Texture[] getFrames() {
-		String[] files = new String[7];
-		for (int i = 1; i < 8; i++) {
-			files[i - 1] = "villagers/evolve/evolve_sprite_" + i + ".png";
-		}
-		return Assets.getTextures(files);
+	protected TextureRegion[] getFrames() {
+		return effectAtlas.findRegions("evolve_sprite").toArray(TextureRegion.class);
 	}
 
 

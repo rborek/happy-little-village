@@ -30,8 +30,8 @@ public class Village {
     private int villagerAdded = 0;
     private int villagerRemoved = 0;
     private static Random random = new Random();
-    private float villagerToSpawn = 0;
-    private int villagerQueue = 0;
+    private float villagerSpawnTimer = 0;
+    private int numVillagersToSpawn = 0;
     //	private static Pool<Rectangle> rectPool = new Pool<Rectangle>() {
 //		@Override
 //		protected Rectangle newObject() {
@@ -173,8 +173,8 @@ public class Village {
         consume(delta);
         timePass(delta);
         //decrement time of spawning
-        if (villagerToSpawn > 0) {
-            villagerToSpawn = villagerToSpawn - delta;
+        if (villagerSpawnTimer > 0) {
+            villagerSpawnTimer -= delta + delta * (numVillagersToSpawn);
         }
         //if enough time pass call the rest of the villagers needed to be spawn
         else {
@@ -194,26 +194,26 @@ public class Village {
     }
 
     public void addVillager(VillagerRole role) {
-        if (villagerQueue == 0) {
-            if (villagerToSpawn <= 0) {
+        if (numVillagersToSpawn == 0) {
+            if (villagerSpawnTimer <= 0) {
                 villagers.add(new Villager(role, this));
                 villagerAdded += 1;
-                villagerToSpawn = (float) 0.5;
+                villagerSpawnTimer = (float) 0.5;
             } else {
-                villagerQueue++;
+                numVillagersToSpawn++;
             }
         } else {
-            villagerQueue++;
+            numVillagersToSpawn++;
         }
     }
 
     // The queue of spawning villagers
     private void queueSpawn() {
-        if (villagerQueue != 0) {
+        if (numVillagersToSpawn != 0) {
             villagers.add(new Villager(VillagerRole.CITIZEN, this));
             villagerAdded += 1;
-            villagerToSpawn = (float) 0.5;
-            villagerQueue--;
+            villagerSpawnTimer = (float) 0.5;
+            numVillagersToSpawn--;
         }
     }
 

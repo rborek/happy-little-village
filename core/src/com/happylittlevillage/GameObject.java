@@ -13,14 +13,16 @@ public abstract class GameObject {
 
 	protected GameObject(Texture texture, float xPos, float yPos) {
 		this.texture = texture;
-		this.texture.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.MipMapLinearLinear);
 		this.position = new Vector2(xPos, yPos);
-		width = texture.getWidth();
-		height = texture.getHeight();
+		if (texture != null) {
+			width = texture.getWidth();
+			height = texture.getHeight();
+		}
 	}
 
 	protected GameObject(Texture texture, float xPos, float yPos, int width, int height) {
-		this(texture, xPos, yPos);
+		this.texture = texture;
+		this.position = new Vector2(xPos, yPos);
 		this.width = width;
 		this.height = height;
 	}

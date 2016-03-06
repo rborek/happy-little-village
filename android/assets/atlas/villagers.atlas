@@ -1,0 +1,229 @@
+villagers.png
+size: 28, 1344
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+citizen
+  rotate: false
+  xy: 0, 0
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: -1
+citizen_walk
+  rotate: false
+  xy: 0, 42
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 1
+citizen_walk
+  rotate: false
+  xy: 0, 84
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 2
+citizen_walk
+  rotate: false
+  xy: 0, 126
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 3
+death_sprite
+  rotate: false
+  xy: 0, 168
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 1
+death_sprite
+  rotate: false
+  xy: 0, 210
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 2
+death_sprite
+  rotate: false
+  xy: 0, 252
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 3
+death_sprite
+  rotate: false
+  xy: 0, 294
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 4
+death_sprite
+  rotate: false
+  xy: 0, 336
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 5
+death_sprite
+  rotate: false
+  xy: 0, 378
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 6
+death_sprite
+  rotate: false
+  xy: 0, 420
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 7
+evolve_sprite
+  rotate: false
+  xy: 0, 462
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 1
+evolve_sprite
+  rotate: false
+  xy: 0, 504
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 2
+evolve_sprite
+  rotate: false
+  xy: 0, 546
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 3
+evolve_sprite
+  rotate: false
+  xy: 0, 588
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 4
+evolve_sprite
+  rotate: false
+  xy: 0, 630
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 5
+evolve_sprite
+  rotate: false
+  xy: 0, 672
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 6
+evolve_sprite
+  rotate: false
+  xy: 0, 714
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 7
+evolve_sprite
+  rotate: false
+  xy: 0, 756
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 8
+evolve_sprite
+  rotate: false
+  xy: 0, 798
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 9
+explorer
+  rotate: false
+  xy: 0, 840
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: -1
+explorer_walk
+  rotate: false
+  xy: 0, 882
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 1
+explorer_walk
+  rotate: false
+  xy: 0, 924
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 2
+explorer_walk
+  rotate: false
+  xy: 0, 966
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 3
+farmer
+  rotate: false
+  xy: 0, 1008
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: -1
+farmer_walk
+  rotate: false
+  xy: 0, 1050
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 1
+farmer_walk
+  rotate: false
+  xy: 0, 1092
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 2
+farmer_walk
+  rotate: false
+  xy: 0, 1134
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 3
+miner
+  rotate: false
+  xy: 0, 1176
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: -1
+miner_walk
+  rotate: false
+  xy: 0, 1218
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 1
+miner_walk
+  rotate: false
+  xy: 0, 1260
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 2
+miner_walk
+  rotate: false
+  xy: 0, 1302
+  size: 28, 42
+  orig: 28, 42
+  offset: 0, 0
+  index: 3

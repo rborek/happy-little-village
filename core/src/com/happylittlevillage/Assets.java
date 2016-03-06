@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.happylittlevillage.rituals.Ritual;
 
@@ -114,12 +115,26 @@ public class Assets {
 		manager.finishLoading();
 	}
 
+	public static TextureAtlas getAtlas(String name) {
+		return manager.get("atlas/" + name + ".atlas");
+	}
+
+	public static void loadAtlases() {
+		FileHandle dir = Gdx.files.internal("atlas");
+		for (FileHandle file : dir.list()) {
+			if (file.toString().contains(".atlas")) {
+				manager.load(file.toString(), TextureAtlas.class);
+			}
+		}
+	}
+
 	public static void load() {
 		TextureParameter param = new TextureParameter();
 		param.genMipMaps = true;
 		param.minFilter = TextureFilter.MipMapLinearLinear;
 		param.magFilter = TextureFilter.Linear;
 		loadTextures(param);
+		loadAtlases();
 		manager.finishLoading();
 		Ritual.load();
 	}

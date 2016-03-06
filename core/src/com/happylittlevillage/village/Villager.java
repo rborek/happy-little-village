@@ -2,10 +2,12 @@ package com.happylittlevillage.village;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
@@ -16,14 +18,14 @@ import java.util.Random;
 
 public class Villager extends GameObject implements Comparable<Villager> {
 	private VillagerRole role;
-	private final static Texture[][] villagerTextures = {Assets.getTextures("villagers/citizen/citizen.png", "villagers/citizen/citizen_left_1.png",
-			"villagers/citizen/citizen_left_2.png", "villagers/citizen/citizen_left_3.png", "villagers/citizen/citizen_left_2.png"),
-			Assets.getTextures("villagers/miner/miner.png", "villagers/miner/miner_left_1.png",
-					"villagers/miner/miner_left_2.png", "villagers/miner/miner_left_3.png", "villagers/miner/miner_left_2.png"),
-			Assets.getTextures("villagers/farmer/farmer.png", "villagers/farmer/farmer_left_1.png",
-					"villagers/farmer/farmer_left_2.png", "villagers/farmer/farmer_left_3.png", "villagers/farmer/farmer_left_2.png"),
-			Assets.getTextures("villagers/explorer/explorer.png", "villagers/explorer/explorer_left_1.png",
-					"villagers/explorer/explorer_left_2.png", "villagers/explorer/explorer_left_3.png", "villagers/explorer/explorer_left_2.png")};
+	private TextureRegion region;
+	private final static TextureAtlas villagerAtlas = Assets.getAtlas("villagers");
+	private final static TextureRegion[][] idleTextures = {villagerAtlas.findRegions("citizen").toArray(TextureRegion.class),
+			villagerAtlas.findRegions("miner").toArray(TextureRegion.class), villagerAtlas.findRegions("farmer").toArray(TextureRegion.class),
+			villagerAtlas.findRegions("explorer").toArray(TextureRegion.class)};
+	private final static TextureRegion[][] walkTextures = {villagerAtlas.findRegions("citizen_walk").toArray(TextureRegion.class),
+			villagerAtlas.findRegions("miner_walk").toArray(TextureRegion.class), villagerAtlas.findRegions("farmer_walk").toArray(TextureRegion.class),
+			villagerAtlas.findRegions("explorer_walk").toArray(TextureRegion.class)};
 	private static Pool<Line> linePool = new Pool<Line>() {
 		@Override
 		protected Line newObject() {
@@ -67,12 +69,13 @@ public class Villager extends GameObject implements Comparable<Villager> {
 
 	// subtract delta from restTimer
 	public Villager(VillagerRole role, Village village) {
-		super(villagerTextures[role.ordinal()][0], 0, 0);
+		super(null, 0, 0, 28, 42);
 		this.village = village;
 //		position = new Vector2((float) Math.random() * 500, 195);
-		position = new Vector2(216,300);
+		position = new Vector2(216, 300);
 		this.role = role;
 		velocity = new Vector2(0, 0);
+		region = idleTextures[role.ordinal()][0];
 		generateNewDestination();
 	}
 
@@ -100,8 +103,12 @@ public class Villager extends GameObject implements Comparable<Villager> {
 	}
 
 	private void move(float delta) {
-		int frame = (int) (walkTimer * 5 % 4) + 1;
-		texture = villagerTextures[role.ordinal()][frame];
+		int frame = (int) (walkTimer * 5 % 4);
+		if (frame == 3) {
+			region = walkTextures[role.ordinal()][frame - 2];
+		} else {
+			region = walkTextures[role.ordinal()][frame];
+		}
 		walkTimer += delta;
 		position.add(velocity.x * delta, velocity.y * delta);
 	}
@@ -112,14 +119,13 @@ public class Villager extends GameObject implements Comparable<Villager> {
 
 	@Override
 	public void render(Batch batch) {
-		batch.draw(texture, position.x, position.y, width, height, 0, 0, (int) width, (int) height, isMovingRight(),
-				false);
+		batch.draw(region, isMovingRight() ? position.x + width : position.x, position.y, 0, 0, width, height, isMovingRight() ? -1 : 1, 1, 0);
 	}
 
 	@Override
 	public void update(float delta) {
 		if (resting) {
-			texture = villagerTextures[role.ordinal()][0];
+			region = idleTextures[role.ordinal()][0];
 			restTimer -= delta;
 			if (restTimer <= 0) {
 				generateNewDestination();

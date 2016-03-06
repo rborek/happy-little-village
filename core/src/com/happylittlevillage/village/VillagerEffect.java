@@ -1,17 +1,22 @@
 package com.happylittlevillage.village;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
 
 public abstract class VillagerEffect extends GameObject {
 	Villager villager;
-	Texture[] frames;
+	TextureRegion region;
+	TextureRegion[] frames;
+	protected final static TextureAtlas effectAtlas = Assets.getAtlas("villagers");
 	protected float timer;
 	protected boolean done = false;
 
 	public VillagerEffect(Villager villager) {
-		super(Assets.getTexture("villagers/evolve/evolve_sprite_1.png"), villager.getPosition().x, villager.getPosition().y);
+		super(null, villager.getPosition().x, villager.getPosition().y);
 		position = villager.getPosition();
 		this.villager = villager;
 		frames = getFrames();
@@ -21,16 +26,21 @@ public abstract class VillagerEffect extends GameObject {
 		return villager;
 	}
 
-	protected abstract Texture[] getFrames();
+	protected abstract TextureRegion[] getFrames();
 
 	@Override
 	public void update(float delta) {
 		int frame = (int) (timer * 10 % frames.length);
-		texture = frames[frame];
+		region = frames[frame];
 		timer += delta;
 		if (timer > frames.length / 10f) {
 			done = true;
 		}
+	}
+
+	@Override
+	public void render(Batch batch) {
+		batch.draw(region, position.x, position.y);
 	}
 
 	public boolean isDone() {

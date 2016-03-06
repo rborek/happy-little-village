@@ -20,7 +20,7 @@ public class VillageInformation extends GameObject {
 
 
 	protected VillageInformation(Village villagers,float xPos, float yPos) {
-		super(Assets.getTexture("villagers/info_menu.png"), xPos, yPos);
+		super(Assets.getTexture("ui/info_menu.png"), xPos, yPos);
 		setResources(villagers);
 		this.villagers = villagers;
 	}

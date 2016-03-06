@@ -2,6 +2,7 @@ package com.happylittlevillage.rituals;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.happylittlevillage.Assets;
@@ -40,7 +41,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     private Rectangle[][] slots2; // render and UI stuff
     private ArrayList<RitualEffect[]> ritualEffects = new ArrayList<RitualEffect[]>();
     private Village village;
-    private ArrayList<ArrayList<Point>> lightUpGrid = new ArrayList<ArrayList<Point>>();
+    private ArrayList<ArrayList<GridPoint2>> lightUpGrid = new ArrayList<ArrayList<GridPoint2>>();
 
 
     public RitualAltar(GemBag gemBag, float xPos, float yPos, Village village) {
@@ -199,7 +200,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     private void compareRecipe(int ritualNumber, int gridRow, int gridColumn, int firstRecipePosition) {
         GemColour[][] check = rituals.get(ritualNumber).getRecipe(); // check: just to shorten the path
         boolean match = true;
-        ArrayList<Point> addToLightUpGrid = new ArrayList<Point>();
+        ArrayList<GridPoint2> addToLightUpGrid = new ArrayList<GridPoint2>();
         //reset addToBonus
         for (int a = 0; a < bonus.length; a++) {
             for (int b = 0; b < bonus[0].length; b++) {
@@ -245,7 +246,7 @@ public class RitualAltar extends GameObject implements MenuItem {
                     if (addToBonus[c][d] != 0) {
                         bonus[c][d] += addToBonus[c][d];
                         //set x y coordinates for addPoint then add it to addToLightUpGrid which will then be added to the final LightUpGrid
-                        addToLightUpGrid.add(new Point(c, d));
+                        addToLightUpGrid.add(new GridPoint2(c, d));
                     }
                 }
             }
