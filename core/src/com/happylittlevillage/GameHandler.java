@@ -58,12 +58,12 @@ public class GameHandler {
         if(isTutorial){
             village = new Village(gemBag, 200, 100, 5);
             ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
-            tutorialMessage = new TutorialMessage(this, 0, ritualAltar);
+            tutorialMessage = new TutorialMessage(this, ritualAltar);
             arrow.add(new Vector2(476, 579));
         }
         else{
-            ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
             village = new Village(gemBag, 500, 200, 10);
+            ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village);
         }
         messageBox = new Introduction(this, isTutorial);
         gameOverMessage = new GameOver(this);
@@ -150,9 +150,7 @@ public class GameHandler {
                 tutorialMessage.setAngle(angle,flip);
             }
             //arrow for screen 4-6
-            if(tutorialMessage.getTutorialScreen()>=4 && tutorialMessage.getTutorialScreen() <=6){
                 tutorialMessage.update(delta);
-            }
         }
 
     }
@@ -167,6 +165,9 @@ public class GameHandler {
         inputHandler.renderSelectedGem(batch);
         miniBook.render(batch);
         if (!gameOver && !win) {
+            if(isTutorial){
+                tutorialMessage.render(batch);
+            }
             if (paused) {
                 messageBox.render(batch);
             } else if (bookOpen) {
@@ -177,10 +178,6 @@ public class GameHandler {
                     Villager.renderLines(shapeRenderer);
                     shapeRenderer.end();
                 }
-                if(isTutorial){
-                    tutorialMessage.render(batch);
-                }
-
             }
         } else {
             messageBox.render(batch);

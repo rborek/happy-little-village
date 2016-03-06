@@ -13,7 +13,7 @@ public class TutorialMessage extends MessageBox {
     //this list contains position x and y of each tutorial messages
     private static float[] positionOfEachMessage = {480, 590, 480, 590, 80, 200, 350, 200, 475, 400, 475, 400, 475, 400, 475, 400,
             480, 590, 480, 590, 480, 590, 480, 590, 480, 590, 480, 590, 480, 590, 480, 590, 480, 590, 480, 590};
-    private int positionIndex;
+    private int positionIndex = 0;
     private RitualAltar ritualAltar;
     private float angle;
     private int tutorialScreen = 0;
@@ -28,11 +28,12 @@ public class TutorialMessage extends MessageBox {
     private static int[] disableBackButton = {0, 4, 5, 6, 7};
     private boolean disableBack = false;
     private boolean disableContinue = false;
+    private boolean clickTheButton = false; //for # 7 when player clicks to combine ritual
+    private float case8Time = 0;
 
-    public TutorialMessage(GameHandler gameHandler, int positionIndex, RitualAltar ritualAltar) {
+    public TutorialMessage(GameHandler gameHandler, RitualAltar ritualAltar) {
         super(gameHandler);
         this.ritualAltar = ritualAltar;
-        this.positionIndex = positionIndex;
         texture = Assets.getTexture("ui/tutorialMessageBox.png");
         continueButton = Assets.getTexture("ui/tutorialContinueButton.png");
         backButton = Assets.getTexture("ui/tutorialBackButton.png");
@@ -66,25 +67,28 @@ public class TutorialMessage extends MessageBox {
                 text = "Pick up another red gem and put it here";
                 break;
             case 7:
-                text = "Click compile and get your resources";
+                text = "This Ritual generates food but drains happiness \nClick compile and observe";
                 break;
             case 8:
-                text = "You can put the gems in a any grid you want";
+                text = "You can put the gems in a any grid you want \n as long as the components align with the recipe";
                 break;
             //convert miner/explorer/farmer
             case 9:
-                text = "Now try this ritual";
-                break;
-            case 10:
                 text = "If the gem does not follow any recipe\n you will waste it";
                 break;
-            case 11:
+            case 10:
                 text = "All the unlocked ritual can be viewed in the ritualBook";
+                break;
+            case 11:
+                text = "Brief description and ability of each ritual";
                 break;
             case 12:
                 text = "Click to close the book";
                 break;
             case 13:
+                text = "Ritual can be combined to cost less gem";
+                break;
+            case 14:
                 text = "For each week there is a mandatory weekly ritual that needs to be done before time runs out";
                 break;
             default:
@@ -178,6 +182,52 @@ public class TutorialMessage extends MessageBox {
                 break;
             case 7 :
                 break;
+            //you can align ritual wherever you want as long as it fits the ritual recipe
+            case 8 :
+                supportTexture1 = Assets.getTexture("gems/gem_yellow.png");
+                supportTexture2 = Assets.getTexture("gems/gem_red.png");
+                supportTexture3 = Assets.getTexture("gems/gem_red.png");
+                case8Time+= delta;
+                if(case8Time<1){
+                    batch.draw(supportTexture1, 845,390);
+                    batch.draw(supportTexture2, 845,390+80);
+                    batch.draw(supportTexture3, 845,390+160);
+                    break;
+                }
+                else if(case8Time <2){
+                    batch.draw(supportTexture1, 925,390);
+                    batch.draw(supportTexture2, 925,390+80);
+                    batch.draw(supportTexture3, 925,390+160);
+                    break;
+                }
+                else if(case8Time<3){
+                    batch.draw(supportTexture1, 1005,390);
+                    batch.draw(supportTexture2, 1005,390+80);
+                    batch.draw(supportTexture3, 1005,390+160);
+                    break;
+                }
+                else if(case8Time <4){
+                    batch.draw(supportTexture1, 1085,390);
+                    batch.draw(supportTexture2, 1085,390+80);
+                    batch.draw(supportTexture3, 1085,390+160);
+                    break;
+                }
+                else{
+                    case8Time = 0;
+                }
+
+            case 9 :
+                break;
+            case 10:
+                batch.draw(arrow, 700, 200, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 270, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
+                break;
+            case 11:
+                break;
+            case 12:
+                break;
+            case 13:
+                break;
+
         }
         if(!disableContinue){
             batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
@@ -201,9 +251,13 @@ public class TutorialMessage extends MessageBox {
             nextScreen();
         } else if (ritualAltar.getColour(3, 1) == GemColour.RED && tutorialScreen == 6) {
             nextScreen();
+        }else  if(clickTheButton && tutorialScreen == 7){
+            nextScreen();
         }
     }
-
+    public void alreadyClick(){
+        clickTheButton = true;
+    }
     private Vector2 setMovingPosition(float delta, float startX, float startY, float endX, float endY) {
         float moveX = (endX - startX) * delta / 3;
         float moveY = (endY - startY) * delta / 3;
