@@ -127,13 +127,14 @@ public class InputHandler implements InputProcessor {
 		if (gameHandler.isPaused()) {
 			checkContinue(realPos.x, realPos.y);
 		}
+		//if Tutorial
 		else if (gameHandler.isTutorial()){
 			tutorialMessage.interact(realPos.x,realPos.y);
 			//this restrict player's interaction with the grid only
 			if(tutorialMessage.getTutorialScreen()>=4 && tutorialMessage.getTutorialScreen() <10){
 				pickUpGem(realPos.x,realPos.y);
 				removeFromSlots(realPos.x, realPos.y);
-				//exclusively for clicking at the thing only
+				//exclusively for clicking at the compile button only
 				if(ritualAltar.interact(realPos.x, realPos.y)){
 					tutorialMessage.alreadyClick();
 				}

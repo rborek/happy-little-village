@@ -22,14 +22,21 @@ public class TutorialMessage extends MessageBox {
     private Texture supportTexture3;
     private float delta;
     private boolean gemPlaced = false;
-    private float moveX = 0;
-    private float moveY = 0;
     private static int[] disableContinueButton = { 4, 5, 6, 7};
     private static int[] disableBackButton = {0, 4, 5, 6, 7};
+    private static int[] noArrowScreen = {7, 8, 9};
     private boolean disableBack = false;
     private boolean disableContinue = false;
+    private boolean noArrow = false;
     private boolean clickTheButton = false; //for # 7 when player clicks to combine ritual
     private float case8Time = 0;
+    //Exclusively for the arrow
+    Vector2 move = null;
+    private float arrowMoveX = 0;
+    private float arrowMoveY = 0;
+    private float arrowPositionX = 0;
+    private float arrowPositionY = 0;
+    private float supportX1 =0, supportY1 = 0, supportX2 = 0, supportY2 = 0,  supportX3 = 0, supportY3 = 0;
 
     public TutorialMessage(GameHandler gameHandler, RitualAltar ritualAltar) {
         super(gameHandler);
@@ -37,8 +44,8 @@ public class TutorialMessage extends MessageBox {
         texture = Assets.getTexture("ui/tutorialMessageBox.png");
         continueButton = Assets.getTexture("ui/tutorialContinueButton.png");
         backButton = Assets.getTexture("ui/tutorialBackButton.png");
-        position.x = 480;
-        position.y = 590;
+        position.x = positionOfEachMessage[0];
+        position.y = positionOfEachMessage[1];
     }
 
 
@@ -115,70 +122,36 @@ public class TutorialMessage extends MessageBox {
     public void render(Batch batch) {
         //Since some supportingTextures need to be drawn after the box. We need to separate which case the texture or the supportingTextures is being rendered first
         //REMINDER of draw batch: scale=1 is normal. srcX,srcY and scrWidth/Height mark the render portion of the actual image not the game
-        Vector2 move = null;
+
+
         batch.draw(texture, position.x, position.y);
         switch (tutorialScreen) {
             //point village
             case 0:
-                batch.draw(arrow, position.x - 70, position.y - texture.getHeight() / 2 - 40, arrow.getWidth() / 2, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, angle, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
-                batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
                 break;
             //explain types of villagers
             case 1:
-                batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
-                batch.draw(backButton, position.x, position.y);
 //                supportTexture1 = Assets.getTexture("villagers/explorer/explorer.png");
 //                supportTexture2 = Assets.getTexture("villagers/farmer/farmer.png");
 //                supportTexture3 = Assets.getTexture("villagers/miner/miner.png");
 //                batch.draw(supportTexture1, position.x, position.y + 30);
 //                batch.draw(supportTexture2, position.x + supportTexture1.getWidth() + 50, position.y + 30);
 //                batch.draw(supportTexture3, position.x + supportTexture2.getWidth() + supportTexture2.getWidth() + 100, position.y + 30);
-                batch.draw(arrow, position.x - 70, position.y - texture.getHeight() / 2 - 40, arrow.getWidth() / 2, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, angle, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
                 break;
             //food and happiness
             case 2:
-                batch.draw(arrow, 125, 170, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 270, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
-                batch.draw(arrow, 225, 170, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 270, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
                 break;
             //pop and hour
             case 3:
-                batch.draw(arrow, 400, 170, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 270, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
                 break;
             //pick up a yellow gem and put it here
             case 4:
-                move = setMovingPosition(delta, 1150, 80, 960, 500);
-                moveX -= move.x;
-                moveY -= move.y;
-                // reset move if it passes the destination. This is pretty bad code
-                if (1150 - moveX < 800 || 80 - moveY > 350) {
-                    moveX = 0;
-                    moveY = 0;
-                }
-                batch.draw(arrow, 1150 - moveX, 80 - moveY, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 120, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
                 break;
             //pick up a red gem and put it here
             case 5 :
-                move = setMovingPosition(delta,875,80,930,360);
-                moveX -= move.x;
-                moveY -= move.y;
-                // reset move if it passes the destination. This is pretty bad code
-                if (875 - moveX < 850 || 80 - moveY > 230) {
-                    moveX = 0;
-                    moveY = 0;
-                }
-                batch.draw(arrow, 875 - moveX, 80 - moveY, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 70, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
                 break;
                 /// /pick up another red gem and put it here
             case 6 :
-                move = setMovingPosition(delta,875,80,930,270);
-                moveX -= move.x;
-                moveY -= move.y;
-                // reset move if it passes the destination. This is pretty bad code
-                if (875 - moveX < 850 || 80 - moveY > 180) {
-                    moveX = 0;
-                    moveY = 0;
-                }
-                batch.draw(arrow, 875 - moveX, 80 - moveY, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 65, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
                 break;
             case 7 :
                 break;
@@ -187,39 +160,9 @@ public class TutorialMessage extends MessageBox {
                 supportTexture1 = Assets.getTexture("gems/gem_yellow.png");
                 supportTexture2 = Assets.getTexture("gems/gem_red.png");
                 supportTexture3 = Assets.getTexture("gems/gem_red.png");
-                case8Time+= delta;
-                if(case8Time<1){
-                    batch.draw(supportTexture1, 845,390);
-                    batch.draw(supportTexture2, 845,390+80);
-                    batch.draw(supportTexture3, 845,390+160);
-                    break;
-                }
-                else if(case8Time <2){
-                    batch.draw(supportTexture1, 925,390);
-                    batch.draw(supportTexture2, 925,390+80);
-                    batch.draw(supportTexture3, 925,390+160);
-                    break;
-                }
-                else if(case8Time<3){
-                    batch.draw(supportTexture1, 1005,390);
-                    batch.draw(supportTexture2, 1005,390+80);
-                    batch.draw(supportTexture3, 1005,390+160);
-                    break;
-                }
-                else if(case8Time <4){
-                    batch.draw(supportTexture1, 1085,390);
-                    batch.draw(supportTexture2, 1085,390+80);
-                    batch.draw(supportTexture3, 1085,390+160);
-                    break;
-                }
-                else{
-                    case8Time = 0;
-                }
-
             case 9 :
                 break;
             case 10:
-                batch.draw(arrow, 700, 200, 0, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, 270, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
                 break;
             case 11:
                 break;
@@ -229,13 +172,19 @@ public class TutorialMessage extends MessageBox {
                 break;
 
         }
+        if(!noArrow){
+            batch.draw(arrow, arrowPositionX, arrowPositionY, arrow.getWidth() / 2, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, angle, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);}
         if(!disableContinue){
             batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
         }
         if(!disableBack && tutorialScreen != 0){
             batch.draw(backButton, position.x, position.y);
         }
-
+        if(tutorialScreen == 8){
+            batch.draw(supportTexture1,supportX1, supportY1);
+            batch.draw(supportTexture2,supportX2, supportY2);
+            batch.draw(supportTexture3,supportX3, supportY3);
+        }
         font = Assets.getFont(24);
         if (text != null) {
             font.draw(batch, text, position.x, position.y + 100);
@@ -245,6 +194,95 @@ public class TutorialMessage extends MessageBox {
     @Override
     public void update(float delta) {
         this.delta = delta;
+        disableBack = false;
+        disableContinue = false;
+        noArrow = false;
+        for ( int a : disableBackButton) {
+            if (tutorialScreen == a) {
+                disableBack = true;
+                break;
+            }
+        }
+        //check if the screen's continue button is disabled
+        for ( int a : disableContinueButton) {
+            if (tutorialScreen == a) {
+                disableContinue = true;
+                break;
+            }
+        }
+        for( int a : noArrowScreen){
+            if(tutorialScreen == a){
+                noArrow = true;
+                break;
+            }
+        }
+        switch (tutorialScreen){
+            case 0: arrowPositionX = position.x - 70;
+                arrowPositionY = position.y - texture.getHeight() / 2 - 40;
+                break;
+            case 1: arrowPositionX = position.x - 70;
+                arrowPositionY = position.y - texture.getHeight() / 2 - 40;
+                break;
+            case 2:arrowPositionX = 125;
+                arrowPositionY = 170;
+                angle = 270;
+                break;
+            case 3: arrowPositionX = 400;
+                arrowPositionY = 170;
+                angle = 270;
+                break;
+            case 4: setMovingPosition(delta, 1150, 80, 960, 500);
+                angle = 120;
+                break;
+            case 5: setMovingPosition(delta,875,80,930,360);
+                angle = 70;
+                break;
+            case 6: setMovingPosition(delta,875,80,930,270);
+                angle = 65;
+                break;
+            case 8:
+                case8Time+= delta;
+                supportY1 = 390;
+                supportY2 = 390 + 80;
+                supportY3 = 390 + 160;
+                if(case8Time<1){
+                    supportX1 = 845;
+                    supportX2 = 845;
+                    supportX3 = 845;
+                    break;
+                }
+                else if(case8Time <2){
+                    supportX1 = 845;
+                    supportX2 = 845;
+                    supportX3 = 845;
+                    break;
+                }
+                else if(case8Time<3){
+                    supportX1 = 1005;
+                    supportX2 = 1005;
+                    supportX3 = 1005;
+                    break;
+                }
+                else if(case8Time <4){
+                    supportX1 = 1085;
+                    supportX2 = 1085;
+                    supportX3 = 1085;
+                    break;
+                }
+                else{
+                    case8Time = 0;
+                }
+                break;
+            case 10:
+                arrowPositionX = 700;
+                arrowPositionY = 200;
+                angle = 270;
+                break;
+            case 12:
+                break;
+
+        }
+        //for the simple ritual from #4-#6
         if (ritualAltar.getColour(1, 1) == GemColour.YELLOW && tutorialScreen == 4) {
             nextScreen();
         } else if (ritualAltar.getColour(2, 1) == GemColour.RED && tutorialScreen == 5) {
@@ -258,30 +296,32 @@ public class TutorialMessage extends MessageBox {
     public void alreadyClick(){
         clickTheButton = true;
     }
-    private Vector2 setMovingPosition(float delta, float startX, float startY, float endX, float endY) {
+    private void setMovingPosition(float delta, float startX, float startY, float endX, float endY) {
         float moveX = (endX - startX) * delta / 3;
         float moveY = (endY - startY) * delta / 3;
-        return new Vector2(moveX, moveY);
+        arrowMoveX -= moveX;
+        arrowMoveY -= moveY;
+        //this temporary code makes sure the arrow repeats
+        if(startX < endX){
+            //going to the right
+            if(startX-arrowMoveX >endX -100){
+                arrowMoveX = 0;
+                arrowMoveY = 0;
+            }
+        }
+        else if(startX > endX){
+            if(startX-arrowMoveY < endX + 100){
+                arrowMoveX = 0;
+                arrowMoveY = 0;
+            }
+        }
+        arrowPositionX = startX - arrowMoveX;
+        arrowPositionY = startY - arrowMoveY;
     }
 
     @Override
     public boolean interact(float mouseX, float mouseY) {
         //check if the screen's back button is disabled
-        disableBack = false;
-        disableContinue = false;
-        for (int k = 0; k < disableBackButton.length; k++) {
-            if (tutorialScreen == disableBackButton[k]) {
-                disableBack = true;
-                break;
-            }
-        }
-        //check if the screen's continue button is disabled
-        for (int k = 0; k < disableContinueButton.length; k++) {
-            if (tutorialScreen == disableContinueButton[k]) {
-                disableContinue = true;
-                break;
-            }
-        }
         if (!disableBack) {
             Rectangle backPosition = new Rectangle(position.x, position.y, backButton.getWidth(), backButton.getHeight());
             if (backPosition.contains(mouseX, mouseY)) {

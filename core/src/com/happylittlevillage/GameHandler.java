@@ -147,7 +147,6 @@ public class GameHandler {
 				}
 				tutorialMessage.setAngle(angle, flip);
 			}
-			//arrow for screen 4-6
 			tutorialMessage.update(delta);
 		}
 
