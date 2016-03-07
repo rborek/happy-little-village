@@ -45,7 +45,7 @@ public class RitualAltar extends GameObject implements MenuItem {
 
 
     public RitualAltar(GemBag gemBag, float xPos, float yPos, Village village) {
-        super(Assets.getTexture("altar/newRitual.png"), xPos, yPos);
+        super(Assets.getTexture("altar/altar.png"), xPos, yPos, 400, 400);
         this.village = village;
         this.gemBag = gemBag;
         bonus = new int[4][4];
@@ -107,8 +107,8 @@ public class RitualAltar extends GameObject implements MenuItem {
 
     @Override
     public void render(Batch batch) {
-        batch.draw(texture, position.x, position.y);
-        batch.draw(button, position.x + (width / 2) - (button.getWidth() / 2), position.y + 30);
+	    super.render(batch);
+	    batch.draw(button, position.x + (width / 2) - (button.getWidth() / 2), position.y + 30);
         for (int i = 0; i < grid.length; i++) {
             for (int k = 0; k < grid[0].length; k++) {
                 if (grid[i][k] != null) {
