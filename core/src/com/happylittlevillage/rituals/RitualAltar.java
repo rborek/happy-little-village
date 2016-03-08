@@ -71,7 +71,7 @@ public class RitualAltar extends GameObject implements MenuItem {
 //                System.out.println(slots2[k][i].y );
 //            }
 //        }
-        commenceButton = new Rectangle(position.x + (width / 2) - (button.getWidth() / 2), position.y, button.getWidth(), button.getHeight() + 30);
+        commenceButton = new Rectangle(position.x + (width / 2) - (button.getWidth() / 2), position.y - 50, button.getWidth(), button.getHeight() + 30);
         rituals = ritualBook.getUnlockedRitual();
     }
 
@@ -103,7 +103,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     @Override
     public void render(Batch batch) {
 	    super.render(batch);
-	    batch.draw(button, position.x + (width / 2) - (button.getWidth() / 2), position.y + 30);
+	    batch.draw(button, position.x + (width / 2) - (button.getWidth() / 2), position.y + 30 - 50);
         for (int i = 0; i < grid.length; i++) {
             for (int k = 0; k < grid[0].length; k++) {
                 if (grid[i][k] != null) {
@@ -172,10 +172,10 @@ public class RitualAltar extends GameObject implements MenuItem {
         }
         //make rituals affect the village
         //count 2 is the index of  rituals
-        for (int count2 = 0; count2 < ritualEffects.size(); count2++) {
+        for (RitualEffect effects[] : ritualEffects) {
             //count is the number of effect in each ritual
-            for (int count = 0; count < ritualEffects.get(count2).length; count++) {
-                ritualEffects.get(count2)[count].affectVillage(village);
+            for(RitualEffect effect : effects){
+                effect.affectVillage(village);
             }
         }
         ritualEffects.clear();

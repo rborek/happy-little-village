@@ -11,7 +11,7 @@ import com.happylittlevillage.gems.GemColour;
 import java.util.ArrayList;
 
 public class RitualBook extends GameObject {
-    private final Texture[] pages = {Assets.getTexture("ui/book1.png"),
+    private final Texture[] pages = {Assets.getTexture("ui/book.png"),
             Assets.getTexture(("ui/book2.png")), Assets.getTexture("ui/book3.png")};
     private int pageNumber = 1;
     private Rectangle leftArrow;
@@ -19,7 +19,7 @@ public class RitualBook extends GameObject {
     private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
     private ArrayList<GemColour[][]> recipes = new ArrayList<GemColour[][]>();
     private ArrayList<String> names = new ArrayList<String>();
-    private ArrayList<RitualEffect[]> effects = new ArrayList<RitualEffect[]>();
+    private ArrayList<String[]> effects = new ArrayList<String[]>();
     private static GameObject redGem = new GameObject(Assets.getTexture("gems/gem_red.png"), 12, 12);
     private static GameObject greenGem = new GameObject(Assets.getTexture("gems/gem_green.png"), 12, 12);
     private static GameObject yellowGem = new GameObject(Assets.getTexture("gems/gem_yellow.png"), 12, 12);
@@ -47,7 +47,16 @@ public class RitualBook extends GameObject {
         for (Ritual ritual : rituals) {
             recipes.add(ritual.getRecipe());
             names.add(ritual.getName());
-            effects.add(ritual.getEffects());
+            String[] effectsOfOneRitual = new String[ritual.getEffects().length];
+            int count = 0;
+            String oneEffect = "";
+            for (RitualEffect anEffect : ritual.getEffects()) {
+                oneEffect = oneEffect.concat(anEffect.getAmount() + " ");
+                oneEffect = oneEffect.concat(anEffect.getModifier().name());
+                effectsOfOneRitual[count] = oneEffect;
+                count++;
+            }
+            effects.add(effectsOfOneRitual);
         }
     }
 
@@ -135,8 +144,9 @@ public class RitualBook extends GameObject {
             }
         }
         font.draw(batch, names.get(indexOfRecipe), startX, startY + 75);
-
-
+        for(int k = 0; k < effects.get(indexOfRecipe).length;k++){
+            font.draw(batch, effects.get(indexOfRecipe)[k], startX, startY - oneRecipe.length*35 - k*25);
+        }
     }
 
     @Override
