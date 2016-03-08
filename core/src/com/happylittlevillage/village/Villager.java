@@ -71,7 +71,6 @@ public class Villager extends GameObject implements Comparable<Villager> {
 	public Villager(VillagerRole role, Village village) {
 		super(null, 0, 0, 28, 42);
 		this.village = village;
-//		position = new Vector2((float) Math.random() * 500, 195);
 		position = new Vector2(216, 300);
 		this.role = role;
 		velocity = new Vector2(0, 0);

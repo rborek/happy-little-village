@@ -13,22 +13,19 @@ public class RitualEffect {
 	}
 
 	public void affectVillage(Village village) {
-		switch (modifier){
+		switch (modifier) {
 			case FOOD:
 				village.addFood(amount);
-				System.out.println("Food added is:"+amount);
+				System.out.println("Food added is:" + amount);
 				break;
 			case VILLAGER:
-				int k =0;
-				while( k < amount){
+				for (int i = 0; i < amount; i++) {
 					village.addVillager(VillagerRole.CITIZEN);
-					k++;
 				}
 				break;
 			case HAPPINESS:
 				village.addHappiness(amount);
-				System.out.println("Happiness added is:"+amount);
-
+				System.out.println("Happiness added is:" + amount);
 				break;
 			case FARMER:
 				village.convertCitizen(VillagerRole.FARMER);
@@ -38,18 +35,18 @@ public class RitualEffect {
 				village.convertCitizen(VillagerRole.EXPLORER);
 				System.out.println("An explorer is converted");
 				break;
-			case  MINER:
+			case MINER:
 				village.convertCitizen(VillagerRole.MINER);
 				System.out.println("A miner is converted");
-
 				break;
-
 		}
 	}
-	public VillageModifier getModifier(){
+
+	public VillageModifier getModifier() {
 		return modifier;
 	}
-	public int getAmount(){
+
+	public int getAmount() {
 		return amount;
 	}
 }
