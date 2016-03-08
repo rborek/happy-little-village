@@ -44,7 +44,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     private ArrayList<ArrayList<GridPoint2>> lightUpGrid = new ArrayList<ArrayList<GridPoint2>>();
 
 
-    public RitualAltar(GemBag gemBag, float xPos, float yPos, Village village) {
+    public RitualAltar(GemBag gemBag, float xPos, float yPos, Village village, RitualBook ritualBook) {
         super(Assets.getTexture("altar/altar.png"), xPos, yPos, 400, 400);
         this.village = village;
         this.gemBag = gemBag;
@@ -72,12 +72,7 @@ public class RitualAltar extends GameObject implements MenuItem {
 //            }
 //        }
         commenceButton = new Rectangle(position.x + (width / 2) - (button.getWidth() / 2), position.y, button.getWidth(), button.getHeight() + 30);
-        rituals.add(Ritual.getRitual("addHappiness"));
-        rituals.add(Ritual.getRitual("addFood"));
-        rituals.add(Ritual.getRitual("addVillager"));
-        rituals.add(Ritual.getRitual("convertExplorer"));
-        rituals.add(Ritual.getRitual("convertFarmer"));
-        rituals.add(Ritual.getRitual("convertMiner"));
+        rituals = ritualBook.getUnlockedRitual();
     }
 
 
@@ -175,7 +170,7 @@ public class RitualAltar extends GameObject implements MenuItem {
                 }
             }
         }
-        //make rituals work by calling affectVillage on each rituals
+        //make rituals affect the village
         //count 2 is the index of  rituals
         for (int count2 = 0; count2 < ritualEffects.size(); count2++) {
             //count is the number of effect in each ritual

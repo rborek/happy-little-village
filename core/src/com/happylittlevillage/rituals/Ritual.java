@@ -8,7 +8,7 @@ import com.happylittlevillage.village.Village;
 
 import java.util.HashMap;
 
-public class Ritual { // to be non-abstract
+public class Ritual {
     private String name;
     protected static Village village;
     protected GemColour[] gemCombination; // to be deleted
