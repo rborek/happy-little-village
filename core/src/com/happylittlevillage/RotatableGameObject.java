@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
  * Created by User on 06/03/16.
  */
 public class RotatableGameObject extends  GameObject {
-    float angle = 0;
+    private float angle = 0;
 
     public RotatableGameObject(Texture texture, float xPos, float yPos, float angle){
         super(texture,xPos,yPos);
@@ -30,5 +30,13 @@ public class RotatableGameObject extends  GameObject {
     @Override
     public void update(float delta) {
 
+    }
+
+    public void setAngle(float angle){
+        this.angle = angle;
+    }
+    public void setPosition(float xPos, float yPos){
+        position.x = xPos;
+        position.y = yPos;
     }
 }

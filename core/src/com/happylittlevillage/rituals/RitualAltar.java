@@ -102,8 +102,8 @@ public class RitualAltar extends GameObject implements MenuItem {
 
     @Override
     public void render(Batch batch) {
-	    super.render(batch);
-	    batch.draw(button, position.x + (width / 2) - (button.getWidth() / 2), position.y + 30 - 50);
+        super.render(batch);
+        batch.draw(button, position.x + (width / 2) - (button.getWidth() / 2), position.y + 30 - 50);
         for (int i = 0; i < grid.length; i++) {
             for (int k = 0; k < grid[0].length; k++) {
                 if (grid[i][k] != null) {
@@ -171,11 +171,11 @@ public class RitualAltar extends GameObject implements MenuItem {
             }
         }
         //make rituals affect the village
-        //count 2 is the index of  rituals
         for (RitualEffect effects[] : ritualEffects) {
-            //count is the number of effect in each ritual
-            for(RitualEffect effect : effects){
-                effect.affectVillage(village);
+            if (effects != null) {
+                for (RitualEffect effect : effects) {
+                    effect.affectVillage(village);
+                }
             }
         }
         ritualEffects.clear();

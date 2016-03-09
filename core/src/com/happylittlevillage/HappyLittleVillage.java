@@ -2,6 +2,10 @@ package com.happylittlevillage;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
+import com.happylittlevillage.menu.Credits;
+import com.happylittlevillage.menu.GameScreen;
+import com.happylittlevillage.menu.MainMenu;
+import com.happylittlevillage.menu.Options;
 
 public class HappyLittleVillage extends Game implements ApplicationListener {
 	private GameScreen gameScreen;
@@ -14,9 +18,9 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 		setMenu();
 	}
 
-	public void setGameScreen() {
+	public void setGameScreen(boolean isTutorial) {
 		if (gameScreen == null) {
-			gameScreen = new GameScreen(this,false);
+			gameScreen = new GameScreen(this,isTutorial);
 		}
 		if (mainMenu != null) {
 			mainMenu.dispose();
@@ -55,25 +59,4 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 		}
 		setScreen(credits);
 	}
-
-	public void setTutorialScreen(){
-		if (gameScreen == null) {
-			gameScreen = new GameScreen(this,true);
-		}
-		if (mainMenu != null) {
-			mainMenu.dispose();
-		}
-		mainMenu = null;
-		if (options != null) {
-			options.dispose();
-		}
-		options = null;
-		if (credits != null) {
-			credits.dispose();
-		}
-		credits = null;
-		Assets.unloadDir("textures/menu");
-		setScreen(gameScreen);
-	}
-
 }

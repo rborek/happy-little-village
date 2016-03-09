@@ -1,5 +1,6 @@
 package com.happylittlevillage;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -54,6 +55,10 @@ public class GameObject {
 
     public Texture getTexture() {
         return texture;
+    }
+
+    public void setTexture(Texture texture){
+        this.texture = texture;
     }
 
     public void setPosition(float xPos, float yPos) {

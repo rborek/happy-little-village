@@ -1,12 +1,8 @@
 package com.happylittlevillage.messages;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameHandler;
@@ -64,9 +60,10 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	public boolean interact(float mouseX, float mouseY) {
 		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
 		if (r.contains(mouseX, mouseY)) {
-			gameHandler.unpause();
+			gameHandler.unPause();
 			return true;
 		}
+		System.out.println(this);
 		return false;
 	}
 }

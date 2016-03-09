@@ -20,10 +20,13 @@ public class RitualEffect {
 				break;
 			case VILLAGER:
 				int k =0;
-				while( k < amount){
-					village.addVillager(VillagerRole.CITIZEN);
-					k++;
+				if(amount >0){
+					while( k < amount){
+						village.addVillager(VillagerRole.CITIZEN);
+						k++;
+					}
 				}
+
 				break;
 			case HAPPINESS:
 				village.addHappiness(amount);

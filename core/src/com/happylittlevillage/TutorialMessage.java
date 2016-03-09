@@ -4,12 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.happylittlevillage.gems.GemBook;
 import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.messages.MessageBox;
 import com.happylittlevillage.rituals.RitualAltar;
+import com.happylittlevillage.rituals.RitualBook;
 
 public class TutorialMessage extends MessageBox {
-    protected Texture arrow = Assets.getTexture("ui/arrow.png");
+    protected RotatableGameObject arrow = new RotatableGameObject(Assets.getTexture("ui/arrow.png"), 0, 0);
     //this list contains position x and y of each tutorial messages
     private static float[] positionOfEachMessage =
             {480, 590,
@@ -24,7 +26,7 @@ public class TutorialMessage extends MessageBox {
                     480, 590,
                     480, 590,
                     690, 500, //11
-                    480, 590,
+                    690, 500,
                     480, 590,
                     480, 590,
                     480, 590,
@@ -32,20 +34,20 @@ public class TutorialMessage extends MessageBox {
                     480, 590};
     private int positionIndex = 0;
     private RitualAltar ritualAltar;
-    private float angle;
     private int tutorialScreen = 0;
-    private Texture supportTexture1;
-    private Texture supportTexture2;
-    private Texture supportTexture3;
-    private float delta;
-    private boolean gemPlaced = false;
-    private static int[] disableContinueButton = {4, 5, 6, 7};
-    private static int[] disableBackButton = {0, 4, 5, 6, 7};
+    private GameObject supportTexture1 = new GameObject(Assets.getTexture("gems/gem_yellow.png"), 0, 0);
+    private GameObject supportTexture2 = new GameObject(Assets.getTexture("gems/gem_yellow.png"), 0, 0);
+    private GameObject supportTexture3 = new GameObject(Assets.getTexture("gems/gem_yellow.png"), 0, 0);
+
+    private static int[] disableContinueButton = {4, 5, 6, 7, 10};
+    private static int[] disableBackButton = {0, 4, 5, 6, 7, 8, 11};
     private static int[] noArrowScreen = {7, 8, 9};
     private boolean disableBack = false;
     private boolean disableContinue = false;
     private boolean noArrow = false;
     private boolean clickTheButton = false; //for # 7 when player clicks to combine ritual
+    private boolean gemPlaced = false;
+    private float delta;
     private float case8Time = 0;
     //Exclusively for the arrow
     Vector2 move = null;
@@ -54,17 +56,19 @@ public class TutorialMessage extends MessageBox {
     private float arrowPositionX = 0;
     private float arrowPositionY = 0;
     private float supportX1 = 0, supportY1 = 0, supportX2 = 0, supportY2 = 0, supportX3 = 0, supportY3 = 0;
+    GemBook gemBook;
 
-    public TutorialMessage(GameHandler gameHandler, RitualAltar ritualAltar) {
+    public TutorialMessage(GameHandler gameHandler, RitualAltar ritualAltar, GemBook gemBook) {
         super(gameHandler);
         this.ritualAltar = ritualAltar;
+        this.gemBook = gemBook;
         texture = Assets.getTexture("ui/tutorialMessageBox.png");
         continueButton = Assets.getTexture("ui/tutorialContinueButton.png");
         backButton = Assets.getTexture("ui/tutorialBackButton.png");
         position.x = positionOfEachMessage[0];
         position.y = positionOfEachMessage[1];
+        switchText();
     }
-
 
     private void switchText() {
         switch (tutorialScreen) {
@@ -104,13 +108,13 @@ public class TutorialMessage extends MessageBox {
                 text = "All the unlocked ritual can be viewed in the ritualBook. Click to open it";
                 break;
             case 11:
-                text = "Here are brief description and ability of each ritual";
+                text = "Here are brief description \nand a ability of each ritual";
                 break;
             case 12:
-                text = "Click to close the book";
+                text = "Ritual can be combined to cost less gem";
                 break;
             case 13:
-                text = "Ritual can be combined to cost less gem";
+                text = "Click to close the book";
                 break;
             case 14:
                 text = "For each week there is a mandatory weekly ritual that needs to be done before time runs out";
@@ -128,7 +132,7 @@ public class TutorialMessage extends MessageBox {
         if (flip) {
             angle += 180;
         }
-        this.angle = (float) angle;
+        arrow.setAngle((float) angle);
     }
 
     public int getTutorialScreen() {
@@ -139,8 +143,6 @@ public class TutorialMessage extends MessageBox {
     public void render(Batch batch) {
         //Since some supportingTextures need to be drawn after the box. We need to separate which case the texture or the supportingTextures is being rendered first
         //REMINDER of draw batch: scale=1 is normal. srcX,srcY and scrWidth/Height mark the render portion of the actual image not the game
-
-
         batch.draw(texture, position.x, position.y);
         switch (tutorialScreen) {
             //point village
@@ -155,43 +157,17 @@ public class TutorialMessage extends MessageBox {
 //                batch.draw(supportTexture2, position.x + supportTexture1.getWidth() + 50, position.y + 30);
 //                batch.draw(supportTexture3, position.x + supportTexture2.getWidth() + supportTexture2.getWidth() + 100, position.y + 30);
                 break;
-            //food and happiness
-            case 2:
-                break;
-            //pop and hour
-            case 3:
-                break;
-            //pick up a yellow gem and put it here
-            case 4:
-                break;
-            //pick up a red gem and put it here
-            case 5:
-                break;
-            /// /pick up another red gem and put it here
-            case 6:
-                break;
-            case 7:
-                break;
-            //you can align ritual wherever you want as long as it fits the ritual recipe
             case 8:
-                supportTexture1 = Assets.getTexture("gems/gem_yellow.png");
-                supportTexture2 = Assets.getTexture("gems/gem_red.png");
-                supportTexture3 = Assets.getTexture("gems/gem_red.png");
+                supportTexture1.setTexture(Assets.getTexture("gems/gem_yellow.png"));
+                supportTexture2.setTexture(Assets.getTexture("gems/gem_red.png"));
+                supportTexture3.setTexture(Assets.getTexture("gems/gem_red.png"));
                 break;
-            case 9:
-                break;
-            case 10:
-                break;
-            case 11:
-                break;
-            case 12:
-                break;
-            case 13:
-                break;
-
         }
         if (!noArrow) {
-            batch.draw(arrow, arrowPositionX, arrowPositionY, arrow.getWidth() / 2, arrow.getHeight() / 2, arrow.getWidth(), arrow.getHeight(), 1, 1, angle, 0, 0, arrow.getWidth(), arrow.getHeight(), false, false);
+//            if(tutorialScreen == 2){ // 2 arrow for Screen 2
+//                arrow.render(batch);
+//            }
+            arrow.render(batch);
         }
         if (!disableContinue) {
             batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
@@ -200,9 +176,9 @@ public class TutorialMessage extends MessageBox {
             batch.draw(backButton, position.x, position.y);
         }
         if (tutorialScreen == 8) {
-            batch.draw(supportTexture1, supportX1, supportY1);
-            batch.draw(supportTexture2, supportX2, supportY2);
-            batch.draw(supportTexture3, supportX3, supportY3);
+            supportTexture1.render(batch);
+            supportTexture2.render(batch);
+            supportTexture3.render(batch);
         }
         font = Assets.getFont(24);
         if (text != null) {
@@ -237,34 +213,30 @@ public class TutorialMessage extends MessageBox {
         }
         switch (tutorialScreen) {
             case 0:
-                arrowPositionX = position.x - 70;
-                arrowPositionY = position.y - texture.getHeight() / 2 - 40;
+                arrow.setPosition(position.x - 70, position.y - texture.getHeight() / 2 - 40);
                 break;
             case 1:
-                arrowPositionX = position.x - 70;
-                arrowPositionY = position.y - texture.getHeight() / 2 - 40;
+                arrow.setPosition(position.x - 70, position.y - texture.getHeight() / 2 - 40);
                 break;
             case 2:
-                arrowPositionX = 125;
-                arrowPositionY = 170;
-                angle = 270;
+                arrow.setPosition(125, 170);
+                arrow.setAngle(270);
                 break;
             case 3:
-                arrowPositionX = 400;
-                arrowPositionY = 170;
-                angle = 270;
+                arrow.setPosition(400, 170);
+                arrow.setAngle(270);
                 break;
             case 4:
                 setMovingPosition(delta, 1150, 80, 960, 500);
-                angle = 120;
+                arrow.setAngle(120);
                 break;
             case 5:
                 setMovingPosition(delta, 875, 80, 930, 360);
-                angle = 70;
+                arrow.setAngle(70);
                 break;
             case 6:
                 setMovingPosition(delta, 875, 80, 930, 270);
-                angle = 65;
+                arrow.setAngle(65);
                 break;
             case 8:
                 case8Time += delta;
@@ -273,40 +245,31 @@ public class TutorialMessage extends MessageBox {
                 supportY3 = 390 + 160;
                 if (case8Time < 1) {
                     supportX1 = 845;
-                    supportX2 = 845;
-                    supportX3 = 845;
-                    break;
                 } else if (case8Time < 2) {
                     supportX1 = 925;
-                    supportX2 = 925;
-                    supportX3 = 925;
-                    break;
+
                 } else if (case8Time < 3) {
                     supportX1 = 1005;
-                    supportX2 = 1005;
-                    supportX3 = 1005;
-                    break;
+
                 } else if (case8Time < 4) {
                     supportX1 = 1085;
-                    supportX2 = 1085;
-                    supportX3 = 1085;
-                    break;
                 } else {
                     case8Time = 0;
                 }
+                supportTexture1.setPosition(supportX1, supportY1);
+                supportTexture2.setPosition(supportX1, supportY2);
+                supportTexture3.setPosition(supportX1, supportY3);
                 break;
             case 10:
-                arrowPositionX = 700;
-                arrowPositionY = 200;
-                angle = 270;
+                arrow.setPosition(700, 200);
+                arrow.setAngle(270);
                 break;
             case 11:
 
             case 12:
                 break;
-
         }
-        //for the simple ritual from #4-#6
+        //small if/else statements to move to nextScreen
         if (ritualAltar.getColour(1, 1) == GemColour.YELLOW && tutorialScreen == 4) {
             nextScreen();
         } else if (ritualAltar.getColour(2, 1) == GemColour.RED && tutorialScreen == 5) {
@@ -315,7 +278,12 @@ public class TutorialMessage extends MessageBox {
             nextScreen();
         } else if (clickTheButton && tutorialScreen == 7) {
             nextScreen();
+        } else if (gemBook.isOpen() && tutorialScreen == 10) {
+            nextScreen();
+        } else if (!gemBook.isOpen() && tutorialScreen == 12) {
+            nextScreen();
         }
+
     }
 
     public void alreadyClick() {
@@ -334,20 +302,16 @@ public class TutorialMessage extends MessageBox {
             if (startX + arrowMoveX > endX - 100) {
                 arrowMoveX = 0;
                 arrowMoveY = 0;
-                System.out.println("RESET");
             }
         } else if (startX > endX) {
             //going to the left
             if (startX + arrowMoveY < endX + 100) {
                 arrowMoveX = 0;
                 arrowMoveY = 0;
-                System.out.println("RESET");
 
             }
         }
-        arrowPositionX = startX - arrowMoveX;
-        arrowPositionY = startY - arrowMoveY;
-        System.out.println("" + arrowPositionX + " " + arrowPositionY);
+        arrow.setPosition(startX - arrowMoveX, startY - arrowMoveY);
     }
 
     @Override

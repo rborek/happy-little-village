@@ -1,8 +1,11 @@
-package com.happylittlevillage;
+package com.happylittlevillage.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.happylittlevillage.Assets;
+import com.happylittlevillage.HappyLittleVillage;
+import com.happylittlevillage.Miscellaneous;
 
 public class MainMenu extends Miscellaneous {
     private Texture optionsButton;
@@ -37,16 +40,13 @@ public class MainMenu extends Miscellaneous {
             happyLittleVillage.setCredits();
             return true;
         } else if (startButtonPosition.contains(realPos)) {
-            happyLittleVillage.setGameScreen();
+            happyLittleVillage.setGameScreen(false);
             return true;
         } else if (optionsButtonPosition.contains(realPos)) {
             happyLittleVillage.setOptions();
             return true;
         } else if(tutorialButtonPosition.contains(realPos)){
-            happyLittleVillage.setTutorialScreen();
-        }
-        else {
-            System.out.println("not contain");
+            happyLittleVillage.setGameScreen(true);
         }
         return false;
     }

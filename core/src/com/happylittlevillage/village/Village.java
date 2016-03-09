@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Random;
 
 public class Village {
-    private static final int MAX_HOURS = 24;
+    private static final int MAX_HOURS = 1;
     private ArrayList<Villager> villagers;
     private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
     private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -40,6 +40,8 @@ public class Village {
 //	};
     private int[] gemsMined = new int[4];
     private GemBag gemBag;
+    private int hunger = 0;
+    private int dehydration = 0;
 
 
     public Village(GemBag gemBag, float food, float happiness, float startingVillagers) {
@@ -180,8 +182,25 @@ public class Village {
         else {
             queueSpawn();
         }
+        decay(delta);
     }
 
+    private void decay(float delta){
+        if(food < 0){
+            hunger += (-food)*delta;
+            if(hunger > 5) {
+            }
+        }
+        else{
+            hunger = 0;
+        }
+        if(happiness < 0){
+
+        }
+        else{
+            dehydration = 0;
+        }
+    }
     private void timePass(float delta) {
         hoursLeft -= (float) (delta * 0.2);
         if (hoursLeft <= 0) {

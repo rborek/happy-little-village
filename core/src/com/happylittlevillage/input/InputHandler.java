@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.happylittlevillage.GameHandler;
-import com.happylittlevillage.GameScreen;
+import com.happylittlevillage.menu.GameScreen;
 import com.happylittlevillage.TutorialMessage;
 import com.happylittlevillage.gems.GemBook;
 import com.happylittlevillage.gems.Gem;
@@ -36,11 +36,9 @@ public class InputHandler implements InputProcessor {
 		this.gameHandler = gameHandler;
 		this.ritualAltar = gameHandler.getRitualAltar();
 		this.gemBag = gameHandler.getGemBag();
-		this.messageBox = gameHandler.getMessageBox();
 		this.ritualBook = gameHandler.getRitualBook();
 		this.miniBook = gameHandler.getMiniBook();
 		this.tutorialMessage = gameHandler.getTutorialMessage();
-
 	}
 
 	public void renderSelectedGem(Batch batch) {
@@ -55,7 +53,7 @@ public class InputHandler implements InputProcessor {
 	}
 
 	private void checkContinue(float mouseX, float mouseY) {
-		messageBox.interact(mouseX, mouseY);
+		gameHandler.getMessageBox().interact(mouseX, mouseY);
 	}
 
 	private void pickUpGem(float mouseX, float mouseY) {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class RitualBook extends GameObject {
     private final Texture[] pages = {Assets.getTexture("ui/book.png"),
-            Assets.getTexture(("ui/book2.png")), Assets.getTexture("ui/book3.png")};
+            Assets.getTexture(("ui/book.png")), Assets.getTexture("ui/book.png")};
     private int pageNumber = 1;
     private Rectangle leftArrow;
     private Rectangle rightArrow;
@@ -31,7 +31,7 @@ public class RitualBook extends GameObject {
         leftArrow = new Rectangle(xPos + 30, yPos + 20, 70, 45);
         rightArrow = new Rectangle(xPos + 495, yPos + 20, 70, 45);
         addStandardRitual();
-        addRitualInfo();
+        synchronizeRitualInfo();
     }
 
     private void addStandardRitual() {
@@ -41,22 +41,29 @@ public class RitualBook extends GameObject {
         rituals.add(Ritual.getRitual("convertExplorer"));
         rituals.add(Ritual.getRitual("convertFarmer"));
         rituals.add(Ritual.getRitual("convertMiner"));
+        rituals.add(Ritual.getRitual("killAVillager"));
     }
 
-    private void addRitualInfo() {
+    private void synchronizeRitualInfo() {
         for (Ritual ritual : rituals) {
-            recipes.add(ritual.getRecipe());
-            names.add(ritual.getName());
+            recipes.add(ritual.getRecipe()); // get the recipes of a ritual
+            names.add(ritual.getName()); // get the names of a ritual
             String[] effectsOfOneRitual = new String[ritual.getEffects().length];
             int count = 0;
             String oneEffect = "";
+            //get the effects of all the rituals
             for (RitualEffect anEffect : ritual.getEffects()) {
-                oneEffect = oneEffect.concat(anEffect.getAmount() + " ");
-                oneEffect = oneEffect.concat(anEffect.getModifier().name());
+                if (anEffect.getAmount() > 0) { // explicitly put a positive sign in front of a positive value
+                    oneEffect = oneEffect.concat("+" + anEffect.getAmount() + " ");
+                } else {
+                    oneEffect = oneEffect.concat(anEffect.getAmount() + " ");
+                }
+                oneEffect = oneEffect.concat(anEffect.getModifier().name()); // get the modifier's name
                 effectsOfOneRitual[count] = oneEffect;
+                oneEffect = "";
                 count++;
             }
-            effects.add(effectsOfOneRitual);
+            effects.add(effectsOfOneRitual); // get the effects of a ritual
         }
     }
 
@@ -107,17 +114,17 @@ public class RitualBook extends GameObject {
         int yTop = 550;
         int yBot = 300;
         for (int indexOfRecipe = k - 3; indexOfRecipe <= k; indexOfRecipe++) {
-            if (indexOfRecipe % 4 == 0) {
-                drawOneRecipe(recipes.get(indexOfRecipe), xLeft, yTop, batch, indexOfRecipe);
-            } else if (indexOfRecipe % 4 == 1) {
-                drawOneRecipe(recipes.get(indexOfRecipe), xRight, yTop, batch, indexOfRecipe);
-            } else if (indexOfRecipe % 4 == 2) {
-                drawOneRecipe(recipes.get(indexOfRecipe), xLeft, yBot, batch, indexOfRecipe);
-            } else if (indexOfRecipe % 4 == 3) {
-                drawOneRecipe(recipes.get(indexOfRecipe), xRight, yBot, batch, indexOfRecipe);
+            if (indexOfRecipe < recipes.size()) {
+                if (indexOfRecipe % 4 == 0) {
+                    drawOneRecipe(recipes.get(indexOfRecipe), xLeft, yTop, batch, indexOfRecipe);
+                } else if (indexOfRecipe % 4 == 1) {
+                    drawOneRecipe(recipes.get(indexOfRecipe), xRight, yTop, batch, indexOfRecipe);
+                } else if (indexOfRecipe % 4 == 2) {
+                    drawOneRecipe(recipes.get(indexOfRecipe), xLeft, yBot, batch, indexOfRecipe);
+                } else if (indexOfRecipe % 4 == 3) {
+                    drawOneRecipe(recipes.get(indexOfRecipe), xRight, yBot, batch, indexOfRecipe);
+                }
             }
-
-
         }
     }
 
@@ -144,8 +151,8 @@ public class RitualBook extends GameObject {
             }
         }
         font.draw(batch, names.get(indexOfRecipe), startX, startY + 75);
-        for(int k = 0; k < effects.get(indexOfRecipe).length;k++){
-            font.draw(batch, effects.get(indexOfRecipe)[k], startX, startY - oneRecipe.length*35 - k*25);
+        for (int k = 0; k < effects.get(indexOfRecipe).length; k++) {
+            font.draw(batch, effects.get(indexOfRecipe)[k], startX, startY - oneRecipe.length * 35 - k * 25);
         }
     }
 

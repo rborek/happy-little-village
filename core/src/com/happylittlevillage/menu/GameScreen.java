@@ -1,4 +1,4 @@
-package com.happylittlevillage;
+package com.happylittlevillage.menu;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -12,6 +12,9 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.happylittlevillage.Assets;
+import com.happylittlevillage.GameHandler;
+import com.happylittlevillage.HappyLittleVillage;
 import com.happylittlevillage.input.InputHandler;
 
 public class GameScreen implements Screen {
@@ -50,7 +53,7 @@ public class GameScreen implements Screen {
 		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
 		inputHandler = new InputHandler(this);
-		gameHandler = new GameHandler(inputHandler, isTutorial);
+		gameHandler = new GameHandler(inputHandler, isTutorial, game);
 		inputHandler.linkTo(gameHandler);
 		Gdx.input.setInputProcessor(inputHandler);
 		dayTime = gameHandler.getVillage().getMaxHours();
