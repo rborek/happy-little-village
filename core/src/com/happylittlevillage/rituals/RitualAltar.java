@@ -144,14 +144,12 @@ public class RitualAltar extends GameObject implements MenuItem {
 
     public void useGems2() {
         //print out grid first
-
         for (int gridRow = 0; gridRow < grid.length; gridRow++) { //row gridRow
             for (int gridColumn = 0; gridColumn < grid[0].length; gridColumn++) { //column gridColumn
                 if (grid[gridRow][gridColumn] != null) {
                     //iterate through all known grid recipe
                     for (int ritualNumber = 0; ritualNumber < rituals.size(); ritualNumber++) {
                         // iterate through the first row of a recipe
-
                         for (int firstRecipePosition = 0; firstRecipePosition < rituals.get(ritualNumber).getRecipe()[0].length; firstRecipePosition++) {
                             // get the first non-null colour
                             if (rituals.get(ritualNumber).getRecipe()[0][firstRecipePosition] != null) {
@@ -161,7 +159,6 @@ public class RitualAltar extends GameObject implements MenuItem {
                                     compareRecipe(ritualNumber, gridRow, gridColumn, firstRecipePosition);
                                     break;
                                 } else {
-//                                    System.out.println("FAILED BEFORE COMPARERECIPE");
                                     break;
                                 }
                             }

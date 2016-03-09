@@ -111,7 +111,7 @@ public class GameHandler {
     // game logic goes here
     public void update(float delta) {
         if (!win) {
-            if (village.getSize() <= 0 || village.getHappiness() <= 0) {
+            if (village.getSize() <= 0 ) {
                 gameOverMessage.setCondition(0);
                 lose = true;
                 pause();

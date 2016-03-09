@@ -27,7 +27,6 @@ public abstract class VillagerEffect extends GameObject {
 	}
 
 	protected abstract TextureRegion[] getFrames();
-
 	@Override
 	public void update(float delta) {
 		int frame = (int) (timer * 10 % frames.length);

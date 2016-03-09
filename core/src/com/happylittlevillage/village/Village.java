@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Random;
 
 public class Village {
-    private static final int MAX_HOURS = 1;
+    private static final int MAX_HOURS = 48;
     private ArrayList<Villager> villagers;
     private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
     private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -187,15 +187,22 @@ public class Village {
 
     private void decay(float delta){
         if(food < 0){
-            hunger += (-food)*delta;
+            hunger += (-food)*delta*50;
             if(hunger > 5) {
+                this.removeVillager();
+                hunger = 0;
             }
         }
         else{
             hunger = 0;
         }
-        if(happiness < 0){
 
+        if(happiness < 0){
+            dehydration += (-happiness)*delta*50;
+            if(dehydration > 5){
+                this.removeVillager();
+                dehydration = 0;
+            }
         }
         else{
             dehydration = 0;

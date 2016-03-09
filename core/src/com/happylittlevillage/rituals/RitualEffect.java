@@ -29,8 +29,6 @@ public class RitualEffect {
 						village.removeVillager();
 					}
 				}
-
-
 				break;
 			case HAPPINESS:
 				village.addHappiness(amount);
