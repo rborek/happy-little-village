@@ -24,13 +24,13 @@ public class TutorialMessage extends MessageBox {
                     475, 400,
                     480, 590,
                     480, 590,
-                    480, 590,
+                    690, 500,
                     690, 500, //11
                     690, 500,
-                    480, 590,
-                    480, 590,
-                    480, 590,
-                    480, 590,
+                    690, 500,
+                    690, 500,
+                    690, 500,
+                    690, 500, //16
                     480, 590};
     private int positionIndex = 0;
     private RitualAltar ritualAltar;
@@ -39,9 +39,9 @@ public class TutorialMessage extends MessageBox {
     private GameObject supportTexture2 = new GameObject(Assets.getTexture("gems/gem_yellow.png"), 0, 0);
     private GameObject supportTexture3 = new GameObject(Assets.getTexture("gems/gem_yellow.png"), 0, 0);
 
-    private static int[] disableContinueButton = {4, 5, 6, 7, 10};
-    private static int[] disableBackButton = {0, 4, 5, 6, 7, 8, 11};
-    private static int[] noArrowScreen = {7, 8, 9};
+    private static int[] disableContinueButton = {4, 5, 6, 7, 9};
+    private static int[] disableBackButton = {0, 4, 5, 6, 7, 8, 9, 10};
+    private static int[] noArrowScreen = {7, 8};
     private boolean disableBack = false;
     private boolean disableContinue = false;
     private boolean noArrow = false;
@@ -95,28 +95,33 @@ public class TutorialMessage extends MessageBox {
                 text = "Pick up another red gem and put it here";
                 break;
             case 7:
-                text = "This Ritual generates food but drains happiness \nClick compile and observe";
+                text = "This combination of Yellow and Red Gem create a ritual generates food but drains happiness \nClick commence and observe";
                 break;
             case 8:
                 text = "You can put the gems in a any grid you want \n as long as the components align with the recipe";
                 break;
             //convert miner/explorer/farmer
             case 9:
-                text = "If the gem does not follow any recipe\n you will waste it";
-                break;
-            case 10:
                 text = "All the unlocked ritual can be viewed in the ritualBook. Click to open it";
                 break;
+            case 10:
+                text = "Here are the combinations \nand a abilities of each ritual";
+                break;
             case 11:
-                text = "Here are brief description \nand a ability of each ritual";
+                text = "Some rituals will reduce your village's happiness. So be wise to use it";
                 break;
             case 12:
-                text = "Ritual can be combined to cost less gem";
-                break;
+                text = "These rituals can turn your villagers into special villagers. Miners mine, farmer farm, explorers explore";
             case 13:
-                text = "Click to close the book";
+                text = "Rituals can be combined to reduce gems used";
                 break;
             case 14:
+                text = "However, if the gem does not follow any recipe\n you will waste it";
+                break;
+            case 15:
+                text = "Click to close the book";
+                break;
+            case 16:
                 text = "For each week there is a mandatory weekly ritual that needs to be done before time runs out";
                 break;
             default:
@@ -260,7 +265,7 @@ public class TutorialMessage extends MessageBox {
                 supportTexture2.setPosition(supportX1, supportY2);
                 supportTexture3.setPosition(supportX1, supportY3);
                 break;
-            case 10:
+            case 9:
                 arrow.setPosition(700, 200);
                 arrow.setAngle(270);
                 break;
@@ -278,7 +283,7 @@ public class TutorialMessage extends MessageBox {
             nextScreen();
         } else if (clickTheButton && tutorialScreen == 7) {
             nextScreen();
-        } else if (gemBook.isOpen() && tutorialScreen == 10) {
+        } else if (gemBook.isOpen() && tutorialScreen == 9) {
             nextScreen();
         } else if (!gemBook.isOpen() && tutorialScreen == 12) {
             nextScreen();

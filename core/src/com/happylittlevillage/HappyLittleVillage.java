@@ -22,6 +22,10 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 		if (gameScreen == null) {
 			gameScreen = new GameScreen(this,isTutorial);
 		}
+		else{
+			gameScreen.dispose();
+			gameScreen = new GameScreen(this,isTutorial);
+		}
 		if (mainMenu != null) {
 			mainMenu.dispose();
 		}

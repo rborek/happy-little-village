@@ -30,9 +30,9 @@ public class RitualEffect {
 					}
 				}
 				break;
-			case HAPPINESS:
-				village.addHappiness(amount);
-				System.out.println("Happiness added is:" + amount);
+			case WATER:
+				village.addWater(amount);
+				System.out.println("Water added is:" + amount);
 				break;
 			case FARMER:
 				village.convertCitizen(VillagerRole.FARMER);
@@ -46,6 +46,8 @@ public class RitualEffect {
 				village.convertCitizen(VillagerRole.MINER);
 				System.out.println("A miner is converted");
 				break;
+			case HAPPINESS:
+				village.addHappiness(amount);
 		}
 	}
 

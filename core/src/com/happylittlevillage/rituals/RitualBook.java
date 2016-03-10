@@ -35,13 +35,15 @@ public class RitualBook extends GameObject {
     }
 
     private void addStandardRitual() {
-        rituals.add(Ritual.getRitual("addHappiness"));
+        rituals.add(Ritual.getRitual("addWater"));
         rituals.add(Ritual.getRitual("addFood"));
         rituals.add(Ritual.getRitual("addVillager"));
         rituals.add(Ritual.getRitual("convertExplorer"));
         rituals.add(Ritual.getRitual("convertFarmer"));
         rituals.add(Ritual.getRitual("convertMiner"));
         rituals.add(Ritual.getRitual("killAVillager"));
+        rituals.add(Ritual.getRitual("addResourcesMakeVillagersAngry"));
+
     }
 
     private void synchronizeRitualInfo() {
