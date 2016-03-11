@@ -27,7 +27,7 @@ public enum VillagerRole {
 			case FARMER:
 				return 0.2f;
 			case EXPLORER:
-				return 0.15f;
+				return 0.1f;
 			default:
 				return -1;
 		}

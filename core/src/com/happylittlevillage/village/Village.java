@@ -21,7 +21,8 @@ public class Village {
     private float water = 0;
     private float consumedWater = 0;
     private float gatheredWater = 0;
-    private float happiness = 100;
+    private float happiness = 1000;
+    //TODO set case when happiness fall below 0
     private WeeklyRitual weeklyRitual;
     private VillageInformation villageInformation;
     private float hoursLeft;
@@ -121,17 +122,17 @@ public class Village {
 
     public void addFood(float x) {
         food += x;
-        villageInformation.getAddedResource("food", -x);
+        villageInformation.getAddedResource("food", (int) x);
     }
 
     public void addWater(float y) {
         water += y;
-        villageInformation.getAddedResource("water", -y);
+        villageInformation.getAddedResource("water", (int) y);
     }
 
     public void addHappiness(float y) {
         happiness += y;
-        villageInformation.getAddedResource("happiness", -y);
+        villageInformation.getAddedResource("happiness", (int) y);
     }
 
     public void removeFood(float x) {
@@ -175,11 +176,11 @@ public class Village {
         float food = 0;
         for (Villager villager : villagers) {
             if (villager.getRole().equals(VillagerRole.FARMER)) {
-                food += 3 * delta;
+                food += 2 * delta;
             }
         }
         if (food != 0) {
-            addFood(food);
+
             gatheredFood += food;
         }
     }
@@ -189,20 +190,19 @@ public class Village {
         float water = 0;
         for (Villager villager : villagers) {
             if (villager.getRole().equals(VillagerRole.EXPLORER)) {
-                water += 3 * delta;
+                water += 2 * delta;
             }
         }
         if (water != 0) {
-            addWater(water);
             gatheredWater += water;
         }
     }
 
     public void mineGems(float delta) {
-        gemThreshold += delta * 3;
+        gemThreshold += delta / 7;
         if (gemThreshold > 1) {
             //get a random gemColour and store it in gemsMined according to its ordinal
-            for (int i = 0; i < getNumberOf(VillagerRole.MINER) * 3; i++) {
+            for (int i = 0; i < getNumberOf(VillagerRole.MINER) * 2; i++) {
                 GemColour g = gemBag.gainRandomGem();
                 gemBag.add(g);
             }
@@ -225,7 +225,7 @@ public class Village {
 
     private void decay(float delta) {
         if (food < 0) {
-            hunger += (-food) * delta * 50;
+            hunger += (-food) * delta * 2;
             if (hunger > 5) {
                 this.removeVillager();
                 hunger = 0;
@@ -235,7 +235,7 @@ public class Village {
         }
 
         if (water < 0) {
-            dehydration += (-water) * delta * 50;
+            dehydration += (-water) * delta * 2;
             if (dehydration > 5) {
                 this.removeVillager();
                 dehydration = 0;
