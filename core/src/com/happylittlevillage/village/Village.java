@@ -134,28 +134,6 @@ public class Village {
         villageInformation.getAddedResource("happiness", -y);
     }
 
-    public void gatheredFood() {
-        float food = 0;
-        for (Villager villager : villagers) {
-            if (villager.getRole().equals(VillagerRole.FARMER)) {
-                food += 7;
-            }
-        }
-        addFood(food);
-        gatheredFood = food;
-    }
-
-    public void gatheredWater() {
-        float water = 0;
-        for (Villager villager : villagers) {
-            if (villager.getRole().equals(VillagerRole.EXPLORER)) {
-                water += 10;
-            }
-            addWater(water);
-            gatheredWater = water;
-        }
-    }
-
     public void removeFood(float x) {
         food -= x;
         food = Math.max(0, food);
@@ -188,36 +166,40 @@ public class Village {
     }
 
     private void gatherResources(float delta) {
-        gatheredFood(delta);
-        gatheredWater(delta);
+        gatherFood(delta);
+        gatherWater(delta);
         mineGems(delta);
     }
 
-    public void gatheredFood(float delta) {
+    public void gatherFood(float delta) {
         float food = 0;
         for (Villager villager : villagers) {
             if (villager.getRole().equals(VillagerRole.FARMER)) {
                 food += 3 * delta;
             }
         }
-        addFood(food);
-        gatheredFood = food;
+        if (food != 0) {
+            addFood(food);
+            gatheredFood += food;
+        }
     }
 
     //TODO check the algorithm. Maybe less dependent on delta
-    public void gatheredWater(float delta) {
+    public void gatherWater(float delta) {
         float water = 0;
         for (Villager villager : villagers) {
             if (villager.getRole().equals(VillagerRole.EXPLORER)) {
                 water += 3 * delta;
             }
+        }
+        if (water != 0) {
             addWater(water);
-            gatheredWater = water;
+            gatheredWater += water;
         }
     }
 
     public void mineGems(float delta) {
-        gemThreshold += delta*3;
+        gemThreshold += delta * 3;
         if (gemThreshold > 1) {
             //get a random gemColour and store it in gemsMined according to its ordinal
             for (int i = 0; i < getNumberOf(VillagerRole.MINER) * 3; i++) {
@@ -481,5 +463,7 @@ public class Village {
         return (int) consumedWater;
     }
 
-    public int getHappiness(){ return (int) happiness;}
+    public int getHappiness() {
+        return (int) happiness;
+    }
 }

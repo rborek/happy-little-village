@@ -127,8 +127,6 @@ public class GameHandler {
         if (!paused && !lose && !win) { // Basically gamePlay
             if (village.isNextDay()) {
                 pause();
-                village.gatheredFood();
-                village.gatheredWater();
             }
             village.update(delta);
             ritualAltar.update(delta);
