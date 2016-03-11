@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
 
+import java.util.ArrayList;
+
 public class VillageInformation extends GameObject {
 
 	// add file to constructors
@@ -14,33 +16,33 @@ public class VillageInformation extends GameObject {
 	private Texture popTexture;
 	private Village village;
 	private BitmapFont font = new BitmapFont();
-	private String[] addedResource = new String[3];
+	private ArrayList<InformationFlash> addedResource = new ArrayList<InformationFlash>();
 	protected VillageInformation(Village village,float xPos, float yPos) {
 		super(Assets.getTexture("ui/info_menu.png"), xPos, yPos);
 		this.village = village;
 	}
-	float alpha = 0;
-	float moveToY = 200;
 	public void getAddedResource(String resource, float amount){
-
 		if(resource.equals("food")){
-			addedResource[0] = amount+"    food";
+			addedResource.add(new InformationFlash(amount+" food", 0));
 		}
 		else if(resource.equals("water")){
-			addedResource[1] = amount+"    water";
+			addedResource.add(new InformationFlash(amount+" water", 1));
 		}
 		else if(resource.equals("happiness")){
-			addedResource[2] = amount+"    happiness";
+			addedResource.add(new InformationFlash(amount+" happiness",2));
 		}
-
+		System.out.println("SIZE"+addedResource.size());
 	}
 
 
 	@Override
 	public void update(float delta) {
-		for(String resource : addedResource){
-			if(resource!=null){
-				updateMotion(delta);
+		for(int index = 0; index < addedResource.size();index ++){
+			if(addedResource.get(index)!=null){
+				addedResource.get(index).updateMotion(delta,true);
+				if(addedResource.get(index).getAlpha()<=0){
+					addedResource.remove(addedResource.get(index));
+				}
 			}
 		}
 	}
@@ -61,22 +63,12 @@ public class VillageInformation extends GameObject {
 	}
 
 	private void moveAndFade(Batch batch){
-		Assets.getFont(40).setColor(1,1,1,alpha);
-		for(int index = 0; index < addedResource.length; index++){
-			if(addedResource[index]!= null){
-				Assets.getFont(30).draw(batch, addedResource[index], 400+index*50, moveToY);
+		for(InformationFlash resource : addedResource){
+			if(resource!= null){
+				Assets.getFont(40).setColor(1,1,1,resource.getAlpha());
+				Assets.getFont(40).draw(batch, resource.getInfo(), 100+resource.getRelativePosition()*50, resource.getmoveToY());
 			}
 		}
+	}
 
-	}
-	private void updateMotion(float delta) {
-		int startY =200;
-		float endY = 600;
-		float moveY = (endY - startY) * delta / 3;
-		moveToY += moveY;
-		alpha += delta;
-		if(alpha > 0.99){
-			alpha = 0;
-		}
-	}
 }
