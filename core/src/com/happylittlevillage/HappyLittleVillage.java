@@ -2,16 +2,15 @@ package com.happylittlevillage;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
-import com.happylittlevillage.menu.Credits;
-import com.happylittlevillage.menu.GameScreen;
-import com.happylittlevillage.menu.MainMenu;
-import com.happylittlevillage.menu.Options;
+import com.happylittlevillage.menu.*;
 
 public class HappyLittleVillage extends Game implements ApplicationListener {
 	private GameScreen gameScreen;
 	private MainMenu mainMenu;
 	private Credits credits;
 	private Options options;
+	private Exit exit;
+	private Load load;
 
 	@Override
 	public void create() {
@@ -38,6 +37,14 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 			credits.dispose();
 		}
 		credits = null;
+		if (exit != null) {
+			exit.dispose();
+		}
+		exit = null;
+		if (load != null) {
+			load.dispose();
+		}
+		load = null;
 		Assets.unloadDir("textures/menu");
 		setScreen(gameScreen);
 	}
@@ -62,5 +69,17 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 			credits = new Credits(this);
 		}
 		setScreen(credits);
+	}
+	public void setLoad() {
+		if (load == null) {
+			load = new Load(this);
+		}
+		setScreen(load);
+	}
+	public void setExit() {
+		if (exit == null) {
+			exit = new Exit(this);
+		}
+		setScreen(exit);
 	}
 }

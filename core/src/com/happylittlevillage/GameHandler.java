@@ -4,18 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemBag;
 import com.happylittlevillage.gems.GemBook;
 import com.happylittlevillage.input.InputHandler;
+import com.happylittlevillage.menu.SaveGame;
 import com.happylittlevillage.messages.*;
 import com.happylittlevillage.rituals.Ritual;
 import com.happylittlevillage.rituals.RitualAltar;
 import com.happylittlevillage.rituals.RitualBook;
+import com.happylittlevillage.rituals.WeeklyRitual;
 import com.happylittlevillage.village.Village;
 import com.happylittlevillage.village.Villager;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class GameHandler {
@@ -42,10 +47,13 @@ public class GameHandler {
     private boolean intro = true;
     private boolean lose = false;
     private boolean isTutorial;
-    //maybe make an int stageTutorial to show the steps of Tutorial
     private boolean finishTutorial = false;
     private static ArrayList<Vector2> arrow = new ArrayList<Vector2>();
     private TutorialMessage tutorialMessage;
+    private Rectangle optionWheelPosition = new Rectangle(0, 600, 64, 64);
+    private GameObject optionWheel = new GameObject(Assets.getTexture("menu/optionWheel.png"), 0, 600, 64, 64);
+    private Json saveInfo = new Json();
+    private SaveGame saveGame;
 
     public GameHandler(InputHandler inputHandler, boolean isTutorial, HappyLittleVillage happyLittleVillage) {
         this.isTutorial = isTutorial;
@@ -61,7 +69,7 @@ public class GameHandler {
             tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
             arrow.add(new Vector2(476, 579));
         } else {
-            village = new Village(gemBag, 100, 50, 10);
+            village = new Village(gemBag, 100, 50, 30);
             ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualBook);
         }
         messageBox = new Introduction(this, isTutorial);
@@ -83,35 +91,35 @@ public class GameHandler {
         if (miniBook.isOpen()) {
             miniBook.close();
         }
-        if(lose){
+        if (lose) {
             messageBox = gameOverMessage;
 
         }
     }
 
     public void unPause() {
-            if (messageBox instanceof WeekSummary) {
-                messageBox = new GemSummary(gemBag, village, this);
-            } else if (messageBox instanceof GemSummary) {
-                messageBox = new GodMessage(gemBag, village, this);
-                if (((GodMessage) messageBox).checkRitual()) {
-                    //TODO change this messy code
-                    ritualAltar.removeRitual(village.getWeeklyRitual());
-                    village.generateNewWeeklyRitual();
-                    ritualAltar.gainRitual(village.getWeeklyRitual());
-                }
-                ((GodMessage) messageBox).stateRitual();
-            } else {
-                messageBox = new WeekSummary(village, this);
-                paused = false;
+        if (messageBox instanceof WeekSummary) {
+            messageBox = new GemSummary(gemBag, village, this);
+        } else if (messageBox instanceof GemSummary) {
+            messageBox = new GodMessage(gemBag, village, this);
+            if (((GodMessage) messageBox).checkRitual()) {
+                //TODO change this messy code
+                ritualAltar.removeRitual(village.getWeeklyRitual());
+                village.generateNewWeeklyRitual();
+                ritualAltar.gainRitual(village.getWeeklyRitual());
             }
+            ((GodMessage) messageBox).stateRitual();
+        } else {
+            messageBox = new WeekSummary(village, this);
+            paused = false;
+        }
 
     }
 
     // game logic goes here
     public void update(float delta) {
         if (!win) {
-            if (village.getSize() <= 0 ) {
+            if (village.getSize() <= 0) {
                 gameOverMessage.setCondition(0);
                 lose = true;
                 pause();
@@ -146,7 +154,6 @@ public class GameHandler {
 
     }
 
-    // rendering goes here
     public void render(Batch batch) {
         batch.draw(background, 0, 0);
         village.render(batch);
@@ -155,6 +162,7 @@ public class GameHandler {
         gemBag.render(batch);
         inputHandler.renderSelectedGem(batch);
         miniBook.render(batch);
+        optionWheel.render(batch);
         if (!lose && !win) {
             if (isTutorial) {
                 tutorialMessage.render(batch);
@@ -175,6 +183,29 @@ public class GameHandler {
         }
     }
 
+    public void saveGame() {
+        saveGame = new SaveGame(village.getFood(), village.getWater(), village.getHappiness(), village.getWeeklyRitual(),
+                village.getHoursLeft(), village.getDaysLeft(), village.getDay(),
+                village.isNextDay(), village.getVillagerSpawnTimer(), village.getNumVillagersToSpawn(),
+                village.getGemThreshold(), village.getHunger(), village.getDehydration(),
+                village.getVillagers(), gemBag, ritualBook.getUnlockedRitual());
+        saveInfo.toJson(saveGame, SaveGame.class);
+        try {
+            FileWriter fileWriter =
+                    new FileWriter("save/saveInfo.txt");
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            String text = saveInfo.prettyPrint(saveGame);
+            System.out.print("Info is: "+ saveGame.toString());
+            bufferedWriter.write(text);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            FileReader fileReader = new FileReader("save/saveInfo.txt");
+            SaveGame saveGame1 = saveInfo.fromJson(SaveGame.class, fileReader);
+        } catch (IOException ex) {
+            System.out.println(
+                    "Error writing to file");
+        }
+    }
 
     public Village getVillage() {
         return village;
@@ -216,7 +247,12 @@ public class GameHandler {
         return isTutorial;
     }
 
-    public GameOver getGameOverMessage(){
+    public GameOver getGameOverMessage() {
         return gameOverMessage;
     }
+
+    public Rectangle getOptionWheelPosition() {
+        return optionWheelPosition;
+    }
+
 }

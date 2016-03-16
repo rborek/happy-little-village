@@ -169,10 +169,11 @@ public class TutorialMessage extends MessageBox {
                 break;
         }
         if (!noArrow) {
-//            if(tutorialScreen == 2){ // 2 arrow for Screen 2
-//                arrow.render(batch);
-//            }
             arrow.render(batch);
+            if(tutorialScreen == 2){ // 2 arrow for Screen 2
+                arrow.setPosition(175, 170);
+                arrow.render(batch);
+            }
         }
         if (!disableContinue) {
             batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
@@ -285,7 +286,7 @@ public class TutorialMessage extends MessageBox {
             nextScreen();
         } else if (gemBook.isOpen() && tutorialScreen == 9) {
             nextScreen();
-        } else if (!gemBook.isOpen() && tutorialScreen == 12) {
+        } else if (!gemBook.isOpen() && tutorialScreen == 15) {
             nextScreen();
         }
 

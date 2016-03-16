@@ -35,15 +35,21 @@ public class RitualEffect {
 				System.out.println("Water added is:" + amount);
 				break;
 			case FARMER:
-				village.convertCitizen(VillagerRole.FARMER);
+				for(int k = 0; k < amount; k++){
+					village.convertCitizen(VillagerRole.FARMER);
+				}
 				System.out.println("A farmer is converted");
 				break;
 			case EXPLORER:
-				village.convertCitizen(VillagerRole.EXPLORER);
+				for(int k = 0; k < amount; k++){
+					village.convertCitizen(VillagerRole.EXPLORER);
+				}
 				System.out.println("An explorer is converted");
 				break;
 			case MINER:
-				village.convertCitizen(VillagerRole.MINER);
+				for(int k = 0; k < amount; k++){
+					village.convertCitizen(VillagerRole.MINER);
+				}
 				System.out.println("A miner is converted");
 				break;
 			case HAPPINESS:

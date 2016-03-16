@@ -52,7 +52,7 @@ public class VillageInformation extends GameObject {
 		batch.draw(waterTexture, position.x + 140, 70);
 		Assets.getFont(36).draw(batch, "" + village.getFood(), position.x + 80, position.y + 90);
 		Assets.getFont(36).draw(batch, "" + village.getWater(), position.x + 190, position.y + 90);
-		Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 270, position.y + 90);
+		Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 250, position.y + 90);
 		Assets.getFont(30).draw(batch, "Pop: " + village.getPop(), position.x + 300, 120);
 		Assets.getFont(30).draw(batch, "Hours: " + (int) Math.ceil(village.getHoursLeft()), position.x + 300, 80);
 		Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(village.getDay()), position.x + 405, 120);

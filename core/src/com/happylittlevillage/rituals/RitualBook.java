@@ -74,7 +74,8 @@ public class RitualBook extends GameObject {
         return rituals;
     }
 
-    public void click(float x, float y) {
+    public void
+    click(float x, float y) {
         if (leftArrow.contains(x, y)) {
             turnLeft();
         } else if (rightArrow.contains(x, y)) {

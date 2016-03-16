@@ -1,20 +1,17 @@
 package com.happylittlevillage.menu;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Json;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.HappyLittleVillage;
 import com.happylittlevillage.Miscellaneous;
 
-public class Credits extends Miscellaneous {
-
-
-    public Credits(HappyLittleVillage happyLittleVillage) {
+public class Load extends Miscellaneous{
+    public Load(HappyLittleVillage happyLittleVillage) {
         super(happyLittleVillage);
         backButton = Assets.getTexture("menu/backButton.png");
         backButtonPosition = new Rectangle(700, 100, backButton.getWidth(), backButton.getHeight());
-        background = Assets.getTexture("menu/credits.png");
+        background = Assets.getTexture("menu/load.png");
     }
 
     @Override
@@ -39,6 +36,4 @@ public class Credits extends Miscellaneous {
     public void resize(int width, int height) {
         super.resize(width, height);
     }
-
-
 }

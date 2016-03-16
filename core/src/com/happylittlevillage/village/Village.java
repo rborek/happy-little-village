@@ -21,7 +21,7 @@ public class Village {
     private float water = 0;
     private float consumedWater = 0;
     private float gatheredWater = 0;
-    private float happiness = 1000;
+    private float happiness = 100;
     //TODO set case when happiness fall below 0
     private WeeklyRitual weeklyRitual;
     private VillageInformation villageInformation;
@@ -43,8 +43,12 @@ public class Village {
 //	};
     private int[] gemsMined = new int[4];
     private GemBag gemBag;
+
     private int hunger = 0;
     private int dehydration = 0;
+    //TODO add rituals that monitor productions
+    private float foodProduction;
+    private float waterProduction;
 
 
     public Village(GemBag gemBag, float food, float water, float startingVillagers) {
@@ -86,27 +90,28 @@ public class Village {
 //        return;
         float consumeFood = 0;
         float consumeWater = 0;
+//        for (Villager villager : villagers) {
+//            if (villager.getRole().equals(VillagerRole.FARMER)) {
+//                consumeFood += 1.05 * (villager.getRole().foodConsumption());
+//                consumeWater += 1.10 * (villager.getRole().waterConsumption());
+//            } else if (villager.getRole().equals(VillagerRole.EXPLORER)) {
+//                consumeFood += 1.15 * (villager.getRole().foodConsumption());
+//                consumeWater += 1.20 * (villager.getRole().waterConsumption());
+//            } else if (villager.getRole().equals(VillagerRole.MINER)) {
+//                consumeFood += 1.25 * (villager.getRole().foodConsumption());
+//                consumeWater += 1.30 * (villager.getRole().waterConsumption());
+//            } else {
+//                consumeFood += villager.getRole().foodConsumption();
+//            }
+//        }
+
         for (Villager villager : villagers) {
-            if (villager.getRole().equals(VillagerRole.FARMER)) {
-                consumeFood += 1.05 * (villager.getRole().foodConsumption());
-                consumeWater += 1.10 * (villager.getRole().waterConsumption());
-            } else if (villager.getRole().equals(VillagerRole.EXPLORER)) {
-                consumeFood += 1.15 * (villager.getRole().foodConsumption());
-                consumeWater += 1.20 * (villager.getRole().waterConsumption());
-            } else if (villager.getRole().equals(VillagerRole.MINER)) {
-                consumeFood += 1.25 * (villager.getRole().foodConsumption());
-                consumeWater += 1.30 * (villager.getRole().waterConsumption());
-            } else {
-                consumeFood += villager.getRole().foodConsumption();
-            }
+            consumeWater += villager.getRole().waterConsumption() / 7;
+            consumeFood += villager.getRole().foodConsumption() / 7;
         }
         food -= consumeFood * delta;
         consumedFood += consumeFood * delta;
         consumedFood /= 10;
-
-        for (Villager villager : villagers) {
-            consumeWater += villager.getRole().foodConsumption();
-        }
         water -= consumeWater * delta;
         consumedWater += consumeWater * delta;
         consumedWater /= 10;
@@ -174,27 +179,29 @@ public class Village {
 
     public void gatherFood(float delta) {
         float food = 0;
+        foodProduction = (float) 0.001;
         for (Villager villager : villagers) {
             if (villager.getRole().equals(VillagerRole.FARMER)) {
-                food += 2 * delta;
+                food += foodProduction;
             }
         }
         if (food != 0) {
-
-            gatheredFood += food;
+            this.food += food;
         }
     }
 
     //TODO check the algorithm. Maybe less dependent on delta
     public void gatherWater(float delta) {
         float water = 0;
+        waterProduction = (float) 0.001;
+
         for (Villager villager : villagers) {
             if (villager.getRole().equals(VillagerRole.EXPLORER)) {
-                water += 2 * delta;
+                water += waterProduction;
             }
         }
         if (water != 0) {
-            gatheredWater += water;
+            this.water += water;
         }
     }
 
@@ -466,4 +473,30 @@ public class Village {
     public int getHappiness() {
         return (int) happiness;
     }
+
+    public float getVillagerSpawnTimer() {
+        return villagerSpawnTimer;
+    }
+
+    public int getNumVillagersToSpawn() {
+        return numVillagersToSpawn;
+    }
+
+    public float getGemThreshold() {
+        return gemThreshold;
+    }
+
+    public int getHunger() {
+        return hunger;
+    }
+
+    public int getDehydration() {
+        return dehydration;
+    }
+
+    public ArrayList<Villager> getVillagers() {
+        return villagers;
+    }
+
+
 }

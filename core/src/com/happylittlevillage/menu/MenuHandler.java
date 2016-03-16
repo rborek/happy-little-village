@@ -13,4 +13,9 @@ public class MenuHandler {
         menuItems = new ArrayList<MenuItem>();
     }
 
+    /**
+     * Created by User on 14/03/16.
+     */
+    public static class Load {
+    }
 }

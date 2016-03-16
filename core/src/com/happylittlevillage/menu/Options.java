@@ -10,8 +10,6 @@ import com.happylittlevillage.Miscellaneous;
 public class Options extends Miscellaneous {
 	private float xPos = 800;
 	private float yPos = 400;
-	private Texture backButton;
-	private Rectangle backButtonPosition;
 	private Texture buttonScale;
 	private Rectangle buttonScalePosition;
 	private Texture bar;

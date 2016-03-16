@@ -52,7 +52,7 @@ public class GameScreen implements Screen {
 		viewport = new StretchViewport(WIDTH, HEIGHT, camera);
 		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
-		inputHandler = new InputHandler(this);
+		inputHandler = new InputHandler(this, game);
 		gameHandler = new GameHandler(inputHandler, isTutorial, game);
 		inputHandler.linkTo(gameHandler);
 		Gdx.input.setInputProcessor(inputHandler);

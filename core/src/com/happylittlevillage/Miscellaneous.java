@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -22,6 +23,8 @@ public class Miscellaneous implements Screen, InputProcessor {
     protected int lastResHeight;
     protected int lastResWidth;
     protected Vector2 realPos = new Vector2();
+    protected Texture backButton;
+    protected Rectangle backButtonPosition;
 
 
     public Miscellaneous(HappyLittleVillage happyLittleVillage) {
