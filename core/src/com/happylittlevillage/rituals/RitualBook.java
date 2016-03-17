@@ -9,6 +9,7 @@ import com.happylittlevillage.GameObject;
 import com.happylittlevillage.gems.GemColour;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RitualBook extends GameObject {
     private final Texture[] pages = {Assets.getTexture("ui/book.png"),
@@ -35,16 +36,10 @@ public class RitualBook extends GameObject {
     }
 
     private void addStandardRitual() {
-        rituals.add(Ritual.getRitual("addWater"));
-        rituals.add(Ritual.getRitual("addFood"));
-        rituals.add(Ritual.getRitual("addVillager"));
-        rituals.add(Ritual.getRitual("addResourcesMakeVillagersAngry"));
-        rituals.add(Ritual.getRitual("convertExplorer"));
-        rituals.add(Ritual.getRitual("convertFarmer"));
-        rituals.add(Ritual.getRitual("convertMiner"));
-        rituals.add(Ritual.getRitual("killAVillager"));
-
-
+        List<String> ritualNames = Ritual.getRitualNames();
+        for (String name : ritualNames) {
+            rituals.add(Ritual.getRitual(name));
+        }
     }
 
     private void synchronizeRitualInfo() {

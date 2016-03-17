@@ -21,17 +21,17 @@ public class MainMenu extends Miscellaneous {
     private Rectangle tutorialButtonPosition;
     private Rectangle loadButtonPosition;
     private Rectangle exitButtonPosition;
-    private static int buttonX = 780;
-    private static int buttonY = 100;
+    private static int buttonX = 862;
+    private static int buttonY = 80;
 
     public MainMenu(HappyLittleVillage happyLittleVillage) {
         super(happyLittleVillage);
-        startButton = new GameObject(Assets.getTexture("menu/startButton.png"), buttonX, buttonY + 425, 400, 167);
+        startButton = new GameObject(Assets.getTexture("menu/startButton.png"), buttonX, buttonY + 400, 360, 150);
         tutorialButton = new GameObject(Assets.getTexture("menu/tutorialButton.png"), buttonX, buttonY + 325);
         loadButton = new GameObject(Assets.getTexture("menu/loadButton.png"), buttonX, buttonY + 200);
         optionsButton = new GameObject(Assets.getTexture("menu/optionsButton.png"), buttonX, buttonY + 75);
         creditsButton = new GameObject(Assets.getTexture("menu/creditsButton.png"), buttonX, buttonY);
-        exitButton = new GameObject(Assets.getTexture("menu/exitButton.png"), buttonX, buttonY);
+        exitButton = new GameObject(Assets.getTexture("menu/exitButton.png"), buttonX, buttonY + 50, 360, 150);
         exitButtonPosition = new Rectangle(buttonX, buttonY - 100 , exitButton.getWidth(), exitButton.getHeight());
         creditsButtonPosition = new Rectangle(buttonX, buttonY  , creditsButton.getWidth(), creditsButton.getHeight());
         optionsButtonPosition = new Rectangle(buttonX, buttonY + 75, optionsButton.getWidth(), optionsButton.getHeight());

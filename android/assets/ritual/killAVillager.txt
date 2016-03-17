@@ -1,4 +1,4 @@
-killAVillager
+For the greater good
 00 RED 01 GREEN 10 GREEN 11 RED
 VILLAGER -1
 FOOD +100

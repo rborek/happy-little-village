@@ -1,3 +1,3 @@
-addWater
+Well water
 00 YELLOW 10 BLUE 20 BLUE
 WATER +40

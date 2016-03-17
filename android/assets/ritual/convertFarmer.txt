@@ -1,3 +1,3 @@
-convertFarmer
+Farming is fun!
 00 YELLOW 10 BLUE 11 GREEN
 FARMER +2

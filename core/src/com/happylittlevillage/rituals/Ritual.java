@@ -6,24 +6,32 @@ import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.village.Village;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Ritual {
     private String name;
     protected static Village village;
     protected GemColour[] gemCombination; // to be deleted
     protected GemColour[][] recipe;
-    private RitualEffect[] effects;
-    private static HashMap<String, Ritual> rituals = new HashMap<String, Ritual>();
+	private RitualEffect[] effects;
+	private static List<String> ritualNames = new ArrayList<String>();
+	private static HashMap<String, Ritual> rituals = new HashMap<String, Ritual>();
 
     Ritual() {
 
     }
 
+	public static List<String> getRitualNames() {
+		return ritualNames;
+	}
+
     private Ritual(String[] file) {
         // the first line of the file contains the ritual's name
         name = file[0];
-        // the second line of the file contains all of the gem combinations
+	    ritualNames.add(name);
+	    // the second line of the file contains all of the gem combinations
         // they are stored in an alternating pattern of ROW/COL COLOUR
         // e.g. 01 RED
         String[] combinationLine = file[1].split(" ");

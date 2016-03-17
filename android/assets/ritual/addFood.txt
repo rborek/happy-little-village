@@ -1,4 +1,4 @@
-addFood
+Dried meat
 00 YELLOW 10 RED 20 RED
 FOOD +100
 WATER -25

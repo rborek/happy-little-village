@@ -3,7 +3,8 @@ package com.happylittlevillage.messages;
 import com.happylittlevillage.GameHandler;
 
 public class Introduction extends MessageBox {
-	private static String instruction = "Welcome to happy little village\nManage your resources by performing rituals";
+	private static String instruction = "Welcome to Happy Little Village!\nManage your resources by performing rituals\n" +
+			"and keep your villagers alive.";
 
 	public Introduction(GameHandler gameHandler, boolean isTutorial) {
 		super(instruction, gameHandler);

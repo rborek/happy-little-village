@@ -93,8 +93,8 @@ public class Village {
 		float consumeFood = 0;
 		float consumeWater = 0;
 		for (Villager villager : villagers) {
-			consumeWater += villager.getRole().waterConsumption() / 7;
-			consumeFood += villager.getRole().foodConsumption() / 7;
+			consumeWater += villager.getRole().waterConsumption() / 4;
+			consumeFood += villager.getRole().foodConsumption() / 4;
 		}
 		food -= consumeFood * delta;
 		consumedFood += consumeFood * delta;
@@ -191,13 +191,11 @@ public class Village {
 	}
 
 	public void mineGems(float delta) {
-		gemThreshold += delta / 7;
+		gemThreshold += delta / 20 * getNumberOf(VillagerRole.MINER);
 		if (gemThreshold > 1) {
 			//get a random gemColour and store it in gemsMined according to its ordinal
-			for (int i = 0; i < getNumberOf(VillagerRole.MINER) * 2; i++) {
-				GemColour g = gemBag.gainRandomGem();
-				gemBag.add(g);
-			}
+			GemColour g = gemBag.gainRandomGem();
+			gemBag.add(g);
 			gemThreshold = 0;
 		}
 	}
@@ -216,9 +214,9 @@ public class Village {
 	}
 
 	private void decay(float delta) {
-		if (food == 0) {
+		if (food <= 0) {
 			hungerTimer += delta;
-			if (Math.random() * hungerTimer * 5 > 3) {
+			if (Math.random() * hungerTimer * 2 > 3) {
 				this.removeVillager();
 				hungerTimer = 0;
 			}
@@ -226,9 +224,9 @@ public class Village {
 			hungerTimer = 0;
 		}
 
-		if (water < 0) {
+		if (water <= 0) {
 			dehydrationTimer += delta;
-			if (Math.random() * dehydrationTimer * 5 > 3) {
+			if (Math.random() * dehydrationTimer * 2 > 3) {
 				this.removeVillager();
 				dehydrationTimer = 0;
 			}

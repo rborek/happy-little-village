@@ -1,4 +1,4 @@
-addResourcesMakeVillagersAngry
+Liquid diet
 00 GREEN 01 YELLOW 10 YELLOW 11 GREEN
-FOOD +100
-WATER -25
+WATER +100
+FOOD -25
