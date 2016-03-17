@@ -60,7 +60,7 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	public boolean interact(float mouseX, float mouseY) {
 		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
 		if (r.contains(mouseX, mouseY)) {
-			gameHandler.unPause();
+			gameHandler.unpause();
 			return true;
 		}
 		System.out.println(this);
