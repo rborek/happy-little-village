@@ -69,7 +69,7 @@ public class GameHandler {
             tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
             arrow.add(new Vector2(476, 579));
         } else {
-            village = new Village(gemBag, 100, 50, 30);
+            village = new Village(gemBag, 100, 75, 30);
             ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualBook);
         }
         messageBox = new Introduction(this, isTutorial);
