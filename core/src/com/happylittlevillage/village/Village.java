@@ -22,6 +22,8 @@ public class Village {
     private float consumedWater = 0;
     private float gatheredWater = 0;
     private float happiness = 100;
+	private float hungerTimer = 0;
+	private float dehydrationTimer = 0;
     //TODO set case when happiness fall below 0
     private WeeklyRitual weeklyRitual;
     private VillageInformation villageInformation;
@@ -90,31 +92,16 @@ public class Village {
 //        return;
         float consumeFood = 0;
         float consumeWater = 0;
-//        for (Villager villager : villagers) {
-//            if (villager.getRole().equals(VillagerRole.FARMER)) {
-//                consumeFood += 1.05 * (villager.getRole().foodConsumption());
-//                consumeWater += 1.10 * (villager.getRole().waterConsumption());
-//            } else if (villager.getRole().equals(VillagerRole.EXPLORER)) {
-//                consumeFood += 1.15 * (villager.getRole().foodConsumption());
-//                consumeWater += 1.20 * (villager.getRole().waterConsumption());
-//            } else if (villager.getRole().equals(VillagerRole.MINER)) {
-//                consumeFood += 1.25 * (villager.getRole().foodConsumption());
-//                consumeWater += 1.30 * (villager.getRole().waterConsumption());
-//            } else {
-//                consumeFood += villager.getRole().foodConsumption();
-//            }
-//        }
-
         for (Villager villager : villagers) {
             consumeWater += villager.getRole().waterConsumption() / 7;
             consumeFood += villager.getRole().foodConsumption() / 7;
         }
         food -= consumeFood * delta;
         consumedFood += consumeFood * delta;
-        consumedFood /= 10;
         water -= consumeWater * delta;
         consumedWater += consumeWater * delta;
-        consumedWater /= 10;
+        food = Math.max(food, 0);
+        water = Math.max(water, 0);
     }
 
     public WeeklyRitual getWeeklyRitual() {
@@ -179,7 +166,7 @@ public class Village {
 
     public void gatherFood(float delta) {
         float food = 0;
-        foodProduction = (float) 0.001;
+        foodProduction = 0.001f;
         for (Villager villager : villagers) {
             if (villager.getRole().equals(VillagerRole.FARMER)) {
                 food += foodProduction;
@@ -193,7 +180,7 @@ public class Village {
     //TODO check the algorithm. Maybe less dependent on delta
     public void gatherWater(float delta) {
         float water = 0;
-        waterProduction = (float) 0.001;
+        waterProduction = 0.001f;
 
         for (Villager villager : villagers) {
             if (villager.getRole().equals(VillagerRole.EXPLORER)) {
@@ -231,24 +218,24 @@ public class Village {
     }
 
     private void decay(float delta) {
-        if (food < 0) {
-            hunger += (-food) * delta * 2;
-            if (hunger > 5) {
+        if (food == 0) {
+            hungerTimer += delta;
+            if (Math.random() * hungerTimer * 5 > 3) {
                 this.removeVillager();
-                hunger = 0;
+                hungerTimer = 0;
             }
         } else {
-            hunger = 0;
+            hungerTimer = 0;
         }
 
         if (water < 0) {
-            dehydration += (-water) * delta * 2;
-            if (dehydration > 5) {
-                this.removeVillager();
-                dehydration = 0;
-            }
+	        dehydrationTimer += delta;
+	        if (Math.random() * dehydrationTimer * 5 > 3) {
+		        this.removeVillager();
+		        dehydrationTimer = 0;
+	        }
         } else {
-            dehydration = 0;
+	        dehydrationTimer = 0;
         }
     }
 

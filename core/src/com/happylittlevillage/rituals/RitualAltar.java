@@ -13,7 +13,6 @@ import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.menu.MenuItem;
 import com.happylittlevillage.village.Village;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class RitualAltar extends GameObject implements MenuItem {
@@ -38,7 +37,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     private Gem[][] grid; // background stuff
     private int[][] bonus;
     private int[][] addToBonus;
-    private Rectangle[][] slots2; // render and UI stuff
+    private Rectangle[][] slots; // render and UI stuff
     private ArrayList<RitualEffect[]> ritualEffects = new ArrayList<RitualEffect[]>();
     private Village village;
     private ArrayList<ArrayList<GridPoint2>> lightUpGrid = new ArrayList<ArrayList<GridPoint2>>();
@@ -51,26 +50,14 @@ public class RitualAltar extends GameObject implements MenuItem {
         bonus = new int[4][4];
         addToBonus = new int[4][4];
         grid = new Gem[4][4]; // the new ritualAltar, background stuff
-
-        slots2 = new Rectangle[4][4]; // only for UI. What goes on in the background is handled by grid
-
+        slots = new Rectangle[4][4]; // only for UI. What goes on in the background is handled by grid
         int paddingColumn = 240;
-        for (int k = 0; k < 4; k++) { // row
-            int paddingRow = spacing;
-            for (int h = 0; h < 4; h++) { //column
-                slots2[k][h] = new Rectangle(paddingRow + 802, spacing + paddingColumn + 265, slotSize2, slotSize2);
-                paddingRow += 80;
+        for (int i = 0; i < 4; i++) { // row
+            for (int j = 0; j < 4; j++) { //column
+                slots[i][j] = new Rectangle(position.x + 37 + 87 * j, spacing + paddingColumn + 280, slotSize2, slotSize2);
             }
-            paddingColumn -= 80;
+            paddingColumn -= 83;
         }
-        //print out position of the slots
-//        for(int k = 0; k <4; k++){
-//            for(int i =0;i<4;i++){
-//                System.out.println("Slots2 Position At"+k+i);
-//                System.out.println(slots2[k][i].x );
-//                System.out.println(slots2[k][i].y );
-//            }
-//        }
         commenceButton = new Rectangle(position.x + (width / 2) - (button.getWidth() / 2), position.y - 50, button.getWidth(), button.getHeight() + 30);
         rituals = ritualBook.getUnlockedRitual();
     }
@@ -107,7 +94,7 @@ public class RitualAltar extends GameObject implements MenuItem {
         for (int i = 0; i < grid.length; i++) {
             for (int k = 0; k < grid[0].length; k++) {
                 if (grid[i][k] != null) {
-                    batch.draw(grid[i][k].getTexture(), slots2[i][k].x, +slots2[i][k].y, 64, 64);
+                    batch.draw(grid[i][k].getTexture(), slots[i][k].x, +slots[i][k].y, 64, 64);
                 }
             }
 
@@ -123,9 +110,9 @@ public class RitualAltar extends GameObject implements MenuItem {
     }
 
     public Gem pickUpGem(float x, float y) {
-        for (int i = 0; i < slots2.length; i++) {
-            for (int k = 0; k < slots2[0].length; k++) {
-                if (slots2[i][k].contains(x, y)) {
+        for (int i = 0; i < slots.length; i++) {
+            for (int k = 0; k < slots[0].length; k++) {
+                if (slots[i][k].contains(x, y)) {
                     if (grid[i][k] != null) {
                         Gem gemToReturn = grid[i][k];
                         grid[i][k] = null;
@@ -260,8 +247,8 @@ public class RitualAltar extends GameObject implements MenuItem {
         Vector2 center = new Vector2();
         for (int i = 0; i < 4; i++) {
             for (int k = 0; k < 4; k++) {
-                if (slots2[i][k].overlaps(gemBounds)) {
-                    slots2[i][k].getCenter(center);
+                if (slots[i][k].overlaps(gemBounds)) {
+                    slots[i][k].getCenter(center);
                     distance = Math.sqrt(Math.pow(center.x - x, 2) + Math.pow(center.y - y, 2));
                     if (minDistance > distance) {
                         minDistance = distance;
