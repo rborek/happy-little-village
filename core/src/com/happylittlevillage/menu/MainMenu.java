@@ -31,7 +31,7 @@ public class MainMenu extends Miscellaneous {
         loadButton = new GameObject(Assets.getTexture("menu/loadButton.png"), buttonX, buttonY + 200);
         optionsButton = new GameObject(Assets.getTexture("menu/optionsButton.png"), buttonX, buttonY + 75);
         creditsButton = new GameObject(Assets.getTexture("menu/creditsButton.png"), buttonX, buttonY);
-        exitButton = new GameObject(Assets.getTexture("menu/exitButton.png"), buttonX, buttonY -100);
+        exitButton = new GameObject(Assets.getTexture("menu/exitButton.png"), buttonX, buttonY);
         exitButtonPosition = new Rectangle(buttonX, buttonY - 100 , exitButton.getWidth(), exitButton.getHeight());
         creditsButtonPosition = new Rectangle(buttonX, buttonY  , creditsButton.getWidth(), creditsButton.getHeight());
         optionsButtonPosition = new Rectangle(buttonX, buttonY + 75, optionsButton.getWidth(), optionsButton.getHeight());
@@ -71,8 +71,8 @@ public class MainMenu extends Miscellaneous {
         startButton.render(batch);
         tutorialButton.render(batch);
         loadButton.render(batch);
-        optionsButton.render(batch);
-        creditsButton.render(batch);
+//        optionsButton.render(batch);
+//        creditsButton.render(batch);
         exitButton.render(batch);
         batch.end();
     }

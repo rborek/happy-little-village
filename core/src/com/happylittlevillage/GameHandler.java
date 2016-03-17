@@ -69,7 +69,7 @@ public class GameHandler {
             tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
             arrow.add(new Vector2(476, 579));
         } else {
-            village = new Village(gemBag, 100, 75, 30);
+            village = new Village(gemBag, 100, 75, 5);
             ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualBook);
         }
         messageBox = new Introduction(this, isTutorial);
@@ -162,7 +162,7 @@ public class GameHandler {
         gemBag.render(batch);
         inputHandler.renderSelectedGem(batch);
         miniBook.render(batch);
-        optionWheel.render(batch);
+//        optionWheel.render(batch);
         if (!lose && !win) {
             if (isTutorial) {
                 tutorialMessage.render(batch);

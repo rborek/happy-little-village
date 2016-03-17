@@ -30,6 +30,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     //new measurements
     private static final int slotSize2 = 80;
     private static final int spacing = 40;
+	private WeeklyRitual weeklyRitual;
 
     private boolean animating = false;
     private float timer = 0;
@@ -130,10 +131,26 @@ public class RitualAltar extends GameObject implements MenuItem {
     }
 
     public void useGems2() {
+	    weeklyRitual = village.getWeeklyRitual();
         //print out grid first
         for (int gridRow = 0; gridRow < grid.length; gridRow++) { //row gridRow
             for (int gridColumn = 0; gridColumn < grid[0].length; gridColumn++) { //column gridColumn
                 if (grid[gridRow][gridColumn] != null) {
+	                for (int firstRecipePosition = 0; firstRecipePosition < weeklyRitual.getRecipe()[0].length; firstRecipePosition++) {
+		                // get the first non-null colour
+		                if (weeklyRitual.getRecipe()[0][firstRecipePosition] != null) {
+			                //check if the first row's non-null colour matches with the grid
+			                if (grid[gridRow][gridColumn].getColour().equals(weeklyRitual.getRecipe()[0][firstRecipePosition])) {
+				                //start specifically checking one recipe
+				                System.out.println("CHECK WEEKLY RITUAL");
+				                compareRecipe(weeklyRitual, gridRow, gridColumn, firstRecipePosition);
+				                break;
+			                } else {
+				                break;
+			                }
+		                }
+	                }//end checking for one specific recipe
+
                     //iterate through all known grid recipe
                     for (int ritualNumber = 0; ritualNumber < rituals.size(); ritualNumber++) {
                         // iterate through the first row of a recipe
@@ -143,7 +160,7 @@ public class RitualAltar extends GameObject implements MenuItem {
                                 //check if the first row's non-null colour matches with the grid
                                 if (grid[gridRow][gridColumn].getColour().equals(rituals.get(ritualNumber).getRecipe()[0][firstRecipePosition])) {
                                     //start specifically checking one recipe
-                                    compareRecipe(ritualNumber, gridRow, gridColumn, firstRecipePosition);
+                                    compareRecipe(rituals.get(ritualNumber), gridRow, gridColumn, firstRecipePosition);
                                     break;
                                 } else {
                                     break;
@@ -176,8 +193,8 @@ public class RitualAltar extends GameObject implements MenuItem {
     // compareRecipe compare the recipe according to ritualNumber,
     // having the position of gridRow and  gridColumn
     // and the  firstRecipePosition that the grid encounters
-    private void compareRecipe(int ritualNumber, int gridRow, int gridColumn, int firstRecipePosition) {
-        GemColour[][] check = rituals.get(ritualNumber).getRecipe(); // check: just to shorten the path
+    private void compareRecipe(Ritual ritual, int gridRow, int gridColumn, int firstRecipePosition) {
+        GemColour[][] check = ritual.getRecipe(); // check: just to shorten the path
         boolean match = true;
         ArrayList<GridPoint2> addToLightUpGrid = new ArrayList<GridPoint2>();
         //reset addToBonus
@@ -232,7 +249,10 @@ public class RitualAltar extends GameObject implements MenuItem {
             //add used position to lightUpGrid for rendering
             lightUpGrid.add(addToLightUpGrid);
             //add each effect to the arrayList of ritualEffects
-            ritualEffects.add(rituals.get(ritualNumber).getEffects());
+            ritualEffects.add(ritual.getEffects());
+	        if (ritual == weeklyRitual) {
+		        ritual.commence();
+	        }
         }
     }
 

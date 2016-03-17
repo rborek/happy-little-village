@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Random;
 
 public class Village {
-    private static final int MAX_HOURS = 24;
+    private static final int MAX_HOURS = 5;
     private ArrayList<Villager> villagers;
     private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
     private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -240,7 +240,7 @@ public class Village {
     }
 
     private void timePass(float delta) {
-        hoursLeft -= (float) (delta * 0.2);
+        hoursLeft -= delta * .35f;
         if (hoursLeft <= 0) {
             dayPass();
         }
