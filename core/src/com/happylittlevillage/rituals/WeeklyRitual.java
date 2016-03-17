@@ -19,7 +19,7 @@ public class WeeklyRitual extends Ritual {
     }
 
     public boolean isComplete() {
-        return timesToDo == timesPerformed;
+        return timesToDo <= timesPerformed;
     }
 
 
@@ -35,7 +35,7 @@ public class WeeklyRitual extends Ritual {
         recipe = new GemColour[numGems][numGems];
         gemCombination = new GemColour[numGems];
         for (int i = 0; i < numGems; i++) {
-            for (int j = 0; i < numGems; i++) {
+            for (int j = 0; j < numGems; j++) {
                 recipe[i][j] = GemColour.values()[random.nextInt(GemColour.values().length - 1)];
             }
 

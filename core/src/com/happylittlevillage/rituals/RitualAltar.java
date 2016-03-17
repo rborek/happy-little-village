@@ -142,7 +142,6 @@ public class RitualAltar extends GameObject implements MenuItem {
 			                //check if the first row's non-null colour matches with the grid
 			                if (grid[gridRow][gridColumn].getColour().equals(weeklyRitual.getRecipe()[0][firstRecipePosition])) {
 				                //start specifically checking one recipe
-				                System.out.println("CHECK WEEKLY RITUAL");
 				                compareRecipe(weeklyRitual, gridRow, gridColumn, firstRecipePosition);
 				                break;
 			                } else {

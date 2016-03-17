@@ -21,12 +21,12 @@ public class MainMenu extends Miscellaneous {
     private Rectangle tutorialButtonPosition;
     private Rectangle loadButtonPosition;
     private Rectangle exitButtonPosition;
-    private static int buttonX = 800;
+    private static int buttonX = 780;
     private static int buttonY = 100;
 
     public MainMenu(HappyLittleVillage happyLittleVillage) {
         super(happyLittleVillage);
-        startButton = new GameObject(Assets.getTexture("menu/startButton.png"), buttonX, buttonY + 450);
+        startButton = new GameObject(Assets.getTexture("menu/startButton.png"), buttonX, buttonY + 425, 400, 167);
         tutorialButton = new GameObject(Assets.getTexture("menu/tutorialButton.png"), buttonX, buttonY + 325);
         loadButton = new GameObject(Assets.getTexture("menu/loadButton.png"), buttonX, buttonY + 200);
         optionsButton = new GameObject(Assets.getTexture("menu/optionsButton.png"), buttonX, buttonY + 75);
@@ -45,21 +45,22 @@ public class MainMenu extends Miscellaneous {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button); // set the realPos
         System.out.println(realPos);
-        if (creditsButtonPosition.contains(realPos)) {
-            happyLittleVillage.setCredits();
-            return true;
-        } else if (startButtonPosition.contains(realPos)) {
+//        if (creditsButtonPosition.contains(realPos)) {
+//            happyLittleVillage.setCredits();
+//            return true;
+        if (startButtonPosition.contains(realPos)) {
             happyLittleVillage.setGameScreen(false);
             return true;
-        } else if (optionsButtonPosition.contains(realPos)) {
-            happyLittleVillage.setOptions();
-            return true;
-        } else if (tutorialButtonPosition.contains(realPos)) {
-            happyLittleVillage.setGameScreen(true);
-        } else if(loadButtonPosition.contains(realPos)){
-            happyLittleVillage.setLoad();
+//        } else if (optionsButtonPosition.contains(realPos)) {
+//            happyLittleVillage.setOptions();
+//            return true;
+//        } else if (tutorialButtonPosition.contains(realPos)) {
+//            happyLittleVillage.setGameScreen(true);
+//        } else if(loadButtonPosition.contains(realPos)){
+//            happyLittleVillage.setLoad();
         } else if(exitButtonPosition.contains(realPos)){
             happyLittleVillage.setExit();
+            return true;
         }
         return false;
     }
@@ -69,8 +70,8 @@ public class MainMenu extends Miscellaneous {
         batch.begin();
         batch.draw(background, 0, 0);
         startButton.render(batch);
-        tutorialButton.render(batch);
-        loadButton.render(batch);
+//        tutorialButton.render(batch);
+//        loadButton.render(batch);
 //        optionsButton.render(batch);
 //        creditsButton.render(batch);
         exitButton.render(batch);

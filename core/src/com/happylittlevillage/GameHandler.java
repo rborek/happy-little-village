@@ -91,6 +91,9 @@ public class GameHandler {
         if (miniBook.isOpen()) {
             miniBook.close();
         }
+        if (village.getDaysLeft() < 0) {
+            lose = true;
+        }
         if (lose) {
             messageBox = gameOverMessage;
 
@@ -104,9 +107,7 @@ public class GameHandler {
             messageBox = new GodMessage(gemBag, village, this);
             if (((GodMessage) messageBox).checkRitual()) {
                 //TODO change this messy code
-                ritualAltar.removeRitual(village.getWeeklyRitual());
                 village.generateNewWeeklyRitual();
-                ritualAltar.gainRitual(village.getWeeklyRitual());
             }
             ((GodMessage) messageBox).stateRitual();
         } else {
