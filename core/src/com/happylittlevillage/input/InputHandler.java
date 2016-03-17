@@ -101,7 +101,7 @@ public class InputHandler implements InputProcessor {
     public boolean keyDown(int keycode) {
         if (!gameHandler.isPaused()) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                ritualAltar.useGems2();
+                ritualAltar.useGems();
             }
         }
         return true;
@@ -130,11 +130,11 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 realPos = screen.getRealScreenPos(screenX, screenY);
         System.out.println("Mouse click at " + realPos);
-        if(clickOptionWheel(realPos.x,realPos.y)){
+//        if(clickOptionWheel(realPos.x,realPos.y)){
 //            gameHandler.saveGame();
-            happyLittleVillage.setMenu();
-            gameHandler.pause();
-        }
+//            happyLittleVillage.setMenu();
+//            gameHandler.pause();
+//    }
         if (gameHandler.isPaused()) {
             checkContinue(realPos.x, realPos.y);
         }

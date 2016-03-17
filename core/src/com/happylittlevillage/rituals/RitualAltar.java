@@ -14,6 +14,7 @@ import com.happylittlevillage.menu.MenuItem;
 import com.happylittlevillage.village.Village;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RitualAltar extends GameObject implements MenuItem {
     private GemBag gemBag;
@@ -130,7 +131,7 @@ public class RitualAltar extends GameObject implements MenuItem {
         animating = true;
     }
 
-    public void useGems2() {
+    public void useGems() {
 	    weeklyRitual = village.getWeeklyRitual();
         //print out grid first
         for (int gridRow = 0; gridRow < grid.length; gridRow++) { //row gridRow
@@ -171,12 +172,15 @@ public class RitualAltar extends GameObject implements MenuItem {
             }
         }
         //make rituals affect the village
-        for (RitualEffect effects[] : ritualEffects) {
-            if (effects != null) {
-                for (RitualEffect effect : effects) {
-                    effect.affectVillage(village);
-                }
+        ArrayList<RitualEffect> sortedEffects = new ArrayList<RitualEffect>();
+        for (RitualEffect[] effects : ritualEffects) {
+            for (RitualEffect effect : effects) {
+                sortedEffects.add(effect);
             }
+        }
+        Collections.sort(sortedEffects);
+        for (RitualEffect effect : sortedEffects) {
+            effect.affectVillage(village);
         }
         ritualEffects.clear();
         //TODO figure out something to do with bonuses
@@ -307,7 +311,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     public boolean interact(float mouseX, float mouseY) {
         pickUpGem(mouseX, mouseY);
         if (commenceButton.contains(mouseX, mouseY)) {
-            useGems2();
+            useGems();
             return true;
         }
         return false;

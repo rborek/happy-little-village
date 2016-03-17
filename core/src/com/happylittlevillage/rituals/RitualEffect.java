@@ -3,7 +3,7 @@ package com.happylittlevillage.rituals;
 import com.happylittlevillage.village.Village;
 import com.happylittlevillage.village.VillagerRole;
 
-public class RitualEffect {
+public class RitualEffect implements Comparable<RitualEffect> {
 	private VillageModifier modifier;
 	private int amount;
 
@@ -63,5 +63,10 @@ public class RitualEffect {
 
 	public int getAmount() {
 		return amount;
+	}
+
+	@Override
+	public int compareTo(RitualEffect other) {
+		return this.modifier.orderOf() - other.modifier.orderOf();
 	}
 }

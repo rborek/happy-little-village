@@ -100,8 +100,6 @@ public class Village {
 		consumedFood += consumeFood * delta;
 		water -= consumeWater * delta;
 		consumedWater += consumeWater * delta;
-		food = Math.max(food, 0);
-		water = Math.max(water, 0);
 	}
 
 	public WeeklyRitual getWeeklyRitual() {
@@ -142,8 +140,10 @@ public class Village {
 			villager.update(delta);
 		}
 		isNextDay = false;
-		consume(delta);
 		gatherResources(delta);
+		consume(delta);
+		food = Math.max(food, 0);
+		water = Math.max(water, 0);
 		timePass(delta);
 		//decrement time of spawning
 		if (villagerSpawnTimer > 0) {
@@ -164,10 +164,10 @@ public class Village {
 
 	public void gatherFood(float delta) {
 		float food = 0;
-		foodProduction = 0.001f;
+		foodProduction = 1f;
 		for (Villager villager : villagers) {
 			if (villager.getRole().equals(VillagerRole.FARMER)) {
-				food += foodProduction;
+				food += foodProduction * delta;
 			}
 		}
 		if (food != 0) {
@@ -178,11 +178,11 @@ public class Village {
 	//TODO check the algorithm. Maybe less dependent on delta
 	public void gatherWater(float delta) {
 		float water = 0;
-		waterProduction = 0.001f;
+		waterProduction = 1f;
 
 		for (Villager villager : villagers) {
 			if (villager.getRole().equals(VillagerRole.EXPLORER)) {
-				water += waterProduction;
+				water += waterProduction * delta;
 			}
 		}
 		if (water != 0) {
@@ -191,7 +191,7 @@ public class Village {
 	}
 
 	public void mineGems(float delta) {
-		gemThreshold += delta / 20 * getNumberOf(VillagerRole.MINER);
+		gemThreshold += delta / 30 * getNumberOf(VillagerRole.MINER);
 		if (gemThreshold > 1) {
 			//get a random gemColour and store it in gemsMined according to its ordinal
 			GemColour g = gemBag.gainRandomGem();
