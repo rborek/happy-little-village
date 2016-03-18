@@ -19,7 +19,6 @@ import java.util.Collections;
 public class RitualAltar extends GameObject implements MenuItem {
     private GemBag gemBag;
     // gonna replace animation with different picture
-    private Texture[] animation = Assets.getTextures("altar/altar1.png", "altar/altar2.png", "altar/altar3.png", "altar/altar2.png", "altar/altar1.png");
     private Texture button = Assets.getTexture("altar/button.png");
     private Rectangle commenceButton;
     private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
@@ -77,16 +76,16 @@ public class RitualAltar extends GameObject implements MenuItem {
 
     @Override
     public void update(float delta) {
-        if (animating) {
-            int frame = (int) ((timer * 8) % animation.length);
-            texture = animation[frame];
-            timer += delta;
-            if (timer * 8 >= 5) {
-                animating = false;
-                timer = 0;
-                texture = animation[0];
-            }
-        }
+//        if (animating) {
+//            int frame = (int) ((timer * 8) % animation.length);
+//            texture = animation[frame];
+//            timer += delta;
+//            if (timer * 8 >= 5) {
+//                animating = false;
+//                timer = 0;
+//                texture = animation[0];
+//            }
+//        }
     }
 
     @Override
@@ -174,14 +173,17 @@ public class RitualAltar extends GameObject implements MenuItem {
         //make rituals affect the village
         ArrayList<RitualEffect> sortedEffects = new ArrayList<RitualEffect>();
         for (RitualEffect[] effects : ritualEffects) {
-            for (RitualEffect effect : effects) {
-                sortedEffects.add(effect);
+            if (effects != null) {
+                for (RitualEffect effect : effects) {
+                    sortedEffects.add(effect);
+                }
             }
         }
         Collections.sort(sortedEffects);
         for (RitualEffect effect : sortedEffects) {
             effect.affectVillage(village);
         }
+        sortedEffects.clear();
         ritualEffects.clear();
         //TODO figure out something to do with bonuses
         //reset bonus

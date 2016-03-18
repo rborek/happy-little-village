@@ -22,7 +22,7 @@ public class GameOver extends MessageBox {
 		this.happyLittleVillage = happyLittleVillage;
 		title = " GAME OVER ";
 		message = "";
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/fonts/palitoon.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = 36;
 		parameter.borderColor = Color.BLACK;

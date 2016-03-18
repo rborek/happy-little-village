@@ -76,7 +76,7 @@ public class Ritual {
     }
 
     public static void load() {
-        FileHandle dir = Gdx.files.internal("ritual");
+        FileHandle dir = Gdx.files.internal("data/ritual");
         for (FileHandle file : dir.list()) {
             addRitual(file);
         }
