@@ -45,19 +45,20 @@ public class MainMenu extends Miscellaneous {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button); // set the realPos
         System.out.println(realPos);
-//        if (creditsButtonPosition.contains(realPos)) {
-//            happyLittleVillage.setCredits();
-//            return true;
+        if (creditsButtonPosition.contains(realPos)) {
+            happyLittleVillage.setCredits();
+            return true;
+        }
         if (startButtonPosition.contains(realPos)) {
             happyLittleVillage.setGameScreen(false);
             return true;
-//        } else if (optionsButtonPosition.contains(realPos)) {
-//            happyLittleVillage.setOptions();
-//            return true;
-//        } else if (tutorialButtonPosition.contains(realPos)) {
-//            happyLittleVillage.setGameScreen(true);
-//        } else if(loadButtonPosition.contains(realPos)){
-//            happyLittleVillage.setLoad();
+        } else if (optionsButtonPosition.contains(realPos)) {
+            happyLittleVillage.setOptions();
+            return true;
+        } else if (tutorialButtonPosition.contains(realPos)) {
+            happyLittleVillage.setGameScreen(true);
+        } else if(loadButtonPosition.contains(realPos)){
+            happyLittleVillage.setLoad();
         } else if(exitButtonPosition.contains(realPos)){
             happyLittleVillage.setExit();
             return true;
@@ -70,10 +71,10 @@ public class MainMenu extends Miscellaneous {
         batch.begin();
         batch.draw(background, 0, 0);
         startButton.render(batch);
-//        tutorialButton.render(batch);
-//        loadButton.render(batch);
-//        optionsButton.render(batch);
-//        creditsButton.render(batch);
+        tutorialButton.render(batch);
+        loadButton.render(batch);
+        optionsButton.render(batch);
+        creditsButton.render(batch);
         exitButton.render(batch);
         batch.end();
     }
