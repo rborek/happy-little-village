@@ -28,9 +28,9 @@ public class RitualBook extends GameObject {
 	private BitmapFont font;
 
 	public RitualBook(float xPos, float yPos) {
-		super(Assets.getTexture("ui/book1.png"), xPos, yPos);
-		leftArrow = new Rectangle(xPos + 30, yPos + 20, 70, 45);
-		rightArrow = new Rectangle(xPos + 495, yPos + 20, 70, 45);
+		super(Assets.getTexture("ui/book.png"), xPos, yPos);
+		leftArrow = new Rectangle(xPos + 30, yPos + 20, 90, 55);
+		rightArrow = new Rectangle(xPos + 580, yPos + 20, 90, 55);
 		addStandardRitual();
 		synchronizeRitualInfo();
 	}

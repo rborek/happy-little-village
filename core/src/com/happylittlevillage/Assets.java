@@ -18,19 +18,19 @@ import java.util.HashMap;
 public class Assets {
 	private static final AssetManager manager = new AssetManager();
 	private static final HashMap<Integer, BitmapFont> fonts = new HashMap<Integer, BitmapFont>();
-	private static FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
+	private static FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/fonts/palitoon.otf"));
 	private static FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
 	// returns the texture of a given file path
 	public static Texture getTexture(String path) {
-		return manager.get("textures/" + path, Texture.class);
+		return manager.get("data/textures/" + path, Texture.class);
 	}
 
-	// returns an array of all the textures listed
+	// returns an array of all the data.textures listed
 	public static Texture[] getTextures(String... paths) {
 		Texture[] textures = new Texture[paths.length];
 		for (int i = 0; i < paths.length; i++) {
-			textures[i] = manager.get("textures/" + paths[i], Texture.class);
+			textures[i] = manager.get("data/textures/" + paths[i], Texture.class);
 		}
 		return textures;
 	}
@@ -79,9 +79,9 @@ public class Assets {
 	}
 
 
-	// returns an array of textures given a folder/prefix
+	// returns an array of data.textures given a folder/prefix
 	public static Texture[] getTextures(String prefix) {
-		FileHandle dir = Gdx.files.internal("prefix");
+		FileHandle dir = Gdx.files.internal("data/" + prefix);
 		if (dir.isDirectory()) {
 			Texture[] textures = new Texture[dir.list().length];
 			for (int i = 0; i < dir.list().length; i++) {
@@ -93,7 +93,7 @@ public class Assets {
 	}
 
 	private static void loadTextures(TextureParameter param) {
-		loadTextures(Gdx.files.internal("textures"), param);
+		loadTextures(Gdx.files.internal("data/textures"), param);
 	}
 
 	// recursively goes through every directory, loading all files within them as a Texture
@@ -113,16 +113,16 @@ public class Assets {
 		param.genMipMaps = true;
 		param.minFilter = TextureFilter.MipMapLinearLinear;
 		param.magFilter = TextureFilter.Linear;
-		loadTextures(Gdx.files.internal("textures/menu"), param);
+		loadTextures(Gdx.files.internal("data/textures/menu"), param);
 		manager.finishLoading();
 	}
 
 	public static TextureAtlas getAtlas(String name) {
-		return manager.get("atlas/" + name + ".atlas");
+		return manager.get("data/atlas/" + name + ".atlas");
 	}
 
 	public static void loadAtlases() {
-		FileHandle dir = Gdx.files.internal("atlas");
+		FileHandle dir = Gdx.files.internal("data/atlas");
 		for (FileHandle file : dir.list()) {
 			if (file.toString().contains(".atlas")) {
 				manager.load(file.toString(), TextureAtlas.class);

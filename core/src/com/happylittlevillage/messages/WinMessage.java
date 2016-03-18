@@ -18,7 +18,7 @@ public class WinMessage extends MessageBox {
 		condition[0] = "Enough food to survive, your \nvillagers part away with their food";
 		condition[1] = "Enough villagers to create a tribe";
 		condition[2] = "Enough happiness to survive, your vilagers part away with their happiness wtf";
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/palitoon.otf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/fonts/palitoon.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = 36;
 		parameter.borderColor = Color.BLACK;

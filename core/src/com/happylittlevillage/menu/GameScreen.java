@@ -3,6 +3,7 @@ package com.happylittlevillage.menu;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -41,11 +42,12 @@ public class GameScreen implements Screen {
 		this.isTutorial = isTutorial;
 		Assets.load();
 		sun = Assets.getTexture("bg/sun.png");
-		if (Gdx.app.getType() == Application.ApplicationType.Android) {
-			batch = new SpriteBatch();
-		} else {
-			batch = new SpriteBatch(1000, createDefaultShader());
-		}
+		batch = new SpriteBatch();
+//		if (Gdx.app.getType() == Application.ApplicationType.Android || !Gdx.graphics.isGL30Available()) {
+//			batch = new SpriteBatch();
+//		} else {
+//			batch = new SpriteBatch(1000, createDefaultShader());
+//		}
 		camera = new OrthographicCamera();
 		camera.position.set(WIDTH / 2f, HEIGHT / 2f, 0);
 		camera.update();
@@ -75,7 +77,7 @@ public class GameScreen implements Screen {
 		sunPos.x = percentage * 640;
 		sunPos.y = 485 + skyAlpha * 125f;
 		Gdx.gl.glClearColor(0, 191 / 255f * skyAlpha, 255 / 255f * skyAlpha, 1);
-		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(sun, sunPos.x, sunPos.y);
 		gameHandler.render(batch);

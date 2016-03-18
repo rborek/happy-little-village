@@ -6,9 +6,7 @@ import com.happylittlevillage.gems.GemBag;
 import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.rituals.WeeklyRitual;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 
 public class Village {
 	private static final int MAX_HOURS = 24;
@@ -35,7 +33,7 @@ public class Village {
 	private int villagerRemoved = 0;
 	private static Random random = new Random();
 	private float villagerSpawnTimer = 0;
-	private int numVillagersToSpawn = 0;
+	private Queue<Villager> villagersToSpawn = new ArrayDeque<Villager>();
 	private float gemThreshold = 0;
 	//	private static Pool<Rectangle> rectPool = new Pool<Rectangle>() {
 //		@Override
@@ -82,6 +80,12 @@ public class Village {
 			if (villager.getRole() == VillagerRole.CITIZEN) {
 				villager.setRole(role);
 				effects.add(new VillagerEvolveEffect(villager));
+				return true;
+			}
+		}
+		for (Villager villager : villagersToSpawn) {
+			if (villager.getRole() == VillagerRole.CITIZEN) {
+				villager.setRole(role);
 				return true;
 			}
 		}
@@ -236,7 +240,7 @@ public class Village {
 	}
 
 	private void timePass(float delta) {
-		hoursLeft -= delta * .35f;
+		hoursLeft -= delta * .3f;
 		if (hoursLeft <= 0) {
 			dayPass();
 		}
@@ -247,26 +251,25 @@ public class Village {
 	}
 
 	public void addVillager(VillagerRole role) {
-		if (numVillagersToSpawn == 0) {
+		if (villagersToSpawn.isEmpty()) {
 			if (villagerSpawnTimer <= 0) {
 				villagers.add(new Villager(role, this));
 				villagerAdded += 1;
 				villagerSpawnTimer = (float) 0.5;
 			} else {
-				numVillagersToSpawn++;
+				villagersToSpawn.add(new Villager(role, this));
 			}
 		} else {
-			numVillagersToSpawn++;
+			villagersToSpawn.add(new Villager(role, this));
 		}
 	}
 
 	// The queue of spawning villagers
 	private void queueSpawn() {
-		if (numVillagersToSpawn != 0) {
-			villagers.add(new Villager(VillagerRole.CITIZEN, this));
+		if (!villagersToSpawn.isEmpty()) {
+			villagers.add(villagersToSpawn.remove());
 			villagerAdded += 1;
 			villagerSpawnTimer = (float) 0.5;
-			numVillagersToSpawn--;
 		}
 	}
 
@@ -460,8 +463,8 @@ public class Village {
 		return villagerSpawnTimer;
 	}
 
-	public int getNumVillagersToSpawn() {
-		return numVillagersToSpawn;
+	public Queue<Villager> getVillagersToSpawn() {
+		return villagersToSpawn;
 	}
 
 	public float getGemThreshold() {

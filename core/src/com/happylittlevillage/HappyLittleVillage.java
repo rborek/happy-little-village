@@ -45,7 +45,7 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 			load.dispose();
 		}
 		load = null;
-		Assets.unloadDir("textures/menu");
+		Assets.unloadDir("data/textures/menu");
 		setScreen(gameScreen);
 	}
 

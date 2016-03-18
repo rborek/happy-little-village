@@ -71,7 +71,7 @@ public class GameHandler {
 			tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
 			arrow.add(new Vector2(476, 579));
 		} else {
-			village = new Village(gemBag, 125, 100, 5);
+			village = new Village(gemBag, 150, 100, 5);
 			ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualBook);
 		}
 		messageBox = new Introduction(this, isTutorial);
@@ -189,20 +189,20 @@ public class GameHandler {
 	public void saveGame() {
 		saveGame = new SaveGame(village.getFood(), village.getWater(), village.getHappiness(), village.getWeeklyRitual(),
 				village.getHoursLeft(), village.getDaysLeft(), village.getDay(),
-				village.isNextDay(), village.getVillagerSpawnTimer(), village.getNumVillagersToSpawn(),
+				village.isNextDay(), village.getVillagerSpawnTimer(), village.getVillagersToSpawn().size(),
 				village.getGemThreshold(), village.getHunger(), village.getDehydration(),
 				village.getVillagers(), gemBag, ritualBook.getUnlockedRitual());
 		saveInfo.toJson(saveGame, SaveGame.class);
 		try {
 			FileWriter fileWriter =
-					new FileWriter("save/saveInfo.txt");
+					new FileWriter("data/data.save/saveInfo.txt");
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			String text = saveInfo.prettyPrint(saveGame);
 			System.out.print("Info is: " + saveGame.toString());
 			bufferedWriter.write(text);
 			bufferedWriter.flush();
 			bufferedWriter.close();
-			FileReader fileReader = new FileReader("save/saveInfo.txt");
+			FileReader fileReader = new FileReader("data/data.save/saveInfo.txt");
 			SaveGame saveGame1 = saveInfo.fromJson(SaveGame.class, fileReader);
 		} catch (IOException ex) {
 			System.out.println(

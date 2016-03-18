@@ -1,5 +1,6 @@
 package com.happylittlevillage.desktop;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.happylittlevillage.HappyLittleVillage;
@@ -15,7 +16,7 @@ public class DesktopLauncher {
 		config.vSyncEnabled = false;
 		config.title = "Happy Little Village";
 		config.resizable = true;
-		config.useGL30 = true;
+		config.useGL30 = false;
 		new LwjglApplication(new HappyLittleVillage(), config);
 	}
 }

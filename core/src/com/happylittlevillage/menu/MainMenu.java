@@ -1,6 +1,7 @@
 package com.happylittlevillage.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.Assets;
@@ -27,16 +28,16 @@ public class MainMenu extends Miscellaneous {
     public MainMenu(HappyLittleVillage happyLittleVillage) {
         super(happyLittleVillage);
         startButton = new GameObject(Assets.getTexture("menu/startButton.png"), buttonX, buttonY + 400, 360, 150);
-        tutorialButton = new GameObject(Assets.getTexture("menu/tutorialButton.png"), buttonX, buttonY + 325);
-        loadButton = new GameObject(Assets.getTexture("menu/loadButton.png"), buttonX, buttonY + 200);
-        optionsButton = new GameObject(Assets.getTexture("menu/optionsButton.png"), buttonX, buttonY + 75);
-        creditsButton = new GameObject(Assets.getTexture("menu/creditsButton.png"), buttonX, buttonY);
+//        tutorialButton = new GameObject(Assets.getTexture("menu/tutorialButton.png"), buttonX, buttonY + 325);
+//        loadButton = new GameObject(Assets.getTexture("menu/loadButton.png"), buttonX, buttonY + 200);
+//        optionsButton = new GameObject(Assets.getTexture("menu/optionsButton.png"), buttonX, buttonY + 75);
+//        creditsButton = new GameObject(Assets.getTexture("menu/creditsButton.png"), buttonX, buttonY);
         exitButton = new GameObject(Assets.getTexture("menu/exitButton.png"), buttonX, buttonY + 50, 360, 150);
         exitButtonPosition = new Rectangle(buttonX, buttonY - 100 , exitButton.getWidth(), exitButton.getHeight());
-        creditsButtonPosition = new Rectangle(buttonX, buttonY  , creditsButton.getWidth(), creditsButton.getHeight());
-        optionsButtonPosition = new Rectangle(buttonX, buttonY + 75, optionsButton.getWidth(), optionsButton.getHeight());
-        loadButtonPosition = new Rectangle(buttonX, buttonY + 200, loadButton.getWidth(), loadButton.getHeight());
-        tutorialButtonPosition = new Rectangle(buttonX, buttonY + 325, tutorialButton.getWidth(), tutorialButton.getHeight());
+//        creditsButtonPosition = new Rectangle(buttonX, buttonY  , creditsButton.getWidth(), creditsButton.getHeight());
+//        optionsButtonPosition = new Rectangle(buttonX, buttonY + 75, optionsButton.getWidth(), optionsButton.getHeight());
+//        loadButtonPosition = new Rectangle(buttonX, buttonY + 200, loadButton.getWidth(), loadButton.getHeight());
+//        tutorialButtonPosition = new Rectangle(buttonX, buttonY + 325, tutorialButton.getWidth(), tutorialButton.getHeight());
         startButtonPosition = new Rectangle(buttonX, buttonY + 450, startButton.getWidth(), startButton.getHeight());
         background = Assets.getTexture("menu/menu.png");
     }
@@ -68,6 +69,8 @@ public class MainMenu extends Miscellaneous {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, 0, 0);
         startButton.render(batch);
