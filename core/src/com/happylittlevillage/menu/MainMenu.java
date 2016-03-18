@@ -27,12 +27,12 @@ public class MainMenu extends Miscellaneous {
 
     public MainMenu(HappyLittleVillage happyLittleVillage) {
         super(happyLittleVillage);
-        startButton = new GameObject(Assets.getTexture("menu/startButton.png"), buttonX, buttonY + 400, 360, 150);
+        startButton = new GameObject(Assets.getTexture("menu/start_button.png"), buttonX, buttonY + 400, 360, 150);
 //        tutorialButton = new GameObject(Assets.getTexture("menu/tutorialButton.png"), buttonX, buttonY + 325);
 //        loadButton = new GameObject(Assets.getTexture("menu/loadButton.png"), buttonX, buttonY + 200);
 //        optionsButton = new GameObject(Assets.getTexture("menu/optionsButton.png"), buttonX, buttonY + 75);
 //        creditsButton = new GameObject(Assets.getTexture("menu/creditsButton.png"), buttonX, buttonY);
-        exitButton = new GameObject(Assets.getTexture("menu/exitButton.png"), buttonX, buttonY + 50, 360, 150);
+        exitButton = new GameObject(Assets.getTexture("menu/exit_button.png"), buttonX, buttonY + 50, 360, 150);
         exitButtonPosition = new Rectangle(buttonX, buttonY - 100 , exitButton.getWidth(), exitButton.getHeight());
 //        creditsButtonPosition = new Rectangle(buttonX, buttonY  , creditsButton.getWidth(), creditsButton.getHeight());
 //        optionsButtonPosition = new Rectangle(buttonX, buttonY + 75, optionsButton.getWidth(), optionsButton.getHeight());
