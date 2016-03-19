@@ -22,15 +22,17 @@ public class InputHandler implements InputProcessor {
     private RitualAltar ritualAltar;
     private GemBag gemBag;
     private Gem selectedGem;
+    private Gem[][] selectedRitual;
     private RitualBook ritualBook;
     private MessageBox messageBox;
     private GemBook miniBook;
     private GameHandler gameHandler;
     private TutorialMessage tutorialMessage;
     private HappyLittleVillage happyLittleVillage;
+    private int spaceBetweenGems = 50;
+    private int gemSize = 48;
 
-
-    public InputHandler(GameScreen screen,HappyLittleVillage happyLittleVillage ) {
+    public InputHandler(GameScreen screen, HappyLittleVillage happyLittleVillage) {
         this.screen = screen;
         this.happyLittleVillage = happyLittleVillage;
     }
@@ -48,6 +50,21 @@ public class InputHandler implements InputProcessor {
         if (selectedGem != null) {
             Vector2 realPos = screen.getRealScreenPos(Gdx.input.getX(), Gdx.input.getY());
             selectedGem.render(batch, realPos.x - 40, realPos.y - 40);
+        }
+    }
+
+    public void renderSelectedRitual(Batch batch) {
+        if (selectedRitual != null) {
+            Vector2 realPos = screen.getRealScreenPos(Gdx.input.getX(), Gdx.input.getY());
+            for (int k = 0; k < selectedRitual.length; k++) {
+                for (int i = 0; i < selectedRitual[0].length; i++) {
+                    if (selectedRitual[k][i] != null) {
+                        //do not change this algorithm or stuff will be flipped
+                        selectedRitual[k][i].render(batch, realPos.x + (ritualBook.getTouchRitualIndex().x + i) * (gemSize + spaceBetweenGems),
+                                realPos.y + (ritualBook.getTouchRitualIndex().y - k) * (gemSize + spaceBetweenGems));
+                    }
+                }
+            }
         }
     }
 
@@ -69,6 +86,12 @@ public class InputHandler implements InputProcessor {
                     gemBag.remove(gemColour);
                 }
             }
+        }
+    }
+
+    private void pickUpRitual(float mouseX, float mouseY) {
+        if (selectedGem == null && selectedRitual == null) {
+            selectedRitual = ritualBook.getRitualRecipe(mouseX, mouseY);
         }
     }
 
@@ -107,8 +130,8 @@ public class InputHandler implements InputProcessor {
         return true;
     }
 
-    public void tryToTurnPages(float x, float y) {
-        ritualBook.click(x, y);
+    public void interactRitualBook(float x, float y) {
+        ritualBook.turnPage(x, y);
     }
 
     public boolean clickOptionWheel(float x, float y) {
@@ -153,13 +176,19 @@ public class InputHandler implements InputProcessor {
             //This restrict player's interaction with the book only
             if (tutorialMessage.getTutorialScreen() >= 10 || tutorialMessage.getTutorialScreen() <= 12) {
                 tryToOpenBook(realPos.x, realPos.y);
-                tryToTurnPages(realPos.x, realPos.y);
+                if (miniBook.isOpen()) {
+                    interactRitualBook(realPos.x, realPos.y);
+                    pickUpRitual(realPos.x, realPos.y);
+                }
             }
         }
-        //gamePlay
+        //start GamePlay
         else {
             tryToOpenBook(realPos.x, realPos.y);
-            tryToTurnPages(realPos.x, realPos.y);
+            if (miniBook.isOpen()) {
+                interactRitualBook(realPos.x, realPos.y);
+                pickUpRitual(realPos.x, realPos.y);
+            }
             removeFromSlots(realPos.x, realPos.y);
             pickUpGem(realPos.x, realPos.y);
             ritualAltar.interact(realPos.x, realPos.y);
