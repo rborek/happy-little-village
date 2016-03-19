@@ -36,6 +36,15 @@ public class GemBag extends GameObject {
 	public void add(GemColour colour) {
 		gemAmounts[colour.ordinal()]++;
 	}
+	public void add(Gem[][] colour ){
+		for(int k = 0; k < colour.length; k ++){
+			for(int i = 0; i < colour[0].length; i ++){
+				if(colour[k][i] != null){
+					gemAmounts[colour[k][i].getColour().ordinal()]++;
+				}
+			}
+		}
+	}
 
 	public Gem pickUpGem(float x, float y) {
 		for (int i = 0; i < slots.length; i++) {

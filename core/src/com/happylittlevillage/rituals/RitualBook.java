@@ -33,9 +33,10 @@ public class RitualBook extends GameObject {
     private int xRight = 460;
     private int yTop = 550;
     private int yBot = 300;
-    private int spaceBetweenGems = 50;
+    private int spaceBetweenGems = 48;
     private int gemSize = 48;
-    private Vector2 touchRitualIndex = new Vector2(0, 0);
+    private Vector2 touchRitualIndex = new Vector2(0, 0); // this indicates which grid of the ritual the mouse touch.  x coord means the row and y coord means the column
+    private Vector2 touchRitualSpecificPosition = new Vector2(0, 0); //this indicates the exact position of the specific grid in contact
 
     public RitualBook(float xPos, float yPos) {
         super(Assets.getTexture("ui/book.png"), xPos, yPos);
@@ -97,12 +98,14 @@ public class RitualBook extends GameObject {
             for (int h = 0; h < recipe[0].length; h++) {
                 if (recipe[k][h] != null) {
                     // set the position of each gem in a ritual
-                    ritualRecipePosition[k][h] = new Rectangle(startX + h * gemSize + h * spaceBetweenGems,
-                            startY + k * gemSize + k * spaceBetweenGems, gemSize, gemSize);
+                    ritualRecipePosition[k][h] = new Rectangle(startX + h * spaceBetweenGems,
+                            startY - k * spaceBetweenGems, gemSize, gemSize);
+                    System.out.println("x:"+k +" y:"+ h + " position"+ ritualRecipePosition[k][h].x +" " + ritualRecipePosition[k][h].y);
                 }
             }
         }
         recipePositions.add(ritualRecipePosition);
+        System.out.println("index is : "+ (recipePositions.size()-1));
     }
 
     public void turnPage(float x, float y) {
@@ -120,15 +123,16 @@ public class RitualBook extends GameObject {
 
     public Gem[][] getRitualRecipe(float x, float y) {
         int k = 4 * pageNumber - 1; // this number restrict the 4 situations being tested on a page
-        for (int indexOfRecipePosition = k - 3; indexOfRecipePosition <= k; indexOfRecipePosition++) { // only 4 ritualPosition are being tested from k-3 to k
-            // check for one specific ritual recipe position
+        // only 4 ritualPosition are being tested from k-3 to k
+        for (int indexOfRecipePosition = k - 3; indexOfRecipePosition <= k; indexOfRecipePosition++) {
+            // check for one specific ritual recipe position in the arraylist of recipePositions
             for (int i = 0; i < recipePositions.get(indexOfRecipePosition).length; i++) {
                 for (int h = 0; h < recipePositions.get(indexOfRecipePosition)[0].length; h++) {
                     //if there is a gem in the position
                     if (recipePositions.get(indexOfRecipePosition)[i][h] != null) {
-                        System.out.println("i and h is "+ i + h);
                         if (recipePositions.get(indexOfRecipePosition)[i][h].contains(x, y)) { // if the recipe position contains the mouse
                             touchRitualIndex.set(i,h);
+                            touchRitualSpecificPosition.set(recipePositions.get(indexOfRecipePosition)[i][h].x - x, recipePositions.get(indexOfRecipePosition)[i][h].y - y);
                             System.out.println("touchRitualIndex is "+ i + h);
                             return getPickUpRitual(indexOfRecipePosition);
                         }
@@ -233,5 +237,9 @@ public class RitualBook extends GameObject {
     public Vector2 getTouchRitualIndex() {
         return touchRitualIndex;
     }
+    public Vector2 getTouchRitualSpecificPosition() {
+        return touchRitualSpecificPosition;
+    }
+
 
 }

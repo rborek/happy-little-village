@@ -29,7 +29,7 @@ public class InputHandler implements InputProcessor {
     private GameHandler gameHandler;
     private TutorialMessage tutorialMessage;
     private HappyLittleVillage happyLittleVillage;
-    private int spaceBetweenGems = 50;
+    private int spaceBetweenGems = 40;
     private int gemSize = 48;
 
     public InputHandler(GameScreen screen, HappyLittleVillage happyLittleVillage) {
@@ -60,8 +60,8 @@ public class InputHandler implements InputProcessor {
                 for (int i = 0; i < selectedRitual[0].length; i++) {
                     if (selectedRitual[k][i] != null) {
                         //do not change this algorithm or stuff will be flipped
-                        selectedRitual[k][i].render(batch, realPos.x + (ritualBook.getTouchRitualIndex().x + i) * (gemSize + spaceBetweenGems),
-                                realPos.y + (ritualBook.getTouchRitualIndex().y - k) * (gemSize + spaceBetweenGems));
+                        selectedRitual[k][i].render(batch, realPos.x + (-ritualBook.getTouchRitualIndex().y + i) * (gemSize + spaceBetweenGems) + ritualBook.getTouchRitualSpecificPosition().x,
+                                realPos.y + (ritualBook.getTouchRitualIndex().x - k) * (gemSize + spaceBetweenGems) + ritualBook.getTouchRitualSpecificPosition().y);
                     }
                 }
             }
@@ -98,12 +98,19 @@ public class InputHandler implements InputProcessor {
     private void dropGem(float mouseX, float mouseY) {
         if (selectedGem != null) {
             //if it's not added to any of the gem
-            if (!ritualAltar.place(selectedGem, mouseX, mouseY)) {
+            if (!ritualAltar.placeGem(selectedGem, mouseX, mouseY)) {
                 gemBag.add(selectedGem.getColour());
             }
             selectedGem = null;
         }
 
+    }
+
+    private void dropRitual(float mouseX, float mouseY) {
+        if (selectedRitual != null) {
+            ritualAltar.placeRitual(selectedRitual, mouseX, mouseY, ritualBook.getTouchRitualIndex(), ritualBook. getTouchRitualSpecificPosition());
+            selectedRitual = null;
+        }
     }
 
     private void addToSlots(float mouseX, float mouseY) {
@@ -200,6 +207,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector2 realPos = screen.getRealScreenPos(screenX, screenY);
         dropGem(realPos.x, realPos.y);
+        dropRitual(realPos.x, realPos.y);
         return true;
     }
 

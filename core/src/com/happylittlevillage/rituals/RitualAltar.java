@@ -30,7 +30,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     //new measurements
     private static final int slotSize2 = 80;
     private static final int spacing = 40;
-	private WeeklyRitual weeklyRitual;
+    private WeeklyRitual weeklyRitual;
 
     private boolean animating = false;
     private float timer = 0;
@@ -131,24 +131,24 @@ public class RitualAltar extends GameObject implements MenuItem {
     }
 
     public void useGems() {
-	    weeklyRitual = village.getWeeklyRitual();
+        weeklyRitual = village.getWeeklyRitual();
         //print out grid first
         for (int gridRow = 0; gridRow < grid.length; gridRow++) { //row gridRow
             for (int gridColumn = 0; gridColumn < grid[0].length; gridColumn++) { //column gridColumn
                 if (grid[gridRow][gridColumn] != null) {
-	                for (int firstRecipePosition = 0; firstRecipePosition < weeklyRitual.getRecipe()[0].length; firstRecipePosition++) {
-		                // get the first non-null colour
-		                if (weeklyRitual.getRecipe()[0][firstRecipePosition] != null) {
-			                //check if the first row's non-null colour matches with the grid
-			                if (grid[gridRow][gridColumn].getColour().equals(weeklyRitual.getRecipe()[0][firstRecipePosition])) {
-				                //start specifically checking one recipe
-				                compareRecipe(weeklyRitual, gridRow, gridColumn, firstRecipePosition);
-				                break;
-			                } else {
-				                break;
-			                }
-		                }
-	                }//end checking for one specific recipe
+                    for (int firstRecipePosition = 0; firstRecipePosition < weeklyRitual.getRecipe()[0].length; firstRecipePosition++) {
+                        // get the first non-null colour
+                        if (weeklyRitual.getRecipe()[0][firstRecipePosition] != null) {
+                            //check if the first row's non-null colour matches with the grid
+                            if (grid[gridRow][gridColumn].getColour().equals(weeklyRitual.getRecipe()[0][firstRecipePosition])) {
+                                //start specifically checking one recipe
+                                compareRecipe(weeklyRitual, gridRow, gridColumn, firstRecipePosition);
+                                break;
+                            } else {
+                                break;
+                            }
+                        }
+                    }//end checking for one specific recipe
 
                     //iterate through all known grid recipe
                     for (int ritualNumber = 0; ritualNumber < rituals.size(); ritualNumber++) {
@@ -255,40 +255,47 @@ public class RitualAltar extends GameObject implements MenuItem {
             lightUpGrid.add(addToLightUpGrid);
             //add each effect to the arrayList of ritualEffects
             ritualEffects.add(ritual.getEffects());
-	        if (ritual == weeklyRitual) {
-		        ritual.commence();
-	        }
+            if (ritual == weeklyRitual) {
+                ritual.commence();
+            }
         }
     }
 
-    public boolean place(Gem gem, float x, float y) {
-        //x and y is the mouse's position but also the center of gem
-        Rectangle gemBounds = new Rectangle(x - spacing, y - spacing, slotSize2, slotSize2);
-        //centerGrid contains center of overlapped grids
-        double distance;
-        double minDistance = 100; // very arbitrary number
-        int gridRow = 0;
-        int gridCol = 0;
-        Vector2 center = new Vector2();
-        for (int i = 0; i < 4; i++) {
-            for (int k = 0; k < 4; k++) {
-                if (slots[i][k].overlaps(gemBounds)) {
-                    slots[i][k].getCenter(center);
-                    distance = Math.sqrt(Math.pow(center.x - x, 2) + Math.pow(center.y - y, 2));
-                    if (minDistance > distance) {
-                        minDistance = distance;
-                        gridRow = i;
-                        gridCol = k;
+    public boolean placeRitual(Gem[][] ritual, float x, float y, Vector2 touchRitualIndex, Vector2 touchRitualSpecificPosition) {
+        //the Rectangle is at the mouse's position
+        //gridMatch is the grid[x][y] in which the pointed gem is placed
+        Vector2 gridMatch = matchOneGrid(x - touchRitualSpecificPosition.x, y - touchRitualSpecificPosition.y);
+        if (gridMatch != null) {
+//            grid[(int)gridMatch.x][(int)gridMatch.y] = ritual[(int)touchRitualIndex.x][(int)touchRitualIndex.y];
+            for (int gridRow = 0; gridRow < ritual.length; gridRow++) {
+                for (int gridCol = 0; gridCol < ritual[0].length; gridCol++) {
+                    if (ritual[gridRow][gridCol] != null) {
+                        //realRow is the actual position to put the ritual[gridRow][gridCol] from the pickedUp ritual
+                        int realRow = (int) gridMatch.x + gridRow - (int) touchRitualIndex.x;
+                        int realCol = (int) gridMatch.y + gridCol - (int) touchRitualIndex.y;
+                        if (realRow <= 3 && realRow >= 0 && realCol <= 3 && realCol >= 0) {
+                            System.out.println("position is"+ realRow+realCol);
+                            if (grid[realRow][realCol]!=null){
+                                gemBag.add(grid[realRow][realCol].getColour());
+                            }
+                            grid[realRow][realCol] = ritual[gridRow][gridCol];
+                            gemBag.remove(ritual[gridRow][gridCol].getColour());
+                        }
                     }
                 }
             }
         }
-        //if the minDistance is changed- something overlap
-        if (minDistance != 100) {
+        return false;
+    }
+
+    public boolean placeGem(Gem gem, float x, float y) {
+        Vector2 gridMatch = matchOneGrid(x, y);
+        if (gridMatch != null) {
+            int gridRow = (int) gridMatch.x;
+            int gridCol = (int) gridMatch.y;
             if (grid[gridRow][gridCol] != null) {
                 System.out.println("Colour is" + grid[gridRow][gridCol].getColour());
                 gemBag.add(grid[gridRow][gridCol].getColour());
-
             }
             grid[gridRow][gridCol] = gem;
             return true;
@@ -296,6 +303,35 @@ public class RitualAltar extends GameObject implements MenuItem {
         return false;
     }
 
+    private Vector2 matchOneGrid(float x, float y) {
+        //x and y is the center of the gem
+        //rectangle has to be from the bottom left, so subtract spacing from both x and y
+        Rectangle gemBounds = new Rectangle(x - spacing, y - spacing, slotSize2, slotSize2);
+        //centerGrid contains center of overlapped grids
+        double distance; // distance from center of the gem to the grid
+        double minDistance = 100; // very arbitrary number
+        Vector2 matchGrid = new Vector2(); // row and column of the matched grid
+        Vector2 center = new Vector2();
+        for (int i = 0; i < 4; i++) {
+            for (int k = 0; k < 4; k++) {
+                if (slots[i][k].overlaps(gemBounds)) {
+                    slots[i][k].getCenter(center);
+                    distance = Math.sqrt(Math.pow(center.x - x, 2) + Math.pow(center.y - y, 2)); // calculate distance from center of the gem to the specific grid
+                    if (minDistance > distance) {
+                        minDistance = distance;
+                        System.out.println(minDistance);
+                        //i is the row and k is the column
+                        matchGrid.set(i, k);
+                    }
+                }
+            }
+        }
+        if (minDistance != 100) {
+            return matchGrid;
+        } else {
+            return null;
+        }
+    }
 
     public GemColour getColour(int row, int col) {
         if (grid[row][col] != null) {
