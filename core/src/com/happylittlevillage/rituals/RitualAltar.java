@@ -113,6 +113,157 @@ public class RitualAltar extends GameObject implements MenuItem {
     public Gem pickUpGem(float x, float y) {
         for (int i = 0; i < slots.length; i++) {
             for (int k = 0; k < slots[0].length; k++) {
+                +
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 if (slots[i][k].contains(x, y)) {
                     if (grid[i][k] != null) {
                         Gem gemToReturn = grid[i][k];
@@ -274,12 +425,16 @@ public class RitualAltar extends GameObject implements MenuItem {
                         int realRow = (int) gridMatch.x + gridRow - (int) touchRitualIndex.x;
                         int realCol = (int) gridMatch.y + gridCol - (int) touchRitualIndex.y;
                         if (realRow <= 3 && realRow >= 0 && realCol <= 3 && realCol >= 0) {
-                            System.out.println("position is"+ realRow+realCol);
-                            if (grid[realRow][realCol]!=null){
+                            System.out.println("position is" + realRow + realCol);
+                            // if the grid has a gem in its grid
+                            if (grid[realRow][realCol] != null) {
                                 gemBag.add(grid[realRow][realCol].getColour());
                             }
-                            grid[realRow][realCol] = ritual[gridRow][gridCol];
-                            gemBag.remove(ritual[gridRow][gridCol].getColour());
+                            // if the gemBag is not empty
+                            if (gemBag.getAmount(ritual[gridRow][gridCol].getColour()) >= 1) {
+                                grid[realRow][realCol] = ritual[gridRow][gridCol];
+                                gemBag.remove(ritual[gridRow][gridCol].getColour());
+                            }
                         }
                     }
                 }
