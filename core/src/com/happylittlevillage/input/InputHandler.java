@@ -16,6 +16,7 @@ import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.messages.MessageBox;
 import com.happylittlevillage.rituals.RitualAltar;
 import com.happylittlevillage.rituals.RitualBook;
+import com.happylittlevillage.village.Village;
 
 public class InputHandler implements InputProcessor {
     private GameScreen screen;
@@ -143,7 +144,10 @@ public class InputHandler implements InputProcessor {
 
     public boolean clickOptionWheel(float x, float y) {
         return (gameHandler.getOptionWheelPosition().contains(x, y));
+    }
 
+    public void clickNextButtonVillageInfo(float x, float y ){
+        gameHandler.getVillage().getVillageInformation().interact(x, y);
     }
 
     @Override
@@ -165,6 +169,7 @@ public class InputHandler implements InputProcessor {
 //            happyLittleVillage.setMenu();
 //            gameHandler.pause();
 //    }
+        clickNextButtonVillageInfo(realPos.x, realPos.y);
         if (gameHandler.isPaused()) {
             checkContinue(realPos.x, realPos.y);
         }

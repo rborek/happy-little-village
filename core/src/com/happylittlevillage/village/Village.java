@@ -483,5 +483,7 @@ public class Village {
 		return villagers;
 	}
 
+	public VillageInformation getVillageInformation(){ return villageInformation; }
+
 
 }

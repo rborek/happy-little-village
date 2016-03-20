@@ -84,6 +84,9 @@ public class Villager extends GameObject implements Comparable<Villager> {
 		}
 	}
 
+	public static TextureRegion getIdleVillagerTexture(VillagerRole role){
+		return idleTextures[role.ordinal()][0];
+	}
 	public boolean isMovingRight() {
 		return position.x < destination.x;
 	}
