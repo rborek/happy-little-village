@@ -131,9 +131,14 @@ public class TutorialMessage extends MessageBox {
         }
     }
 
-    public void setAngle(double angle, boolean flip) {
+    public void setAngle(Vector2 positionOfARandomVillager, Vector2 arrowPoint) {
+        double angle = Math.atan((positionOfARandomVillager.y - arrowPoint.y) / (positionOfARandomVillager.x - arrowPoint.x));
         //boolean flip is to know if the angle is flipped. Since tan is the same in the first and third quadrant
-        angle = angle * 57.2958;
+        angle = angle * 57.2958; //convert radian to degree
+        boolean flip = false;
+        if (positionOfARandomVillager.y - arrowPoint.y < 0 && positionOfARandomVillager.x - arrowPoint.x < 0) {
+            flip = true;
+        }
         if (flip) {
             angle += 180;
         }

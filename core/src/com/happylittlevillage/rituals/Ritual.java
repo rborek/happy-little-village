@@ -104,28 +104,6 @@ public class Ritual {
         return null;
     }
 
-    public boolean attempt(Gem[] gems) {
-        GemColour[] gemsToUse = new GemColour[gems.length];
-        for (int i = 0; i < gems.length; i++) {
-            if (gems[i] != null) {
-                gemsToUse[i] = gems[i].getColour();
-            }
-        }
-        if (gemCombination.length != gemsToUse.length) {
-            return false;
-        }
-        boolean working = true;
-        for (int i = 0; i < gemCombination.length; i++) {
-            if (gemCombination[i] != gemsToUse[i]) {
-                working = false;
-            }
-            if (!working) {
-                return false;
-            }
-        }
-        commence();
-        return true;
-    }
 
 
     /**

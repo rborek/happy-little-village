@@ -67,7 +67,7 @@ public class VillageInformation extends GameObject implements MenuItem {
             foodTexture.render(batch);
             waterTexture.render(batch);
             Assets.getFont(36).draw(batch, "" + village.getFood(), position.x + 70, position.y + 90);
-            Assets.getFont(36).draw(batch, "" + village.getWater(), position.x + 220, position.y + 90);
+            Assets.getFont (36).draw(batch, "" + village.getWater(), position.x + 220, position.y + 90);
             Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 300, position.y + 90);
             moveAndFade(batch);
         } else {

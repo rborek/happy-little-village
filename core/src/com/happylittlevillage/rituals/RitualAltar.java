@@ -31,7 +31,6 @@ public class RitualAltar extends GameObject implements MenuItem {
     private static final int slotSize2 = 80;
     private static final int spacing = 40;
     private WeeklyRitual weeklyRitual;
-
     private boolean animating = false;
     private float timer = 0;
     //var for the grid

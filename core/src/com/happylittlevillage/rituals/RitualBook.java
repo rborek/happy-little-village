@@ -19,6 +19,7 @@ public class RitualBook extends GameObject {
     private int pageNumber = 1;
     private Rectangle leftArrow;
     private Rectangle rightArrow;
+    //TODO all the recipes, recipePositions, names, effects need to be called from RitualTree
     private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
     private ArrayList<GemColour[][]> recipes = new ArrayList<GemColour[][]>();
     private ArrayList<Rectangle[][]> recipePositions = new ArrayList<Rectangle[][]>(); // arraylist which elements are arraylists of rectangles of each ritual
@@ -93,6 +94,7 @@ public class RitualBook extends GameObject {
     }
 
     private void addRecipePosition(float startX, float startY, GemColour[][] recipe) {
+        // this method set each gem in a recipe to its position in the book
         Rectangle[][] ritualRecipePosition = new Rectangle[4][4];
         for (int k = 0; k < recipe.length; k++) {
             for (int h = 0; h < recipe[0].length; h++) {
