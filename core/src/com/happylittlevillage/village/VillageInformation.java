@@ -24,7 +24,7 @@ public class VillageInformation extends GameObject implements MenuItem {
     private BitmapFont font = new BitmapFont();
     private ArrayList<InformationFlash> addedResource = new ArrayList<InformationFlash>();
     private ArrayList<TextureRegion> villagers = new ArrayList<TextureRegion>();
-    private GameObject nextButton = new GameObject(Assets.getTexture("ui/next_button_villageinfo.png"), position.x + 550, position.y + 50);
+    private GameObject nextButton = new GameObject(Assets.getTexture("ui/next_button_villageinfo.png"), position.x + 500, position.y + 60);
     private Rectangle nextButtonPosition = new Rectangle(nextButton.getPosition().x, nextButton.getPosition().y, nextButton.getWidth(), nextButton.getHeight());
     private int page = 0;
 
@@ -52,7 +52,7 @@ public class VillageInformation extends GameObject implements MenuItem {
     public void update(float delta) {
         for (int index = 0; index < addedResource.size(); index++) {
             addedResource.get(index).updateMotion(delta, true);
-            if (addedResource.get(index).getAlpha() <= 0.01) {
+            if (addedResource.get(index).getAlpha() <= 0.07) {
                 addedResource.remove(addedResource.get(index));
                 index--;
             }
@@ -64,6 +64,7 @@ public class VillageInformation extends GameObject implements MenuItem {
         batch.draw(texture, position.x, position.y);
         nextButton.render(batch);
         if (page == 0) {
+            // page 1
             foodTexture.render(batch);
             waterTexture.render(batch);
             Assets.getFont(36).draw(batch, "" + village.getFood(), position.x + 70, position.y + 90);
@@ -71,6 +72,7 @@ public class VillageInformation extends GameObject implements MenuItem {
             Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 300, position.y + 90);
             moveAndFade(batch);
         } else {
+            // page 2
             batch.draw(villagers.get(0), position.x + 50, 50);
             Assets.getFont(30).draw(batch, "" + village.getPop(), position.x + 50, 40);
             batch.draw(villagers.get(1), position.x + 100, 50);

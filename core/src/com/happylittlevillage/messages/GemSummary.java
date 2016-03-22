@@ -21,10 +21,11 @@ public class GemSummary extends MessageBox {
 	@Override
 	public void render(Batch batch) {
 		super.render(batch);
-		font.draw(batch, "Red gems mined \n" + village.getMinedGems()[0], position.x + 190, position.y + 430);
-		font.draw(batch, "Yellow gems mined \n" + village.getMinedGems()[1], position.x + 190, position.y + 340);
-		font.draw(batch, "Green gems mined \n" + village.getMinedGems()[2], position.x + 190, position.y + 250);
-		font.draw(batch, "Blue gems mined \n" + village.getMinedGems()[3], position.x + 190, position.y + 160);
+		int alignX = 100;
+		font.draw(batch, "Red gems mined  " + village.getMinedGems()[0], position.x + alignX, position.y + 430);
+		font.draw(batch, "Yellow gems mined  " + village.getMinedGems()[1], position.x + alignX, position.y + 340);
+		font.draw(batch, "Green gems mined  " + village.getMinedGems()[2], position.x + alignX, position.y + 250);
+		font.draw(batch, "Blue gems mined  " + village.getMinedGems()[3], position.x + alignX, position.y + 160);
 
 	}
 

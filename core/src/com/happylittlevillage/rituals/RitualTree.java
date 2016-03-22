@@ -9,7 +9,7 @@ import com.happylittlevillage.gems.GemColour;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RitualTree extends GameObject{
+public class RitualTree extends GameObject {
 
     private int skillPoints;
     private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
@@ -22,7 +22,7 @@ public class RitualTree extends GameObject{
 
     public RitualTree(float xPos, float yPos) {
         super(Assets.getTexture("ui/ritual_tree.png"), xPos, yPos);
-        skillPoints =1;
+        skillPoints = 1;
         addStandardRitual();
     }
 
@@ -55,6 +55,10 @@ public class RitualTree extends GameObject{
         for (String name : ritualNames) {
             rituals.add(Ritual.getRitual(name));
         }
+    }
+
+    public ArrayList<Ritual> getRituals() {
+        return rituals;
     }
 
     public int getSkillPoints() {

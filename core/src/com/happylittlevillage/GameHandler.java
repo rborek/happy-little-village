@@ -37,7 +37,7 @@ public class GameHandler {
     private boolean paused;
     private GemBook miniBook = new GemBook(this);
     private boolean bookOpen;
-    private RitualBook ritualBook = new RitualBook(70, 160);
+    private RitualBook ritualBook = new RitualBook(600, 0);
     private RitualTree ritualTree = new RitualTree(70, 120);
     private WinMessage winMessage;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
@@ -70,12 +70,12 @@ public class GameHandler {
         gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
         if (isTutorial) {
             village = new Village(gemBag, 200, 100, 5);
-            ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualBook);
+            ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
             tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
             arrow.add(new Vector2(476, 579));
         } else {
             village = new Village(gemBag, 1000, 1000, 5);
-            ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualBook);
+            ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
         }
 
         messageBox = new Introduction(this, isTutorial);
@@ -168,8 +168,7 @@ public class GameHandler {
         if (!paused) {
             if (isTutorial) {
                 tutorialMessage.render(batch);
-            }
-            else if (bookOpen) {
+            } else if (bookOpen) {
                 ritualBook.render(batch);
             } else {
                 if (DEBUG) {
@@ -187,11 +186,11 @@ public class GameHandler {
     }
 
     public void saveGame() {
-        saveGame = new SaveGame(village.getFood(), village.getWater(), village.getHappiness(), village.getWeeklyRitual(),
-                village.getHoursLeft(), village.getDaysLeft(), village.getDay(),
-                village.isNextDay(), village.getVillagerSpawnTimer(), village.getVillagersToSpawn().size(),
-                village.getGemThreshold(), village.getHunger(), village.getDehydration(),
-                village.getVillagers(), gemBag, ritualBook.getUnlockedRitual());
+//        saveGame = new SaveGame(village.getFood(), village.getWater(), village.getHappiness(), village.getWeeklyRitual(),
+//                village.getHoursLeft(), village.getDaysLeft(), village.getDay(),
+//                village.isNextDay(), village.getVillagerSpawnTimer(), village.getVillagersToSpawn().size(),
+//                village.getGemThreshold(), village.getHunger(), village.getDehydration(),
+//                village.getVillagers(), gemBag, ritualBook.getUnlockedRitual());
         saveInfo.toJson(saveGame, SaveGame.class);
         try {
             FileWriter fileWriter =

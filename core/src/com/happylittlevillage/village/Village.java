@@ -62,7 +62,7 @@ public class Village {
 		daysLeft = 8;
 		day = 0;
 		this.gemBag = gemBag;
-		villageInformation = new VillageInformation(this, 60, 10);
+		villageInformation = new VillageInformation(this, 10, 10);
 		generateNewWeeklyRitual();
 	}
 
@@ -281,13 +281,10 @@ public class Village {
 		hoursLeft = MAX_HOURS;
 		isNextDay = true;
 		villagerAdded = 0;
+		resetMinedGems();
 	}
 
 	public void mineGems() {
-		// reset the gem from previous week
-		for (int resetGem : gemsMined) {
-			resetGem = 0;
-		}
 		//get a random gemColour and store it in gemsMined according to its ordinal
 		for (int i = 0; i < getNumberOf(VillagerRole.MINER) * 3; i++) {
 			GemColour g = gemBag.gainRandomGem();
@@ -300,6 +297,12 @@ public class Village {
 		return gemsMined;
 	}
 
+	public void resetMinedGems(){
+		// reset the gem from previous week
+		for (int resetGem : gemsMined) {
+			resetGem = 0;
+		}
+	}
 	public boolean isNextDay() {
 		return isNextDay;
 	}

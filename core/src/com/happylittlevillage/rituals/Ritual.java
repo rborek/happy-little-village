@@ -11,11 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Ritual {
-    private String name;
+    protected String name;
     protected static Village village;
     protected GemColour[] gemCombination; // to be deleted
     protected GemColour[][] recipe;
-	private RitualEffect[] effects;
+	protected RitualEffect[] effects;
+
 	private static List<String> ritualNames = new ArrayList<String>();
 	private static HashMap<String, Ritual> rituals = new HashMap<String, Ritual>();
 
