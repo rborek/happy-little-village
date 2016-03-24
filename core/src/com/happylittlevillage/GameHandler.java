@@ -144,6 +144,7 @@ public class GameHandler {
             }
             village.update(delta);
             ritualAltar.update(delta);
+            ritualBook.update(delta);
         }
         if (isTutorial) {
             //arrow for screen 0 and 1
@@ -163,13 +164,12 @@ public class GameHandler {
         ritualAltar.render(batch);
         gemBag.render(batch);
         miniBook.render(batch);
+        ritualBook.render(batch);
 //		ritualTree.render(batch);
 //      optionWheel.render(batch);
         if (!paused) {
             if (isTutorial) {
                 tutorialMessage.render(batch);
-            } else if (bookOpen) {
-                ritualBook.render(batch);
             } else {
                 if (DEBUG) {
                     shapeRenderer.begin(ShapeRenderer.ShapeType.Line);

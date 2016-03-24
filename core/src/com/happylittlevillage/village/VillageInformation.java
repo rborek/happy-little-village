@@ -24,7 +24,7 @@ public class VillageInformation extends GameObject implements MenuItem {
     private BitmapFont font = new BitmapFont();
     private ArrayList<InformationFlash> addedResource = new ArrayList<InformationFlash>();
     private ArrayList<TextureRegion> villagers = new ArrayList<TextureRegion>();
-    private GameObject nextButton = new GameObject(Assets.getTexture("ui/next_button_villageinfo.png"), position.x + 500, position.y + 60);
+    private GameObject nextButton = new GameObject(Assets.getTexture("ui/next_button_villageinfo.png"), position.x + 450, position.y + 60);
     private Rectangle nextButtonPosition = new Rectangle(nextButton.getPosition().x, nextButton.getPosition().y, nextButton.getWidth(), nextButton.getHeight());
     private int page = 0;
 
@@ -61,7 +61,7 @@ public class VillageInformation extends GameObject implements MenuItem {
 
     @Override
     public void render(Batch batch) {
-        batch.draw(texture, position.x, position.y);
+        batch.draw(texture, position.x, position.y, 500, 150);
         nextButton.render(batch);
         if (page == 0) {
             // page 1
@@ -81,9 +81,9 @@ public class VillageInformation extends GameObject implements MenuItem {
             Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.EXPLORER), position.x + 150, 40);
             batch.draw(villagers.get(3), position.x + 200, 50);
             Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.MINER), position.x + 200, 40);
-            Assets.getFont(30).draw(batch, "Hours: " + (int) Math.ceil(village.getHoursLeft()), position.x + 280, 80);
-            Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(village.getDay()), position.x + 405, 120);
-            Assets.getFont(30).draw(batch, "Days left: " + village.getDaysLeft(), position.x + 405, 80);
+            Assets.getFont(30).draw(batch, "Hours: " + (int) Math.ceil(village.getHoursLeft()), position.x + 230, 80);
+            Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(village.getDay()), position.x + 350, 120);
+            Assets.getFont(30).draw(batch, "Days left: " + village.getDaysLeft(), position.x + 350, 80);
         }
     }
 
