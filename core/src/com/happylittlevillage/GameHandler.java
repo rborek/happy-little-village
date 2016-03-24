@@ -58,6 +58,7 @@ public class GameHandler {
     private GameObject optionWheel = new GameObject(Assets.getTexture("menu/optionWheel.png"), 0, 600, 64, 64);
     private Json saveInfo = new Json();
     private SaveGame saveGame;
+    private int messageScreen = 0;
 
 
     public GameHandler(InputHandler inputHandler, boolean isTutorial, HappyLittleVillage happyLittleVillage) {
@@ -99,14 +100,33 @@ public class GameHandler {
         }
         if (village.getDaysLeft() < 0) {
             lose = true;
-        }
-        if (lose) {
             messageBox = gameOverMessage;
-
         }
     }
 
     public void unpause() {
+//        if (intro) {
+//            intro = false;
+//            paused = false;
+//        } else {
+//            if (messageScreen == 0) {
+//                messageBox = new WeekSummary(village, this);
+//                messageScreen++;
+//            } else if (messageScreen == 1) {
+//                messageBox = new GemSummary(gemBag, village, this);
+//                messageScreen++;
+//            } else if (messageScreen == 2) {
+//                messageBox = new GodMessage(gemBag, village, this);
+//                if (((GodMessage) messageBox).checkRitual()) {
+//                    village.generateNewWeeklyRitual();
+//                }
+//                ((GodMessage) messageBox).stateRitual();
+//                messageScreen++;
+//            } else if (messageScreen == 3) { // ritualTree
+//                messageScreen = 0;
+//                paused = false;
+//            }
+//        }
         if (messageBox instanceof WeekSummary) {
             messageBox = new GemSummary(gemBag, village, this);
         } else if (messageBox instanceof GemSummary) {
@@ -120,7 +140,6 @@ public class GameHandler {
             messageBox = new WeekSummary(village, this);
             paused = false;
         }
-
     }
 
     // game logic goes here
@@ -164,7 +183,7 @@ public class GameHandler {
         ritualAltar.render(batch);
         gemBag.render(batch);
         miniBook.render(batch);
-        ritualBook.render(batch);
+        if (miniBook.isOpen()) ritualBook.render(batch);
 //		ritualTree.render(batch);
 //      optionWheel.render(batch);
         if (!paused) {
@@ -180,7 +199,12 @@ public class GameHandler {
             inputHandler.renderSelectedGem(batch);
             inputHandler.renderSelectedRitual(batch);
         } else {
-            messageBox.render(batch);
+            if(messageScreen!=3){
+                messageBox.render(batch);
+            }
+            else{
+                ritualTree.render(batch);
+            }
         }
 
     }

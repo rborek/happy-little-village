@@ -17,15 +17,13 @@ public class DynamicRitual {
     private static final int startY = 150;
     private int index;
     private float posX = 0;
-    private  RitualBook ritualBook;
     public static GameObject[] gemTextures = {
             new GameObject(Gem.getArrayOfTextures()[0], 0, 0, gemSize, gemSize),
             new GameObject(Gem.getArrayOfTextures()[1], 0, 0, gemSize, gemSize),
             new GameObject(Gem.getArrayOfTextures()[2], 0, 0, gemSize, gemSize),
             new GameObject(Gem.getArrayOfTextures()[3], 0, 0, gemSize, gemSize),};
 
-    public DynamicRitual(Ritual ritual,RitualBook ritualBook ) {
-        this.ritualBook = ritualBook;
+    public DynamicRitual(Ritual ritual ) {
         this.ritual = ritual;
         recipePositions = new Rectangle[ritual.getRecipe().length][ritual.getRecipe()[0].length];
         movePosition(posX);
@@ -69,7 +67,7 @@ public class DynamicRitual {
         //index is the relative position of the ritual
         //sign determines if the ritual goes left or right
         //int indexX = 650 + index * 200 ;
-        posX -= 200 * ((float) delta) * sign;
+        posX -= 200 * ((float) delta) * sign* 1.5;
         movePosition(posX);
     }
 

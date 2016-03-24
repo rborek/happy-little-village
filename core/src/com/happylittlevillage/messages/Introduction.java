@@ -1,5 +1,6 @@
 package com.happylittlevillage.messages;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.GameHandler;
 
 public class Introduction extends MessageBox {
@@ -13,5 +14,4 @@ public class Introduction extends MessageBox {
 		}
 
 	}
-
 }

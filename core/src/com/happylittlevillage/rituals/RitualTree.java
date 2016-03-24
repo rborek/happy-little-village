@@ -1,17 +1,20 @@
 package com.happylittlevillage.rituals;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
 import com.happylittlevillage.gems.GemColour;
+import com.happylittlevillage.messages.MessageBox;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RitualTree extends GameObject {
 
-    private int skillPoints;
+    private int skillPoints = 1;
     private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
     private ArrayList<GemColour[][]> recipes = new ArrayList<GemColour[][]>();
     private ArrayList<Rectangle[][]> recipePositions = new ArrayList<Rectangle[][]>(); // arrayList which elements are arrayLists of rectangles of each ritual
@@ -22,7 +25,6 @@ public class RitualTree extends GameObject {
 
     public RitualTree(float xPos, float yPos) {
         super(Assets.getTexture("ui/ritual_tree.png"), xPos, yPos);
-        skillPoints = 1;
         addStandardRitual();
     }
 

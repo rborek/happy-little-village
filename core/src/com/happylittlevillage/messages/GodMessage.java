@@ -25,6 +25,7 @@ public class GodMessage extends MessageBox {
 
 	public boolean checkRitual() {
 		if (village.getWeeklyRitual().isComplete()) {
+			//TODO do not set day left instantly
 			village.setDaysLeft(7);
 			return true;
 		} else {

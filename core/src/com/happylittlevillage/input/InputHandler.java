@@ -169,8 +169,9 @@ public class InputHandler implements InputProcessor {
 //            happyLittleVillage.setMenu();
 //            gameHandler.pause();
 //    }
-        clickNextButtonVillageInfo(realPos.x, realPos.y);
+        clickNextButtonVillageInfo(realPos.x, realPos.y); //  VillageInfo next button
         if (gameHandler.isPaused()) {
+            System.out.print("CHECKED");
             checkContinue(realPos.x, realPos.y);
         }
         //if Tutorial
