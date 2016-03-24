@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
 import com.happylittlevillage.gems.Gem;
+import com.happylittlevillage.menu.GameScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,8 @@ public class RitualBook extends GameObject {
     private BitmapFont font;
     private Vector2 touchRitualIndex = new Vector2(0, 0); // this indicates which grid of the ritual the mouse touches.  x coord means the row and y coord means the column
     private Vector2 touchRitualSpecificPosition = new Vector2(0, 0); //this indicates the exact position of the specific grid in contact
-    private GameObject ritual_arrow_right = new GameObject(Assets.getTexture("ui/ritual_arrow_right.png"), position.x + 630, position.y + 120, 60, 60);
-    private GameObject ritual_arrow_left = new GameObject(Assets.getTexture("ui/ritual_arrow_left.png"), position.x + 630, position.y + 40, 60, 60);
+    private GameObject ritual_arrow_right = new GameObject(Assets.getTexture("ui/ritual_arrow_right.png"), position.x + 610, position.y + 120, 60, 60);
+    private GameObject ritual_arrow_left = new GameObject(Assets.getTexture("ui/ritual_arrow_left.png"), position.x + 610, position.y + 40, 60, 60);
     private boolean isMoving = false;
     private boolean updateIndexForSlidingRitual = false;
     private boolean slideLeft = false;
@@ -82,14 +83,14 @@ public class RitualBook extends GameObject {
 
     public void enableScissor(float clipX, float clipY, float clipWidth, float clipHeight) {
         Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
-        Gdx.gl.glScissor((int) (clipX),
-                (int) (clipY),
-                (int) (clipWidth),
-                (int) (clipHeight));
+        Gdx.gl.glScissor((int) ((clipX) * (Gdx.graphics.getWidth() / (double) GameScreen.WIDTH)),
+                (int) ((clipY) * (Gdx.graphics.getHeight() / (double) GameScreen.HEIGHT)),
+                (int) ((clipWidth) * (Gdx.graphics.getWidth() / (double) GameScreen.WIDTH)),
+                (int) ((clipHeight) * (Gdx.graphics.getHeight() / (double) GameScreen.HEIGHT)));
     }
-    public void disableScissor(){
-        Gdx.gl.glDisable(GL20.GL_SCISSOR_TEST);
 
+    public void disableScissor() {
+        Gdx.gl.glDisable(GL20.GL_SCISSOR_TEST);
     }
 
     // to pick up ritual
@@ -139,16 +140,19 @@ public class RitualBook extends GameObject {
     public void render(Batch batch) {
         font = Assets.getFont(24);
         batch.draw(texture, position.x, position.y, width, height);
-        ritual_arrow_left.render(batch);
-        ritual_arrow_right.render(batch);
-        enableScissor(620, 0, 600, 220);
+        batch.end(); // drawing doesn't happen until .end() is called
+        batch.begin(); // restart batch to not scissor the background (as well as not break everything else that uses the batch);
+        // need to use aspect ratio to properly scissor at resolutions other than the virtual resolution
+        enableScissor(620f, 0, 600f, 220f);
         if (isMoving) {
             renderSlidingIndex(batch);
         }
-        for (int k = firstIndex; k < firstIndex + 3; k++) {
-            dynamicRituals.get((k) % count).render(batch, font);
+        for (int i = firstIndex; i < firstIndex + 3; i++) {
+            dynamicRituals.get((i) % count).render(batch, font);
         }
         disableScissor();
+        ritual_arrow_left.render(batch);
+        ritual_arrow_right.render(batch);
     }
 
     private void renderSlidingIndex(Batch batch) {
