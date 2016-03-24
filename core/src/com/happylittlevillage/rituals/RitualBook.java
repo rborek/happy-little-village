@@ -1,5 +1,7 @@
 package com.happylittlevillage.rituals;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
@@ -26,6 +28,8 @@ public class RitualBook extends GameObject {
     private GameObject ritual_arrow_left = new GameObject(Assets.getTexture("ui/ritual_arrow_left.png"), position.x + 630, position.y + 40, 60, 60);
     private boolean isMoving = false;
     private boolean updateIndexForSlidingRitual = false;
+    private boolean slideLeft = false;
+    private boolean slideRight = false;
     private float slideTime = 0;
 
     public RitualBook(float xPos, float yPos) {
@@ -46,7 +50,7 @@ public class RitualBook extends GameObject {
     }
 
     public void turnPage(float x, float y) {
-        if(!isMoving){
+        if (!isMoving) {
             if (leftArrow.contains(x, y)) {
                 previous();
             } else if (rightArrow.contains(x, y)) {
@@ -58,21 +62,33 @@ public class RitualBook extends GameObject {
     public void previous() {
         isMoving = true;
         firstIndex--;
-        slidingIndex = firstIndex + 3;
         if (firstIndex < 0) {
             firstIndex = count;
         }
+        slideRight = true;
         System.out.println("previous");
     }
 
     public void next() {
         isMoving = true;
         firstIndex++;
-        slidingIndex = firstIndex - 1;
         if (firstIndex >= count) {
             firstIndex = 0;
         }
+        slideLeft = true;
         System.out.println("next");
+
+    }
+
+    public void enableScissor(float clipX, float clipY, float clipWidth, float clipHeight) {
+        Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
+        Gdx.gl.glScissor((int) (clipX),
+                (int) (clipY),
+                (int) (clipWidth),
+                (int) (clipHeight));
+    }
+    public void disableScissor(){
+        Gdx.gl.glDisable(GL20.GL_SCISSOR_TEST);
 
     }
 
@@ -123,22 +139,23 @@ public class RitualBook extends GameObject {
     public void render(Batch batch) {
         font = Assets.getFont(24);
         batch.draw(texture, position.x, position.y, width, height);
-        ritual_arrow_right.render(batch);
         ritual_arrow_left.render(batch);
+        ritual_arrow_right.render(batch);
+        enableScissor(620, 0, 600, 220);
         if (isMoving) {
             renderSlidingIndex(batch);
         }
         for (int k = firstIndex; k < firstIndex + 3; k++) {
             dynamicRituals.get((k) % count).render(batch, font);
         }
-
+        disableScissor();
     }
 
     private void renderSlidingIndex(Batch batch) {
-        if (slidingIndex == firstIndex - 1) {
-            dynamicRituals.get((slidingIndex + count) % count).render(batch, font);
-        } else if (slidingIndex == firstIndex + 2) {
-            dynamicRituals.get((slidingIndex + count) % count).render(batch, font);
+        if (slideLeft) {
+            dynamicRituals.get((firstIndex - 1 + count) % count).render(batch, font);
+        } else if (slideRight) {
+            dynamicRituals.get((firstIndex + 3 + count) % count).render(batch, font);
         }
     }
 
@@ -146,36 +163,39 @@ public class RitualBook extends GameObject {
     public void update(float delta) {
         if (isMoving) {
             slideTime += delta;
-            if (slidingIndex == firstIndex - 1) { // everything goes to the left 1 index
-                if(!updateIndexForSlidingRitual){
-                    dynamicRituals.get((slidingIndex + count ) % count).update(delta, 0);
+            if (slideLeft) { // everything goes to the left 1 index
+                if (!updateIndexForSlidingRitual) {
+                    for (int k = firstIndex - 1; k < firstIndex + 3; k++) {
+                        dynamicRituals.get((k + count) % count).update(delta, k - firstIndex + 1); // add count to k to prevent negative results
+                    }
                     updateIndexForSlidingRitual = true;
                 }
-                dynamicRituals.get((slidingIndex + count) % count).updateMovement(delta, 1);
-                //the 3 textures at position 1,2 and 3
-                //TODO preset position for the upcoming firstIndex +2, since this ritual's position has not been initialized
-                //TODO also some of other rituals' positions need to be reorganized
+                dynamicRituals.get((firstIndex - 1 + count) % count).updateMovement(delta, 1);
                 for (int k = firstIndex; k < firstIndex + 3; k++) {
                     dynamicRituals.get(k % count).updateMovement(delta, 1); // k - firstIndex is the position being drawn,
                     // k - firstIndex is the position that the texture needs to go to
                 }
-            } else if (slidingIndex == firstIndex + 3) { // slidingIndex slides to the right
-                if(!updateIndexForSlidingRitual){
-                    dynamicRituals.get((slidingIndex + count ) % count).update(delta, 2);
+            } else if (slideRight) { // slidingIndex slides to the right
+                if (!updateIndexForSlidingRitual) {
+                    for (int k = firstIndex; k < firstIndex + 4; k++) {
+                        dynamicRituals.get(k % count).update(delta, k - firstIndex - 1);
+                    }
                     updateIndexForSlidingRitual = true;
                 }
-                dynamicRituals.get((slidingIndex + count) % count).updateMovement(delta,  -1);
+                dynamicRituals.get((firstIndex + 3 + count) % count).updateMovement(delta, -1);
                 for (int k = firstIndex; k < firstIndex + 3; k++) {
                     dynamicRituals.get(k % count).updateMovement(delta, -1); // k - firstIndex is the position being drawn
                 }
             }
             if (slideTime >= 1) {
+                System.out.println(firstIndex);
                 slideTime = 0;
                 isMoving = false;
                 updateIndexForSlidingRitual = false;
+                slideRight = false;
+                slideLeft = false;
             }
-        }
-        else{
+        } else {
             for (int k = firstIndex; k < firstIndex + 3; k++) {
                 dynamicRituals.get(k % count).update(delta, k - firstIndex);
             }
