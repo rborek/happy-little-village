@@ -44,7 +44,7 @@ public class RitualBook extends GameObject {
         List<String> ritualNames = Ritual.getRitualNames();
         count = 0;
         for (String name : ritualNames) {
-            dynamicRituals.add(new DynamicRitual(Ritual.getRitual(name), this));
+            dynamicRituals.add(new DynamicRitual(Ritual.getRitual(name)));
             count++;
         }
     }
@@ -187,7 +187,7 @@ public class RitualBook extends GameObject {
                     dynamicRituals.get(k % count).updateMovement(delta, -1); // k - firstIndex is the position being drawn
                 }
             }
-            if (slideTime >= 1) {
+            if (slideTime >= 0.65) {
                 System.out.println(firstIndex);
                 slideTime = 0;
                 isMoving = false;
