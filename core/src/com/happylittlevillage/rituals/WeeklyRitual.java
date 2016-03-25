@@ -11,11 +11,11 @@ public class WeeklyRitual extends Ritual {
     private int timesPerformed;
     private int timesToDo;
 
-    public WeeklyRitual(int numGems, int timesToDo, Village village) {
+    public WeeklyRitual(Village village) {
         super();
-        generateRandom(numGems);
         this.village = village;
-        this.timesToDo = timesToDo;
+        generateRandom();
+        timesToDo = 3;
     }
 
     public boolean isComplete() {
@@ -31,7 +31,8 @@ public class WeeklyRitual extends Ritual {
         return timesPerformed;
     }
 
-    private void generateRandom(int numGems) {
+    private void generateRandom() {
+        int numGems = 3;
         recipe = new GemColour[numGems][numGems];
         gemCombination = new GemColour[numGems];
         for (int i = 0; i < numGems; i++) {

@@ -1,10 +1,13 @@
 package com.happylittlevillage.village;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 import com.badlogic.gdx.math.Vector2;
+import com.happylittlevillage.Assets;
 import com.happylittlevillage.rituals.VillageModifier;
 
 public class InformationFlash {
-    private String info;
+    private BitmapFontCache cache;
     private float alpha = 1;
     private Vector2 start;
     private Vector2 end;
@@ -12,11 +15,23 @@ public class InformationFlash {
     private VillageModifier relativePosition; //only for food, water and happiness( 0, 1 ,2)
 
     public InformationFlash(String info, VillageModifier relativePosition) {
-        this.info = info;
+        cache = Assets.getFont(42).newFontCache();
+        if (Integer.parseInt(info) > 0) {
+            cache.setColor(0, 1, 0.3f, 1);
+        } else if (Integer.parseInt(info) < 0) {
+            cache.setColor(1, 0.3f, 0, 1);
+        }
+        cache.addText(info, 0, 0);
         this.relativePosition = relativePosition;
         start = new Vector2(0, 200);
         end = new Vector2(0, 400);
         moveTo = new Vector2(0, 150);
+        final int startPos = 75;
+        final int offset = 140;
+        start.x += startPos+ getRelativePosition() * offset;
+        end.x += startPos + getRelativePosition() * offset;
+        moveTo.x += startPos + getRelativePosition() * offset;
+
     }
 
     public void setPositionX(int startX, int endX) {
@@ -37,10 +52,12 @@ public class InformationFlash {
             float moveX = (end.x - start.x) * delta / 4;
             moveTo.x += moveX;
         }
+        cache.setPosition(moveTo.x, moveTo.y);
         alpha -= delta / 1;
         if (alpha < 0) {
             alpha = 1;
         }
+        cache.setAlphas(alpha);
     }
 
     public float getAlpha() {
@@ -67,8 +84,8 @@ public class InformationFlash {
         }
     }
 
-    public String getInfo() {
-        return info;
+    public BitmapFontCache getCache() {
+        return cache;
     }
 }
 

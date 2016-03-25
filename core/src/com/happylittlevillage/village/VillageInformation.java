@@ -1,10 +1,7 @@
 package com.happylittlevillage.village;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.Assets;
@@ -91,8 +88,7 @@ public class VillageInformation extends GameObject implements MenuItem {
     private void moveAndFade(Batch batch) {
         for (InformationFlash resource : addedResource) {
             if (resource != null) {
-                Assets.getFont(40).setColor(1, 1, 1, resource.getAlpha());
-                Assets.getFont(40).draw(batch, resource.getInfo(), 100 + resource.getRelativePosition() * 150, resource.getMoveToY());
+                resource.getCache().draw(batch);
             }
         }
     }
