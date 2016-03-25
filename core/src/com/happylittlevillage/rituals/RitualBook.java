@@ -64,7 +64,7 @@ public class RitualBook extends GameObject {
         isMoving = true;
         firstIndex--;
         if (firstIndex < 0) {
-            firstIndex = count;
+            firstIndex = count - 1;
         }
         slideRight = true;
         System.out.println("previous");
