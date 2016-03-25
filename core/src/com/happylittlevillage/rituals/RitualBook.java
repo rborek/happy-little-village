@@ -81,15 +81,16 @@ public class RitualBook extends GameObject {
 
     }
 
-    public void enableScissor(float clipX, float clipY, float clipWidth, float clipHeight) {
+    private void enableScissor(float clipX, float clipY, float clipWidth, float clipHeight) {
         Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
+        // need to use aspect ratio to properly scissor at resolutions other than the virtual resolution
         Gdx.gl.glScissor((int) ((clipX) * (Gdx.graphics.getWidth() / (double) GameScreen.WIDTH)),
                 (int) ((clipY) * (Gdx.graphics.getHeight() / (double) GameScreen.HEIGHT)),
                 (int) ((clipWidth) * (Gdx.graphics.getWidth() / (double) GameScreen.WIDTH)),
                 (int) ((clipHeight) * (Gdx.graphics.getHeight() / (double) GameScreen.HEIGHT)));
     }
 
-    public void disableScissor() {
+    private void disableScissor() {
         Gdx.gl.glDisable(GL20.GL_SCISSOR_TEST);
     }
 
@@ -142,7 +143,6 @@ public class RitualBook extends GameObject {
         batch.draw(texture, position.x, position.y, width, height);
         batch.end(); // drawing doesn't happen until .end() is called
         batch.begin(); // restart batch to not scissor the background (as well as not break everything else that uses the batch);
-        // need to use aspect ratio to properly scissor at resolutions other than the virtual resolution
         enableScissor(620f, 0, 600f, 220f);
         if (isMoving) {
             renderSlidingIndex(batch);
@@ -150,7 +150,9 @@ public class RitualBook extends GameObject {
         for (int i = firstIndex; i < firstIndex + 3; i++) {
             dynamicRituals.get((i) % count).render(batch, font);
         }
+        batch.end(); // must end batch before disabling scissor
         disableScissor();
+        batch.begin();
         ritual_arrow_left.render(batch);
         ritual_arrow_right.render(batch);
     }
