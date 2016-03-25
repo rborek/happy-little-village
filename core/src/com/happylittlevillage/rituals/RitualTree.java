@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.Assets;
+import com.happylittlevillage.GameHandler;
 import com.happylittlevillage.GameObject;
 import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.messages.MessageBox;
@@ -21,10 +22,12 @@ public class RitualTree extends GameObject {
     private ArrayList<String> names = new ArrayList<String>();
     private ArrayList<String[]> effects = new ArrayList<String[]>();
     //TODO make each skill upgradable ?
-
-
-    public RitualTree(float xPos, float yPos) {
+    private Texture continueButton = Assets.getTexture("ui/continue_button.png");
+    private Rectangle continueButtonPosiiton = new Rectangle(0, 0, continueButton.getWidth(), continueButton.getHeight());
+    private GameHandler gameHandler;
+    public RitualTree(GameHandler gameHandler, float xPos, float yPos) {
         super(Assets.getTexture("ui/ritual_tree.png"), xPos, yPos);
+        this.gameHandler = gameHandler;
         addStandardRitual();
     }
 
@@ -71,4 +74,12 @@ public class RitualTree extends GameObject {
         this.skillPoints = skillPoints;
     }
 
+    public boolean interact(float mouseX, float mouseY) {
+        System.out.println("interacted with continue button");
+        if (continueButtonPosiiton.contains(mouseX, mouseY)) {
+            gameHandler.unpause();
+            return true;
+        }
+        return false;
+    }
 }

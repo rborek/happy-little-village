@@ -23,8 +23,6 @@ public class RitualBook extends GameObject {
     //TODO all the recipes, recipePositions, names, effects need to be called from RitualTree
     private ArrayList<DynamicRitual> dynamicRituals = new ArrayList<DynamicRitual>();
     private BitmapFont font;
-    private Vector2 touchRitualIndex = new Vector2(0, 0); // this indicates which grid of the ritual the mouse touches.  x coord means the row and y coord means the column
-    private Vector2 touchRitualSpecificPosition = new Vector2(0, 0); //this indicates the exact position of the specific grid in contact
     private GameObject ritual_arrow_right = new GameObject(Assets.getTexture("ui/ritual_arrow_right.png"), position.x + 610, position.y + 120, 60, 60);
     private GameObject ritual_arrow_left = new GameObject(Assets.getTexture("ui/ritual_arrow_left.png"), position.x + 610, position.y + 40, 60, 60);
     private boolean isMoving = false;
@@ -109,9 +107,6 @@ public class RitualBook extends GameObject {
                         //if there is a gem in the position
                         if (dynamicRituals.get(index).getRitual().getRecipe()[i][h] != null) {
                             if (dynamicRituals.get(index).getRecipePositions()[i][h].contains(x, y)) { // if the recipe position contains the mouse
-                                touchRitualIndex.set(i, h);
-                                touchRitualSpecificPosition.set(dynamicRituals.get(index).getRecipePositions()[i][h].x - x, dynamicRituals.get(index).getRecipePositions()[i][h].y - y);
-                                System.out.println("touchRitualIndex is " + i + h);
                                 return getPickUpRitual(index);
                             }
                         }
@@ -122,8 +117,9 @@ public class RitualBook extends GameObject {
         return null;
     }
 
-    // get the matched ritual up
+    // return the recipe of the matched ritual
     private Gem[][] getPickUpRitual(int index) {
+        //pickUpRitual has the size of the recipe
         Gem[][] pickUpRitual = new Gem[dynamicRituals.get(index).getRitual().getRecipe().length][dynamicRituals.get(index).getRitual().getRecipe()[0].length];
         for (int i = 0; i < dynamicRituals.get(index).getRitual().getRecipe().length; i++) {
             for (int h = 0; h < dynamicRituals.get(index).getRitual().getRecipe()[0].length; h++) {
@@ -191,8 +187,7 @@ public class RitualBook extends GameObject {
                     dynamicRituals.get(k % count).updateMovement(delta, -1); // k - firstIndex is the position being drawn
                 }
             }
-            if (slideTime >= 0.65) {
-                System.out.println(firstIndex);
+            if (slideTime >= 1 / DynamicRitual.SLIDING_SPEED) {
                 slideTime = 0;
                 isMoving = false;
                 updateIndexForSlidingRitual = false;
@@ -204,14 +199,6 @@ public class RitualBook extends GameObject {
                 dynamicRituals.get(k % count).update(delta, k - firstIndex);
             }
         }
-    }
-
-    public Vector2 getTouchRitualIndex() {
-        return touchRitualIndex;
-    }
-
-    public Vector2 getTouchRitualSpecificPosition() {
-        return touchRitualSpecificPosition;
     }
 
     public void setMoving(boolean moving) {

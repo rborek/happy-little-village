@@ -17,6 +17,7 @@ public class DynamicRitual {
     private static final int startY = 150;
     private int index;
     private float posX = 0;
+    public static final double SLIDING_SPEED = 1;
     public static GameObject[] gemTextures = {
             new GameObject(Gem.getArrayOfTextures()[0], 0, 0, gemSize, gemSize),
             new GameObject(Gem.getArrayOfTextures()[1], 0, 0, gemSize, gemSize),
@@ -62,12 +63,11 @@ public class DynamicRitual {
             movePosition(posX);
         }
     }
-
     public void updateMovement(float delta, int sign) {
         //index is the relative position of the ritual
         //sign determines if the ritual goes left or right
         //int indexX = 650 + index * 200 ;
-        posX -= 200 * ((float) delta) * sign* 1.5;
+        posX -= 200 * ((float) delta) * sign * SLIDING_SPEED;
         movePosition(posX);
     }
 

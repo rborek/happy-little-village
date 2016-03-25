@@ -30,8 +30,8 @@ public class InputHandler implements InputProcessor {
     private GameHandler gameHandler;
     private TutorialMessage tutorialMessage;
     private HappyLittleVillage happyLittleVillage;
-    private int spaceBetweenGems = 40;
-    private int gemSize = 48;
+//    private int spaceBetweenGems = 40;
+//    private int gemSize = 48;
 
     public InputHandler(GameScreen screen, HappyLittleVillage happyLittleVillage) {
         this.screen = screen;
@@ -61,8 +61,8 @@ public class InputHandler implements InputProcessor {
                 for (int i = 0; i < selectedRitual[0].length; i++) {
                     if (selectedRitual[k][i] != null) {
                         //do not change this algorithm or stuff will be flipped
-                        selectedRitual[k][i].render(batch, realPos.x + (-ritualBook.getTouchRitualIndex().y + i) * (gemSize + spaceBetweenGems) + ritualBook.getTouchRitualSpecificPosition().x,
-                                realPos.y + (ritualBook.getTouchRitualIndex().x - k) * (gemSize + spaceBetweenGems) + ritualBook.getTouchRitualSpecificPosition().y);
+                        selectedRitual[k][i].render(batch, realPos.x + (i - selectedRitual[0].length) * (RitualAltar.spacing +RitualAltar.slotSize2),
+                                realPos.y + (-k) * (RitualAltar.spacing +RitualAltar.slotSize2));
                     }
                 }
             }
@@ -104,12 +104,11 @@ public class InputHandler implements InputProcessor {
             }
             selectedGem = null;
         }
-
     }
 
     private void dropRitual(float mouseX, float mouseY) {
         if (selectedRitual != null) {
-            ritualAltar.placeRitual(selectedRitual, mouseX, mouseY, ritualBook.getTouchRitualIndex(), ritualBook. getTouchRitualSpecificPosition());
+            ritualAltar.placeRitual(selectedRitual, mouseX, mouseY);
             selectedRitual = null;
         }
     }
@@ -146,7 +145,7 @@ public class InputHandler implements InputProcessor {
         return (gameHandler.getOptionWheelPosition().contains(x, y));
     }
 
-    public void clickNextButtonVillageInfo(float x, float y ){
+    public void clickNextButtonVillageInfo(float x, float y) {
         gameHandler.getVillage().getVillageInformation().interact(x, y);
     }
 

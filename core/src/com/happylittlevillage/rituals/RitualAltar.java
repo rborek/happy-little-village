@@ -19,17 +19,12 @@ import java.util.Collections;
 public class RitualAltar extends GameObject implements MenuItem {
     private GemBag gemBag;
     // gonna replace animation with different picture
-    private GameObject commenceButton = new GameObject(Assets.getTexture("altar/button.png"), position.x + width,position.y);
+    private GameObject commenceButton = new GameObject(Assets.getTexture("altar/button.png"), position.x + width, position.y);
     private Rectangle commenceButtonPosition;
     private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
-    private static final int spacingX = 136;
-    private static final int spacingY = 121;
-    private static final int paddingX = 60;
-    private static final int paddingY = 67;
-    private static final int slotSize = 64;
     //new measurements
-    private static final int slotSize2 = 80;
-    private static final int spacing = 40;
+    public static final int slotSize2 = 67;
+    public static final int spacing = 14;
     private WeeklyRitual weeklyRitual;
     private boolean animating = false;
     private float timer = 0;
@@ -54,7 +49,7 @@ public class RitualAltar extends GameObject implements MenuItem {
         int paddingColumn = 240;
         for (int i = 0; i < 4; i++) { // row
             for (int j = 0; j < 4; j++) { //column
-                slots[i][j] = new Rectangle(position.x + 37 + 87 * j, spacing + paddingColumn + 280, slotSize2, slotSize2);
+                slots[i][j] = new Rectangle(position.x + 37 + 87 * j, slotSize2 / 2 + paddingColumn + 280, slotSize2, slotSize2);
             }
             paddingColumn -= 83;
         }
@@ -260,30 +255,31 @@ public class RitualAltar extends GameObject implements MenuItem {
         }
     }
 
-    public boolean placeRitual(Gem[][] ritual, float x, float y, Vector2 touchRitualIndex, Vector2 touchRitualSpecificPosition) {
-        //the Rectangle is at the mouse's position
-        //gridMatch is the grid[x][y] in which the pointed gem is placed
-        Vector2 gridMatch = matchOneGrid(x - touchRitualSpecificPosition.x, y - touchRitualSpecificPosition.y);
-        if (gridMatch != null) {
-//            grid[(int)gridMatch.x][(int)gridMatch.y] = ritual[(int)touchRitualIndex.x][(int)touchRitualIndex.y];
-            for (int gridRow = 0; gridRow < ritual.length; gridRow++) {
-                for (int gridCol = 0; gridCol < ritual[0].length; gridCol++) {
-                    if (ritual[gridRow][gridCol] != null) {
-                        //realRow is the actual position to put the ritual[gridRow][gridCol] from the pickedUp ritual
-                        int realRow = (int) gridMatch.x + gridRow - (int) touchRitualIndex.x;
-                        int realCol = (int) gridMatch.y + gridCol - (int) touchRitualIndex.y;
-                        if (realRow <= 3 && realRow >= 0 && realCol <= 3 && realCol >= 0) {
-//                            System.out.println("position is" + realRow + realCol);
-                            // if the grid has a gem in its grid
-                            if (grid[realRow][realCol] != null) {
-                                gemBag.add(grid[realRow][realCol].getColour());
-                            }
-                            // if the gemBag is not empty
-                            if (gemBag.getAmount(ritual[gridRow][gridCol].getColour()) >= 1) {
-                                grid[realRow][realCol] = ritual[gridRow][gridCol];
-                                gemBag.remove(ritual[gridRow][gridCol].getColour());
+    public boolean placeRitual(Gem[][] ritual, float x, float y) {
+        //loop through the ritual
+        for (int row = 0; row < ritual.length; row++) {
+            for (int col = 0; col < ritual[0].length; col++) {
+                if (ritual[row][col] != null) {
+                    Vector2 gridMatch = matchOneGrid(x - (col + ritual[0].length) * (slotSize2 + spacing), y - (row ) * (slotSize2 + spacing));
+                    if (gridMatch != null) {
+                        System.out.println(" match at" + row + " " + col);
+                        //if we have a matching case, we loop through the ritual again and place all the gems in their grids
+                        for (int row2 = 0; row2 < ritual.length; row2++) {
+                            for (int col2 = 0; col2 < ritual[0].length; col2++) {
+                                if (ritual[row2][col2] != null) {
+                                    if (gridMatch.x - ritual.length + 1 + row2 >= 0 && gridMatch.x - ritual.length + 1 + row2 < 4 && gridMatch.y - ritual[0].length + 1 + col2 >= 0 && gridMatch.x - ritual[0].length + 1 + col2 < 4) {
+                                        if (grid[(int) gridMatch.x - ritual.length + 1 + row2][(int) gridMatch.y - ritual[0].length + 1 + col2] != null) {
+                                            gemBag.add(grid[(int) gridMatch.x - ritual.length + 1 + row2][(int) gridMatch.y - ritual[0].length + 1 + col2].getColour());
+                                        }
+                                        if (gemBag.getAmount(ritual[row2][col2].getColour()) > 0) {
+                                            grid[(int) gridMatch.x - ritual.length + 1 + row2][(int) gridMatch.y - ritual[0].length + 1 + col2] = ritual[row2][col2];
+                                            gemBag.remove(ritual[row2][col2].getColour());
+                                        }
+                                    }
+                                }
                             }
                         }
+                        return true;
                     }
                 }
             }
@@ -306,10 +302,10 @@ public class RitualAltar extends GameObject implements MenuItem {
         return false;
     }
 
-    private Vector2 matchOneGrid(float x, float y) {
+    private Vector2 matchOneGrid(float x, float y) { //this check if one gem match any grid
         //x and y is the center of the gem
         //rectangle has to be from the bottom left, so subtract spacing from both x and y
-        Rectangle gemBounds = new Rectangle(x - spacing, y - spacing, slotSize2, slotSize2);
+        Rectangle gemBounds = new Rectangle(x - slotSize2 / 2, y - slotSize2 / 2, slotSize2, slotSize2);
         //centerGrid contains center of overlapped grids
         double distance; // distance from center of the gem to the grid
         double minDistance = 100; // very arbitrary number

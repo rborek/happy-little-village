@@ -38,7 +38,7 @@ public class GameHandler {
     private GemBook miniBook = new GemBook(this);
     private boolean bookOpen;
     private RitualBook ritualBook = new RitualBook(600, 0);
-    private RitualTree ritualTree = new RitualTree(70, 120);
+    private RitualTree ritualTree = new RitualTree(this, 70, 120);
     private WinMessage winMessage;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private boolean DEBUG = false;
@@ -105,41 +105,47 @@ public class GameHandler {
     }
 
     public void unpause() {
-//        if (intro) {
+        if (intro) {
+            intro = false;
+            paused = false;
+        } else {
+            if (messageScreen == 0) {
+                messageBox = new WeekSummary(village, this);
+                messageScreen++;
+            } else if (messageScreen == 1) {
+                messageBox = new GemSummary(gemBag, village, this);
+                messageScreen++;
+            } else if (messageScreen == 2) {
+                messageBox = new GodMessage(gemBag, village, this);
+                if (((GodMessage) messageBox).checkRitual()) {
+                    village.generateNewWeeklyRitual();
+                }
+                ((GodMessage) messageBox).stateRitual();
+                messageScreen++;
+            } else if (messageScreen == 3) { // ritualTree
+                messageScreen++;
+            } else {
+                messageScreen = 0;
+                paused = false;
+            }
+        }
+//        if (messageBox instanceof WeekSummary) {
+//            messageBox = new GemSummary(gemBag, village, this);
+//        } else if (messageBox instanceof GemSummary) {
+//            messageBox = new GodMessage(gemBag, village, this);
+//            if (((GodMessage) messageBox).checkRitual()) {
+//                //TODO change this messy code
+//                village.generateNewWeeklyRitual();
+//            }
+//            ((GodMessage) messageBox).stateRitual();
+//        } else if (messageBox instanceof GodMessage) {
+//
+//        } else {
+//            messageBox = new WeekSummary(village, this);
 //            intro = false;
 //            paused = false;
-//        } else {
-//            if (messageScreen == 0) {
-//                messageBox = new WeekSummary(village, this);
-//                messageScreen++;
-//            } else if (messageScreen == 1) {
-//                messageBox = new GemSummary(gemBag, village, this);
-//                messageScreen++;
-//            } else if (messageScreen == 2) {
-//                messageBox = new GodMessage(gemBag, village, this);
-//                if (((GodMessage) messageBox).checkRitual()) {
-//                    village.generateNewWeeklyRitual();
-//                }
-//                ((GodMessage) messageBox).stateRitual();
-//                messageScreen++;
-//            } else if (messageScreen == 3) { // ritualTree
-//                messageScreen = 0;
-//                paused = false;
-//            }
+//
 //        }
-        if (messageBox instanceof WeekSummary) {
-            messageBox = new GemSummary(gemBag, village, this);
-        } else if (messageBox instanceof GemSummary) {
-            messageBox = new GodMessage(gemBag, village, this);
-            if (((GodMessage) messageBox).checkRitual()) {
-                //TODO change this messy code
-                village.generateNewWeeklyRitual();
-            }
-            ((GodMessage) messageBox).stateRitual();
-        } else {
-            messageBox = new WeekSummary(village, this);
-            paused = false;
-        }
     }
 
     // game logic goes here
@@ -168,7 +174,7 @@ public class GameHandler {
         if (isTutorial) {
             //arrow for screen 0 and 1
             if (tutorialMessage.getTutorialScreen() <= 1) {
-                // make the arrow point to a villager
+                // make the arrow point to a villnager
                 tutorialMessage.setAngle(village.getPositionOfARandomVillager(), arrow.get(0));
             }
             tutorialMessage.update(delta);
@@ -183,7 +189,7 @@ public class GameHandler {
         ritualAltar.render(batch);
         gemBag.render(batch);
         miniBook.render(batch);
-        if (miniBook.isOpen()) ritualBook.render(batch);
+        if (!intro) ritualBook.render(batch);
 //		ritualTree.render(batch);
 //      optionWheel.render(batch);
         if (!paused) {
@@ -199,10 +205,9 @@ public class GameHandler {
             inputHandler.renderSelectedGem(batch);
             inputHandler.renderSelectedRitual(batch);
         } else {
-            if(messageScreen!=3){
+            if (messageScreen != 3) {
                 messageBox.render(batch);
-            }
-            else{
+            } else {
                 ritualTree.render(batch);
             }
         }
