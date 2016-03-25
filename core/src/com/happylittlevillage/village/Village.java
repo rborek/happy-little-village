@@ -92,8 +92,7 @@ public class Village {
 		return false;
 	}
 
-	public void consume(float delta) {
-//        return;
+	private void consume(float delta) {
 		float consumeFood = 0;
 		float consumeWater = 0;
 		for (Villager villager : villagers) {
@@ -111,7 +110,7 @@ public class Village {
 	}
 
 	public void generateNewWeeklyRitual() {
-		weeklyRitual = new WeeklyRitual(2, 3, this);
+		weeklyRitual = new WeeklyRitual(this);
 	}
 
 	public void addFood(float x) {
@@ -166,7 +165,7 @@ public class Village {
 		mineGems(delta);
 	}
 
-	public void gatherFood(float delta) {
+	private void gatherFood(float delta) {
 		float food = 0;
 		foodProduction = 1f;
 		for (Villager villager : villagers) {
@@ -180,7 +179,7 @@ public class Village {
 	}
 
 	//TODO check the algorithm. Maybe less dependent on delta
-	public void gatherWater(float delta) {
+	private void gatherWater(float delta) {
 		float water = 0;
 		waterProduction = 1f;
 
@@ -194,7 +193,7 @@ public class Village {
 		}
 	}
 
-	public void mineGems(float delta) {
+	private void mineGems(float delta) {
 		gemThreshold += delta / 30 * getNumberOf(VillagerRole.MINER);
 		if (gemThreshold > 1) {
 			//get a random gemColour and store it in gemsMined according to its ordinal
@@ -274,7 +273,7 @@ public class Village {
 	}
 
 
-	public void dayPass() {
+	private void dayPass() {
 		villagerRemoved = 0;
 		daysLeft -= 1;
 		day += 1;
@@ -284,7 +283,7 @@ public class Village {
 		resetMinedGems();
 	}
 
-	public void mineGems() {
+	private void mineGems() {
 		//get a random gemColour and store it in gemsMined according to its ordinal
 		for (int i = 0; i < getNumberOf(VillagerRole.MINER) * 3; i++) {
 			GemColour g = gemBag.gainRandomGem();
@@ -375,7 +374,6 @@ public class Village {
 	private int randomY() {
 		return random.nextInt(400) + 180;
 	}
-
 
 	public boolean removeVillager() {
 		if (villagers.size() > 0) {
