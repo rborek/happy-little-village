@@ -260,19 +260,22 @@ public class RitualAltar extends GameObject implements MenuItem {
         for (int row = 0; row < ritual.length; row++) {
             for (int col = 0; col < ritual[0].length; col++) {
                 if (ritual[row][col] != null) {
-                    Vector2 gridMatch = matchOneGrid(x - (col + ritual[0].length) * (slotSize2 + spacing), y - (row ) * (slotSize2 + spacing));
+                    System.out.println("coord " + row + col);
+                    Vector2 gridMatch = matchOneGrid(x - (ritual[0].length - col) * (slotSize2 + spacing), y - (row) * (slotSize2 + spacing));
                     if (gridMatch != null) {
-                        System.out.println(" match at" + row + " " + col);
                         //if we have a matching case, we loop through the ritual again and place all the gems in their grids
                         for (int row2 = 0; row2 < ritual.length; row2++) {
                             for (int col2 = 0; col2 < ritual[0].length; col2++) {
                                 if (ritual[row2][col2] != null) {
-                                    if (gridMatch.x - ritual.length + 1 + row2 >= 0 && gridMatch.x - ritual.length + 1 + row2 < 4 && gridMatch.y - ritual[0].length + 1 + col2 >= 0 && gridMatch.x - ritual[0].length + 1 + col2 < 4) {
-                                        if (grid[(int) gridMatch.x - ritual.length + 1 + row2][(int) gridMatch.y - ritual[0].length + 1 + col2] != null) {
-                                            gemBag.add(grid[(int) gridMatch.x - ritual.length + 1 + row2][(int) gridMatch.y - ritual[0].length + 1 + col2].getColour());
+                                    int gridRow = (int) gridMatch.x - row + row2;
+                                    int gridCol = (int) gridMatch.y - col + col2;
+                                    if (gridRow >= 0 && gridRow <= 3 && gridCol >= 0 && gridCol <= 3) {
+                                        System.out.println("Passed");
+                                        if (grid[gridRow][gridCol] != null) {
+                                            gemBag.add(grid[gridRow][gridCol].getColour());
                                         }
                                         if (gemBag.getAmount(ritual[row2][col2].getColour()) > 0) {
-                                            grid[(int) gridMatch.x - ritual.length + 1 + row2][(int) gridMatch.y - ritual[0].length + 1 + col2] = ritual[row2][col2];
+                                            grid[gridRow][gridCol] = ritual[row2][col2];
                                             gemBag.remove(ritual[row2][col2].getColour());
                                         }
                                     }
@@ -293,10 +296,10 @@ public class RitualAltar extends GameObject implements MenuItem {
             int gridRow = (int) gridMatch.x;
             int gridCol = (int) gridMatch.y;
             if (grid[gridRow][gridCol] != null) {
-                System.out.println("Colour is" + grid[gridRow][gridCol].getColour());
                 gemBag.add(grid[gridRow][gridCol].getColour());
             }
             grid[gridRow][gridCol] = gem;
+            System.out.println("Set Colour" + grid[gridRow][gridCol].getColour() + "To position" + gridRow + gridCol);
             return true;
         }
         return false;

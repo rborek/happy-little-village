@@ -50,7 +50,7 @@ public class InputHandler implements InputProcessor {
     public void renderSelectedGem(Batch batch) {
         if (selectedGem != null) {
             Vector2 realPos = screen.getRealScreenPos(Gdx.input.getX(), Gdx.input.getY());
-            selectedGem.render(batch, realPos.x - 40, realPos.y - 40);
+            selectedGem.render(batch, realPos.x - RitualAltar.slotSize2/2, realPos.y - RitualAltar.slotSize2/2);
         }
     }
 
