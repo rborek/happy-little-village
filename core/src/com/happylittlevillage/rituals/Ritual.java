@@ -18,7 +18,7 @@ public class Ritual {
 	protected RitualEffect[] effects;
 
 	private static List<String> ritualNames = new ArrayList<String>();
-	private static HashMap<String, Ritual> rituals = new HashMap<String, Ritual>();
+	private static HashMap<String, RitualNode> rituals = new HashMap<String, RitualNode>();
 
     Ritual() {
 
@@ -74,6 +74,24 @@ public class Ritual {
 			}
             effects[i - 2] = new RitualEffect(VillageModifier.valueOf(effect[0]), modifier);
         }
+
+        // adds effects to an array of String to render easier
+//        String[] effectsOfOneRitual = new String[file.length - 2];
+//        int count = 0;
+//        String oneEffect = "";
+//        //get the effects of all the rituals
+//        for (RitualEffect anEffect : effects) {
+//            if (anEffect.getAmount() > 0) { // explicitly put a positive sign in front of a positive value
+//                oneEffect = oneEffect.concat("+" + anEffect.getAmount() + " ");
+//            } else {
+//                oneEffect = oneEffect.concat(anEffect.getAmount() + " ");
+//            }
+//            oneEffect = oneEffect.concat(anEffect.getModifier().name()); // get the modifier's name
+//            effectsOfOneRitual[count] = oneEffect;
+//            oneEffect = "";
+//            count++;
+//        }
+//        effectsString.add(effectsOfOneRitual); // get the effects of a ritual
     }
 
     public static void load() {
@@ -84,27 +102,29 @@ public class Ritual {
 
     }
 
-    public static void addRitual(FileHandle fileHandle) {
+    public static void addRitual(FileHandle fileHandle ) {
         Ritual ritual = new Ritual(fileHandle.readString().split("\r\n"));
-        rituals.put(ritual.getName(), ritual);
+        rituals.put(ritual.getName(), new RitualNode(ritual));
         System.out.println(ritual.getName() + ritual.getEffects()[0].getModifier().toString() + ritual.getEffects()[0].getAmount());
+    }
 
-
-//		for(int k = 0; k < ritual.getRecipe().length;k++){
-//			for(int i = 0; i < ritual.getRecipe()[0].length;i++){
-//				System.out.println(""+k+i+ritual.getRecipe()[k][i]);
-//			}
-//		}
-
+    public static HashMap<String, RitualNode> getRituals() {
+        return rituals;
     }
 
     public static Ritual getRitual(String ritualName) {
+        if (rituals.containsKey(ritualName)) {
+            return rituals.get(ritualName).getRitual();
+        }
+        return null;
+    }
+
+    public static RitualNode getRitualNode(String ritualName) {
         if (rituals.containsKey(ritualName)) {
             return rituals.get(ritualName);
         }
         return null;
     }
-
 
 
     /**

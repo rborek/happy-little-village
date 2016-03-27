@@ -37,8 +37,8 @@ public class GameHandler {
     private boolean paused;
     private GemBook miniBook = new GemBook(this);
     private boolean bookOpen;
-    private RitualBook ritualBook = new RitualBook(600, 0);
-    private RitualTree ritualTree = new RitualTree(this, 70, 120);
+    private RitualTree ritualTree = new RitualTree(this, 30, 15);
+    private RitualBook ritualBook = new RitualBook(ritualTree,600, 0);
     private WinMessage winMessage;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private boolean DEBUG = false;
@@ -285,5 +285,14 @@ public class GameHandler {
     public Rectangle getOptionWheelPosition() {
         return optionWheelPosition;
     }
+
+    public int getMessageScreen() {
+        return messageScreen;
+    }
+    public RitualTree getRitualTree() {
+        return ritualTree;
+    }
+
+
 
 }

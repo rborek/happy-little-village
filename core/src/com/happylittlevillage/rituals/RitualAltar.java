@@ -1,6 +1,5 @@
 package com.happylittlevillage.rituals;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
@@ -37,7 +36,6 @@ public class RitualAltar extends GameObject implements MenuItem {
     private Village village;
     private ArrayList<ArrayList<GridPoint2>> lightUpGrid = new ArrayList<ArrayList<GridPoint2>>();
 
-
     public RitualAltar(GemBag gemBag, float xPos, float yPos, Village village, RitualTree ritualTree) {
         super(Assets.getTexture("altar/altar.png"), xPos, yPos, 400, 400);
         this.village = village;
@@ -54,7 +52,7 @@ public class RitualAltar extends GameObject implements MenuItem {
             paddingColumn -= 83;
         }
         commenceButtonPosition = new Rectangle(commenceButton.getPosition().x, commenceButton.getPosition().y, commenceButton.getWidth(), commenceButton.getHeight());
-        rituals = ritualTree.getRituals();
+        rituals = ritualTree.getUnlockedRituals(); // TODO change this
     }
 
 

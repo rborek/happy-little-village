@@ -30,20 +30,21 @@ public class RitualBook extends GameObject {
     private boolean slideLeft = false;
     private boolean slideRight = false;
     private float slideTime = 0;
+    private RitualTree ritualTree;
 
-    public RitualBook(float xPos, float yPos) {
+    public RitualBook(RitualTree ritualTree, float xPos, float yPos) {
         super(Assets.getTexture("ui/parchment2.png"), xPos, yPos, 700, 250);
         rightArrow = new Rectangle(ritual_arrow_right.getPosition().x, ritual_arrow_right.getPosition().y, ritual_arrow_right.getWidth(), ritual_arrow_right.getHeight());
         leftArrow = new Rectangle(ritual_arrow_left.getPosition().x, ritual_arrow_left.getPosition().y, ritual_arrow_left.getWidth(), ritual_arrow_left.getHeight());
+        this.ritualTree = ritualTree;
         addStandardRitual();
     }
 
     private void addStandardRitual() {
         //TODO change this to only available rituals
-        List<String> ritualNames = Ritual.getRitualNames();
         count = 0;
-        for (String name : ritualNames) {
-            dynamicRituals.add(new DynamicRitual(Ritual.getRitual(name)));
+        for (Ritual ritual : ritualTree.getChosenRituals()) {
+            dynamicRituals.add(new DynamicRitual(ritual));
             count++;
         }
     }

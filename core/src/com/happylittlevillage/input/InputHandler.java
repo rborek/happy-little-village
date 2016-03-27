@@ -16,6 +16,7 @@ import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.messages.MessageBox;
 import com.happylittlevillage.rituals.RitualAltar;
 import com.happylittlevillage.rituals.RitualBook;
+import com.happylittlevillage.rituals.RitualTree;
 import com.happylittlevillage.village.Village;
 
 public class InputHandler implements InputProcessor {
@@ -30,6 +31,7 @@ public class InputHandler implements InputProcessor {
     private GameHandler gameHandler;
     private TutorialMessage tutorialMessage;
     private HappyLittleVillage happyLittleVillage;
+    private RitualTree ritualTree;
 //    private int spaceBetweenGems = 40;
 //    private int gemSize = 48;
 
@@ -45,6 +47,7 @@ public class InputHandler implements InputProcessor {
         this.ritualBook = gameHandler.getRitualBook();
         this.miniBook = gameHandler.getMiniBook();
         this.tutorialMessage = gameHandler.getTutorialMessage();
+        this.ritualTree = gameHandler.getRitualTree();
     }
 
     public void renderSelectedGem(Batch batch) {
@@ -74,7 +77,12 @@ public class InputHandler implements InputProcessor {
     }
 
     private void checkContinue(float mouseX, float mouseY) {
-        gameHandler.getMessageBox().interact(mouseX, mouseY);
+        if(gameHandler.getMessageScreen()!=3){
+            gameHandler.getMessageBox().interact(mouseX, mouseY);
+        }
+        else{
+            gameHandler.getRitualTree().interact(mouseX,mouseY);
+        }
     }
 
     private void pickUpGem(float mouseX, float mouseY) {

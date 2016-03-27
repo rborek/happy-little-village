@@ -17,7 +17,7 @@ public class DynamicRitual {
     private static final int startY = 150;
     private int index;
     private float posX = 0;
-    public static final double SLIDING_SPEED = 1;
+    public static final double SLIDING_SPEED = 2.5;
     public static GameObject[] gemTextures = {
             new GameObject(Gem.getArrayOfTextures()[0], 0, 0, gemSize, gemSize),
             new GameObject(Gem.getArrayOfTextures()[1], 0, 0, gemSize, gemSize),
