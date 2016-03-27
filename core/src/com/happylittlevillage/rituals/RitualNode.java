@@ -52,12 +52,11 @@ public class RitualNode {
     public String toString() {
         String prerequisite = "";
         for (RitualNode node : prerequisiteRituals) {
-            prerequisite = node.getRitual().getName() + " ";
+            prerequisite += node.getRitual().getName() + " ";
         }
-        return "RitualNode{" + "number of prerequisites is" + prerequisiteRituals.size()+
-                "prerequisiteRituals:" + prerequisite +
-                ", activated=" + activated +
-                ", ritual=" + ritual.getName() +
+        return "Ritual name is " + ritual.getName() + " number of prerequisites is " + prerequisiteRituals.size()+
+                " \nprerequisiteRituals:" + prerequisite +
+                ", \nactivated: " + activated +
                 '}';
     }
 }
