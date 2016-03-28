@@ -87,6 +87,28 @@ public class DynamicRitual {
         font.draw(batch, ritual.getName(), posX, posY + 20);
     }
 
+    public static void renderRecipe(Batch batch, BitmapFont font, Ritual ritual, float startX, float startY, int gemSize, int spaceBetweenGems){
+        for (int k = 0; k < ritual.getRecipe().length; k++) {
+            for (int h = 0; h < ritual.getRecipe()[0].length; h++) {
+                if (ritual.getRecipe()[k][h] != null) {
+                    if (ritual.getRecipe()[k][h].equals(GemColour.BLUE)) {
+                        gemTextures[1].setPosition(startX + h * (spaceBetweenGems + gemSize) , startY - k * (spaceBetweenGems + gemSize));
+                        gemTextures[1].render(batch, gemSize, gemSize);
+                    } else if (ritual.getRecipe()[k][h].equals(GemColour.GREEN)) {
+                        gemTextures[2].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
+                        gemTextures[2].render(batch, gemSize, gemSize);
+                    } else if (ritual.getRecipe()[k][h].equals(GemColour.YELLOW)) {
+                        gemTextures[3].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
+                        gemTextures[3].render(batch, gemSize, gemSize);
+                    } else if (ritual.getRecipe()[k][h].equals(GemColour.RED)) {
+                        gemTextures[0].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
+                        gemTextures[0].render(batch, gemSize, gemSize);
+                    }
+                }
+            }
+        }
+    }
+
     public void update(float delta, int index) {
         if(posX != 200 * (index) + 650){
             posX = 200 *(index) + 650;

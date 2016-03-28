@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class RitualTree extends GameObject {
     private GameHandler gameHandler;
-    private int skillPoints = 1;
+    private int skillPoints = 10;
 
     private ArrayList<Ritual> unlockedRituals = new ArrayList<Ritual>();
     private ArrayList<Ritual> chosenRituals = new ArrayList<Ritual>();
@@ -22,10 +22,16 @@ public class RitualTree extends GameObject {
     private static HashMap<Integer, RitualNode> ritualIndexOnTree = new HashMap<Integer, RitualNode>();
 
     private GameObject dot = new GameObject(Assets.getTexture("ui/dot.png"), 0, 0);
-    private GameObject ritualTextureOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree.png"), 0, 0);
+    private GameObject disabledRitualTextureOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree_disabled.png"), 0, 0);
+    private GameObject enabledRitualTextureOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree_activated.png"), 0, 0);
     private GameObject continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), 1060, 23);
     private Rectangle continueButtonPosition = new Rectangle(continueButton.getPosition().x, continueButton.getPosition().y, continueButton.getWidth(), continueButton.getHeight());
-    private Rectangle chooseButton = new Rectangle(1100, 100, 150, 70); // choose a Ritual
+    private GameObject chooseButton = new GameObject(Assets.getTexture("ui/choose_button.png"), 925, 170);
+    private GameObject chosenButton = new GameObject(Assets.getTexture("ui/chosen_button.png"), 925, 170);
+    private GameObject unlockButton = new GameObject(Assets.getTexture("ui/unlock_button.png"), 925, 170);
+    private GameObject resetButton;
+    private GameObject chosenSign = new GameObject(Assets.getTexture("ui/chosen_sign.png"), 0, 0);
+    private Rectangle chooseButtonPosition = new Rectangle(chooseButton.getPosition().x, chooseButton.getPosition().y, chooseButton.getWidth(), chooseButton.getHeight()); // choose a Ritual
     private Rectangle nextButtonPosition = new Rectangle(1055, 80, 70, 65); // for the chosen ritual bar
     private Rectangle prevButtonPosition = new Rectangle(1160, 80, 70, 65);// for the chosen ritual bar
     private static final int ritualSize = 100;
@@ -66,9 +72,7 @@ public class RitualTree extends GameObject {
     }
 
     private void addUnlockedRituals() {
-        for (String name : Ritual.getRitualNames()) {
-            chosenRituals.add(Ritual.getRitual(name));
-        }
+        unlockedRituals.add(Ritual.getRitual("Dried meat"));
     }
 
     private void SetPrerequisites() {
@@ -89,9 +93,7 @@ public class RitualTree extends GameObject {
 
 
     private void addChosenRituals() {
-        for (String name : Ritual.getRitualNames()) {
-            chosenRituals.add(Ritual.getRitual(name));
-        }
+        chosenRituals.add(Ritual.getRitual("Dried meat"));
     }
 
     private void addPrerequisites(String name, ArrayList<String> prerequisites) {
@@ -122,18 +124,53 @@ public class RitualTree extends GameObject {
     }
 
     public boolean interact(float mouseX, float mouseY) {
+        //continue the game
         if (continueButtonPosition.contains(mouseX, mouseY)) {
             gameHandler.unpause();
             return true;
-        } else if (nextButtonPosition.contains(mouseX, mouseY) || prevButtonPosition.contains(mouseX, mouseY)) {
-            System.out.println("Touch change");
-        } else if (touchRitual(mouseX, mouseY)) {
+        }
+        //slide the bar
+        else if (nextButtonPosition.contains(mouseX, mouseY) || prevButtonPosition.contains(mouseX, mouseY)) {
+            System.out.println("Slide the bar");
+        }
+        //view ritual
+        else if (touchRitual(mouseX, mouseY)) {
             return true;
-        } else if (viewingRitual != null) {
-            if (chooseButton.contains(mouseX, mouseY)) {
-                System.out.println("PIKACHU I CHOOSE YOU");
+        }
+        // choose ritual
+        else if (chooseButtonPosition.contains(mouseX, mouseY)) {
+            if (viewingRitual != null) {
+                System.out.println("Choose");
+                // if it is not unlocked, then unlock it and decrement skillPoint
+                if (!unlockedRituals.contains(viewingRitual.getRitual()) && skillPoints > 0) {
+                    unlockedRituals.add(viewingRitual.getRitual());
+                    skillPoints--;
+                }
+                // if it is unlocked, then select it and put it in the bar. Do not decrement skillPoint
+                else if (!chosenRituals.contains(viewingRitual.getRitual())) {
+                    chosenRituals.add(viewingRitual.getRitual());
+                }
+                //unlock other ritual
+                return true;
             }
         }
+        // unChoose ritual from the bar
+        //TODO I wanna pass in an array of positions of the bar in the if statement's argument but I cannot write a for loop there
+        else {
+            System.out.println("size is:" + chosenRituals.size());
+            //rectangle of the chosen ritual on the bar
+            Rectangle chosenRitualPosition = new Rectangle(0, 0, 0, 0);
+            for (int k = 0; k < chosenRituals.size(); k++) {
+                System.out.println("Checking chosen rituals");
+                chosenRitualPosition.set(35 + 130 * k, 20, 130, 130);
+                if (chosenRitualPosition.contains(mouseX, mouseY)) {
+                    chosenRituals.remove(k);
+                    System.out.println("REMOVED");
+                    return true;
+                }
+            }
+        }
+        System.out.println("touched nothing and the size of chosenRitual is " + chosenRituals.size());
         return false;
     }
 
@@ -156,18 +193,49 @@ public class RitualTree extends GameObject {
         batch.draw(texture, position.x, position.y, width, height);
         continueButton.render(batch);
         font.draw(batch, skillPoints + "", 1105, 600);
-
         //render rituals on tree
         for (int k = 0; k < ritualPositionsOnTree.length; k++) {
-            ritualTextureOnTree.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
-            ritualTextureOnTree.render(batch);
+            if (unlockedRituals.contains(ritualIndexOnTree.get(k).getRitual())) {
+                enabledRitualTextureOnTree.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
+                enabledRitualTextureOnTree.render(batch);
+                if (chosenRituals.contains(ritualIndexOnTree.get(k).getRitual())) {
+                    chosenSign.setPosition(ritualPositionsOnTree[k].x + 80, ritualPositionsOnTree[k].y + 80);
+                    chosenSign.render(batch);
+                }
+            } else {
+                disabledRitualTextureOnTree.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
+                disabledRitualTextureOnTree.render(batch);
+            }
         }
+        //render lines
+        renderLines(batch);
+        //render viewing ritual
+        if (viewingRitual != null) {
+            DynamicRitual.renderRitual(batch, font, viewingRitual.getRitual(), 830, 630, 835, 385, 54, 6);
+            // if the viewingRitual is already picked then render the chosenButton instead
+            if (!unlockedRituals.contains(viewingRitual.getRitual()) && skillPoints > 0) {
+                unlockButton.render(batch);
+            } else if (!chosenRituals.contains(viewingRitual.getRitual())) {
+                chooseButton.render(batch);
+            } else {
+                chosenButton.render(batch);
+            }
+        }
+        //render chosen rituals
+        if (chosenRituals.size() != 0) {
+            for (int k = 0; k < chosenRituals.size(); k++) {
+                DynamicRitual.renderRecipe(batch, font, chosenRituals.get(k), 35 + 150 * k, 115, 24, 6);
+            }
+        }
+
+    }
+
+    private void renderLines(Batch batch) {
         Vector2 start = new Vector2();
         Vector2 end = new Vector2();
         for (Map.Entry<Integer, RitualNode> entry : ritualIndexOnTree.entrySet()) {
             int key = entry.getKey();
             start.set(ritualPositionsOnTree[key].x + ritualSize / 2, ritualPositionsOnTree[key].y + ritualSize / 2);
-
             //get the end point of lines
             RitualNode value = entry.getValue();
             for (RitualNode ritualNode : value.getPrerequisiteRituals()) {
@@ -184,17 +252,11 @@ public class RitualTree extends GameObject {
             }
 
         }
-
-        if (viewingRitual != null) {
-            DynamicRitual.renderRitual(batch, font, viewingRitual.getRitual(), 830, 630, 835, 385, 54, 6);
-        }
-
     }
 
     private void drawLines(Vector2 start, Vector2 end, Batch batch) {
         float distanceBetweenDot = 10;
         double distance = Math.sqrt(Math.pow(end.y - start.y, 2) + Math.pow(end.x - start.x, 2));
-//        System.out.println("distance is" + distance);
         int times = (int) (distance / distanceBetweenDot);
         Vector2 dir = new Vector2(end.x - start.x, end.y - start.y);
         int signX = 1;
@@ -203,17 +265,14 @@ public class RitualTree extends GameObject {
             signX = -1;
             if (dir.y < 0) {
                 signY = -1;
-            }
-            else{
+            } else {
                 signY = 1;
             }
-        }
-        else{
+        } else {
             if (dir.y < 0) {
                 signY = -1;
             }
         }
-
         double slope = (dir.y) / (dir.x);
         double degree = Math.atan(slope);
         double y = start.y;

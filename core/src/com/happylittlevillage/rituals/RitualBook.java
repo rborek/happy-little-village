@@ -164,45 +164,45 @@ public class RitualBook extends GameObject {
 
     @Override
     public void update(float delta) {
-        if (isMoving) {
-            slideTime += delta;
-            if (slideLeft) { // everything goes to the left 1 index
-                if (!updateIndexForSlidingRitual) {
-                    for (int k = firstIndex - 1; k < firstIndex + 3; k++) {
-                        dynamicRituals.get((k + count) % count).update(delta, k - firstIndex + 1); // add count to k to prevent negative results
+            if (isMoving) {
+                slideTime += delta;
+                if (slideLeft) { // everything goes to the left 1 index
+                    if (!updateIndexForSlidingRitual) {
+                        for (int k = firstIndex - 1; k < firstIndex + 3; k++) {
+                            dynamicRituals.get((k + count) % count).update(delta, k - firstIndex + 1); // add count to k to prevent negative results
+                        }
+                        updateIndexForSlidingRitual = true;
                     }
-                    updateIndexForSlidingRitual = true;
-                }
-                dynamicRituals.get((firstIndex - 1 + count) % count).updateMovement(delta, 1);
-                for (int k = firstIndex; k < firstIndex + 3; k++) {
-                    dynamicRituals.get(k % count).updateMovement(delta, 1); // k - firstIndex is the position being drawn,
-                    // k - firstIndex is the position that the texture needs to go to
-                }
-            } else if (slideRight) { // slidingIndex slides to the right
-                if (!updateIndexForSlidingRitual) {
-                    for (int k = firstIndex; k < firstIndex + 4; k++) {
-                        dynamicRituals.get(k % count).update(delta, k - firstIndex - 1);
+                    dynamicRituals.get((firstIndex - 1 + count) % count).updateMovement(delta, 1);
+                    for (int k = firstIndex; k < firstIndex + 3; k++) {
+                        dynamicRituals.get(k % count).updateMovement(delta, 1); // k - firstIndex is the position being drawn,
+                        // k - firstIndex is the position that the texture needs to go to
                     }
-                    updateIndexForSlidingRitual = true;
+                } else if (slideRight) { // slidingIndex slides to the right
+                    if (!updateIndexForSlidingRitual) {
+                        for (int k = firstIndex; k < firstIndex + 4; k++) {
+                            dynamicRituals.get(k % count).update(delta, k - firstIndex - 1);
+                        }
+                        updateIndexForSlidingRitual = true;
+                    }
+                    dynamicRituals.get((firstIndex + 3 + count) % count).updateMovement(delta, -1);
+                    for (int k = firstIndex; k < firstIndex + 3; k++) {
+                        dynamicRituals.get(k % count).updateMovement(delta, -1); // k - firstIndex is the position being drawn
+                    }
                 }
-                dynamicRituals.get((firstIndex + 3 + count) % count).updateMovement(delta, -1);
+                if (slideTime >= 1 / DynamicRitual.SLIDING_SPEED) {
+                    slideTime = 0;
+                    isMoving = false;
+                    updateIndexForSlidingRitual = false;
+                    slideRight = false;
+                    slideLeft = false;
+                }
+            } else {
                 for (int k = firstIndex; k < firstIndex + 3; k++) {
-                    dynamicRituals.get(k % count).updateMovement(delta, -1); // k - firstIndex is the position being drawn
+                    dynamicRituals.get(k % count).update(delta, k - firstIndex);
                 }
-            }
-            if (slideTime >= 1 / DynamicRitual.SLIDING_SPEED) {
-                slideTime = 0;
-                isMoving = false;
-                updateIndexForSlidingRitual = false;
-                slideRight = false;
-                slideLeft = false;
-            }
-        } else {
-            for (int k = firstIndex; k < firstIndex + 3; k++) {
-                dynamicRituals.get(k % count).update(delta, k - firstIndex);
             }
         }
-    }
 
     public void setMoving(boolean moving) {
         isMoving = moving;

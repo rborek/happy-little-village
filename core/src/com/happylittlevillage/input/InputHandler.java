@@ -178,7 +178,6 @@ public class InputHandler implements InputProcessor {
 //    }
         clickNextButtonVillageInfo(realPos.x, realPos.y); //  VillageInfo next button
         if (gameHandler.isPaused()) {
-            System.out.print("CHECKED");
             checkContinue(realPos.x, realPos.y);
         }
         //if Tutorial
