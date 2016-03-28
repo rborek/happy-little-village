@@ -127,6 +127,7 @@ public class GameHandler {
             } else {
                 messageScreen = 0;
                 paused = false;
+                ritualBook.addStandardRitual(); // this is so that RitualBook will update new rituals from the ritual Tree after a week
             }
         }
 //        if (messageBox instanceof WeekSummary) {
@@ -179,7 +180,6 @@ public class GameHandler {
             }
             tutorialMessage.update(delta);
         }
-
     }
 
     public void render(Batch batch) {

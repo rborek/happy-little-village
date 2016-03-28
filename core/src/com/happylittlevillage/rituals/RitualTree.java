@@ -45,6 +45,9 @@ public class RitualTree extends GameObject {
             new Rectangle(520, 302, ritualSize, ritualSize),
             new Rectangle(636, 543, ritualSize, ritualSize),
     };
+    // two vector2 to render lines
+    private Vector2 start = new Vector2();
+    private Vector2 end = new Vector2();
 
     public RitualTree(GameHandler gameHandler, float xPos, float yPos) {
         super(Assets.getTexture("ui/ritual_tree.png"), xPos, yPos);
@@ -58,10 +61,11 @@ public class RitualTree extends GameObject {
                 System.out.println("" + Ritual.getRitualNode(name).toString());
             }
         }
+
     }
 
     private void addIndexOnTree() {
-        // this hashmap will connect each ritual to each index on the tree so that ritualPositionOnTree can just call the index for interact
+        // this hashmap will connect each ritual to each index/position on the tree so that ritualPositionOnTree can just call the index for interact/render
         // TODO since Ritual reads ritual in alphabetical order, renaming or adding new files in the middle will mess up the order of the rituals on the tree
         int index = 0;
         for (String name : Ritual.getRitualNames()) {
@@ -73,6 +77,15 @@ public class RitualTree extends GameObject {
 
     private void addUnlockedRituals() {
         unlockedRituals.add(Ritual.getRitual("Dried meat"));
+        for(Ritual ritual : unlockedRituals){
+            for(Map.Entry<Integer, RitualNode> entry : ritualIndexOnTree.entrySet()){
+                if(entry.getValue().getRitual() == ritual){
+                    entry.getValue().activate();
+                    System.out.println("!!!!!!!!!!!!" +entry.getValue().toString());
+                }
+            }
+
+        }
     }
 
     private void SetPrerequisites() {
@@ -140,22 +153,28 @@ public class RitualTree extends GameObject {
         // choose ritual
         else if (chooseButtonPosition.contains(mouseX, mouseY)) {
             if (viewingRitual != null) {
-                System.out.println("Choose");
-                // if it is not unlocked, then unlock it and decrement skillPoint
-                if (!unlockedRituals.contains(viewingRitual.getRitual()) && skillPoints > 0) {
-                    unlockedRituals.add(viewingRitual.getRitual());
-                    skillPoints--;
+                System.out.println("View/Unlock/Choose");
+                // if it is not unlocked
+                if (skillPoints > 0) { // if there is enough skillpoint
+                    if (!unlockedRituals.contains(viewingRitual.getRitual())) { // if it is not in the thingy
+                        if (viewingRitual.activate()) { // if it is activated. Return true also activates it
+                            unlockedRituals.add(viewingRitual.getRitual());
+                            skillPoints--;
+                            return true;
+                        }
+                    }
                 }
                 // if it is unlocked, then select it and put it in the bar. Do not decrement skillPoint
-                else if (!chosenRituals.contains(viewingRitual.getRitual())) {
+                //if it is not in chosenRituals and it is unlocked
+                if (!chosenRituals.contains(viewingRitual.getRitual()) && unlockedRituals.contains(viewingRitual.getRitual())) {
                     chosenRituals.add(viewingRitual.getRitual());
+                    System.out.println("added");
                 }
                 //unlock other ritual
                 return true;
             }
         }
         // unChoose ritual from the bar
-        //TODO I wanna pass in an array of positions of the bar in the if statement's argument but I cannot write a for loop there
         else {
             System.out.println("size is:" + chosenRituals.size());
             //rectangle of the chosen ritual on the bar
@@ -209,9 +228,10 @@ public class RitualTree extends GameObject {
         }
         //render lines
         renderLines(batch);
+
         //render viewing ritual
         if (viewingRitual != null) {
-            DynamicRitual.renderRitual(batch, font, viewingRitual.getRitual(), 830, 630, 835, 385, 54, 6);
+            viewingRitual.getRitual().render(batch, font, viewingRitual.getRitual(), 830, 630, 835, 385, 54, 6);
             // if the viewingRitual is already picked then render the chosenButton instead
             if (!unlockedRituals.contains(viewingRitual.getRitual()) && skillPoints > 0) {
                 unlockButton.render(batch);
@@ -224,15 +244,13 @@ public class RitualTree extends GameObject {
         //render chosen rituals
         if (chosenRituals.size() != 0) {
             for (int k = 0; k < chosenRituals.size(); k++) {
-                DynamicRitual.renderRecipe(batch, font, chosenRituals.get(k), 35 + 150 * k, 115, 24, 6);
+                chosenRituals.get(k).renderRecipe(batch, font, chosenRituals.get(k), 35 + 150 * k, 115, 24, 6);
             }
         }
 
     }
 
     private void renderLines(Batch batch) {
-        Vector2 start = new Vector2();
-        Vector2 end = new Vector2();
         for (Map.Entry<Integer, RitualNode> entry : ritualIndexOnTree.entrySet()) {
             int key = entry.getKey();
             start.set(ritualPositionsOnTree[key].x + ritualSize / 2, ritualPositionsOnTree[key].y + ritualSize / 2);

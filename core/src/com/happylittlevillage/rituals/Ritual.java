@@ -2,6 +2,8 @@ package com.happylittlevillage.rituals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.village.Village;
@@ -151,6 +153,56 @@ public class Ritual {
 
     public String getName() {
         return name;
+    }
+
+    public void render(Batch batch, BitmapFont font, Ritual ritual, float startX, float startY, float posX, float posY, int gemSize, int spaceBetweenGems){
+        for (int k = 0; k < ritual.getRecipe().length; k++) {
+            for (int h = 0; h < ritual.getRecipe()[0].length; h++) {
+                if (ritual.getRecipe()[k][h] != null) {
+                    if (ritual.getRecipe()[k][h].equals(GemColour.BLUE)) {
+                        DynamicRitual.gemTextures[1].setPosition(startX + h * (spaceBetweenGems + gemSize) , startY - k * (spaceBetweenGems + gemSize));
+                        DynamicRitual.gemTextures[1].render(batch, gemSize, gemSize);
+                    } else if (ritual.getRecipe()[k][h].equals(GemColour.GREEN)) {
+                        DynamicRitual.gemTextures[2].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
+                        DynamicRitual.gemTextures[2].render(batch, gemSize, gemSize);
+                    } else if (ritual.getRecipe()[k][h].equals(GemColour.YELLOW)) {
+                        DynamicRitual.gemTextures[3].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
+                        DynamicRitual.gemTextures[3].render(batch, gemSize, gemSize);
+                    } else if (ritual.getRecipe()[k][h].equals(GemColour.RED)) {
+                        DynamicRitual.gemTextures[0].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
+                        DynamicRitual.gemTextures[0].render(batch, gemSize, gemSize);
+                    }
+                }
+            }
+        }
+        for (int k = 0; k < ritual.getEffects().length; k++) {
+            font.draw(batch, ritual.getEffects()[k].getModifier().name() + ritual.getEffects()[k].getAmount(), posX, posY - ritual.getEffects().length * 35 - k * 25);
+        }
+        font.draw(batch, ritual.getName(), posX, posY + 20);
+    }
+
+    // render not moving ritual's recipe only
+
+    public void renderRecipe(Batch batch, BitmapFont font, Ritual ritual, float startX, float startY, int gemSize, int spaceBetweenGems){
+        for (int k = 0; k < ritual.getRecipe().length; k++) {
+            for (int h = 0; h < ritual.getRecipe()[0].length; h++) {
+                if (ritual.getRecipe()[k][h] != null) {
+                    if (ritual.getRecipe()[k][h].equals(GemColour.BLUE)) {
+                        DynamicRitual.gemTextures[1].setPosition(startX + h * (spaceBetweenGems + gemSize) , startY - k * (spaceBetweenGems + gemSize));
+                        DynamicRitual.gemTextures[1].render(batch, gemSize, gemSize);
+                    } else if (ritual.getRecipe()[k][h].equals(GemColour.GREEN)) {
+                        DynamicRitual.gemTextures[2].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
+                        DynamicRitual.gemTextures[2].render(batch, gemSize, gemSize);
+                    } else if (ritual.getRecipe()[k][h].equals(GemColour.YELLOW)) {
+                        DynamicRitual.gemTextures[3].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
+                        DynamicRitual.gemTextures[3].render(batch, gemSize, gemSize);
+                    } else if (ritual.getRecipe()[k][h].equals(GemColour.RED)) {
+                        DynamicRitual.gemTextures[0].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
+                        DynamicRitual.gemTextures[0].render(batch, gemSize, gemSize);
+                    }
+                }
+            }
+        }
     }
 
 }

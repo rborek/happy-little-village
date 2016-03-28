@@ -18,6 +18,7 @@ public class RitualNode {
 
     public boolean activate() {
         if (prerequisiteRituals.size() == 0) {
+            activated = true;
             return true;
         } else {
             for (RitualNode ritualNode : prerequisiteRituals) {

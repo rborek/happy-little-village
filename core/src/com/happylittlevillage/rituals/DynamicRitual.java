@@ -19,7 +19,7 @@ public class DynamicRitual {
     private int index;
     private float posX = 0;
     public static final double SLIDING_SPEED = 2.5;
-    public static GameObject[] gemTextures = {
+    public static GameObject[] gemTextures = { // red blue green yellow
             new GameObject(Gem.getArrayOfTextures()[0], 0, 0, gemSize, gemSize),
             new GameObject(Gem.getArrayOfTextures()[1], 0, 0, gemSize, gemSize),
             new GameObject(Gem.getArrayOfTextures()[2], 0, 0, gemSize, gemSize),
@@ -60,54 +60,8 @@ public class DynamicRitual {
             font.draw(batch, dynamicRitual.getRitual().getEffects()[k].getModifier().name() + dynamicRitual.getRitual().getEffects()[k].getAmount(), posX, startY - dynamicRitual.getRitual().getEffects().length * 35 - k * 25);
         }
     }
-    // render not moving ritual
-    public static void renderRitual(Batch batch, BitmapFont font, Ritual ritual, float startX, float startY,  float posX, float posY, int gemSize, int spaceBetweenGems){
-        for (int k = 0; k < ritual.getRecipe().length; k++) {
-            for (int h = 0; h < ritual.getRecipe()[0].length; h++) {
-                if (ritual.getRecipe()[k][h] != null) {
-                    if (ritual.getRecipe()[k][h].equals(GemColour.BLUE)) {
-                        gemTextures[1].setPosition(startX + h * (spaceBetweenGems + gemSize) , startY - k * (spaceBetweenGems + gemSize));
-                        gemTextures[1].render(batch, gemSize, gemSize);
-                    } else if (ritual.getRecipe()[k][h].equals(GemColour.GREEN)) {
-                        gemTextures[2].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
-                        gemTextures[2].render(batch, gemSize, gemSize);
-                    } else if (ritual.getRecipe()[k][h].equals(GemColour.YELLOW)) {
-                        gemTextures[3].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
-                        gemTextures[3].render(batch, gemSize, gemSize);
-                    } else if (ritual.getRecipe()[k][h].equals(GemColour.RED)) {
-                        gemTextures[0].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
-                        gemTextures[0].render(batch, gemSize, gemSize);
-                    }
-                }
-            }
-        }
-        for (int k = 0; k < ritual.getEffects().length; k++) {
-            font.draw(batch, ritual.getEffects()[k].getModifier().name() + ritual.getEffects()[k].getAmount(), posX, posY - ritual.getEffects().length * 35 - k * 25);
-        }
-        font.draw(batch, ritual.getName(), posX, posY + 20);
-    }
 
-    public static void renderRecipe(Batch batch, BitmapFont font, Ritual ritual, float startX, float startY, int gemSize, int spaceBetweenGems){
-        for (int k = 0; k < ritual.getRecipe().length; k++) {
-            for (int h = 0; h < ritual.getRecipe()[0].length; h++) {
-                if (ritual.getRecipe()[k][h] != null) {
-                    if (ritual.getRecipe()[k][h].equals(GemColour.BLUE)) {
-                        gemTextures[1].setPosition(startX + h * (spaceBetweenGems + gemSize) , startY - k * (spaceBetweenGems + gemSize));
-                        gemTextures[1].render(batch, gemSize, gemSize);
-                    } else if (ritual.getRecipe()[k][h].equals(GemColour.GREEN)) {
-                        gemTextures[2].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
-                        gemTextures[2].render(batch, gemSize, gemSize);
-                    } else if (ritual.getRecipe()[k][h].equals(GemColour.YELLOW)) {
-                        gemTextures[3].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
-                        gemTextures[3].render(batch, gemSize, gemSize);
-                    } else if (ritual.getRecipe()[k][h].equals(GemColour.RED)) {
-                        gemTextures[0].setPosition(startX + h * (spaceBetweenGems + gemSize), startY - k * (spaceBetweenGems + gemSize));
-                        gemTextures[0].render(batch, gemSize, gemSize);
-                    }
-                }
-            }
-        }
-    }
+
 
     public void update(float delta, int index) {
         if(posX != 200 * (index) + 650){
