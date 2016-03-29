@@ -35,10 +35,12 @@ public class RitualAltar extends GameObject implements MenuItem {
     private ArrayList<RitualEffect[]> ritualEffects = new ArrayList<RitualEffect[]>();
     private Village village;
     private ArrayList<ArrayList<GridPoint2>> lightUpGrid = new ArrayList<ArrayList<GridPoint2>>();
+    private RitualTree ritualTree;
 
     public RitualAltar(GemBag gemBag, float xPos, float yPos, Village village, RitualTree ritualTree) {
         super(Assets.getTexture("altar/altar.png"), xPos, yPos, 400, 400);
         this.village = village;
+        this.ritualTree = ritualTree;
         this.gemBag = gemBag;
         bonus = new int[4][4];
         addToBonus = new int[4][4];
@@ -52,10 +54,17 @@ public class RitualAltar extends GameObject implements MenuItem {
             paddingColumn -= 83;
         }
         commenceButtonPosition = new Rectangle(commenceButton.getPosition().x, commenceButton.getPosition().y, commenceButton.getWidth(), commenceButton.getHeight());
-        rituals = ritualTree.getUnlockedRituals(); // TODO change this
+        setWeeklyChosenRitual();
     }
 
+    public void setWeeklyChosenRitual(){
+        rituals.clear();
+        for(Ritual ritual : ritualTree.getChosenRituals()){
+            rituals.add(ritual);
+        }
+    }
 
+    //TODO this thing messes up the whole ritual thingy.
     public boolean gainRitual(Ritual ritual) {
         rituals.add(ritual);
         return true;

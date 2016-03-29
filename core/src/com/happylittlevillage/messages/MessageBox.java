@@ -27,7 +27,7 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	}
 	// for the daily information
 	public MessageBox(String instruction, GameHandler gameHandler) {
-		super(Assets.getTexture("ui/parchment2.png"), 70, 160);
+		super(Assets.getTexture("ui/parchment3.png"), 30, 15);
 		continueButton = Assets.getTexture("ui/continue_button.png");
 		this.gameHandler = gameHandler;
 		this.text = instruction;
@@ -57,10 +57,10 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 
 	@Override
 	public boolean interact(float mouseX, float mouseY) {
-		System.out.println("interacted with continue button");
 		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
 		if (r.contains(mouseX, mouseY)) {
-			gameHandler.unpause();
+			System.out.println("interacted with continue button");
+			gameHandler.unpauseInGame();
 			return true;
 		}
 		return false;

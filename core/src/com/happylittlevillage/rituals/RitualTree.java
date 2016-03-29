@@ -16,8 +16,8 @@ public class RitualTree extends GameObject {
     private GameHandler gameHandler;
     private int skillPoints = 10;
 
-    private ArrayList<Ritual> unlockedRituals = new ArrayList<Ritual>();
-    private ArrayList<Ritual> chosenRituals = new ArrayList<Ritual>();
+    private ArrayList<Ritual> unlockedRituals = new ArrayList<Ritual>(); // all the unlocked rituals. Greater than chosenRituals
+    private ArrayList<Ritual> chosenRituals = new ArrayList<Ritual>(); // chosen rituals and passed in ritualBook and ritualAltar
     private RitualNode viewingRitual = null;
     private static HashMap<Integer, RitualNode> ritualIndexOnTree = new HashMap<Integer, RitualNode>();
 
@@ -54,7 +54,7 @@ public class RitualTree extends GameObject {
         this.gameHandler = gameHandler;
         addIndexOnTree(); // synchronize rituals with their positions on the ritualTree
         addUnlockedRituals();
-        addChosenRituals();
+        addPresetChosenRituals();
         SetPrerequisites();
         for (String name : Ritual.getRitualNames()) {
             if (Ritual.getRituals().containsKey(name)) {
@@ -77,11 +77,10 @@ public class RitualTree extends GameObject {
 
     private void addUnlockedRituals() {
         unlockedRituals.add(Ritual.getRitual("Dried meat"));
-        for(Ritual ritual : unlockedRituals){
-            for(Map.Entry<Integer, RitualNode> entry : ritualIndexOnTree.entrySet()){
-                if(entry.getValue().getRitual() == ritual){
+        for (Ritual ritual : unlockedRituals) {
+            for (Map.Entry<Integer, RitualNode> entry : ritualIndexOnTree.entrySet()) {
+                if (entry.getValue().getRitual() == ritual) {
                     entry.getValue().activate();
-                    System.out.println("!!!!!!!!!!!!" +entry.getValue().toString());
                 }
             }
 
@@ -104,10 +103,16 @@ public class RitualTree extends GameObject {
 
     }
 
+    //TODO need to add condition so that it is impossible to remove preset rituals
+    private void addPresetChosenRituals() {
 
-    private void addChosenRituals() {
         chosenRituals.add(Ritual.getRitual("Dried meat"));
     }
+
+    public void addWeeklyRitualToChosenRitual(Ritual weeklyRitual) {
+        chosenRituals.add(weeklyRitual);
+    }
+
 
     private void addPrerequisites(String name, ArrayList<String> prerequisites) {
         HashMap<String, RitualNode> allRituals = Ritual.getRituals(); // shorten the name
@@ -139,7 +144,7 @@ public class RitualTree extends GameObject {
     public boolean interact(float mouseX, float mouseY) {
         //continue the game
         if (continueButtonPosition.contains(mouseX, mouseY)) {
-            gameHandler.unpause();
+            gameHandler.unpauseInGame();
             return true;
         }
         //slide the bar
@@ -168,7 +173,7 @@ public class RitualTree extends GameObject {
                 //if it is not in chosenRituals and it is unlocked
                 if (!chosenRituals.contains(viewingRitual.getRitual()) && unlockedRituals.contains(viewingRitual.getRitual())) {
                     chosenRituals.add(viewingRitual.getRitual());
-                    System.out.println("added");
+                    System.out.println("added to chosenRitual");
                 }
                 //unlock other ritual
                 return true;

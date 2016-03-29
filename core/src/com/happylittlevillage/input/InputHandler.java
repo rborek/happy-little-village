@@ -53,7 +53,7 @@ public class InputHandler implements InputProcessor {
     public void renderSelectedGem(Batch batch) {
         if (selectedGem != null) {
             Vector2 realPos = screen.getRealScreenPos(Gdx.input.getX(), Gdx.input.getY());
-            selectedGem.render(batch, realPos.x - RitualAltar.slotSize2/2, realPos.y - RitualAltar.slotSize2/2);
+            selectedGem.render(batch, realPos.x - RitualAltar.slotSize2 / 2, realPos.y - RitualAltar.slotSize2 / 2);
         }
     }
 
@@ -64,8 +64,8 @@ public class InputHandler implements InputProcessor {
                 for (int i = 0; i < selectedRitual[0].length; i++) {
                     if (selectedRitual[k][i] != null) {
                         //do not change this algorithm or stuff will be flipped
-                        selectedRitual[k][i].render(batch, realPos.x + (i - selectedRitual[0].length) * (RitualAltar.spacing +RitualAltar.slotSize2),
-                                realPos.y + (-k) * (RitualAltar.spacing +RitualAltar.slotSize2));
+                        selectedRitual[k][i].render(batch, realPos.x + (i - selectedRitual[0].length) * (RitualAltar.spacing + RitualAltar.slotSize2),
+                                realPos.y + (-k) * (RitualAltar.spacing + RitualAltar.slotSize2));
                     }
                 }
             }
@@ -77,11 +77,10 @@ public class InputHandler implements InputProcessor {
     }
 
     private void checkContinue(float mouseX, float mouseY) {
-        if(gameHandler.getMessageScreen()!=3){
+        if (gameHandler.getMessageScreen() == 0 ) {
             gameHandler.getMessageBox().interact(mouseX, mouseY);
-        }
-        else{
-            gameHandler.getRitualTree().interact(mouseX,mouseY);
+        } else if (gameHandler.getMessageScreen() == 1) {
+            gameHandler.getRitualTree().interact(mouseX, mouseY);
         }
     }
 
@@ -195,19 +194,15 @@ public class InputHandler implements InputProcessor {
             //This restrict player's interaction with the book only
             if (tutorialMessage.getTutorialScreen() >= 10 || tutorialMessage.getTutorialScreen() <= 12) {
                 tryToOpenBook(realPos.x, realPos.y);
-                if (miniBook.isOpen()) {
-                    interactRitualBook(realPos.x, realPos.y);
-                    pickUpRitual(realPos.x, realPos.y);
-                }
+                interactRitualBook(realPos.x, realPos.y);
+                pickUpRitual(realPos.x, realPos.y);
             }
         }
         //start GamePlay
         else {
             tryToOpenBook(realPos.x, realPos.y);
-            if (miniBook.isOpen()) {
-                interactRitualBook(realPos.x, realPos.y);
-                pickUpRitual(realPos.x, realPos.y);
-            }
+            interactRitualBook(realPos.x, realPos.y);
+            pickUpRitual(realPos.x, realPos.y);
             removeFromSlots(realPos.x, realPos.y);
             pickUpGem(realPos.x, realPos.y);
             ritualAltar.interact(realPos.x, realPos.y);

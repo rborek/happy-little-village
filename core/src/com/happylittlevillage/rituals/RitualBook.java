@@ -5,14 +5,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.menu.GameScreen;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RitualBook extends GameObject {
     private int firstIndex = 0;
@@ -37,14 +35,18 @@ public class RitualBook extends GameObject {
         rightArrow = new Rectangle(ritual_arrow_right.getPosition().x, ritual_arrow_right.getPosition().y, ritual_arrow_right.getWidth(), ritual_arrow_right.getHeight());
         leftArrow = new Rectangle(ritual_arrow_left.getPosition().x, ritual_arrow_left.getPosition().y, ritual_arrow_left.getWidth(), ritual_arrow_left.getHeight());
         this.ritualTree = ritualTree;
-        addStandardRitual();
+        setWeeklyChosenRitual();
     }
 
-    public void addStandardRitual() {
+    // to be called every weeek after pausing the game to update available rituals
+    public void setWeeklyChosenRitual() {
+        dynamicRituals.clear(); //clear out all the content before adding new rituals
         count = 0;
         for (Ritual ritual : ritualTree.getChosenRituals()) {
-            dynamicRituals.add(new DynamicRitual(ritual));
-            count++;
+            if(ritual != null){
+                dynamicRituals.add(new DynamicRitual(ritual));
+                count++;
+            }
         }
     }
 

@@ -1,46 +1,113 @@
 package com.happylittlevillage.messages;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.happylittlevillage.GameHandler;
+import com.happylittlevillage.gems.Gem;
+import com.happylittlevillage.gems.GemBag;
+import com.happylittlevillage.gems.GemColour;
 import com.happylittlevillage.village.Village;
 
 public class WeekSummary extends MessageBox {
-	private Village village;
+    private Village village;
+    private GemBag gemBag;
+    private int timesPerformed;
+    private int timesToDo;
+    private Texture[][] gems;
 
 
-	public WeekSummary(Village village, GameHandler gameHandler) {
-		super("", gameHandler);
-		this.village = village;
-		title = "Resource Summary";
-	}
+    public WeekSummary(Village village, GemBag gembag, GameHandler gameHandler) {
+        super("", gameHandler);
+        this.village = village;
+        this.gemBag = gembag;
+        title = "Week Summary";
+    }
 
 
-	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
-	}
+    public boolean checkRitual() {
+        if (village.getWeeklyRitual().isComplete()) {
+            //TODO do not set day left instantly
+            village.setDaysLeft(7);
+            return true;
+        } else {
+            timesToDo = village.getWeeklyRitual().getTimesToDo();
+            timesPerformed = village.getWeeklyRitual().getTimesPerformed();
+            return false;
+        }
+    }
+
+    public void stateRitual() {
+        text += " \n\n              is the ritual";
+        GemColour[][] colours = village.getWeeklyRitual().getRecipe();
+        Texture[] textures = Gem.getArrayOfTextures();
+        gems = new Texture[colours.length][colours[0].length];
+        for (int i = 0; i < gems.length; i++) {
+            for (int j = 0; j < gems[0].length; j++) {
+                if (colours[i][j] != null) {
+                    System.out.println(colours[i][j]);
+                    gems[i][j] = textures[colours[i][j].ordinal()];
+                }
+            }
+        }
+
+    }
 
 
-	@Override
-	public void render(Batch batch) {
-		super.render(batch);
-		//batch.draw(texture,position.x,position.y);
-		position.y -= 20;
-		int alignX = 100;
-		font.draw(batch, "Food Consumed: " + village.getConsumedFood(), position.x + alignX, position.y + 430);
-		font.draw(batch, "Food Gathered: " + village.getGatheredFood(), position.x + alignX, position.y + 390);
-		font.draw(batch, "Food Total: " + village.getFood(), position.x + alignX, position.y + 350);
+    @Override
+    public void update(float delta) {
+        // TODO Auto-generated method stub
+    }
 
-		font.draw(batch, "Water Consumed: " + village.getConsumedWater(), position.x + alignX, position.y + 310);
-		font.draw(batch, "Water Gathered: " + village.getGatheredWater(), position.x + alignX, position.y + 270);
-		font.draw(batch, "Water Total: " + village.getWater(), position.x + alignX, position.y + 230);
 
-		font.draw(batch, "Population: " + village.getPop(), position.x + alignX, position.y + 190);
-		position.y += 20;
+    @Override
+    public void render(Batch batch) {
+        super.render(batch);
+        //batch.draw(texture,position.x,position.y);
+        position.y -= 20;
+        int alignY = 600;
+        int alignX = 80;
+        font.draw(batch, "Food Consumed: " + village.getConsumedFood(), position.x + alignX, position.y + alignY);
+        alignY -= 40;
+        font.draw(batch, "Food Gathered: " + village.getGatheredFood(), position.x + alignX, position.y + alignY);
+        alignY -= 40;
+        font.draw(batch, "Food Total: " + village.getFood(), position.x + alignX, position.y + alignY);
+        font.draw(batch, "Water Consumed: " + village.getConsumedWater(), position.x + alignX, position.y + alignY);
+        alignY -= 40;
+        font.draw(batch, "Water Gathered: " + village.getGatheredWater(), position.x + alignX, position.y + alignY);
+        alignY -= 40;
+        font.draw(batch, "Water Total: " + village.getWater(), position.x + alignX, position.y + alignY);
+        alignY -= 40;
+        font.draw(batch, "Population: " + village.getPop(), position.x + alignX, position.y + alignY);
+        position.y += 20;
 //		font.draw(batch, "Villagers Created: "+ village.getVillagerAdded(), position.x+200, position.y+150);
 //		font.draw(batch, "Villagers Lost: "+ (village.getPop()-village.getVillagerAdded()), position.x+200, position.y+110);
 
+        //for the gems
+        int alignY2 = 620;
+        int alignX2 = 670;
+        font.draw(batch, "Red gems mined  " + village.getMinedGems()[0], position.x + alignX2, position.y + alignY2);
+        alignY2 -= 40;
+        font.draw(batch, "Yellow gems mined  " + village.getMinedGems()[1], position.x + alignX2, position.y + alignY2);
+        alignY2 -= 40;
+        font.draw(batch, "Green gems mined  " + village.getMinedGems()[2], position.x + alignX2, position.y + alignY2);
+        alignY2 -= 40;
+        font.draw(batch, "Blue gems mined  " + village.getMinedGems()[3], position.x + alignX2, position.y + alignY2);
 
-	}
+        //for the weekly Ritual
+        int alignY3 = 200;
+//        font.draw(batch, text, position.x + alignX2, position.y + alignY3);
+        for (int i = 0; i < gems.length; i++) {
+            for (int j = 0; j < gems[0].length; j++) {
+                if (gems[i][j] != null) batch.draw(gems[i][j], 720 + 64 * j, 350 - 64 * i, 64, 64);
+            }
+        }
+        int howMany = village.getWeeklyRitual().getTimesToDo() - village.getWeeklyRitual().getTimesPerformed();
+        alignY3-=50;
+        font.draw(batch, "Number of times to complete: " + howMany, position.x + alignX2, position.y + alignY3);
+        alignY3-=50;
+        font.draw(batch, "Days left to complete weekly ritual: " + village.getDaysLeft(), position.x + alignX2, position.y + alignY3);
+
+
+    }
 
 }

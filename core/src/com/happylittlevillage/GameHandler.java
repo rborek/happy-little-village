@@ -38,7 +38,7 @@ public class GameHandler {
     private GemBook miniBook = new GemBook(this);
     private boolean bookOpen;
     private RitualTree ritualTree = new RitualTree(this, 30, 15);
-    private RitualBook ritualBook = new RitualBook(ritualTree,600, 0);
+    private RitualBook ritualBook = new RitualBook(ritualTree, 600, 0);
     private WinMessage winMessage;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private boolean DEBUG = false;
@@ -83,7 +83,6 @@ public class GameHandler {
         gameOverMessage = new GameOver(this, happyLittleVillage);
         winMessage = new WinMessage(this);
         Ritual.setVillage(village);
-        ritualAltar.gainRitual(village.getWeeklyRitual());
         Gdx.input.setInputProcessor(inputHandler);
         pause();
     }
@@ -95,58 +94,37 @@ public class GameHandler {
 
     public void pause() {
         paused = true;
-        if (miniBook.isOpen()) {
-            miniBook.close();
-        }
+        //TODO This is a stupid place to put this method
         if (village.getDaysLeft() < 0) {
             lose = true;
             messageBox = gameOverMessage;
         }
     }
 
-    public void unpause() {
-        if (intro) {
-            intro = false;
-            paused = false;
-        } else {
-            if (messageScreen == 0) {
-                messageBox = new WeekSummary(village, this);
-                messageScreen++;
-            } else if (messageScreen == 1) {
-                messageBox = new GemSummary(gemBag, village, this);
-                messageScreen++;
-            } else if (messageScreen == 2) {
-                messageBox = new GodMessage(gemBag, village, this);
-                if (((GodMessage) messageBox).checkRitual()) {
-                    village.generateNewWeeklyRitual();
-                }
-                ((GodMessage) messageBox).stateRitual();
-                messageScreen++;
-            } else if (messageScreen == 3) { // ritualTree
-                messageScreen++;
-            } else {
-                messageScreen = 0;
-                paused = false;
-                ritualBook.addStandardRitual(); // this is so that RitualBook will update new rituals from the ritual Tree after a week
+    public void finishIntro() {
+        intro = false;
+        paused = false;
+        messageBox = new WeekSummary(village, gemBag, this);
+    }
+
+    public void unpauseInGame() {
+        //TODO 2 options: the weekly ritual can be in the RitualBook and the Altar. ( we choose this for now)
+        // so we must call add weeklyRitual recipe to the RitualBook right when we show ritual tree
+        //TODO the weekly ritual can be excluded from the RitualBook and only functions in the Altar
+        // we dont update weeklyRitual to the chosenRituals anymore. Just dont update anything about it cuz the altar can call it from village
+
+        if (messageScreen == 0) {
+            messageScreen++; // move to the ritual Tree
+            // this add the weekly Ritual To the chosen ritual
+            if (!ritualTree.getChosenRituals().contains(village.getWeeklyRitual())) {
+                ritualTree.addWeeklyRitualToChosenRitual(village.getWeeklyRitual());
             }
+        } else if (messageScreen == 1) {
+            messageScreen = 0;
+            paused = false;
+            ritualBook.setWeeklyChosenRitual(); // this is so that RitualBook will update new rituals from the ritual Tree after a week
+            ritualAltar.setWeeklyChosenRitual();
         }
-//        if (messageBox instanceof WeekSummary) {
-//            messageBox = new GemSummary(gemBag, village, this);
-//        } else if (messageBox instanceof GemSummary) {
-//            messageBox = new GodMessage(gemBag, village, this);
-//            if (((GodMessage) messageBox).checkRitual()) {
-//                //TODO change this messy code
-//                village.generateNewWeeklyRitual();
-//            }
-//            ((GodMessage) messageBox).stateRitual();
-//        } else if (messageBox instanceof GodMessage) {
-//
-//        } else {
-//            messageBox = new WeekSummary(village, this);
-//            intro = false;
-//            paused = false;
-//
-//        }
     }
 
     // game logic goes here
@@ -166,6 +144,11 @@ public class GameHandler {
 
         if (!paused) { // not pause
             if (village.isNextDay()) {
+                //update information of weekly summary before the week ends
+                if (((WeekSummary) messageBox).checkRitual()) {
+                    village.generateNewWeeklyRitual();
+                }
+                ((WeekSummary) messageBox).stateRitual();
                 pause();
             }
             village.update(delta);
@@ -175,7 +158,7 @@ public class GameHandler {
         if (isTutorial) {
             //arrow for screen 0 and 1
             if (tutorialMessage.getTutorialScreen() <= 1) {
-                // make the arrow point to a villnager
+                // make the arrow point to a villager
                 tutorialMessage.setAngle(village.getPositionOfARandomVillager(), arrow.get(0));
             }
             tutorialMessage.update(delta);
@@ -205,9 +188,9 @@ public class GameHandler {
             inputHandler.renderSelectedGem(batch);
             inputHandler.renderSelectedRitual(batch);
         } else {
-            if (messageScreen != 3) {
+            if (messageScreen == 0) {
                 messageBox.render(batch);
-            } else {
+            } else if (messageScreen == 1) {
                 ritualTree.render(batch);
             }
         }
@@ -289,10 +272,10 @@ public class GameHandler {
     public int getMessageScreen() {
         return messageScreen;
     }
+
     public RitualTree getRitualTree() {
         return ritualTree;
     }
-
 
 
 }

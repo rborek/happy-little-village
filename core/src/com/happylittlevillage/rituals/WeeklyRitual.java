@@ -39,8 +39,9 @@ public class WeeklyRitual extends Ritual {
             for (int j = 0; j < numGems; j++) {
                 recipe[i][j] = GemColour.values()[random.nextInt(GemColour.values().length - 1)];
             }
-
         }
+        name = "weekly Ritual";
+        effects = new RitualEffect[0];
     }
 
     @Override
