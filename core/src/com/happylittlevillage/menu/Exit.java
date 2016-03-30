@@ -5,7 +5,7 @@ import com.happylittlevillage.Assets;
 import com.happylittlevillage.HappyLittleVillage;
 import com.happylittlevillage.Miscellaneous;
 
-public class Exit extends Miscellaneous{
+public class Exit extends Miscellaneous {
 
     public Exit (HappyLittleVillage happyLittleVillage) {
         super(happyLittleVillage);

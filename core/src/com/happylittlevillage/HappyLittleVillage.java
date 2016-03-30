@@ -11,12 +11,17 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 	private Options options;
 	private Exit exit;
 	private Load load;
+	private LoadingScreen loadingScreen;
 
 	@Override
 	public void create() {
 		setMenu();
 	}
 
+	public void setLoadingScreen(boolean isTutorial){
+		loadingScreen = new LoadingScreen(this, isTutorial);
+		setScreen(loadingScreen);
+	}
 	public void setGameScreen(boolean isTutorial) {
 		if (gameScreen == null) {
 			gameScreen = new GameScreen(this,isTutorial);

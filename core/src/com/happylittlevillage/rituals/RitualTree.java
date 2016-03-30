@@ -55,7 +55,7 @@ public class RitualTree extends GameObject {
         addIndexOnTree(); // synchronize rituals with their positions on the ritualTree
         addUnlockedRituals();
         addPresetChosenRituals();
-        SetPrerequisites();
+        setPrerequisites();
         for (String name : Ritual.getRitualNames()) {
             if (Ritual.getRituals().containsKey(name)) {
                 System.out.println("" + Ritual.getRitualNode(name).toString());
@@ -87,7 +87,7 @@ public class RitualTree extends GameObject {
         }
     }
 
-    private void SetPrerequisites() {
+    private void setPrerequisites() {
         ArrayList<String> prerequisites = new ArrayList<String>();
         prerequisites.add("Dried meat");
         addPrerequisites("Liquid diet", prerequisites); // this one has 1 prerequisite

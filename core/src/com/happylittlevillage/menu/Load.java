@@ -1,12 +1,11 @@
 package com.happylittlevillage.menu;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Json;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.HappyLittleVillage;
 import com.happylittlevillage.Miscellaneous;
 
-public class Load extends Miscellaneous{
+public class Load extends Miscellaneous {
     public Load(HappyLittleVillage happyLittleVillage) {
         super(happyLittleVillage);
         backButton = Assets.getTexture("menu/backButton.png");

@@ -44,8 +44,6 @@ public class GameHandler {
     private boolean DEBUG = false;
     // all menu items is put here
     private MessageBox messageBox;
-    private GemSummary gemSummary;
-    private GodMessage godMessage;
     private GameOver gameOverMessage;
     private boolean win = false;
     private boolean intro = true;

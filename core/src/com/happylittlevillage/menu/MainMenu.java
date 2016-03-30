@@ -2,7 +2,6 @@ package com.happylittlevillage.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
@@ -51,13 +50,13 @@ public class MainMenu extends Miscellaneous {
 //            return true;
 //        }
         if (startButtonPosition.contains(realPos)) {
-            happyLittleVillage.setGameScreen(false);
+            happyLittleVillage.setLoadingScreen(false);
             return true;
 //        } else if (optionsButtonPosition.contains(realPos)) {
 //            happyLittleVillage.setOptions();
 //            return true;
         } else if (tutorialButtonPosition.contains(realPos)) {
-            happyLittleVillage.setGameScreen(true);
+            happyLittleVillage.setLoadingScreen(true);
         } else if(loadButtonPosition.contains(realPos)){
             happyLittleVillage.setLoad();
         } else if(exitButtonPosition.contains(realPos)){
