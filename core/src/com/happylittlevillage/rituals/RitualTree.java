@@ -15,7 +15,6 @@ import java.util.Map;
 public class RitualTree extends GameObject {
     private GameHandler gameHandler;
     private int skillPoints = 10;
-
     private ArrayList<Ritual> unlockedRituals = new ArrayList<Ritual>(); // all the unlocked rituals. Greater than chosenRituals
     private ArrayList<Ritual> chosenRituals = new ArrayList<Ritual>(); // chosen rituals and passed in ritualBook and ritualAltar
     private RitualNode viewingRitual = null;
@@ -24,7 +23,7 @@ public class RitualTree extends GameObject {
     private GameObject dot = new GameObject(Assets.getTexture("ui/dot.png"), 0, 0);
     private GameObject disabledRitualTextureOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree_disabled.png"), 0, 0);
     private GameObject enabledRitualTextureOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree_activated.png"), 0, 0);
-    private GameObject continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), 1060, 23);
+    private GameObject continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), position.x + 1030, position.y + 5);
     private Rectangle continueButtonPosition = new Rectangle(continueButton.getPosition().x, continueButton.getPosition().y, continueButton.getWidth(), continueButton.getHeight());
     private GameObject chooseButton = new GameObject(Assets.getTexture("ui/choose_button.png"), 925, 170);
     private GameObject chosenButton = new GameObject(Assets.getTexture("ui/chosen_button.png"), 925, 170);
@@ -46,8 +45,8 @@ public class RitualTree extends GameObject {
             new Rectangle(636, 543, ritualSize, ritualSize),
     };
     // two vector2 to render lines
-    private Vector2 start = new Vector2();
-    private Vector2 end = new Vector2();
+    private Vector2 start = new Vector2(0,0);
+    private Vector2 end = new Vector2(0,0);
 
     public RitualTree(GameHandler gameHandler, float xPos, float yPos) {
         super(Assets.getTexture("ui/ritual_tree.png"), xPos, yPos);
@@ -58,7 +57,7 @@ public class RitualTree extends GameObject {
         setPrerequisites();
         for (String name : Ritual.getRitualNames()) {
             if (Ritual.getRituals().containsKey(name)) {
-                System.out.println("" + Ritual.getRitualNode(name).toString());
+                System.out.println("ritual is " + Ritual.getRitualNode(name).toString());
             }
         }
 
@@ -91,16 +90,11 @@ public class RitualTree extends GameObject {
         ArrayList<String> prerequisites = new ArrayList<String>();
         prerequisites.add("Dried meat");
         addPrerequisites("Liquid diet", prerequisites); // this one has 1 prerequisite
-        System.out.println("matched");
         prerequisites.add("Liquid diet");
-        addPrerequisites("Well water", prerequisites); // water has 2 prerequisite
-        System.out.println("matched");
-        prerequisites.clear(); //
+        addPrerequisites("Well water", prerequisites); // water has 2 prerequisites
         prerequisites.add("Farming is fun!");
         prerequisites.add("Liquid diet");
         addPrerequisites("Time to explore!", prerequisites);
-        System.out.println("matched");
-
     }
 
     //TODO need to add condition so that it is impossible to remove preset rituals
@@ -123,6 +117,7 @@ public class RitualTree extends GameObject {
 
             }
         }
+        prerequisites.clear();
     }
 
     public ArrayList<Ritual> getUnlockedRituals() {
