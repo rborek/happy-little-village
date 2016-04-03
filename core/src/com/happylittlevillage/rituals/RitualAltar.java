@@ -20,6 +20,8 @@ public class RitualAltar extends GameObject implements MenuItem {
     // gonna replace animation with different picture
     private GameObject commenceButton = new GameObject(Assets.getTexture("altar/button.png"), position.x + width, position.y);
     private Rectangle commenceButtonPosition;
+    private GameObject removeAllButton = new GameObject(Assets.getTexture("altar/remove_all_button.png"),position.x + width, position.y + height/2);
+    private Rectangle removeAllButtonPosition;
     private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
     //new measurements
     public static final int slotSize2 = 67;
@@ -54,6 +56,7 @@ public class RitualAltar extends GameObject implements MenuItem {
             paddingColumn -= 83;
         }
         commenceButtonPosition = new Rectangle(commenceButton.getPosition().x, commenceButton.getPosition().y, commenceButton.getWidth(), commenceButton.getHeight());
+        removeAllButtonPosition = new Rectangle(removeAllButton.getPosition().x, removeAllButton.getPosition().y, removeAllButton.getWidth(), removeAllButton.getHeight());
         setWeeklyChosenRitual();
     }
 
@@ -93,6 +96,7 @@ public class RitualAltar extends GameObject implements MenuItem {
     public void render(Batch batch) {
         super.render(batch);
         commenceButton.render(batch);
+        removeAllButton.render(batch);
         for (int i = 0; i < grid.length; i++) {
             for (int k = 0; k < grid[0].length; k++) {
                 if (grid[i][k] != null) {
@@ -354,11 +358,22 @@ public class RitualAltar extends GameObject implements MenuItem {
             for (int k = 0; k < grid[0].length; k++) grid[i][k] = null;
     }
 
+    private void clearAltar(){
+        for (int i = 0; i < grid.length; i++)
+            for (int k = 0; k < grid[0].length; k++){
+                gemBag.add(grid[i][k].getColour());
+                grid[i][k] = null;
+            }
+    }
     @Override
     public boolean interact(float mouseX, float mouseY) {
         pickUpGem(mouseX, mouseY);
         if (commenceButtonPosition.contains(mouseX, mouseY)) {
             useGems();
+            return true;
+        }
+        else if(removeAllButtonPosition.contains(mouseX, mouseY)){
+            clearAltar();
             return true;
         }
         return false;

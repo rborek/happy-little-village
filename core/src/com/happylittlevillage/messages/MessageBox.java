@@ -15,10 +15,8 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	protected GameHandler gameHandler;
 	protected String text;
 	protected String title;
-	protected Texture continueButton;
+	protected GameObject continueButton;
 	protected Texture backButton;
-	protected float continueX;
-	protected float continueY;
 
 	//exclusively for the tutorial
 	public  MessageBox (GameHandler gameHandler){
@@ -28,16 +26,10 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	// for the daily information
 	public MessageBox(String instruction, GameHandler gameHandler) {
 		super(Assets.getTexture("ui/parchment3.png"), 30, 15);
-		continueButton = Assets.getTexture("ui/continue_button.png");
+		continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), position.x + 1030, position.y + 5);
 		this.gameHandler = gameHandler;
 		this.text = instruction;
 		title = "";
-		setButtonPos();
-	}
-
-	private void setButtonPos() {
-		continueX = position.x + 250;
-		continueY = position.y + 45;
 	}
 
 	@Override
@@ -49,15 +41,15 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	public void render(Batch batch) {
 		font = Assets.getFont(36);
 		batch.draw(texture, position.x, position.y);
-		batch.draw(continueButton, continueX, continueY);
+		continueButton.render(batch);
 		if (text != null) {
-			font.draw(batch, text, continueX - 180, continueY + 340);
+			font.draw(batch, text, position.x + 180, position.y + 340);
 		}
 	}
 
 	@Override
 	public boolean interact(float mouseX, float mouseY) {
-		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
+		Rectangle r = new Rectangle(continueButton.getPosition().x, continueButton.getPosition().y, continueButton.getWidth(), continueButton.getHeight());
 		if (r.contains(mouseX, mouseY)) {
 			System.out.println("interacted with continue button");
 			gameHandler.unpauseInGame();

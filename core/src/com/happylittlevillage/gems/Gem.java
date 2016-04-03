@@ -3,6 +3,7 @@ package com.happylittlevillage.gems;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.happylittlevillage.Assets;
+import com.happylittlevillage.rituals.RitualAltar;
 
 
 public class Gem {
@@ -17,7 +18,7 @@ public class Gem {
 	}
 
 	public void render(Batch batch, float xPos, float yPos) {
-		batch.draw(getTexture(), xPos, yPos, 64, 64);
+		batch.draw(getTexture(), xPos, yPos, RitualAltar.slotSize2, RitualAltar.slotSize2);
 	}
 
 	public void render(Batch batch, float xPos, float yPos, float width, float height){

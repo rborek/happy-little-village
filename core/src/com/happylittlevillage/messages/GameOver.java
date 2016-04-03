@@ -43,7 +43,7 @@ public class GameOver extends MessageBox {
 
 	@Override
 	public boolean interact(float mouseX, float mouseY) {
-		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
+		Rectangle r = new Rectangle(continueButton.getPosition().x, continueButton.getPosition().y, continueButton.getWidth(), continueButton.getHeight());
 		if (r.contains(mouseX, mouseY)) {
 			System.out.println("GOTO MENU ");
 			happyLittleVillage.setMenu();

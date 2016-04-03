@@ -71,7 +71,6 @@ public class RitualTree extends GameObject {
             ritualIndexOnTree.put(index, Ritual.getRitualNode(name));
             index++;
         }
-
     }
 
     private void addUnlockedRituals() {
@@ -99,8 +98,13 @@ public class RitualTree extends GameObject {
 
     //TODO need to add condition so that it is impossible to remove preset rituals
     private void addPresetChosenRituals() {
-
         chosenRituals.add(Ritual.getRitual("Dried meat"));
+        chosenRituals.add(Ritual.getRitual("Liquid diet"));
+        chosenRituals.add(Ritual.getRitual("Reproduce"));
+        chosenRituals.add(Ritual.getRitual("Well water"));
+        chosenRituals.add(Ritual.getRitual("Time to explore!"));
+        chosenRituals.add(Ritual.getRitual("Farming is fun!"));
+        chosenRituals.add(Ritual.getRitual("Mining time!"));
     }
 
     public void addWeeklyRitualToChosenRitual(Ritual weeklyRitual) {

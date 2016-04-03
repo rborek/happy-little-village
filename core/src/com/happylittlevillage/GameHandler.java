@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Json;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemBag;
 import com.happylittlevillage.gems.GemBook;
+import com.happylittlevillage.input.GameGestureDetector;
 import com.happylittlevillage.input.InputHandler;
 import com.happylittlevillage.menu.SaveGame;
 import com.happylittlevillage.messages.*;
@@ -32,6 +33,7 @@ public class GameHandler {
     private Texture background = Assets.getTexture("bg/background.png");
     private GemBag gemBag;
     private InputHandler inputHandler;
+    private GameGestureDetector gameGestureDetector;
     private Gem gem;
     private Texture scroll = Assets.getTexture("ui/scroll.png");
     private boolean paused;
@@ -59,9 +61,10 @@ public class GameHandler {
     private int messageScreen = 0;
 
 
-    public GameHandler(InputHandler inputHandler, boolean isTutorial, HappyLittleVillage happyLittleVillage) {
+    public GameHandler(GameGestureDetector gameGestureDetector, InputHandler inputHandler, boolean isTutorial, HappyLittleVillage happyLittleVillage) {
         this.isTutorial = isTutorial;
         this.inputHandler = inputHandler;
+        this.gameGestureDetector = gameGestureDetector;
         init(isTutorial, happyLittleVillage);
     }
 
@@ -73,7 +76,7 @@ public class GameHandler {
             tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
             arrow.add(new Vector2(476, 579));
         } else {
-            village = new Village(gemBag, 1000, 1000, 5);
+            village = new Village(gemBag, 200, 200, 5);
             ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
         }
 
@@ -81,7 +84,7 @@ public class GameHandler {
         gameOverMessage = new GameOver(this, happyLittleVillage);
         winMessage = new WinMessage(this);
         Ritual.setVillage(village);
-        Gdx.input.setInputProcessor(inputHandler);
+        Gdx.input.setInputProcessor(gameGestureDetector);
         pause();
     }
 
@@ -169,7 +172,7 @@ public class GameHandler {
         batch.draw(scroll, 1280 - 550, -12);
         ritualAltar.render(batch);
         gemBag.render(batch);
-        miniBook.render(batch);
+//        miniBook.render(batch);
         if (!intro) ritualBook.render(batch);
 //		ritualTree.render(batch);
 //      optionWheel.render(batch);

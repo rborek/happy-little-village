@@ -27,14 +27,14 @@ public class Ritual {
     }
 
 	public static List<String> getRitualNames() {
-		return ritualNames;
+        return ritualNames;
 	}
 
     private Ritual(String[] file) {
         // the first line of the file contains the ritual's name
         name = file[0];
-	    ritualNames.add(name);
-	    // the second line of the file contains all of the gem combinations
+        ritualNames.add(name);
+        // the second line of the file contains all of the gem combinations
         // they are stored in an alternating pattern of ROW/COL COLOUR
         // e.g. 01 RED
         String[] combinationLine = file[1].split(" ");

@@ -18,7 +18,7 @@ public class Introduction extends MessageBox {
 	@Override
 	public boolean interact(float mouseX, float mouseY) {
 		System.out.println("interacted with continue button");
-		Rectangle r = new Rectangle(continueX, continueY, continueButton.getWidth(), continueButton.getHeight());
+		Rectangle r = new Rectangle(continueButton.getPosition().x, continueButton.getPosition().y, continueButton.getWidth(), continueButton.getHeight());
 		if (r.contains(mouseX, mouseY)) {
 			gameHandler.finishIntro();
 			return true;

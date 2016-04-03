@@ -63,8 +63,8 @@ public class TutorialMessage extends MessageBox {
         this.ritualAltar = ritualAltar;
         this.gemBook = gemBook;
         texture = Assets.getTexture("ui/tutorialMessageBox.png");
-        continueButton = Assets.getTexture("ui/tutorialContinueButton.png");
-        backButton = Assets.getTexture("ui/tutorialBackButton.png");
+//        continueButton = Assets.getTexture("ui/tutorialContinueButton.png");
+//        backButton = Assets.getTexture("ui/tutorialBackButton.png");
         position.x = positionOfEachMessage[0];
         position.y = positionOfEachMessage[1];
         switchText();
@@ -181,10 +181,10 @@ public class TutorialMessage extends MessageBox {
             }
         }
         if (!disableContinue) {
-            batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
+//            batch.draw(continueButton, position.x + texture.getWidth() - continueButton.getWidth(), position.y);
         }
         if (!disableBack && tutorialScreen != 0) {
-            batch.draw(backButton, position.x, position.y);
+//            batch.draw(backButton, position.x, position.y);
         }
         if (tutorialScreen == 8) {
             supportTexture1.render(batch);

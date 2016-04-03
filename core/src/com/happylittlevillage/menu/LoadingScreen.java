@@ -39,7 +39,7 @@ public class LoadingScreen implements Screen, InputProcessor {
         batch.setProjectionMatrix(camera.combined);
         screen = new GameObject(Assets.getTexture("menu/loading_screen.png"),0,0);
         // if we ever wanna interact with the loading screen we have to set the input processor to this class, implement InputProcessor
-        //and methods like touchdragg touch down
+        //and methods like touchDragged touch down
         Gdx.input.setInputProcessor(this);
     }
 
@@ -56,16 +56,14 @@ public class LoadingScreen implements Screen, InputProcessor {
     public void render(float delta) {
         // Clear the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        screen.render(batch);
+        batch.end();
         if (Assets.update()) {
             if(Gdx.input.isTouched()){
                 happyLittleVillage.setGameScreen(isTutorial);
             }
         }
-        batch.begin();
-        screen.render(batch);
-        batch.end();
-
-
     }
 
     @Override

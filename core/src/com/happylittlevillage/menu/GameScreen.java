@@ -1,10 +1,8 @@
 package com.happylittlevillage.menu;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameHandler;
 import com.happylittlevillage.HappyLittleVillage;
+import com.happylittlevillage.input.GameGestureDetector;
 import com.happylittlevillage.input.InputHandler;
 
 public class GameScreen implements Screen {
@@ -30,6 +29,7 @@ public class GameScreen implements Screen {
 	private int dayTime;
 	private GameHandler gameHandler;
 	private InputHandler inputHandler;
+	private GameGestureDetector gameGestureDetector;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport viewport;
@@ -40,7 +40,6 @@ public class GameScreen implements Screen {
 	public GameScreen(HappyLittleVillage game, boolean isTutorial) {
 		this.game = game;
 		this.isTutorial = isTutorial;
-		Assets.load();
 		sun = Assets.getTexture("bg/sun.png");
 		batch = new SpriteBatch();
 //		if (Gdx.app.getType() == Application.ApplicationType.Android || !Gdx.graphics.isGL30Available()) {
@@ -48,16 +47,19 @@ public class GameScreen implements Screen {
 //		} else {
 //			batch = new SpriteBatch(1000, createDefaultShader());
 //		}
+
 		camera = new OrthographicCamera();
 		camera.position.set(WIDTH / 2f, HEIGHT / 2f, 0);
 		camera.update();
 		viewport = new StretchViewport(WIDTH, HEIGHT, camera);
 		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
+
 		inputHandler = new InputHandler(this, game);
-		gameHandler = new GameHandler(inputHandler, isTutorial, game);
+		gameGestureDetector = new GameGestureDetector(inputHandler, this); // only change the 4th value which is the time to detect a long press
+		gameHandler = new GameHandler(gameGestureDetector, inputHandler, isTutorial, game);
 		inputHandler.linkTo(gameHandler);
-		Gdx.input.setInputProcessor(inputHandler);
+		Gdx.input.setInputProcessor(gameGestureDetector);
 		dayTime = gameHandler.getVillage().getMaxHours();
 	}
 

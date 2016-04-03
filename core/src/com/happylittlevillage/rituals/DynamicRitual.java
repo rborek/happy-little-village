@@ -15,10 +15,12 @@ public class DynamicRitual {
     private Rectangle[][] recipePositions;
     private static int spaceBetweenGems = 36;
     private static int gemSize = 36;
-    private static int startY = 150;
+    private static int startY = 170;
+    private static int startX = 630;
+    private static int spaceX = 150;
     private int index;
     private float posX = 0;
-    public static final double SLIDING_SPEED = 2.5;
+    public static final double SLIDING_SPEED = 5;
     public static GameObject[] gemTextures = { // red blue green yellow
             new GameObject(Gem.getArrayOfTextures()[0], 0, 0, gemSize, gemSize),
             new GameObject(Gem.getArrayOfTextures()[1], 0, 0, gemSize, gemSize),
@@ -36,7 +38,7 @@ public class DynamicRitual {
         renderRitual(batch, font, this, startY, gemSize, spaceBetweenGems, posX);
     }
     // rendering moving Ritual
-    public static void renderRitual(Batch batch, BitmapFont font, DynamicRitual dynamicRitual, float startY, int gemSize, int spaceBetweenGems, float posX){
+    private void renderRitual(Batch batch, BitmapFont font, DynamicRitual dynamicRitual, float startY, int gemSize, int spaceBetweenGems, float posX){
         for (int k = 0; k < dynamicRitual.getRitual().getRecipe().length; k++) {
             for (int h = 0; h < dynamicRitual.getRitual().getRecipe()[0].length; h++) {
                 if (dynamicRitual.getRitual().getRecipe()[k][h] != null) {
@@ -61,11 +63,10 @@ public class DynamicRitual {
         }
     }
 
-
-
+    //this update the initial position before sliding
     public void update(float delta, int index) {
-        if(posX != 200 * (index) + 650){
-            posX = 200 *(index) + 650;
+        if(posX != spaceX * (index) + startX){
+            posX = spaceX *(index) + startX;
             movePosition(posX);
         }
     }

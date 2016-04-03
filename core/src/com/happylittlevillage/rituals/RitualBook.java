@@ -21,19 +21,16 @@ public class RitualBook extends GameObject {
     //TODO all the recipes, recipePositions, names, effects need to be called from RitualTree
     private ArrayList<DynamicRitual> dynamicRituals = new ArrayList<DynamicRitual>();
     private BitmapFont font;
-    private GameObject ritual_arrow_right = new GameObject(Assets.getTexture("ui/ritual_arrow_right.png"), position.x + 610, position.y + 120, 60, 60);
-    private GameObject ritual_arrow_left = new GameObject(Assets.getTexture("ui/ritual_arrow_left.png"), position.x + 610, position.y + 40, 60, 60);
     private boolean isMoving = false;
-    private boolean updateIndexForSlidingRitual = false;
+    private boolean updateInitialPositions = false;
     private boolean slideLeft = false;
     private boolean slideRight = false;
     private float slideTime = 0;
     private RitualTree ritualTree;
+    private int lastIndex = 0;
 
     public RitualBook(RitualTree ritualTree, float xPos, float yPos) {
         super(Assets.getTexture("ui/parchment2.png"), xPos, yPos, 700, 250);
-        rightArrow = new Rectangle(ritual_arrow_right.getPosition().x, ritual_arrow_right.getPosition().y, ritual_arrow_right.getWidth(), ritual_arrow_right.getHeight());
-        leftArrow = new Rectangle(ritual_arrow_left.getPosition().x, ritual_arrow_left.getPosition().y, ritual_arrow_left.getWidth(), ritual_arrow_left.getHeight());
         this.ritualTree = ritualTree;
         setWeeklyChosenRitual();
     }
@@ -43,18 +40,18 @@ public class RitualBook extends GameObject {
         dynamicRituals.clear(); //clear out all the content before adding new rituals
         count = 0;
         for (Ritual ritual : ritualTree.getChosenRituals()) {
-            if(ritual != null){
+            if (ritual != null) {
                 dynamicRituals.add(new DynamicRitual(ritual));
                 count++;
             }
         }
     }
 
-    public void turnPage(float x, float y) {
+    public void turnPage(boolean isLeft) {
         if (!isMoving) {
-            if (leftArrow.contains(x, y)) {
+            if (!isLeft) {
                 previous();
-            } else if (rightArrow.contains(x, y)) {
+            } else {
                 next();
             }
         }
@@ -101,7 +98,7 @@ public class RitualBook extends GameObject {
         if (isMoving) {
             return null;
         } else {
-            for (int k = firstIndex; k < firstIndex + 3; k++) {
+            for (int k = firstIndex; k < lastIndex; k++) {
                 int index = k % count;
 //            System.out.println(index + " " + firstIndex);
                 // check for one specific ritual recipe position in the arrayList of recipePositions
@@ -141,66 +138,63 @@ public class RitualBook extends GameObject {
         batch.draw(texture, position.x, position.y, width, height);
         batch.end(); // drawing doesn't happen until .end() is called
         batch.begin(); // restart batch to not scissor the background (as well as not break everything else that uses the batch);
-        enableScissor(620f, 0, 600f, 220f);
+        enableScissor(620f, 0, 800f, 220f);
         if (isMoving) {
             renderSlidingIndex(batch);
         }
-        for (int i = firstIndex; i < firstIndex + 3; i++) {
+        for (int i = firstIndex; i < lastIndex; i++) {
             dynamicRituals.get((i) % count).render(batch, font);
         }
         batch.end(); // must end batch before disabling scissor
         disableScissor();
         batch.begin();
-        ritual_arrow_left.render(batch);
-        ritual_arrow_right.render(batch);
     }
 
     private void renderSlidingIndex(Batch batch) {
         if (slideLeft) {
             dynamicRituals.get((firstIndex - 1 + count) % count).render(batch, font);
         } else if (slideRight) {
-            dynamicRituals.get((firstIndex + 3 + count) % count).render(batch, font);
+            dynamicRituals.get((firstIndex + 4 + count) % count).render(batch, font);
         }
     }
 
     @Override
     public void update(float delta) {
         // this deals with how rituals slide to the right and to the left
+        lastIndex = firstIndex + 4; // the last index to be rendered
         if (isMoving) {
             slideTime += delta;
             if (slideLeft) { // everything goes to the left 1 index
-                if (!updateIndexForSlidingRitual) {
-                    for (int k = firstIndex - 1; k < firstIndex + 3; k++) {
+                if (!updateInitialPositions) {
+                    //this update the initial positions of rituals before they start sliding. firstIndex-1 calculate the index disappearing
+                    for (int k = firstIndex - 1; k < lastIndex; k++) {
                         dynamicRituals.get((k + count) % count).update(delta, k - firstIndex + 1); // add count to k to prevent negative results
                     }
-                    updateIndexForSlidingRitual = true;
+                    updateInitialPositions = true;
                 }
-                dynamicRituals.get((firstIndex - 1 + count) % count).updateMovement(delta, 1);
-                for (int k = firstIndex; k < firstIndex + 3; k++) {
-                    dynamicRituals.get(k % count).updateMovement(delta, 1); // k - firstIndex is the position being drawn,
-                    // k - firstIndex is the position that the texture needs to go to
+                for (int k = firstIndex - 1; k < lastIndex; k++) {
+                    dynamicRituals.get((k + count) % count).updateMovement(delta, 1);
                 }
             } else if (slideRight) { // slidingIndex slides to the right
-                if (!updateIndexForSlidingRitual) {
-                    for (int k = firstIndex; k < firstIndex + 4; k++) {
+                if (!updateInitialPositions) {//this update the initial positions of rituals before they start sliding. firstIndex+
+                    for (int k = firstIndex; k < lastIndex + 1; k++) { // last index +1 calculate the index appearing from the right
                         dynamicRituals.get(k % count).update(delta, k - firstIndex - 1);
                     }
-                    updateIndexForSlidingRitual = true;
+                    updateInitialPositions = true;
                 }
-                dynamicRituals.get((firstIndex + 3 + count) % count).updateMovement(delta, -1);
-                for (int k = firstIndex; k < firstIndex + 3; k++) {
-                    dynamicRituals.get(k % count).updateMovement(delta, -1); // k - firstIndex is the position being drawn
+                for (int k = firstIndex; k < lastIndex + 1; k++) {
+                    dynamicRituals.get((k + count) % count).updateMovement(delta, -1);
                 }
             }
-            if (slideTime >= 1 / DynamicRitual.SLIDING_SPEED) {
+            if (slideTime >= 0.7 / DynamicRitual.SLIDING_SPEED) {
                 slideTime = 0;
                 isMoving = false;
-                updateIndexForSlidingRitual = false;
+                updateInitialPositions = false;
                 slideRight = false;
                 slideLeft = false;
             }
         } else {
-            for (int k = firstIndex; k < firstIndex + 3; k++) {
+            for (int k = firstIndex; k < lastIndex; k++) {
                 dynamicRituals.get(k % count).update(delta, k - firstIndex);
             }
         }
