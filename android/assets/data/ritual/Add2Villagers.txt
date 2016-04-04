@@ -1,0 +1,3 @@
+Double Reproduce
+00 RED 01 GREEN 02 RED 03 GREEN
+VILLAGER +4

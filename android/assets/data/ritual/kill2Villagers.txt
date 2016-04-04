@@ -1,0 +1,3 @@
+Double Sacrifice
+10 GREEN 11 RED 01 RED 02 YELLOW
+VILLAGER -2

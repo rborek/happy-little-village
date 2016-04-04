@@ -186,12 +186,14 @@ public class RitualBook extends GameObject {
                     dynamicRituals.get((k + count) % count).updateMovement(delta, -1);
                 }
             }
-            if (slideTime >= 0.7 / DynamicRitual.SLIDING_SPEED) {
+            if (slideTime >= 0.7 / (DynamicRitual.SLIDING_SPEED)) {
+                System.out.println(slideTime);
                 slideTime = 0;
                 isMoving = false;
                 updateInitialPositions = false;
                 slideRight = false;
                 slideLeft = false;
+
             }
         } else {
             for (int k = firstIndex; k < lastIndex; k++) {

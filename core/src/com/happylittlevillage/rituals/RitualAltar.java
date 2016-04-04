@@ -361,8 +361,10 @@ public class RitualAltar extends GameObject implements MenuItem {
     private void clearAltar(){
         for (int i = 0; i < grid.length; i++)
             for (int k = 0; k < grid[0].length; k++){
-                gemBag.add(grid[i][k].getColour());
-                grid[i][k] = null;
+                if(grid[i][k] != null) {
+                    gemBag.add(grid[i][k].getColour());
+                    grid[i][k] = null;
+                }
             }
     }
     @Override

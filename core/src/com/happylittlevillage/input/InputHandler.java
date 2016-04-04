@@ -217,7 +217,7 @@ public class InputHandler implements GestureDetector.GestureListener {
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        Vector2 realPos = new Vector2(screen.getRealScreenPos(x,y));
+        Vector2 realPos = new Vector2(screen.getRealScreenPos(x, y));
         if (slideable && !isLongPressed) { // if it is in the slideable zone and user does not intend to pick up ritual
             if (realPos.x >= 620 && realPos.y <= 220) {
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
