@@ -194,9 +194,11 @@ public class RitualTree extends GameObject {
                 System.out.println("Checking chosen rituals");
                 chosenRitualPosition.set(40 + 100 * k, 20, 100, 120);
                 if (chosenRitualPosition.contains(mouseX, mouseY)) {
-                    chosenRituals.remove(k);
-                    System.out.println("REMOVED");
-                    return true;
+                    if(!chosenRituals.get(k).getName().equals("Weekly Ritual")) {
+                        chosenRituals.remove(k);
+                        System.out.println("REMOVED");
+                        return true;
+                    }
                 }
             }
         }
@@ -242,7 +244,7 @@ public class RitualTree extends GameObject {
 
         //render viewing ritual
         if (viewingRitual != null) {
-            viewingRitual.getRitual().render(batch, font, viewingRitual.getRitual(), 830, 630, 835, 385, 54, 6);
+            viewingRitual.getRitual().render(batch, font, 830, 630, 835, 385, 54, 6);
             // if the viewingRitual is already picked then render the chosenButton instead
             if (!unlockedRituals.contains(viewingRitual.getRitual()) && skillPoints > 0) {
                 unlockButton.render(batch);
@@ -255,7 +257,7 @@ public class RitualTree extends GameObject {
         //render chosen rituals
         if (chosenRituals.size() != 0) {
             for (int k = 0; k < chosenRituals.size(); k++) {
-                chosenRituals.get(k).renderRecipe(batch, font, chosenRituals.get(k), 40 + 100 * k, 115, 20, 4);
+                chosenRituals.get(k).renderRecipe(batch, 40 + 100 * k, 115, 20, 4);
             }
         }
 

@@ -43,7 +43,7 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 		batch.draw(texture, position.x, position.y);
 		continueButton.render(batch);
 		if (text != null) {
-			font.draw(batch, text, position.x + 180, position.y + 340);
+			font.draw(batch, text, position.x + 220, position.y + 510);
 		}
 	}
 

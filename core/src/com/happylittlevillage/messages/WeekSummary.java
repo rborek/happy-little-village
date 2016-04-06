@@ -37,7 +37,6 @@ public class WeekSummary extends MessageBox {
     }
 
     public void stateRitual() {
-        text += " \n\n              is the ritual";
         GemColour[][] colours = village.getWeeklyRitual().getRecipe();
         Texture[] textures = Gem.getArrayOfTextures();
         gems = new Texture[colours.length][colours[0].length];
@@ -71,6 +70,7 @@ public class WeekSummary extends MessageBox {
         font.draw(batch, "Food Gathered: " + village.getGatheredFood(), position.x + alignX, position.y + alignY);
         alignY -= 40;
         font.draw(batch, "Food Total: " + village.getFood(), position.x + alignX, position.y + alignY);
+        alignY -= 40;
         font.draw(batch, "Water Consumed: " + village.getConsumedWater(), position.x + alignX, position.y + alignY);
         alignY -= 40;
         font.draw(batch, "Water Gathered: " + village.getGatheredWater(), position.x + alignX, position.y + alignY);
@@ -101,9 +101,8 @@ public class WeekSummary extends MessageBox {
                 if (gems[i][j] != null) batch.draw(gems[i][j], 720 + 64 * j, 350 - 64 * i, 64, 64);
             }
         }
-        int howMany = village.getWeeklyRitual().getTimesToDo() - village.getWeeklyRitual().getTimesPerformed();
         alignY3-=50;
-        font.draw(batch, "Number of times to complete: " + howMany, position.x + alignX2, position.y + alignY3);
+        font.draw(batch, "Number of times to complete: " + village.getWeeklyRitual().getTimesLeftToDo(), position.x + alignX2, position.y + alignY3);
         alignY3-=50;
         font.draw(batch, "Days left to complete weekly ritual: " + village.getDaysLeft(), position.x + alignX2, position.y + alignY3);
 

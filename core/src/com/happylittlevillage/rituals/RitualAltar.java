@@ -142,19 +142,19 @@ public class RitualAltar extends GameObject implements MenuItem {
         for (int gridRow = 0; gridRow < grid.length; gridRow++) { //row gridRow
             for (int gridColumn = 0; gridColumn < grid[0].length; gridColumn++) { //column gridColumn
                 if (grid[gridRow][gridColumn] != null) {
-                    for (int firstRecipePosition = 0; firstRecipePosition < weeklyRitual.getRecipe()[0].length; firstRecipePosition++) {
-                        // get the first non-null colour
-                        if (weeklyRitual.getRecipe()[0][firstRecipePosition] != null) {
-                            //check if the first row's non-null colour matches with the grid
-                            if (grid[gridRow][gridColumn].getColour().equals(weeklyRitual.getRecipe()[0][firstRecipePosition])) {
-                                //start specifically checking one recipe
-                                compareRecipe(weeklyRitual, gridRow, gridColumn, firstRecipePosition);
-                                break;
-                            } else {
-                                break;
-                            }
-                        }
-                    }//end checking for one specific recipe
+//                    for (int firstRecipePosition = 0; firstRecipePosition < weeklyRitual.getRecipe()[0].length; firstRecipePosition++) {
+//                        // get the first non-null colour
+//                        if (weeklyRitual.getRecipe()[0][firstRecipePosition] != null) {
+//                            //check if the first row's non-null colour matches with the grid
+//                            if (grid[gridRow][gridColumn].getColour().equals(weeklyRitual.getRecipe()[0][firstRecipePosition])) {
+//                                //start specifically checking one recipe
+//                                compareRecipe(weeklyRitual, gridRow, gridColumn, firstRecipePosition);
+//                                break;
+//                            } else {
+//                                break;
+//                            }
+//                        }
+//                    }//end checking for one specific recipe
 
                     //iterate through all known grid recipe
                     for (int ritualNumber = 0; ritualNumber < rituals.size(); ritualNumber++) {
@@ -261,7 +261,8 @@ public class RitualAltar extends GameObject implements MenuItem {
             //add each effect to the arrayList of ritualEffects
             ritualEffects.add(ritual.getEffects());
             if (ritual == weeklyRitual) {
-                ritual.commence();
+                ((WeeklyRitual) ritual).commence();
+                System.out.println("WEEKLY RITUAL COMMENCE DETECTED");
             }
         }
     }

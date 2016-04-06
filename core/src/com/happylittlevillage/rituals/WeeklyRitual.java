@@ -14,7 +14,6 @@ public class WeeklyRitual extends Ritual {
     public WeeklyRitual(Village village) {
         super();
         this.village = village;
-        generateRandom();
         timesToDo = 3;
     }
 
@@ -31,7 +30,15 @@ public class WeeklyRitual extends Ritual {
         return timesPerformed;
     }
 
-    private void generateRandom() {
+    public int getTimesLeftToDo(){
+        int time;
+        return time = ( timesToDo - timesPerformed >= 0) ? (timesToDo - timesPerformed ) : 0;
+    }
+
+    public void generateRandom() {
+        timesToDo = 3;
+        timesPerformed = 0;
+
         int numGems = 3;
         recipe = new GemColour[numGems][numGems];
         gemCombination = new GemColour[numGems];
@@ -40,7 +47,7 @@ public class WeeklyRitual extends Ritual {
                 recipe[i][j] = GemColour.values()[random.nextInt(GemColour.values().length - 1)];
             }
         }
-        name = "weekly Ritual";
+        name = "Weekly Ritual";
         effects = new RitualEffect[0];
     }
 

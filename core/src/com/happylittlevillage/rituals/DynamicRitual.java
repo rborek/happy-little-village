@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameObject;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemColour;
@@ -36,6 +37,7 @@ public class DynamicRitual {
 
     public void render(Batch batch, BitmapFont font) {
         renderRitual(batch, font, this, startY, gemSize, spaceBetweenGems, posX);
+
     }
     // rendering moving Ritual
     private void renderRitual(Batch batch, BitmapFont font, DynamicRitual dynamicRitual, float startY, int gemSize, int spaceBetweenGems, float posX){

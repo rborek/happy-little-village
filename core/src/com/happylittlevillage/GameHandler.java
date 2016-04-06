@@ -59,6 +59,7 @@ public class GameHandler {
     private Json saveInfo = new Json();
     private SaveGame saveGame;
     private int messageScreen = 0;
+    private CustomMining customMining = new CustomMining(Assets.getTexture("ui/pick_axe.png"), 455, 450, 50, 50);
 
 
     public GameHandler(GameGestureDetector gameGestureDetector, InputHandler inputHandler, boolean isTutorial, HappyLittleVillage happyLittleVillage) {
@@ -145,8 +146,12 @@ public class GameHandler {
 
         if (!paused) { // not pause
             if (village.isNextDay()) {
-                //update information of weekly summary before the week ends
-                if (((WeekSummary) messageBox).checkRitual()) {
+                if (village.getWeeklyRitual().getRecipe() != null) { // if it is first week
+                    if (((WeekSummary) messageBox).checkRitual()) {
+                        village.generateNewWeeklyRitual();
+                    }
+                }
+                else {
                     village.generateNewWeeklyRitual();
                 }
                 ((WeekSummary) messageBox).stateRitual();
@@ -172,6 +177,7 @@ public class GameHandler {
         batch.draw(scroll, 1280 - 550, -12);
         ritualAltar.render(batch);
         gemBag.render(batch);
+        customMining.render(batch);
 //        miniBook.render(batch);
         if (!intro) ritualBook.render(batch);
 //		ritualTree.render(batch);
@@ -278,5 +284,7 @@ public class GameHandler {
         return ritualTree;
     }
 
-
+    public CustomMining getCustomMining() {
+        return customMining;
+    }
 }

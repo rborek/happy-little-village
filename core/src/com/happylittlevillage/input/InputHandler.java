@@ -181,6 +181,7 @@ public class InputHandler implements GestureDetector.GestureListener {
 //            happyLittleVillage.setMenu();
 //            gameHandler.pause();
 //    }
+        gameHandler.getCustomMining().interact(realPos.x, realPos.y);
         isLongPressed = false;
         if (slideArea.contains(realPos.x, realPos.y)) {
             slideable = true;

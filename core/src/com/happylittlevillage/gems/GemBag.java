@@ -25,7 +25,7 @@ public class GemBag extends GameObject {
     public GemBag(float xPos, float yPos) {
         super(Assets.getTexture("ui/gem_bag.png"), xPos, yPos);
         for (int i = 0; i < gemAmounts.length; i++) {
-            gemAmounts[i] = 10;
+            gemAmounts[i] = 100;
         }
         slots[0] = new Rectangle(gemTextures[0].getPosition().x, gemTextures[0].getPosition().y, slotSize, slotSize);
         slots[1] = new Rectangle(gemTextures[1].getPosition().x, gemTextures[1].getPosition().y, slotSize, slotSize);

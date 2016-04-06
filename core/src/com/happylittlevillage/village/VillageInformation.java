@@ -65,22 +65,25 @@ public class VillageInformation extends GameObject implements MenuItem {
             foodTexture.render(batch);
             waterTexture.render(batch);
             Assets.getFont(36).draw(batch, "" + village.getFood(), position.x + 70, position.y + 90);
-            Assets.getFont (36).draw(batch, "" + village.getWater(), position.x + 220, position.y + 90);
+            Assets.getFont(36).draw(batch, "" + village.getWater(), position.x + 200, position.y + 90);
             Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 300, position.y + 90);
+            Assets.getFont(30).draw(batch, "Time: " + (int) Math.ceil(village.getHoursLeft()), position.x + 300, 80);
+            Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(village.getDay()), position.x + 300, 145);
             moveAndFade(batch);
         } else {
             // page 2
-            batch.draw(villagers.get(0), position.x + 50, 50);
-            Assets.getFont(30).draw(batch, "" + village.getPop(), position.x + 50, 40);
-            batch.draw(villagers.get(1), position.x + 100, 50);
-            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.FARMER), position.x + 100, 40);
-            batch.draw(villagers.get(2), position.x + 150, 50);
-            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.EXPLORER), position.x + 150, 40);
-            batch.draw(villagers.get(3), position.x + 200, 50);
-            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.MINER), position.x + 200, 40);
-            Assets.getFont(30).draw(batch, "Hours: " + (int) Math.ceil(village.getHoursLeft()), position.x + 230, 80);
-            Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(village.getDay()), position.x + 350, 120);
-            Assets.getFont(30).draw(batch, "Days left: " + village.getDaysLeft(), position.x + 350, 80);
+            batch.draw(villagers.get(0), position.x + 25, 80);
+            Assets.getFont(30).draw(batch, "" + village.getPop(), position.x + 25, 80);
+            batch.draw(villagers.get(1), position.x + 75, 80);
+            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.FARMER), position.x + 75, 80);
+            batch.draw(villagers.get(2), position.x + 125, 80);
+            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.EXPLORER), position.x + 125, 80);
+            batch.draw(villagers.get(3), position.x + 175, 80);
+            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.MINER), position.x + 175, 80);
+            Assets.getFont(30).draw(batch, "Days left: " + village.getDaysLeft(), position.x + 300, 80);
+            if(village.getWeeklyRitual().getRecipe() != null){
+                Assets.getFont(30).draw(batch, "Times to do: " + village.getWeeklyRitual().getTimesLeftToDo(), position.x + 300, 140);
+            }
         }
     }
 
