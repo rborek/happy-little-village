@@ -12,6 +12,11 @@ public class RotatableGameObject extends GameObject {
 
     }
 
+    public RotatableGameObject(Texture texture, float xPos, float yPos, int textureX, int textureY) {
+        super(texture, xPos, yPos, textureX, textureY);
+    }
+
+
     public RotatableGameObject(Texture texture, float xPos, float yPos) {
         super(texture, xPos, yPos);
     }
@@ -22,6 +27,16 @@ public class RotatableGameObject extends GameObject {
             batch.draw(texture, position.x, position.y);
         } else {
             batch.draw(texture, position.x, position.y, texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth(), texture.getHeight(), 1, 1, angle, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
+        }
+    }
+
+    @Override
+    public void render(Batch batch, float textureX, float textureY) {
+        if (angle == 0) {
+            batch.draw(texture, position.x, position.y, width, height);
+        } else {
+            batch.draw(texture, position.x, position.y, width / 2, height / 2, width, height, 1, 1, angle, 0, 0, (int)width, (int)height, false, false);
+            System.out.print("drawing");
         }
     }
 

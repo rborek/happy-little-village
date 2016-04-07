@@ -9,7 +9,7 @@ import com.happylittlevillage.rituals.WeeklyRitual;
 import java.util.*;
 
 public class Village {
-	private static final int MAX_HOURS = 5;
+	private static final int MAX_HOURS = 1000;
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -194,12 +194,11 @@ public class Village {
 
 	private void mineGems(float delta) {
 		gemThreshold += delta / 30 * getNumberOf(VillagerRole.MINER);
-		if (gemThreshold > 1) {
+//		if (gemThreshold > 0.01) {
 			//get a random gemColour and store it in gemsMined according to its ordinal
-			GemColour g = gemBag.gainRandomGem();
-			gemBag.add(g);
+			gemBag.gainRandomGem();
 			gemThreshold = 0;
-		}
+//		}
 	}
 
 	private void updateVillagerEffects(float delta) {
@@ -282,14 +281,6 @@ public class Village {
 		resetMinedGems();
 	}
 
-	private void mineGems() {
-		//get a random gemColour and store it in gemsMined according to its ordinal
-		for (int i = 0; i < getNumberOf(VillagerRole.MINER) * 3; i++) {
-			GemColour g = gemBag.gainRandomGem();
-			gemsMined[g.ordinal()]++;
-			System.out.println(gemsMined[g.ordinal()]);
-		}
-	}
 
 	public int[] getMinedGems() {
 		return gemsMined;

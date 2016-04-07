@@ -32,7 +32,6 @@ public class DynamicRitual {
         this.ritual = ritual;
         recipePositions = new Rectangle[ritual.getRecipe().length][ritual.getRecipe()[0].length];
         movePosition(posX);
-
     }
 
     public void render(Batch batch, BitmapFont font) {

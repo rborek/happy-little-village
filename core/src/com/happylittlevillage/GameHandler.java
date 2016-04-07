@@ -59,8 +59,7 @@ public class GameHandler {
     private Json saveInfo = new Json();
     private SaveGame saveGame;
     private int messageScreen = 0;
-    private CustomMining customMining = new CustomMining(Assets.getTexture("ui/pick_axe.png"), 455, 450, 50, 50);
-
+    private CustomMining customMining;
 
     public GameHandler(GameGestureDetector gameGestureDetector, InputHandler inputHandler, boolean isTutorial, HappyLittleVillage happyLittleVillage) {
         this.isTutorial = isTutorial;
@@ -71,13 +70,14 @@ public class GameHandler {
 
     public void init(boolean isTutorial, HappyLittleVillage happyLittleVillage) {
         gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
+        customMining = new CustomMining(gemBag, null, 455, 450, 50, 50);
         if (isTutorial) {
             village = new Village(gemBag, 200, 100, 5);
             ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
             tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
             arrow.add(new Vector2(476, 579));
         } else {
-            village = new Village(gemBag, 200, 200, 5);
+            village = new Village(gemBag, 9999, 9999, 5);
             ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
         }
 
@@ -160,6 +160,7 @@ public class GameHandler {
             village.update(delta);
             ritualAltar.update(delta);
             ritualBook.update(delta);
+            customMining.update(delta);
         }
         if (isTutorial) {
             //arrow for screen 0 and 1
