@@ -2,6 +2,7 @@ package com.happylittlevillage.rituals;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.happylittlevillage.Assets;
@@ -49,8 +50,9 @@ public class RitualTree extends GameObject {
             new Rectangle(656, 193, ritualSize, ritualSize),
             new Rectangle(520, 195, ritualSize, ritualSize),
             new Rectangle(380, 178, ritualSize, ritualSize),
-
     };
+//    private HashMap<>
+
     // two vector2 to render lines
     private Vector2 start = new Vector2(0, 0);
     private Vector2 end = new Vector2(0, 0);
@@ -68,7 +70,6 @@ public class RitualTree extends GameObject {
         }
 
     }
-
     private void addIndexOnTree() {
         // this hashmap will connect each ritual to each index/position on the tree so that ritualPositionOnTree can just call the index for interact/render
         // TODO since Ritual reads ritual in alphabetical order, renaming or adding new files in the middle will mess up the order of the rituals on the tree

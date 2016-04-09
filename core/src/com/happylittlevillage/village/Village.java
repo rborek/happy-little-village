@@ -194,11 +194,11 @@ public class Village {
 
 	private void mineGems(float delta) {
 		gemThreshold += delta / 30 * getNumberOf(VillagerRole.MINER);
-//		if (gemThreshold > 0.01) {
-			//get a random gemColour and store it in gemsMined according to its ordinal
+		if (gemThreshold > 1) {
+//			get a random gemColour and store it in gemsMined according to its ordinal
 			gemBag.gainRandomGem();
 			gemThreshold = 0;
-//		}
+		}
 	}
 
 	private void updateVillagerEffects(float delta) {
@@ -248,12 +248,12 @@ public class Village {
 	}
 
 	public void addVillager(VillagerRole role) {
-		if (villagersToSpawn.isEmpty()) {
-			if (villagerSpawnTimer <= 0) {
+		if (villagersToSpawn.isEmpty()) { // if the queue is empty
+			if (villagerSpawnTimer <= 0) { // if the timer is up to date
 				villagers.add(new Villager(role, this));
 				villagerAdded += 1;
 				villagerSpawnTimer = (float) 0.5;
-			} else {
+			} else { // add to the queue as the timer busy
 				villagersToSpawn.add(new Villager(role, this));
 			}
 		} else {
@@ -475,6 +475,4 @@ public class Village {
 	}
 
 	public VillageInformation getVillageInformation(){ return villageInformation; }
-
-
 }

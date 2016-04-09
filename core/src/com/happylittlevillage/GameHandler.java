@@ -77,7 +77,7 @@ public class GameHandler {
             tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
             arrow.add(new Vector2(476, 579));
         } else {
-            village = new Village(gemBag, 9999, 9999, 5);
+            village = new Village(gemBag, 9999, 9999, 6);
             ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
         }
 
@@ -138,22 +138,23 @@ public class GameHandler {
             pause();
         }
         //win
-        else if (village.getSize() >= 50) {
+        else if (village.getSize() >= 5000) {
             win = true;
             winMessage.setCondition(1);
             pause();
         }
 
         if (!paused) { // not pause
-            if (village.isNextDay()) {
-                if (village.getWeeklyRitual().getRecipe() != null) { // if it is first week
+            if (village.isNextDay()) { // if it is the end of the week
+                if (village.getWeeklyRitual().getRecipe() == null) { // if it is first week
+                    village.generateNewWeeklyRitual();
+                }
+                else {
                     if (((WeekSummary) messageBox).checkRitual()) {
                         village.generateNewWeeklyRitual();
                     }
                 }
-                else {
-                    village.generateNewWeeklyRitual();
-                }
+
                 ((WeekSummary) messageBox).stateRitual();
                 pause();
             }
@@ -187,10 +188,13 @@ public class GameHandler {
             if (isTutorial) {
                 tutorialMessage.render(batch);
             } else {
+//                Villager.renderPathMakers(batch);
                 if (DEBUG) {
                     shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                    Villager.renderLines(shapeRenderer);
+//                    Villager.renderLines(shapeRenderer);
+                    Villager.renderPath(shapeRenderer);
                     shapeRenderer.end();
+
                 }
             }
             inputHandler.renderSelectedGem(batch);

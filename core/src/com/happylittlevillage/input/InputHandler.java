@@ -223,10 +223,8 @@ public class InputHandler implements GestureDetector.GestureListener {
             if (realPos.x >= 620 && realPos.y <= 220) {
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
                     if (deltaX > 0) {
-                        System.out.println("right");
                         interactRitualBook(false);
                     } else {
-                        System.out.println("left");
                         interactRitualBook(true);
                     }
                 }
