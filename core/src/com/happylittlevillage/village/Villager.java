@@ -29,11 +29,11 @@ public class Villager extends GameObject implements Comparable<Villager> {
     };
 
     private static Vector2[] pathMarkers = { // destination that villagers can walk in
-            new Vector2(220, 313), // 0
+            new Vector2(200, 304), // 0
             new Vector2(400, 410),
-            new Vector2(297, 466),
+            new Vector2(279, 458),
             new Vector2(230, 440),
-            new Vector2(592, 421),
+            new Vector2(585, 409),
             new Vector2(602, 372), // 5
             new Vector2(401, 259),
             new Vector2(193, 254),
@@ -43,7 +43,7 @@ public class Villager extends GameObject implements Comparable<Villager> {
             new Vector2(620, 256),
             new Vector2(670, 518),
             new Vector2(185, 545),
-            new Vector2(400, 545),
+            new Vector2(386, 544),
 
     };
     private static ArrayList<Line> obstacles = new ArrayList<Line>() {
@@ -76,7 +76,7 @@ public class Villager extends GameObject implements Comparable<Villager> {
     private Vector2 destination;
     private float speed = 120; // magnitude of the villager
     private Vector2 velocity; // velocity of the villager
-    private float restTimer = getNewRestDuration();
+    private float timer = getNewRestDuration();
     private boolean resting = false;
     private float walkTimer = 0;
     private boolean goToMine = true;
@@ -172,7 +172,13 @@ public class Villager extends GameObject implements Comparable<Villager> {
 
     @Override
     public void render(Batch batch) {
-        batch.draw(region, isMovingRight() ? position.x + width : position.x, position.y, 0, 0, width, height, isMovingRight() ? -1 : 1, 1, 0);
+        if (role == VillagerRole.CITIZEN) {
+            batch.draw(region, isMovingRight() ? position.x + width : position.x, position.y, 0, 0, width, height, isMovingRight() ? -1 : 1, 1, 0);
+        } else if (role == VillagerRole.MINER) {
+            if (!resting) {
+                batch.draw(region, isMovingRight() ? position.x + width : position.x, position.y, 0, 0, width, height, isMovingRight() ? -1 : 1, 1, 0);
+            }
+        }
     }
 
     @Override
@@ -180,10 +186,10 @@ public class Villager extends GameObject implements Comparable<Villager> {
         if (this.role == VillagerRole.CITIZEN) {
             if (resting) {
                 region = idleTextures[role.ordinal()][0];
-                restTimer -= delta;
-                if (restTimer <= 0) {
+                timer -= delta;
+                if (timer <= 0) {
                     generateNewDestination();
-                    restTimer = getNewRestDuration();
+                    timer = getNewRestDuration();
                     resting = false;
                 }
             } else {
@@ -195,7 +201,6 @@ public class Villager extends GameObject implements Comparable<Villager> {
         } else if (this.role == VillagerRole.MINER) {
             if (goToMine) { // if the miner is travelling to the mine. False if the miner is at the mine and pathToTake is empty
                 if (!pathToTake.isEmpty()) {
-                    System.out.println("one");
                     destination = pathMarkers[pathToTake.peek()]; // the distance is the next index in path to take
                     calculateVelocity();
                     move(delta);
@@ -203,22 +208,38 @@ public class Villager extends GameObject implements Comparable<Villager> {
                         pathToTake.remove();
                     }
                 } else { // the miner is going to his final destination
-                    System.out.println("two");
                     if (arrivedAtDestination()) {
-                        System.out.println("three");
                         goToMine = false;
                     }
                 }
             } else { // routine
-                if(arriveAt(MINE_INDEX)){ // if the miner is at the mine
-                    destination = pathMarkers[0];
+                if (destination == pathMarkers[MINE_INDEX]) {
+                    if (arriveAt(MINE_INDEX)) { // if the miner is at the mine
+                        if (resting) { // the miner will disappear
+                            timer -= delta;
+                            if (timer <= -1) { // end disappearing, reappearing and go back to the house
+                                destination = pathMarkers[0];
+                                calculateVelocity();
+                                resting = false;
+                            }
+                        } else { // the standard of a new miner is not resting, or not disappearing into the mine
+                            timer = getNewRestDuration();
+                            resting = true;
+                        }
+                    } else {
+                        move(delta);
+                    }
+
+                } else if (destination == pathMarkers[0]) {
+                    if (arriveAt(0)) {
+                        System.out.println("yes");
+                        destination = pathMarkers[MINE_INDEX];
+                        calculateVelocity();
+                    }
+                    move(delta);
                 }
-                if(arriveAt(0)){
-                    destination = pathMarkers[MINE_INDEX];
-                }
-                calculateVelocity();
-                move(delta);
             }
+
         }
     }
 

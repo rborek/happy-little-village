@@ -101,6 +101,8 @@ public class RitualTree extends GameObject {
         chosenRituals.add(Ritual.getRitual("Time to explore!"));
         chosenRituals.add(Ritual.getRitual("Farming is fun!"));
         chosenRituals.add(Ritual.getRitual("Mining time!"));
+        chosenRituals.add(Ritual.getRitual("Double Sacrifice"));
+
         for(Ritual ritual : chosenRituals){
             unlockedRituals.add(ritual);
         }

@@ -43,7 +43,7 @@ public class GameHandler {
     private RitualBook ritualBook = new RitualBook(ritualTree, 600, 0);
     private WinMessage winMessage;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private boolean DEBUG = false;
+    private boolean DEBUG = true;
     // all menu items is put here
     private MessageBox messageBox;
     private GameOver gameOverMessage;
@@ -188,10 +188,9 @@ public class GameHandler {
             if (isTutorial) {
                 tutorialMessage.render(batch);
             } else {
-//                Villager.renderPathMakers(batch);
+                Villager.renderPathMakers(batch);
                 if (DEBUG) {
                     shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-//                    Villager.renderLines(shapeRenderer);
                     Villager.renderPath(shapeRenderer);
                     shapeRenderer.end();
 
