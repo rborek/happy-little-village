@@ -35,6 +35,7 @@ public class RitualTree extends GameObject {
     private Rectangle nextButtonPosition = new Rectangle(1055, 80, 70, 65); // for the chosen ritual bar
     private Rectangle prevButtonPosition = new Rectangle(1160, 80, 70, 65);// for the chosen ritual bar
     private static final int ritualSize = 100;
+
     private Rectangle[] ritualPositionsOnTree = {
             new Rectangle(120, 425, ritualSize, ritualSize),
             new Rectangle(245, 540, ritualSize, ritualSize),
@@ -61,8 +62,9 @@ public class RitualTree extends GameObject {
         super(Assets.getTexture("ui/ritual_tree.png"), xPos, yPos);
         this.gameHandler = gameHandler;
         addIndexOnTree(); // synchronize rituals with their positions on the ritualTree
-        addPresetChosenRituals();
         setPrerequisites();
+        addPresetChosenRituals(); // add default chosen rituals
+
         for (String name : Ritual.getRitualNames()) {
             if (Ritual.getRituals().containsKey(name)) {
                 System.out.println("ritual is " + Ritual.getRitualNode(name).toString());
@@ -98,10 +100,6 @@ public class RitualTree extends GameObject {
         chosenRituals.add(Ritual.getRitual("Liquid diet"));
         chosenRituals.add(Ritual.getRitual("Reproduce"));
         chosenRituals.add(Ritual.getRitual("Well water"));
-        chosenRituals.add(Ritual.getRitual("Time to explore!"));
-        chosenRituals.add(Ritual.getRitual("Farming is fun!"));
-        chosenRituals.add(Ritual.getRitual("Mining time!"));
-        chosenRituals.add(Ritual.getRitual("Double Sacrifice"));
 
         for(Ritual ritual : chosenRituals){
             unlockedRituals.add(ritual);
@@ -178,7 +176,7 @@ public class RitualTree extends GameObject {
                         }
                     }
                 }
-                // if it is unlocked, then select it and put it in the bar. Do not decrement skillPoint
+                //if it is unlocked, then select it and put it in the bar. Do not decrement skillPoint
                 //if it is not in chosenRituals and it is unlocked
                 if (!chosenRituals.contains(viewingRitual.getRitual()) && unlockedRituals.contains(viewingRitual.getRitual())) {
                     chosenRituals.add(viewingRitual.getRitual());
