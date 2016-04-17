@@ -1,11 +1,10 @@
 package com.happylittlevillage.village;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.happylittlevillage.Assets;
-import com.happylittlevillage.GameObject;
+import com.happylittlevillage.objects.GameObject;
 
 public abstract class VillagerEffect extends GameObject {
 	Villager villager;

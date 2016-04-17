@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.happylittlevillage.Assets;
-import com.happylittlevillage.GameObject;
-import com.happylittlevillage.Line;
-import com.happylittlevillage.rituals.Edge;
+import com.happylittlevillage.objects.GameObject;
+import com.happylittlevillage.util.Line;
+import com.happylittlevillage.util.Edge;
 
 import java.util.*;
 
@@ -119,7 +119,7 @@ public class Villager extends GameObject implements Comparable<Villager> {
 
     public static void renderPath(ShapeRenderer renderer) {
         for (Edge edge : edges) {
-            edge.getNodes().render(renderer);
+            edge.getPath().render(renderer);
         }
     }
 

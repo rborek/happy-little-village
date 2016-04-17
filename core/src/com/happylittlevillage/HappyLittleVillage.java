@@ -2,7 +2,8 @@ package com.happylittlevillage;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
-import com.happylittlevillage.menu.*;
+import com.happylittlevillage.screens.Exit;
+import com.happylittlevillage.screens.*;
 
 public class HappyLittleVillage extends Game implements ApplicationListener {
 	private GameScreen gameScreen;
@@ -18,17 +19,17 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 		setMenu();
 	}
 
-	public void setLoadingScreen(boolean isTutorial){
+	public void setLoadingScreen(boolean isTutorial) {
 		loadingScreen = new LoadingScreen(this, isTutorial);
 		setScreen(loadingScreen);
 	}
+
 	public void setGameScreen(boolean isTutorial) {
 		if (gameScreen == null) {
-			gameScreen = new GameScreen(this,isTutorial);
-		}
-		else{
+			gameScreen = new GameScreen(this, isTutorial);
+		} else {
 			gameScreen.dispose();
-			gameScreen = new GameScreen(this,isTutorial);
+			gameScreen = new GameScreen(this, isTutorial);
 		}
 		if (mainMenu != null) {
 			mainMenu.dispose();
@@ -75,12 +76,14 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 		}
 		setScreen(credits);
 	}
+
 	public void setLoad() {
 		if (load == null) {
 			load = new Load(this);
 		}
 		setScreen(load);
 	}
+
 	public void setExit() {
 		if (exit == null) {
 			exit = new Exit(this);

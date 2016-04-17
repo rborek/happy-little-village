@@ -1,10 +1,9 @@
-package com.happylittlevillage.menu;
+package com.happylittlevillage.screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.happylittlevillage.Assets;
 import com.happylittlevillage.HappyLittleVillage;
-import com.happylittlevillage.Miscellaneous;
+import com.happylittlevillage.Assets;
 
 public class Options extends Miscellaneous {
 	private float xPos = 800;

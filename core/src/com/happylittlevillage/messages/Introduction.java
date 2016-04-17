@@ -9,7 +9,7 @@ public class Introduction extends MessageBox {
 
 	public Introduction(GameHandler gameHandler, boolean isTutorial) {
 		super(instruction, gameHandler);
-		if(isTutorial){
+		if (isTutorial) {
 			text = "Welcome to Happy Little Village. Please press continue";
 		}
 

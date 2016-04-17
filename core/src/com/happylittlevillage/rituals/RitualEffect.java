@@ -19,13 +19,12 @@ public class RitualEffect implements Comparable<RitualEffect> {
 				System.out.println("Food added is:" + amount);
 				break;
 			case VILLAGER:
-				if(amount > 0){
-					for(int k = 0; k < amount; k++){
+				if (amount > 0) {
+					for (int k = 0; k < amount; k++) {
 						village.addVillager(VillagerRole.CITIZEN);
 					}
-				}
-				else{
-					for(int k = 0; k < (-amount); k++){
+				} else {
+					for (int k = 0; k < (-amount); k++) {
 						village.removeVillager();
 					}
 				}
@@ -35,19 +34,19 @@ public class RitualEffect implements Comparable<RitualEffect> {
 				System.out.println("Water added is:" + amount);
 				break;
 			case FARMER:
-				for(int k = 0; k < amount; k++){
+				for (int k = 0; k < amount; k++) {
 					village.convertCitizen(VillagerRole.FARMER);
 				}
 				System.out.println("A farmer is converted");
 				break;
 			case EXPLORER:
-				for(int k = 0; k < amount; k++){
+				for (int k = 0; k < amount; k++) {
 					village.convertCitizen(VillagerRole.EXPLORER);
 				}
 				System.out.println("An explorer is converted");
 				break;
 			case MINER:
-				for(int k = 0; k < amount; k++){
+				for (int k = 0; k < amount; k++) {
 					village.convertCitizen(VillagerRole.MINER);
 				}
 				System.out.println("A miner is converted");

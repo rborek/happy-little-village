@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
+import com.happylittlevillage.menu.MiningWindow;
+import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemBag;
 import com.happylittlevillage.gems.GemBook;
@@ -28,270 +30,270 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameHandler {
-    private Village village;
-    private RitualAltar ritualAltar;
-    private Texture background = Assets.getTexture("bg/background.png");
-    private GemBag gemBag;
-    private InputHandler inputHandler;
-    private GameGestureDetector gameGestureDetector;
-    private Gem gem;
-    private Texture scroll = Assets.getTexture("ui/scroll.png");
-    private boolean paused;
-    private GemBook miniBook = new GemBook(this);
-    private boolean bookOpen;
-    private RitualTree ritualTree = new RitualTree(this, 30, 15);
-    private RitualBook ritualBook = new RitualBook(ritualTree, 600, 0);
-    private WinMessage winMessage;
-    private ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private boolean DEBUG = false;
-    // all menu items is put here
-    private MessageBox messageBox;
-    private GameOver gameOverMessage;
-    private boolean win = false;
-    private boolean intro = true;
-    private boolean lose = false;
-    private boolean isTutorial;
-    private boolean finishTutorial = false;
-    private static ArrayList<Vector2> arrow = new ArrayList<Vector2>();
-    private TutorialMessage tutorialMessage;
-    private Rectangle optionWheelPosition = new Rectangle(0, 600, 64, 64);
-    private GameObject optionWheel = new GameObject(Assets.getTexture("menu/optionWheel.png"), 0, 600, 64, 64);
-    private Json saveInfo = new Json();
-    private SaveGame saveGame;
-    private int messageScreen = 0;
-    private CustomMining customMining;
+	private Village village;
+	private RitualAltar ritualAltar;
+	private Texture background = Assets.getTexture("bg/background.png");
+	private GemBag gemBag;
+	private InputHandler inputHandler;
+	private GameGestureDetector gameGestureDetector;
+	private Gem gem;
+	private Texture scroll = Assets.getTexture("ui/scroll.png");
+	private boolean paused;
+	private GemBook miniBook = new GemBook(this);
+	private boolean bookOpen;
+	private RitualTree ritualTree = new RitualTree(this, 30, 15);
+	private RitualBook ritualBook = new RitualBook(ritualTree, 600, 0);
+	private WinMessage winMessage;
+	private ShapeRenderer shapeRenderer = new ShapeRenderer();
+	private boolean DEBUG = false;
+	// all menu items is put here
+	private MessageBox messageBox;
+	private GameOver gameOverMessage;
+	private boolean win = false;
+	private boolean intro = true;
+	private boolean lose = false;
+	private boolean isTutorial;
+	private boolean finishTutorial = false;
+	private static ArrayList<Vector2> arrow = new ArrayList<Vector2>();
+	private TutorialMessage tutorialMessage;
+	private Rectangle optionWheelPosition = new Rectangle(0, 600, 64, 64);
+	private GameObject optionWheel = new GameObject(Assets.getTexture("menu/optionWheel.png"), 0, 600, 64, 64);
+	private Json saveInfo = new Json();
+	private SaveGame saveGame;
+	private int messageScreen = 0;
+	private MiningWindow miningWindow;
 
-    public GameHandler(GameGestureDetector gameGestureDetector, InputHandler inputHandler, boolean isTutorial, HappyLittleVillage happyLittleVillage) {
-        this.isTutorial = isTutorial;
-        this.inputHandler = inputHandler;
-        this.gameGestureDetector = gameGestureDetector;
-        init(isTutorial, happyLittleVillage);
-    }
+	public GameHandler(GameGestureDetector gameGestureDetector, InputHandler inputHandler, boolean isTutorial, HappyLittleVillage happyLittleVillage) {
+		this.isTutorial = isTutorial;
+		this.inputHandler = inputHandler;
+		this.gameGestureDetector = gameGestureDetector;
+		init(isTutorial, happyLittleVillage);
+	}
 
-    public void init(boolean isTutorial, HappyLittleVillage happyLittleVillage) {
-        gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
-        customMining = new CustomMining(gemBag, null, 455, 450, 50, 50);
-        if (isTutorial) {
-            village = new Village(gemBag, 200, 100, 5);
-            ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
-            tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
-            arrow.add(new Vector2(476, 579));
-        } else {
-            village = new Village(gemBag, 200, 100, 5);
-            ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
-        }
+	public void init(boolean isTutorial, HappyLittleVillage happyLittleVillage) {
+		gemBag = new GemBag(1280 - 420 - 36 - 32, 30 + 35 - 12);
+		miningWindow = new MiningWindow(gemBag, null, 455, 450, 50, 50);
+		if (isTutorial) {
+			village = new Village(gemBag, 200, 100, 5);
+			ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
+			tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
+			arrow.add(new Vector2(476, 579));
+		} else {
+			village = new Village(gemBag, 200, 100, 5);
+			ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
+		}
 
-        messageBox = new Introduction(this, isTutorial);
-        gameOverMessage = new GameOver(this, happyLittleVillage);
-        winMessage = new WinMessage(this);
-        Ritual.setVillage(village);
-        Gdx.input.setInputProcessor(gameGestureDetector);
-        pause();
-    }
+		messageBox = new Introduction(this, isTutorial);
+		gameOverMessage = new GameOver(this, happyLittleVillage);
+		winMessage = new WinMessage(this);
+		Ritual.setVillage(village);
+		Gdx.input.setInputProcessor(gameGestureDetector);
+		pause();
+	}
 
 
-    public boolean isPaused() {
-        return paused;
-    }
+	public boolean isPaused() {
+		return paused;
+	}
 
-    public void pause() {
-        paused = true;
+	public void pause() {
+		paused = true;
 //        //TODO This is a stupid place to put this method
 //        if (village.getDaysLeft() < 0) {
 //            lose = true;
 //            messageBox = gameOverMessage;
 //        }
-    }
+	}
 
-    public void finishIntro() {
-        intro = false;
-        paused = false;
-        messageBox = new WeekSummary(village, gemBag, this);
-    }
+	public void finishIntro() {
+		intro = false;
+		paused = false;
+		messageBox = new WeekSummary(village, gemBag, this);
+	}
 
-    public void unpauseInGame() {
-        //TODO 2 options: the weekly ritual can be in the RitualBook and the Altar. ( we choose this for now)
-        // so we must call add weeklyRitual recipe to the RitualBook right when we show ritual tree
-        //TODO the weekly ritual can be excluded from the RitualBook and only functions in the Altar
-        // we dont update weeklyRitual to the chosenRituals anymore. Just dont update anything about it cuz the altar can call it from village
+	public void unpauseInGame() {
+		//TODO 2 options: the weekly ritual can be in the RitualBook and the Altar. ( we choose this for now)
+		// so we must call add weeklyRitual recipe to the RitualBook right when we show ritual tree
+		//TODO the weekly ritual can be excluded from the RitualBook and only functions in the Altar
+		// we dont update weeklyRitual to the chosenRituals anymore. Just dont update anything about it cuz the altar can call it from village
 
-        if (messageScreen == 0) {
-            messageScreen++; // move to the ritual Tree
-            // this add the weekly Ritual To the chosen ritual
-            if (!ritualTree.getChosenRituals().contains(village.getWeeklyRitual())) {
-                ritualTree.addWeeklyRitualToChosenRitual(village.getWeeklyRitual());
-            }
-        } else if (messageScreen == 1) {
-            messageScreen = 0;
-            paused = false;
-            ritualBook.setWeeklyChosenRitual(); // this is so that RitualBook will update new rituals from the ritual Tree after a week
-            ritualAltar.setWeeklyChosenRitual();
-        }
-    }
+		if (messageScreen == 0) {
+			messageScreen++; // move to the ritual Tree
+			// this add the weekly Ritual To the chosen ritual
+			if (!ritualTree.getChosenRituals().contains(village.getWeeklyRitual())) {
+				ritualTree.addWeeklyRitualToChosenRitual(village.getWeeklyRitual());
+			}
+		} else if (messageScreen == 1) {
+			messageScreen = 0;
+			paused = false;
+			ritualBook.setWeeklyChosenRitual(); // this is so that RitualBook will update new rituals from the ritual Tree after a week
+			ritualAltar.setWeeklyChosenRitual();
+		}
+	}
 
-    // game logic goes here
-    public void update(float delta) {
-        // lose
-        if (village.getSize() <= 0 || village.getDaysLeft() < 0) {
-            lose = true;
-            gameOverMessage.setCondition(0);
-            pause();
-            messageBox = gameOverMessage;
-            return;
-        }
-        //win
-        else if (village.getSize() >= 50) {
-            win = true;
-            winMessage.setCondition(1);
-            pause();
-            messageBox = winMessage;
-            return;
-        }
+	// game logic goes here
+	public void update(float delta) {
+		// lose
+		if (village.getSize() <= 0 || village.getDaysLeft() < 0) {
+			lose = true;
+			gameOverMessage.setCondition(0);
+			pause();
+			messageBox = gameOverMessage;
+			return;
+		}
+		//win
+		else if (village.getSize() >= 50) {
+			win = true;
+			winMessage.setCondition(1);
+			pause();
+			messageBox = winMessage;
+			return;
+		}
 
-        if (!paused) { // not pause
-            if (village.isNextDay()) { // if it is the end of the week
-                if (village.getWeeklyRitual().getRecipe() == null) { // if it is first week
-                    village.generateNewWeeklyRitual();
-                } else {
-                    if (((WeekSummary) messageBox).checkRitual()) {
-                        village.generateNewWeeklyRitual();
-                    }
-                }
+		if (!paused) { // not pause
+			if (village.isNextDay()) { // if it is the end of the week
+				if (village.getWeeklyRitual().getRecipe() == null) { // if it is first week
+					village.generateNewWeeklyRitual();
+				} else {
+					if (((WeekSummary) messageBox).checkRitual()) {
+						village.generateNewWeeklyRitual();
+					}
+				}
 
-                ((WeekSummary) messageBox).stateRitual();
-                pause();
-            }
-            village.update(delta);
-            ritualAltar.update(delta);
-            ritualBook.update(delta);
-            customMining.update(delta);
-        }
-        if (isTutorial) {
-            //arrow for screen 0 and 1
-            if (tutorialMessage.getTutorialScreen() <= 1) {
-                // make the arrow point to a villager
-                tutorialMessage.setAngle(village.getPositionOfARandomVillager(), arrow.get(0));
-            }
-            tutorialMessage.update(delta);
-        }
-    }
+				((WeekSummary) messageBox).stateRitual();
+				pause();
+			}
+			village.update(delta);
+			ritualAltar.update(delta);
+			ritualBook.update(delta);
+			miningWindow.update(delta);
+		}
+		if (isTutorial) {
+			//arrow for screen 0 and 1
+			if (tutorialMessage.getTutorialScreen() <= 1) {
+				// make the arrow point to a villager
+				tutorialMessage.setAngle(village.getPositionOfARandomVillager(), arrow.get(0));
+			}
+			tutorialMessage.update(delta);
+		}
+	}
 
-    public void render(Batch batch) {
-        batch.draw(background, 0, 0);
-        village.render(batch);
-        batch.draw(scroll, 1280 - 550, -12);
-        ritualAltar.render(batch);
-        gemBag.render(batch);
-        customMining.render(batch);
+	public void render(Batch batch) {
+		batch.draw(background, 0, 0);
+		village.render(batch);
+		batch.draw(scroll, 1280 - 550, -12);
+		ritualAltar.render(batch);
+		gemBag.render(batch);
+		miningWindow.render(batch);
 //        miniBook.render(batch);
-        if (!intro) ritualBook.render(batch);
+		if (!intro) ritualBook.render(batch);
 //		ritualTree.render(batch);
 //      optionWheel.render(batch);
-        if (!paused) {
-            if (isTutorial) {
-                tutorialMessage.render(batch);
-            } else {
-                //Villager.renderPathMakers(batch);
-                if (DEBUG) {
-                    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                    Villager.renderPath(shapeRenderer);
-                    shapeRenderer.end();
+		if (!paused) {
+			if (isTutorial) {
+				tutorialMessage.render(batch);
+			} else {
+				//Villager.renderPathMakers(batch);
+				if (DEBUG) {
+					shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+					Villager.renderPath(shapeRenderer);
+					shapeRenderer.end();
 
-                }
-            }
-            inputHandler.renderSelectedGem(batch);
-            inputHandler.renderSelectedRitual(batch);
-        } else {
-            if (messageScreen == 0) {
-                messageBox.render(batch);
-            } else if (messageScreen == 1) {
-                ritualTree.render(batch);
-            }
-        }
+				}
+			}
+			inputHandler.renderSelectedGem(batch);
+			inputHandler.renderSelectedRitual(batch);
+		} else {
+			if (messageScreen == 0) {
+				messageBox.render(batch);
+			} else if (messageScreen == 1) {
+				ritualTree.render(batch);
+			}
+		}
 
-    }
+	}
 
-    public void saveGame() {
+	public void saveGame() {
 //        saveGame = new SaveGame(village.getFood(), village.getWater(), village.getHappiness(), village.getWeeklyRitual(),
 //                village.getHoursLeft(), village.getDaysLeft(), village.getDay(),
 //                village.isNextDay(), village.getVillagerSpawnTimer(), village.getVillagersToSpawn().size(),
 //                village.getGemThreshold(), village.getHunger(), village.getDehydration(),
 //                village.getVillagers(), gemBag, ritualBook.getUnlockedRitual());
-        saveInfo.toJson(saveGame, SaveGame.class);
-        try {
-            FileWriter fileWriter =
-                    new FileWriter("data/data.save/saveInfo.txt");
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            String text = saveInfo.prettyPrint(saveGame);
-            System.out.print("Info is: " + saveGame.toString());
-            bufferedWriter.write(text);
-            bufferedWriter.flush();
-            bufferedWriter.close();
-            FileReader fileReader = new FileReader("data/data.save/saveInfo.txt");
-            SaveGame saveGame1 = saveInfo.fromJson(SaveGame.class, fileReader);
-        } catch (IOException ex) {
-            System.out.println(
-                    "Error writing to file");
-        }
-    }
+		saveInfo.toJson(saveGame, SaveGame.class);
+		try {
+			FileWriter fileWriter =
+					new FileWriter("data/data.save/saveInfo.txt");
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			String text = saveInfo.prettyPrint(saveGame);
+			System.out.print("Info is: " + saveGame.toString());
+			bufferedWriter.write(text);
+			bufferedWriter.flush();
+			bufferedWriter.close();
+			FileReader fileReader = new FileReader("data/data.save/saveInfo.txt");
+			SaveGame saveGame1 = saveInfo.fromJson(SaveGame.class, fileReader);
+		} catch (IOException ex) {
+			System.out.println(
+					"Error writing to file");
+		}
+	}
 
-    public Village getVillage() {
-        return village;
-    }
+	public Village getVillage() {
+		return village;
+	}
 
-    public void openBook() {
-        bookOpen = true;
-    }
+	public void openBook() {
+		bookOpen = true;
+	}
 
-    public void closeBook() {
-        bookOpen = false;
-    }
+	public void closeBook() {
+		bookOpen = false;
+	}
 
-    public RitualAltar getRitualAltar() {
-        return ritualAltar;
-    }
+	public RitualAltar getRitualAltar() {
+		return ritualAltar;
+	}
 
-    public GemBag getGemBag() {
-        return gemBag;
-    }
+	public GemBag getGemBag() {
+		return gemBag;
+	}
 
-    public RitualBook getRitualBook() {
-        return ritualBook;
-    }
+	public RitualBook getRitualBook() {
+		return ritualBook;
+	}
 
-    public GemBook getMiniBook() {
-        return miniBook;
-    }
+	public GemBook getMiniBook() {
+		return miniBook;
+	}
 
-    public MessageBox getMessageBox() {
-        return messageBox;
-    }
+	public MessageBox getMessageBox() {
+		return messageBox;
+	}
 
-    public TutorialMessage getTutorialMessage() {
-        return tutorialMessage;
-    }
+	public TutorialMessage getTutorialMessage() {
+		return tutorialMessage;
+	}
 
-    public boolean isTutorial() {
-        return isTutorial;
-    }
+	public boolean isTutorial() {
+		return isTutorial;
+	}
 
-    public GameOver getGameOverMessage() {
-        return gameOverMessage;
-    }
+	public GameOver getGameOverMessage() {
+		return gameOverMessage;
+	}
 
-    public Rectangle getOptionWheelPosition() {
-        return optionWheelPosition;
-    }
+	public Rectangle getOptionWheelPosition() {
+		return optionWheelPosition;
+	}
 
-    public int getMessageScreen() {
-        return messageScreen;
-    }
+	public int getMessageScreen() {
+		return messageScreen;
+	}
 
-    public RitualTree getRitualTree() {
-        return ritualTree;
-    }
+	public RitualTree getRitualTree() {
+		return ritualTree;
+	}
 
-    public CustomMining getCustomMining() {
-        return customMining;
-    }
+	public MiningWindow getMiningWindow() {
+		return miningWindow;
+	}
 }

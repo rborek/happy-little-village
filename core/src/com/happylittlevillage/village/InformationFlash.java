@@ -1,6 +1,5 @@
 package com.happylittlevillage.village;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 import com.badlogic.gdx.math.Vector2;
 import com.happylittlevillage.Assets;

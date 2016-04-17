@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.Assets;
-import com.happylittlevillage.GameObject;
+import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.menu.MenuItem;
 import com.happylittlevillage.rituals.VillageModifier;
 

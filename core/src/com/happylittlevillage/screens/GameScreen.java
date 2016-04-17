@@ -1,4 +1,4 @@
-package com.happylittlevillage.menu;
+package com.happylittlevillage.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,11 +11,11 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameHandler;
 import com.happylittlevillage.HappyLittleVillage;
 import com.happylittlevillage.input.GameGestureDetector;
 import com.happylittlevillage.input.InputHandler;
+import com.happylittlevillage.Assets;
 
 public class GameScreen implements Screen {
 	public static final int WIDTH = 1280;

@@ -9,7 +9,7 @@ import com.happylittlevillage.rituals.WeeklyRitual;
 import java.util.*;
 
 public class Village {
-	private static final int MAX_HOURS = 1000;
+	private static final int MAX_HOURS = 24;
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();

@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
-import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameHandler;
-import com.happylittlevillage.GameObject;
+import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.menu.MenuItem;
+import com.happylittlevillage.Assets;
 
 
 public abstract class MessageBox extends GameObject implements MenuItem {
@@ -19,10 +19,11 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	protected Texture backButton;
 
 	//exclusively for the tutorial
-	public  MessageBox (GameHandler gameHandler){
-		super(Assets.getTexture("ui/tutorialMessageBox.png"), 480,590);
+	public MessageBox(GameHandler gameHandler) {
+		super(Assets.getTexture("ui/tutorialMessageBox.png"), 480, 590);
 		this.gameHandler = gameHandler;
 	}
+
 	// for the daily information
 	public MessageBox(String instruction, GameHandler gameHandler) {
 		super(Assets.getTexture("ui/parchment3.png"), 30, 15);
