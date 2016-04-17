@@ -51,7 +51,7 @@ public class RitualAltar extends GameObject implements MenuItem {
         int paddingColumn = 240;
         for (int i = 0; i < 4; i++) { // row
             for (int j = 0; j < 4; j++) { //column
-                slots[i][j] = new Rectangle(position.x + 37 + 87 * j, slotSize2 / 2 + paddingColumn + 280, slotSize2, slotSize2);
+                slots[i][j] = new Rectangle(position.x + 37 + 87 * j, slotSize2 / 2 + paddingColumn + 292, slotSize2, slotSize2);
             }
             paddingColumn -= 83;
         }
@@ -273,7 +273,7 @@ public class RitualAltar extends GameObject implements MenuItem {
             for (int col = 0; col < ritual[0].length; col++) {
                 if (ritual[row][col] != null) {
                     System.out.println("coord " + row + col);
-                    Vector2 gridMatch = matchOneGrid(x - (ritual[0].length - col) * (slotSize2 + spacing), y - (row) * (slotSize2 + spacing));
+                    Vector2 gridMatch = matchOneGrid(x + slotSize2 + spacing - (ritual[0].length - col) * (slotSize2 + spacing), y - (row) * (slotSize2 + spacing));
                     if (gridMatch != null) {
                         //if we have a matching case, we loop through the ritual again and place all the gems in their grids
                         for (int row2 = 0; row2 < ritual.length; row2++) {

@@ -61,15 +61,13 @@ public class InputHandler implements GestureDetector.GestureListener {
     }
 
     public void renderSelectedRitual(Batch batch) {
-        int alignX = 50;
-        int alignY = 50;
         if (selectedRitual != null) {
             Vector2 realPos = screen.getRealScreenPos(Gdx.input.getX(), Gdx.input.getY());
             for (int k = 0; k < selectedRitual.length; k++) {
                 for (int i = 0; i < selectedRitual[0].length; i++) {
                     if (selectedRitual[k][i] != null) {
                         //do not change this algorithm or stuff will be flipped
-                        selectedRitual[k][i].render(batch, realPos.x - RitualAltar.slotSize2 / 2 + (i - selectedRitual[0].length) * (RitualAltar.spacing + RitualAltar.slotSize2),
+                        selectedRitual[k][i].render(batch, realPos.x + RitualAltar.slotSize2 + RitualAltar.spacing  - RitualAltar.slotSize2 / 2 + (i - selectedRitual[0].length) * (RitualAltar.spacing + RitualAltar.slotSize2),
                                 realPos.y - RitualAltar.slotSize2 / 2 + (-k) * (RitualAltar.spacing + RitualAltar.slotSize2));
                     }
                 }
