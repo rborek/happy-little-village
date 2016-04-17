@@ -43,7 +43,7 @@ public class GameHandler {
     private RitualBook ritualBook = new RitualBook(ritualTree, 600, 0);
     private WinMessage winMessage;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
     // all menu items is put here
     private MessageBox messageBox;
     private GameOver gameOverMessage;
@@ -77,7 +77,7 @@ public class GameHandler {
             tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
             arrow.add(new Vector2(476, 579));
         } else {
-            village = new Village(gemBag, 9999, 9999, 6);
+            village = new Village(gemBag, 200, 100, 5);
             ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
         }
 
@@ -96,11 +96,11 @@ public class GameHandler {
 
     public void pause() {
         paused = true;
-        //TODO This is a stupid place to put this method
-        if (village.getDaysLeft() < 0) {
-            lose = true;
-            messageBox = gameOverMessage;
-        }
+//        //TODO This is a stupid place to put this method
+//        if (village.getDaysLeft() < 0) {
+//            lose = true;
+//            messageBox = gameOverMessage;
+//        }
     }
 
     public void finishIntro() {
@@ -132,24 +132,27 @@ public class GameHandler {
     // game logic goes here
     public void update(float delta) {
         // lose
-        if (village.getSize() <= 0) {
+        if (village.getSize() <= 0 || village.getDaysLeft() < 0) {
             lose = true;
             gameOverMessage.setCondition(0);
             pause();
+            messageBox = gameOverMessage;
+            return;
         }
         //win
-        else if (village.getSize() >= 5000) {
+        else if (village.getSize() >= 50) {
             win = true;
             winMessage.setCondition(1);
             pause();
+            messageBox = winMessage;
+            return;
         }
 
         if (!paused) { // not pause
             if (village.isNextDay()) { // if it is the end of the week
                 if (village.getWeeklyRitual().getRecipe() == null) { // if it is first week
                     village.generateNewWeeklyRitual();
-                }
-                else {
+                } else {
                     if (((WeekSummary) messageBox).checkRitual()) {
                         village.generateNewWeeklyRitual();
                     }
@@ -188,7 +191,7 @@ public class GameHandler {
             if (isTutorial) {
                 tutorialMessage.render(batch);
             } else {
-                Villager.renderPathMakers(batch);
+                //Villager.renderPathMakers(batch);
                 if (DEBUG) {
                     shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
                     Villager.renderPath(shapeRenderer);

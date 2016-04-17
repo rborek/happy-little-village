@@ -175,7 +175,10 @@ public class Villager extends GameObject implements Comparable<Villager> {
         if (role == VillagerRole.CITIZEN) {
             batch.draw(region, isMovingRight() ? position.x + width : position.x, position.y, 0, 0, width, height, isMovingRight() ? -1 : 1, 1, 0);
         } else if (role == VillagerRole.MINER) {
-            if (!resting) {
+            if(goToMine){
+                batch.draw(region, isMovingRight() ? position.x + width : position.x, position.y, 0, 0, width, height, isMovingRight() ? -1 : 1, 1, 0);
+            }
+            else if (!resting) {
                 batch.draw(region, isMovingRight() ? position.x + width : position.x, position.y, 0, 0, width, height, isMovingRight() ? -1 : 1, 1, 0);
             }
         }

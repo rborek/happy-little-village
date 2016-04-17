@@ -60,7 +60,11 @@ public class DynamicRitual {
             }
         }
         for (int k = 0; k < dynamicRitual.getRitual().getEffects().length; k++) {
-            font.draw(batch, dynamicRitual.getRitual().getEffects()[k].getModifier().name() + dynamicRitual.getRitual().getEffects()[k].getAmount(), posX, startY - dynamicRitual.getRitual().getEffects().length * 35 - k * 25);
+            if(dynamicRitual.getRitual().getEffects()[k].getAmount() > 0){
+                font.draw(batch, dynamicRitual.getRitual().getEffects()[k].getModifier().name() + " +" + dynamicRitual.getRitual().getEffects()[k].getAmount(), posX, startY - dynamicRitual.getRitual().getEffects().length * 35 - k * 25);
+            } else{
+                font.draw(batch, dynamicRitual.getRitual().getEffects()[k].getModifier().name() + dynamicRitual.getRitual().getEffects()[k].getAmount(), posX, startY - dynamicRitual.getRitual().getEffects().length * 35 - k * 25);
+            }
         }
     }
 
