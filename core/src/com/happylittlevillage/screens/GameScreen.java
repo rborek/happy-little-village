@@ -81,7 +81,7 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 191 / 255f * skyAlpha, 255 / 255f * skyAlpha, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(sun, sunPos.x, sunPos.y);
+		batch.draw(sun, sunPos.x, sunPos.y, 90, 90);
 		gameHandler.render(batch);
 		font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(), 0, 12);
 		batch.end();
