@@ -24,8 +24,8 @@ public class RitualAltar extends GameObject implements MenuItem {
 	private Rectangle removeAllButtonPosition;
 	private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
 	//new measurements
-	public static final int slotSize2 = 67;
-	public static final int spacing = 14;
+	public static final int SLOT_SIZE = 86;
+	public static final int SPACING = 14;
 	private WeeklyRitual weeklyRitual;
 	private boolean animating = false;
 	private float timer = 0;
@@ -48,12 +48,12 @@ public class RitualAltar extends GameObject implements MenuItem {
 		addToBonus = new int[4][4];
 		grid = new Gem[4][4]; // the new ritualAltar, background stuff
 		slots = new Rectangle[4][4]; // only for UI. What goes on in the background is handled by grid
-		int paddingColumn = 240;
 		for (int i = 0; i < 4; i++) { // row
 			for (int j = 0; j < 4; j++) { //column
-				slots[i][j] = new Rectangle(position.x + 37 + 87 * j, slotSize2 / 2 + paddingColumn + 292, slotSize2, slotSize2);
+				float posX = position.x + SPACING / 2 + (SLOT_SIZE + SPACING) * j;
+				float posY = -SLOT_SIZE - SPACING / 2 + height + position.y - ((SPACING + SLOT_SIZE) * i);
+				slots[i][j] = new Rectangle(posX, posY, SLOT_SIZE, SLOT_SIZE);
 			}
-			paddingColumn -= 83;
 		}
 		commenceButtonPosition = new Rectangle(commenceButton.getPosition().x, commenceButton.getPosition().y, commenceButton.getWidth(), commenceButton.getHeight());
 		removeAllButtonPosition = new Rectangle(removeAllButton.getPosition().x, removeAllButton.getPosition().y, removeAllButton.getWidth(), removeAllButton.getHeight());
@@ -100,7 +100,7 @@ public class RitualAltar extends GameObject implements MenuItem {
 		for (int i = 0; i < grid.length; i++) {
 			for (int k = 0; k < grid[0].length; k++) {
 				if (grid[i][k] != null) {
-					batch.draw(grid[i][k].getTexture(), slots[i][k].x, +slots[i][k].y, 64, 64);
+					batch.draw(grid[i][k].getTexture(), slots[i][k].x, slots[i][k].y, SLOT_SIZE, SLOT_SIZE);
 				}
 			}
 
@@ -273,7 +273,7 @@ public class RitualAltar extends GameObject implements MenuItem {
 			for (int col = 0; col < ritual[0].length; col++) {
 				if (ritual[row][col] != null) {
 					System.out.println("coord " + row + col);
-					Vector2 gridMatch = matchOneGrid(x + slotSize2 + spacing - (ritual[0].length - col) * (slotSize2 + spacing), y - (row) * (slotSize2 + spacing));
+					Vector2 gridMatch = matchOneGrid(x + SLOT_SIZE + SPACING - (ritual[0].length - col) * (SLOT_SIZE + SPACING), y - (row) * (SLOT_SIZE + SPACING));
 					if (gridMatch != null) {
 						//if we have a matching case, we loop through the ritual again and place all the gems in their grids
 						for (int row2 = 0; row2 < ritual.length; row2++) {
@@ -320,7 +320,7 @@ public class RitualAltar extends GameObject implements MenuItem {
 	private Vector2 matchOneGrid(float x, float y) { //this check if one gem match any grid
 		//x and y is the center of the gem
 		//rectangle has to be from the bottom left, so subtract spacing from both x and y
-		Rectangle gemBounds = new Rectangle(x - slotSize2 / 2, y - slotSize2 / 2, slotSize2, slotSize2);
+		Rectangle gemBounds = new Rectangle(x - SLOT_SIZE / 2, y - SLOT_SIZE / 2, SLOT_SIZE, SLOT_SIZE);
 		//centerGrid contains center of overlapped grids
 		double distance; // distance from center of the gem to the grid
 		double minDistance = 100; // very arbitrary number

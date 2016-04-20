@@ -18,7 +18,7 @@ public class Gem {
 	}
 
 	public void render(Batch batch, float xPos, float yPos) {
-		batch.draw(getTexture(), xPos, yPos, RitualAltar.slotSize2, RitualAltar.slotSize2);
+		batch.draw(getTexture(), xPos, yPos, RitualAltar.SLOT_SIZE, RitualAltar.SLOT_SIZE);
 	}
 
 	public void render(Batch batch, float xPos, float yPos, float width, float height) {
