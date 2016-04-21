@@ -1,13 +1,16 @@
 package com.happylittlevillage.village;
 
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.objects.GameObject;
-import com.happylittlevillage.util.Line;
 import com.happylittlevillage.util.Edge;
+import com.happylittlevillage.util.Line;
 
 import java.util.*;
 
@@ -173,7 +176,9 @@ public class Villager extends GameObject implements Comparable<Villager> {
 
 	@Override
 	public void render(Batch batch) {
-		batch.draw(region, isMovingRight() ? position.x + width : position.x, position.y, 0, 0, width, height, isMovingRight() ? -1 : 1, 1, 0);
+		if (role != VillagerRole.MINER || !resting || goToMine) {
+			batch.draw(region, isMovingRight() ? position.x + width : position.x, position.y, 0, 0, width, height, isMovingRight() ? -1 : 1, 1, 0);
+		}
 	}
 
 	@Override
