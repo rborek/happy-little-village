@@ -143,8 +143,8 @@ public class InputHandler implements GestureDetector.GestureListener {
 //        return true;
 //    }
 
-	public void interactRitualBook(boolean isLeft) {
-		ritualBook.turnPage(isLeft);
+	public void interactRitualBook(boolean isLeft, float deltaX) {
+		ritualBook.moveRitual(isLeft, deltaX);
 	}
 
 	public boolean clickOptionWheel(float x, float y) {
@@ -167,6 +167,7 @@ public class InputHandler implements GestureDetector.GestureListener {
 
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
+		System.out.println("fling detected");
 		return false;
 	}
 
@@ -179,7 +180,7 @@ public class InputHandler implements GestureDetector.GestureListener {
 //            happyLittleVillage.setMenu();
 //            gameHandler.pause();
 //    }
-		gameHandler.getMiningWindow().interact(realPos.x, realPos.y);
+		gameHandler.getMiningWindow().interact(realPos.x, realPos.y); // for the mining window
 		isLongPressed = false;
 		if (slideArea.contains(realPos.x, realPos.y)) {
 			slideable = true;
@@ -218,12 +219,12 @@ public class InputHandler implements GestureDetector.GestureListener {
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		Vector2 realPos = new Vector2(screen.getRealScreenPos(x, y));
 		if (slideable && !isLongPressed) { // if it is in the slideable zone and user does not intend to pick up ritual
-			if (realPos.x >= 620 && realPos.y <= 220) {
+			if (realPos.x >= slideArea.x && realPos.y <= slideArea.height) { // if the finger is in range
 				if (Math.abs(deltaX) > Math.abs(deltaY)) {
 					if (deltaX > 0) {
-						interactRitualBook(false);
+						interactRitualBook(false, deltaX); //swipe right
 					} else {
-						interactRitualBook(true);
+						interactRitualBook(true, deltaX); // swipe left
 					}
 				}
 			}
@@ -254,6 +255,5 @@ public class InputHandler implements GestureDetector.GestureListener {
 		pickUpRitual(realPos.x, realPos.y);
 		return false;
 	}
-
 
 }

@@ -47,12 +47,14 @@ public class RitualBook extends GameObject {
 		}
 	}
 
-	public void turnPage(boolean isLeft) {
+	public void moveRitual(boolean isLeft, float deltaX) {
 		if (!isMoving) {
 			if (!isLeft) {
 				previous();
+				slideRight = true;
 			} else {
 				next();
+				slideLeft = true;
 			}
 		}
 	}
@@ -63,7 +65,6 @@ public class RitualBook extends GameObject {
 		if (firstIndex < 0) {
 			firstIndex = count - 1;
 		}
-		slideRight = true;
 		System.out.println("previous");
 	}
 
@@ -73,9 +74,7 @@ public class RitualBook extends GameObject {
 		if (firstIndex >= count) {
 			firstIndex = 0;
 		}
-		slideLeft = true;
 		System.out.println("next");
-
 	}
 
 	private void enableScissor(float clipX, float clipY, float clipWidth, float clipHeight) {
@@ -138,7 +137,7 @@ public class RitualBook extends GameObject {
 		batch.draw(texture, position.x, position.y, width, height);
 		batch.end(); // drawing doesn't happen until .end() is called
 		batch.begin(); // restart batch to not scissor the background (as well as not break everything else that uses the batch);
-		enableScissor(620f, 0, 800f, 220f);
+		enableScissor(620f, 0, 800f, 220f); // if this changes the Rectangle slideArea in InputHandler has to change
 		if (isMoving) {
 			renderSlidingIndex(batch);
 		}
