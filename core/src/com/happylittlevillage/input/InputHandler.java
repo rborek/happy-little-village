@@ -143,9 +143,7 @@ public class InputHandler implements GestureDetector.GestureListener {
 //        return true;
 //    }
 
-	public void interactRitualBook(boolean isLeft, float deltaX) {
-		ritualBook.moveRitual(isLeft, deltaX);
-	}
+
 
 	public boolean clickOptionWheel(float x, float y) {
 		return (gameHandler.getOptionWheelPosition().contains(x, y));
@@ -167,7 +165,6 @@ public class InputHandler implements GestureDetector.GestureListener {
 
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
-		System.out.println("fling detected");
 		return false;
 	}
 
@@ -214,7 +211,14 @@ public class InputHandler implements GestureDetector.GestureListener {
 		return true;
 	}
 
+	public void interactRitualBook(boolean isLeft, float deltaX) {
+		ritualBook.moveRitual(isLeft, deltaX);
+	}
 
+	// this is only for the TouchUp in GestureDetector.
+	public void reset(){
+		ritualBook.reset(0);
+	}
 	@Override
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		Vector2 realPos = new Vector2(screen.getRealScreenPos(x, y));
@@ -222,9 +226,9 @@ public class InputHandler implements GestureDetector.GestureListener {
 			if (realPos.x >= slideArea.x && realPos.y <= slideArea.height) { // if the finger is in range
 				if (Math.abs(deltaX) > Math.abs(deltaY)) {
 					if (deltaX > 0) {
-						interactRitualBook(false, deltaX); //swipe right
+						interactRitualBook(false, deltaX); //if the finger goes to the right
 					} else {
-						interactRitualBook(true, deltaX); // swipe left
+						interactRitualBook(true, deltaX); // if the finger goes to the left
 					}
 				}
 			}

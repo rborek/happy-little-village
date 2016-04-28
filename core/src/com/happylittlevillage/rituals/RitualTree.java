@@ -51,8 +51,6 @@ public class RitualTree extends GameObject {
 			new Rectangle(520, 195, ritualSize, ritualSize),
 			new Rectangle(380, 178, ritualSize, ritualSize),
 	};
-//    private HashMap<>
-
 	// two vector2 to render lines
 	private Vector2 start = new Vector2(0, 0);
 	private Vector2 end = new Vector2(0, 0);
@@ -100,6 +98,15 @@ public class RitualTree extends GameObject {
 		chosenRituals.add(Ritual.getRitual("Liquid diet"));
 		chosenRituals.add(Ritual.getRitual("Reproduce"));
 		chosenRituals.add(Ritual.getRitual("Well water"));
+		chosenRituals.add(Ritual.getRitual("Massive expansion"));
+		chosenRituals.add(Ritual.getRitual("Massive production"));
+		chosenRituals.add(Ritual.getRitual("Time to explore!"));
+		chosenRituals.add(Ritual.getRitual("For the greater good"));
+		chosenRituals.add(Ritual.getRitual("Double Sacrifice"));
+		chosenRituals.add(Ritual.getRitual("Mining time!"));
+		chosenRituals.add(Ritual.getRitual("Farming is fun!"));
+		chosenRituals.add(Ritual.getRitual("Mirin"));
+		chosenRituals.add(Ritual.getRitual("Reproduce"));
 
 		for (Ritual ritual : chosenRituals) {
 			unlockedRituals.add(ritual);
@@ -228,22 +235,23 @@ public class RitualTree extends GameObject {
 		font.draw(batch, skillPoints + "", 1105, 600);
 		//render rituals on tree
 		for (int k = 0; k < ritualPositionsOnTree.length; k++) {
-			if (unlockedRituals.contains(ritualIndexOnTree.get(k).getRitual())) { // for the unlocked Rituals
+			if (unlockedRituals.contains(ritualIndexOnTree.get(k).getRitual())) { // for rituals that are unlocked
 				enabledRitualTextureOnTree.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
 				enabledRitualTextureOnTree.render(batch);
-				if (chosenRituals.contains(ritualIndexOnTree.get(k).getRitual())) {
-					chosenSign.setPosition(ritualPositionsOnTree[k].x + 80, ritualPositionsOnTree[k].y + 80);
+				if (chosenRituals.contains(ritualIndexOnTree.get(k).getRitual())) { // for rituals that are unlocked and chosen
+					chosenSign.setPosition(ritualPositionsOnTree[k].x + 40, ritualPositionsOnTree[k].y + 40);
 					chosenSign.render(batch);
 				}
 			} else { // for the locked rituals
 				disabledRitualTextureOnTree.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
 				disabledRitualTextureOnTree.render(batch);
 			}
+			ritualIndexOnTree.get(k).getRitual().renderRecipe(batch, ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y + 45, 16, 4);
 		}
 		//render lines
-		renderLines(batch);
+//		renderLines(batch);
 
-		//render viewing ritual
+		//render the viewing ritual
 		if (viewingRitual != null) {
 			viewingRitual.getRitual().render(batch, font, 830, 630, 835, 385, 54, 6);
 			// if the viewingRitual is already picked then render the chosenButton instead
@@ -255,7 +263,7 @@ public class RitualTree extends GameObject {
 				chosenButton.render(batch);
 			}
 		}
-		//render chosen rituals
+		//render chosen rituals on the bar
 		if (chosenRituals.size() != 0) {
 			for (int k = 0; k < chosenRituals.size(); k++) {
 				chosenRituals.get(k).renderRecipe(batch, 40 + 100 * k, 115, 20, 4);

@@ -54,7 +54,6 @@ public class GameScreen implements Screen {
 		viewport = new StretchViewport(WIDTH, HEIGHT, camera);
 		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
-
 		inputHandler = new InputHandler(this, game);
 		gameGestureDetector = new GameGestureDetector(inputHandler, this); // only change the 4th value which is the time to detect a long press
 		gameHandler = new GameHandler(gameGestureDetector, inputHandler, isTutorial, game);

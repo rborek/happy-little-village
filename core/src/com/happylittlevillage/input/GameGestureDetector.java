@@ -19,8 +19,9 @@ public class GameGestureDetector extends GestureDetector {
 	@Override
 	public boolean touchUp(float x, float y, int pointer, int button) {
 		Vector2 realPos = screen.getRealScreenPos(x, y);
-		inputHandler.dropGem(realPos.x, realPos.y);
-		inputHandler.dropRitual(realPos.x, realPos.y);
+		inputHandler.dropGem(realPos.x, realPos.y); // drop a single gem
+		inputHandler.dropRitual(realPos.x, realPos.y); // drop a ritual
+		inputHandler.reset();
 		return super.touchUp(realPos.x, realPos.y, pointer, button);
 	}
 
