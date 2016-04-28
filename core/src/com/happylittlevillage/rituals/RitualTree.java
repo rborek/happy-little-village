@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.happylittlevillage.GameHandler;
 import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.Assets;
+import com.happylittlevillage.objects.RotatableGameObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,27 +30,44 @@ public class RitualTree extends GameObject {
 	private GameObject chosenButton = new GameObject(Assets.getTexture("ui/chosen_button.png"), 925, 170);
 	private GameObject unlockButton = new GameObject(Assets.getTexture("ui/unlock_button.png"), 925, 170);
 	private GameObject resetButton;
-	private GameObject chosenSign = new GameObject(Assets.getTexture("ui/chosen_sign.png"), 0, 0);
+	private GameObject chosenSign = new GameObject(Assets.getTexture("ui/chosen_sign.png"), 0, 0, 35, 35);
 	private Rectangle chooseButtonPosition = new Rectangle(chooseButton.getPosition().x, chooseButton.getPosition().y, chooseButton.getWidth(), chooseButton.getHeight()); // choose a Ritual
 	private Rectangle nextButtonPosition = new Rectangle(1055, 80, 70, 65); // for the chosen ritual bar
 	private Rectangle prevButtonPosition = new Rectangle(1160, 80, 70, 65);// for the chosen ritual bar
+	private RotatableGameObject pickAxe = new RotatableGameObject(Assets.getTexture("ui/pick_axe.png"), 405, 390, 60, 60);
+
 	private static final int ritualSize = 100;
 
 	private Rectangle[] ritualPositionsOnTree = {
-			new Rectangle(120, 425, ritualSize, ritualSize),
-			new Rectangle(245, 540, ritualSize, ritualSize),
-			new Rectangle(230, 290, ritualSize, ritualSize),
-			new Rectangle(378, 550, ritualSize, ritualSize),
-			new Rectangle(376, 287, ritualSize, ritualSize),
-			new Rectangle(525, 548, ritualSize, ritualSize),
-			new Rectangle(520, 302, ritualSize, ritualSize),
-			new Rectangle(636, 543, ritualSize, ritualSize),
-			new Rectangle(520, 422, ritualSize, ritualSize),
-			new Rectangle(649, 418, ritualSize, ritualSize),
-			new Rectangle(660, 302, ritualSize, ritualSize),
-			new Rectangle(656, 193, ritualSize, ritualSize),
-			new Rectangle(520, 195, ritualSize, ritualSize),
-			new Rectangle(380, 178, ritualSize, ritualSize),
+			new Rectangle(70, 275, ritualSize, ritualSize),  // tier 1
+			new Rectangle(70, 400, ritualSize, ritualSize),
+			new Rectangle(70, 525, ritualSize, ritualSize),
+
+			new Rectangle(195, 565, ritualSize, ritualSize), // tier 2
+			new Rectangle(195, 445, ritualSize, ritualSize),
+			new Rectangle(195, 325, ritualSize, ritualSize),
+			new Rectangle(195, 205, ritualSize, ritualSize),
+
+			new Rectangle(320, 565, ritualSize, ritualSize), // tier 3
+			new Rectangle(320, 445, ritualSize, ritualSize),
+			new Rectangle(320, 325, ritualSize, ritualSize),
+			new Rectangle(320, 205, ritualSize, ritualSize),
+
+			new Rectangle(470, 565, ritualSize, ritualSize), // tier 3
+			new Rectangle(470, 445, ritualSize, ritualSize),
+			new Rectangle(470, 325, ritualSize, ritualSize),
+			new Rectangle(470, 205, ritualSize, ritualSize),
+
+			new Rectangle(575, 565, ritualSize, ritualSize), // tier 3
+			new Rectangle(575, 445, ritualSize, ritualSize),
+			new Rectangle(575, 325, ritualSize, ritualSize),
+			new Rectangle(575, 205, ritualSize, ritualSize),
+
+			new Rectangle(680, 580, ritualSize, ritualSize), // tier 6
+			new Rectangle(680, 485, ritualSize, ritualSize),
+			new Rectangle(680, 390, ritualSize, ritualSize),
+			new Rectangle(680, 295, ritualSize, ritualSize),
+			new Rectangle(680, 200, ritualSize, ritualSize),
 	};
 	// two vector2 to render lines
 	private Vector2 start = new Vector2(0, 0);
@@ -199,7 +217,6 @@ public class RitualTree extends GameObject {
 			//rectangle of the chosen ritual on the bar
 			Rectangle chosenRitualPosition = new Rectangle(0, 0, 0, 0);
 			for (int k = 0; k < chosenRituals.size(); k++) {
-				System.out.println("Checking chosen rituals");
 				chosenRitualPosition.set(40 + 100 * k, 20, 100, 120);
 				if (chosenRitualPosition.contains(mouseX, mouseY)) {
 					if (!chosenRituals.get(k).getName().equals("Weekly Ritual")) {
@@ -229,31 +246,41 @@ public class RitualTree extends GameObject {
 
 	@Override
 	public void render(Batch batch) {
-		BitmapFont font = Assets.getFont(36);
+		BitmapFont font = Assets.getFont(30);
 		batch.draw(texture, position.x, position.y, width, height);
 		continueButton.render(batch);
 		font.draw(batch, skillPoints + "", 1105, 600);
+		pickAxe.render(batch,0 ,0);
 		//render rituals on tree
-		for (int k = 0; k < ritualPositionsOnTree.length; k++) {
+		for (int k = 0; k < Ritual.getRitualNames().size(); k++) { // TODO replace with ritualPositionsOnTree.length
 			if (unlockedRituals.contains(ritualIndexOnTree.get(k).getRitual())) { // for rituals that are unlocked
 				enabledRitualTextureOnTree.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
 				enabledRitualTextureOnTree.render(batch);
 				if (chosenRituals.contains(ritualIndexOnTree.get(k).getRitual())) { // for rituals that are unlocked and chosen
-					chosenSign.setPosition(ritualPositionsOnTree[k].x + 40, ritualPositionsOnTree[k].y + 40);
+					chosenSign.setPosition(ritualPositionsOnTree[k].x + 50, ritualPositionsOnTree[k].y + 50);
 					chosenSign.render(batch);
 				}
 			} else { // for the locked rituals
 				disabledRitualTextureOnTree.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
 				disabledRitualTextureOnTree.render(batch);
 			}
-			ritualIndexOnTree.get(k).getRitual().renderRecipe(batch, ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y + 45, 16, 4);
+			ritualIndexOnTree.get(k).getRitual().renderRecipe(batch, ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y + 55, 16, 4);
+//			font.draw(batch, ritualPositionsOnTree[k].x + " " + ritualPositionsOnTree[k].y, ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
 		}
+
+		//testing only
+		for(int k = 14; k < ritualPositionsOnTree.length; k ++){
+//			font.draw(batch, ritualPositionsOnTree[k].x + " " + ritualPositionsOnTree[k].y, ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
+			disabledRitualTextureOnTree.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
+			disabledRitualTextureOnTree.render(batch);
+		}
+
 		//render lines
 //		renderLines(batch);
 
 		//render the viewing ritual
 		if (viewingRitual != null) {
-			viewingRitual.getRitual().render(batch, font, 830, 630, 835, 385, 54, 6);
+			viewingRitual.getRitual().render(batch, font, 845, 605, 835, 365, 54, 12);
 			// if the viewingRitual is already picked then render the chosenButton instead
 			if (!unlockedRituals.contains(viewingRitual.getRitual()) && skillPoints > 0) {
 				unlockButton.render(batch);

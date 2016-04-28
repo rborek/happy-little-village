@@ -155,6 +155,7 @@ public class Ritual {
 	}
 
 	public void render(Batch batch, BitmapFont font, float startX, float startY, float posX, float posY, int gemSize, int spaceBetweenGems) {
+		// render the recipe
 		for (int k = 0; k < this.getRecipe().length; k++) {
 			for (int h = 0; h < this.getRecipe()[0].length; h++) {
 				if (this.getRecipe()[k][h] != null) {
@@ -174,10 +175,15 @@ public class Ritual {
 				}
 			}
 		}
+		// render the name
+		font.draw(batch, "Name: " + this.getName(), posX, posY + 50);
+		font.draw(batch, "Effect:\n ", posX, posY + 25);
+
+		// render the effect
 		for (int k = 0; k < this.getEffects().length; k++) {
-			font.draw(batch, this.getEffects()[k].getModifier().name() + this.getEffects()[k].getAmount(), posX, posY - this.getEffects().length * 35 - k * 25);
+			font.draw(batch, this.getEffects()[k].getModifier().name() + this.getEffects()[k].getAmount(), posX, posY  - k * 30);
 		}
-		font.draw(batch, this.getName(), posX, posY + 20);
+
 	}
 
 	// render not moving ritual's recipe only

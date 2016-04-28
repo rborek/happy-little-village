@@ -217,7 +217,7 @@ public class InputHandler implements GestureDetector.GestureListener {
 
 	// this is only for the TouchUp in GestureDetector.
 	public void reset(){
-		ritualBook.reset(0);
+//		ritualBook.reset(0);
 	}
 	@Override
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
