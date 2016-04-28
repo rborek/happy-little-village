@@ -176,12 +176,16 @@ public class Ritual {
 			}
 		}
 		// render the name
-		font.draw(batch, "Name: " + this.getName(), posX, posY + 50);
-		font.draw(batch, "Effect:\n ", posX, posY + 25);
+		font.draw(batch, "Name: " + this.getName(), posX, posY + 60);
+		font.draw(batch, "Effect:\n ", posX, posY + 30);
 
 		// render the effect
 		for (int k = 0; k < this.getEffects().length; k++) {
-			font.draw(batch, this.getEffects()[k].getModifier().name() + this.getEffects()[k].getAmount(), posX, posY  - k * 30);
+			if(this.getEffects()[k].getAmount() > 0){
+				font.draw(batch, this.getEffects()[k].getModifier().name() + " +" + this.getEffects()[k].getAmount(), posX, posY  - k * 30);
+			} else {
+				font.draw(batch, this.getEffects()[k].getModifier().name() + " " + this.getEffects()[k].getAmount(), posX, posY  - k * 30);
+			}
 		}
 
 	}
