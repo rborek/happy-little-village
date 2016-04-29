@@ -34,22 +34,40 @@ public class RitualEffect implements Comparable<RitualEffect> {
 				System.out.println("Water added is:" + amount);
 				break;
 			case FARMER:
-				for (int k = 0; k < amount; k++) {
-					village.convertCitizen(VillagerRole.FARMER);
+				if(amount > 0 ) { // if add
+					for (int k = 0; k < amount; k++) {
+						village.convertCitizen(VillagerRole.FARMER);
+					}
 				}
-				System.out.println("A farmer is converted");
+				else{ // if reconvert a role
+					for(int k = 0; k < - amount; k ++){
+						village.reconvertCitizen(VillagerRole.FARMER);
+					}
+				}
 				break;
 			case EXPLORER:
-				for (int k = 0; k < amount; k++) {
-					village.convertCitizen(VillagerRole.EXPLORER);
+				if(amount > 0 ) { // if add
+					for (int k = 0; k < amount; k++) {
+						village.convertCitizen(VillagerRole.EXPLORER);
+					}
 				}
-				System.out.println("An explorer is converted");
+				else{ // if reconvert a role
+					for(int k = 0; k < - amount; k ++){
+						village.reconvertCitizen(VillagerRole.EXPLORER);
+					}
+				}
 				break;
 			case MINER:
-				for (int k = 0; k < amount; k++) {
-					village.convertCitizen(VillagerRole.MINER);
+				if(amount > 0 ) { // if add
+					for (int k = 0; k < amount; k++) {
+						village.convertCitizen(VillagerRole.MINER);
+					}
 				}
-				System.out.println("A miner is converted");
+				else{ // if reconvert a role
+					for(int k = 0; k < - amount; k ++){
+						village.reconvertCitizen(VillagerRole.MINER);
+					}
+				}
 				break;
 			case HAPPINESS:
 				village.addHappiness(amount);

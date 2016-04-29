@@ -45,6 +45,7 @@ public class RitualNode {
 		prerequisiteRituals.add(ritualNode);
 	}
 
+	// check if this ritual is activated or not
 	public boolean isActivated() {
 		return activated;
 	}

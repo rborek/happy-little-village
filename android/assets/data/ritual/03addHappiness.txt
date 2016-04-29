@@ -1,0 +1,3 @@
+A little party
+00 BLUE 01 RED 02 YELLOW
+HAPPINESS +20

@@ -1,0 +1,3 @@
+A medium party
+00 RED 01 YELLOW 02 BLUE 03 RED
+HAPPINESS +40

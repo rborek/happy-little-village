@@ -1,0 +1,4 @@
+Cure the thirst
+00 RED 01 RED 02 BLUE
+WATER +200
+HAPPINESS +10

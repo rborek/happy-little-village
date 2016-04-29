@@ -16,15 +16,16 @@ import java.util.Map;
 
 public class RitualTree extends GameObject {
 	private GameHandler gameHandler;
-	private int skillPoints = 10;
+	private int skillPoints = 18;
 	private ArrayList<Ritual> unlockedRituals = new ArrayList<Ritual>(); // all the unlocked rituals. Equal or greater than chosenRituals
 	private ArrayList<Ritual> chosenRituals = new ArrayList<Ritual>(); // chosen rituals and passed in ritualBook and ritualAltar
 	private RitualNode viewingRitual = null;
 	private static HashMap<Integer, RitualNode> ritualIndexOnTree = new HashMap<Integer, RitualNode>();
 
 	private GameObject dot = new GameObject(Assets.getTexture("ui/dot.png"), 0, 0);
+	private GameObject dot2 = new GameObject(Assets.getTexture("ui/dot2.png"), 0, 0);
 	private GameObject lockedRitualTextureOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree_locked.png"), 0, 0, 80, 80);
-//	private GameObject unlockedRitualTexturesOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree_activated.png"), 0, 0);
+	//	private GameObject unlockedRitualTexturesOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree_activated.png"), 0, 0);
 	private static HashMap<String, GameObject> unlockedRitualTexturesOnTree = new HashMap<String, GameObject>();
 	private GameObject continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), position.x + 1030, position.y + 5);
 	private Rectangle continueButtonPosition = new Rectangle(continueButton.getPosition().x, continueButton.getPosition().y, continueButton.getWidth(), continueButton.getHeight());
@@ -39,12 +40,13 @@ public class RitualTree extends GameObject {
 	private RotatableGameObject pickAxe = new RotatableGameObject(Assets.getTexture("ui/pick_axe.png"), 405, 390, 60, 60);
 	private Rectangle pickAxePosition = new Rectangle(pickAxe.getPosition().x, pickAxe.getPosition().y, pickAxe.getWidth(), pickAxe.getHeight());
 	private boolean viewPickAxe = false;
-	private static final int ritualSize = 100;
+	private GameObject blackGem = new GameObject(Assets.getTexture("gems/gem_black.png"), 1105, 550, 40, 40);
+	private static final int ritualSize = 80;
 
 	private Rectangle[] ritualPositionsOnTree = {
-			new Rectangle(70, 275, ritualSize, ritualSize),  // tier 1
+			new Rectangle(70, 525, ritualSize, ritualSize),  // tier 1
 			new Rectangle(70, 400, ritualSize, ritualSize),
-			new Rectangle(70, 525, ritualSize, ritualSize),
+			new Rectangle(70, 275, ritualSize, ritualSize),
 
 			new Rectangle(195, 565, ritualSize, ritualSize), // tier 2
 			new Rectangle(195, 445, ritualSize, ritualSize),
@@ -101,43 +103,55 @@ public class RitualTree extends GameObject {
 		}
 	}
 
-	private void texturesOfUnlockedRituals(){
-		unlockedRitualTexturesOnTree.put("FARMER",new GameObject(Assets.getTexture("ui/ritual_on_tree_farmer.png"),0,0,80,80));
-		unlockedRitualTexturesOnTree.put("EXPLORER",new GameObject(Assets.getTexture("ui/ritual_on_tree_explorer.png"),0,0,80,80));
-		unlockedRitualTexturesOnTree.put("MINER",new GameObject(Assets.getTexture("ui/ritual_on_tree_miner.png"),0,0,80,80));
-		unlockedRitualTexturesOnTree.put("VILLAGER",new GameObject(Assets.getTexture("ui/ritual_on_tree_villager.png"),0,0,80,80));
-		unlockedRitualTexturesOnTree.put("FOOD",new GameObject(Assets.getTexture("ui/ritual_on_tree_food.png"),0,0,80,80));
-		unlockedRitualTexturesOnTree.put("WATER",new GameObject(Assets.getTexture("ui/ritual_on_tree_water.png"),0,0,80,80));
-		unlockedRitualTexturesOnTree.put("SACRIFICE",new GameObject(Assets.getTexture("ui/ritual_on_tree_sacrifice.png"),0,0,80,80));
+	private void texturesOfUnlockedRituals() {
+		unlockedRitualTexturesOnTree.put("FARMER", new GameObject(Assets.getTexture("ui/ritual_on_tree_farmer.png"), 0, 0, 80, 80));
+		unlockedRitualTexturesOnTree.put("EXPLORER", new GameObject(Assets.getTexture("ui/ritual_on_tree_explorer.png"), 0, 0, 80, 80));
+		unlockedRitualTexturesOnTree.put("MINER", new GameObject(Assets.getTexture("ui/ritual_on_tree_miner.png"), 0, 0, 80, 80));
+		unlockedRitualTexturesOnTree.put("VILLAGER", new GameObject(Assets.getTexture("ui/ritual_on_tree_villager.png"), 0, 0, 80, 80));
+		unlockedRitualTexturesOnTree.put("FOOD", new GameObject(Assets.getTexture("ui/ritual_on_tree_food.png"), 0, 0, 80, 80));
+		unlockedRitualTexturesOnTree.put("WATER", new GameObject(Assets.getTexture("ui/ritual_on_tree_water.png"), 0, 0, 80, 80));
+		unlockedRitualTexturesOnTree.put("SACRIFICE", new GameObject(Assets.getTexture("ui/ritual_on_tree_sacrifice.png"), 0, 0, 80, 80));
+		unlockedRitualTexturesOnTree.put("HAPPINESS", new GameObject(Assets.getTexture("ui/ritual_on_tree_activated.png"), 0, 0, 80, 80));
 	}
 
 
-	private void setPrerequisites() {
+	private void setPrerequisites() { // this code is very very sloppy and ugly
 		ArrayList<String> prerequisites = new ArrayList<String>();
 		prerequisites.add("Dried meat");
-		addPrerequisites("Liquid diet", prerequisites); // this one has 1 prerequisite
-		prerequisites.add("Liquid diet");
-		addPrerequisites("Well water", prerequisites); // water has 2 prerequisites
-		prerequisites.add("Farming is fun!");
-		prerequisites.add("Liquid diet");
+		addPrerequisites("Farming is fun!", prerequisites);
+
+		prerequisites.add("Dried meat");
+		prerequisites.add("Well water");
+		addPrerequisites("Mining time!", prerequisites);
+
+		prerequisites.add("Well water");
+		prerequisites.add("A little party");
 		addPrerequisites("Time to explore!", prerequisites);
+
+		prerequisites.add("A little party");
+		addPrerequisites("Reproduce", prerequisites);
+
+		for (int k = 7; k < 20; k++) { // automatically add prerequisites for indexes from 7 to 20
+			prerequisites.add(ritualIndexOnTree.get(k - 4).getRitual().getName());
+			addPrerequisites(ritualIndexOnTree.get(k).getRitual().getName(), prerequisites);
+		}
+
+		for (int k = 20; k < 23; k++) { // automatically add prerequisites for indexes from 20 to 23
+			prerequisites.add(ritualIndexOnTree.get(k - 5).getRitual().getName());
+			prerequisites.add(ritualIndexOnTree.get(k - 4).getRitual().getName());
+			addPrerequisites(ritualIndexOnTree.get(k).getRitual().getName(), prerequisites);
+		}
+
+		prerequisites.add("A large party");
+		addPrerequisites("Super Fertility", prerequisites);
 	}
 
 	//TODO need to add condition so that it is impossible to remove preset rituals
 	private void addPresetChosenRituals() {
 		chosenRituals.add(Ritual.getRitual("Dried meat"));
-		chosenRituals.add(Ritual.getRitual("Liquid diet"));
-		chosenRituals.add(Ritual.getRitual("Reproduce"));
 		chosenRituals.add(Ritual.getRitual("Well water"));
-		chosenRituals.add(Ritual.getRitual("Massive expansion"));
-		chosenRituals.add(Ritual.getRitual("Massive production"));
-		chosenRituals.add(Ritual.getRitual("Time to explore!"));
-		chosenRituals.add(Ritual.getRitual("For the greater good"));
-		chosenRituals.add(Ritual.getRitual("Double Sacrifice"));
-		chosenRituals.add(Ritual.getRitual("Mining time!"));
-		chosenRituals.add(Ritual.getRitual("Farming is fun!"));
-		chosenRituals.add(Ritual.getRitual("Mirin"));
-		chosenRituals.add(Ritual.getRitual("Reproduce"));
+		chosenRituals.add(Ritual.getRitual("A little party"));
+
 
 		for (Ritual ritual : chosenRituals) {
 			unlockedRituals.add(ritual);
@@ -193,7 +207,7 @@ public class RitualTree extends GameObject {
 			return true;
 		}
 		//click on the pickAxe
-		else if(pickAxePosition.contains(mouseX, mouseY)){
+		else if (pickAxePosition.contains(mouseX, mouseY)) {
 			viewingRitual = null;
 			viewPickAxe = true;
 		}
@@ -268,13 +282,22 @@ public class RitualTree extends GameObject {
 		BitmapFont font = Assets.getFont(30);
 		batch.draw(texture, position.x, position.y, width, height);
 		continueButton.render(batch);
-		font.draw(batch, "Skill Points: " + skillPoints + "\nreplaced by black gems ", 1105, 600);
-		pickAxe.render(batch,0 ,0);
+		blackGem.render(batch);
+		font.draw(batch, skillPoints + "", 1105, 600);
+		pickAxe.render(batch, 0, 0);
+		//render lines
+		renderLines(batch);
 		//render rituals on tree
-		for (int k = 0; k < Ritual.getRitualNames().size(); k++) { // TODO replace with ritualPositionsOnTree.length
+		for (int k = 0; k < ritualPositionsOnTree.length; k++) {
 			if (unlockedRituals.contains(ritualIndexOnTree.get(k).getRitual())) { // for rituals that are unlocked
-				unlockedRitualTexturesOnTree.get(ritualIndexOnTree.get(k).getRitual().getEffects()[0].getModifier().toString()).setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
-				unlockedRitualTexturesOnTree.get(ritualIndexOnTree.get(k).getRitual().getEffects()[0].getModifier().toString()).render(batch);
+				String firstEffect = ritualIndexOnTree.get(k).getRitual().getEffects()[0].getModifier().toString();
+				if (firstEffect.equals("VILLAGER")) {
+					if (ritualIndexOnTree.get(k).getRitual().getEffects()[0].getAmount() < 0) {
+						firstEffect = "SACRIFICE";
+					}
+				}
+				unlockedRitualTexturesOnTree.get(firstEffect).setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
+				unlockedRitualTexturesOnTree.get(firstEffect).render(batch);
 				if (chosenRituals.contains(ritualIndexOnTree.get(k).getRitual())) { // for rituals that are unlocked and chosen
 					chosenSign.setPosition(ritualPositionsOnTree[k].x + 50, ritualPositionsOnTree[k].y + 50);
 					chosenSign.render(batch);
@@ -283,17 +306,9 @@ public class RitualTree extends GameObject {
 				lockedRitualTextureOnTree.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
 				lockedRitualTextureOnTree.render(batch);
 			}
-//			ritualIndexOnTree.get(k).getRitual().renderRecipe(batch, ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y + 55, 16, 4);
 		}
 
-		//testing only
-		for(int k = 14; k < ritualPositionsOnTree.length; k ++){
-			lockedRitualTextureOnTree.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
-			lockedRitualTextureOnTree.render(batch);
-		}
 
-		//render lines
-//		renderLines(batch);
 
 		//render the viewing ritual
 		if (viewingRitual != null) {
@@ -308,7 +323,7 @@ public class RitualTree extends GameObject {
 			}
 		}
 
-		if(viewPickAxe){
+		if (viewPickAxe) {
 			String description = "Pick Axe allows to monitor mining gems\n" +
 					"Unlocked automatically upon\n" + "unlocking any tier 4 ritual";
 			font.draw(batch, description, 840, 390);
@@ -323,29 +338,30 @@ public class RitualTree extends GameObject {
 	}
 
 	private void renderLines(Batch batch) {
-		for (Map.Entry<Integer, RitualNode> entry : ritualIndexOnTree.entrySet()) {
-			int key = entry.getKey();
+		for (Map.Entry<Integer, RitualNode> entry : ritualIndexOnTree.entrySet()) { // for each ritual
+			int key = entry.getKey(); // get the integer index
 			start.set(ritualPositionsOnTree[key].x + ritualSize / 2, ritualPositionsOnTree[key].y + ritualSize / 2);
 			//get the end point of lines
-			RitualNode value = entry.getValue();
-			for (RitualNode ritualNode : value.getPrerequisiteRituals()) {
+			RitualNode value = entry.getValue(); // get the ritualNode
+			for (RitualNode ritualNode : value.getPrerequisiteRituals()) { //loop through the prerequisites
 				// need to find the key2 that matches each ritualNode
 				int key2 = 0;
-				for (Map.Entry<Integer, RitualNode> entry1 : ritualIndexOnTree.entrySet()) {
-					if (entry1.getValue() == ritualNode) {
+				for (Map.Entry<Integer, RitualNode> entry1 : ritualIndexOnTree.entrySet()) { // for each ritual
+					if (entry1.getValue() == ritualNode) { // if it matches the prerequisite of the ritual in key
 						key2 = entry1.getKey();
 						break;
 					}
 				}
 				end.set(ritualPositionsOnTree[key2].x + ritualSize, ritualPositionsOnTree[key2].y + ritualSize / 2);
-				drawLines(start, end, batch);
+
+				drawLines(start, end, batch, ritualNode.isActivated());
 			}
 
 		}
 	}
 
-	private void drawLines(Vector2 start, Vector2 end, Batch batch) {
-		float distanceBetweenDot = 10;
+	private void drawLines(Vector2 start, Vector2 end, Batch batch, boolean activated) {
+		float distanceBetweenDot = 5;
 		double distance = Math.sqrt(Math.pow(end.y - start.y, 2) + Math.pow(end.x - start.x, 2));
 		int times = (int) (distance / distanceBetweenDot);
 		Vector2 dir = new Vector2(end.x - start.x, end.y - start.y);
@@ -369,10 +385,18 @@ public class RitualTree extends GameObject {
 		double x = start.x;
 		int count = 0;
 		while (count < times) {
-			dot.render(batch);
+			if(activated){
+				dot2.render(batch);
+			}else {
+				dot.render(batch);
+			}
 			y += Math.abs(Math.sin(degree)) * distanceBetweenDot * signY;
 			x += Math.abs(Math.cos(degree)) * distanceBetweenDot * signX;
-			dot.setPosition((float) x, (float) y);
+			if(activated){
+				dot2.setPosition((float) x, (float) y);
+			}else {
+				dot.setPosition((float) x, (float) y);
+			}
 			count++;
 		}
 	}

@@ -91,6 +91,16 @@ public class Village {
 		return false;
 	}
 
+	public boolean reconvertCitizen(VillagerRole role){
+		for(Villager villager : villagers){
+			if(villager.getRole() == role){
+				villager.setRole(VillagerRole.CITIZEN);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void consume(float delta) {
 		float consumeFood = 0;
 		float consumeWater = 0;

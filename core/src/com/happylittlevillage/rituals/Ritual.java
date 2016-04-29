@@ -65,7 +65,6 @@ public class Ritual {
 			numEffects++;
 		}
 		effects = new RitualEffect[numEffects];
-
 		// adds each effect to the effects array
 		for (int i = 2; i < file.length; i++) {
 			String[] effect = file[i].split(" ");
