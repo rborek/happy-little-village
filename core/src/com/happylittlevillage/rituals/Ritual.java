@@ -14,7 +14,6 @@ import java.util.List;
 public class Ritual {
 	protected String name;
 	protected static Village village;
-	protected GemColour[] gemCombination; // to be deleted
 	protected GemColour[][] recipe;
 	protected RitualEffect[] effects;
 	protected int blackGemRequire;
