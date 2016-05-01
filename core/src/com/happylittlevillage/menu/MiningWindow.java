@@ -13,7 +13,7 @@ import com.happylittlevillage.Assets;
 public class MiningWindow extends GameObject {
 	private boolean show = false;
 	private GameObject box = new GameObject(Assets.getTexture("ui/parchment2.png"), 340, 420, 250, 200);
-	private GameObject continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), 400, 435, 100, 35);
+	private GameObject continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), 390, 435, 140, 45);
 	private GameObject chosenSign = new GameObject(Assets.getTexture("ui/chosen_sign.png"), 0, 0, 40, 40);
 	private RotatableGameObject pickAxe = new RotatableGameObject(Assets.getTexture("ui/pick_axe.png"), position.x, position.y, 50, 50);
 	private boolean[] mine = {false, false, false, false};
@@ -22,6 +22,8 @@ public class MiningWindow extends GameObject {
 	private GemBag gemBag;
 	private int count = 0; // number of activated gems
 	private float angle = 0;
+	private boolean backward = false;
+	private final double EXTRA_POSIBILITIES = 15;  // this is the total difference in possibilites of gems ( 10%)
 
 	public MiningWindow(GemBag gemBag, Texture texture, float xPos, float yPos, int width, int height) {
 		super(texture, xPos, yPos, width, height);
@@ -60,15 +62,14 @@ public class MiningWindow extends GameObject {
 
 	private void setPercentage() {
 		double[] probabilities = {0, 0, 0, 0};
-		double extraProbability = 10;
 		if (count == 0 || count == 4) {
 			gemBag.setCumulativeProbabilities(probabilities);
 		} else {
 			for (int h = 0; h < mine.length; h++) {
 				if (mine[h]) {
-					probabilities[h] = extraProbability / (count);
+					probabilities[h] = EXTRA_POSIBILITIES / (count);
 				} else {
-					probabilities[h] = -extraProbability / (mine.length - count);
+					probabilities[h] = -EXTRA_POSIBILITIES / (mine.length - count);
 				}
 			}
 			gemBag.setCumulativeProbabilities(probabilities);
@@ -77,37 +78,43 @@ public class MiningWindow extends GameObject {
 
 	@Override
 	public void render(Batch batch) {
-		font = Assets.getFont(32);
+		font = Assets.getFont(24);
 		if (show) {
 			box.render(batch); // the background theme
 			continueButton.render(batch);
 			font.draw(batch, text, 350, 600);
 
 			for (int k = 0; k < 4; k++) {
-				DynamicRitual.gemTextures[k].setPosition(350 + k * 60, 475);
+				DynamicRitual.gemTextures[k].setPosition(350 + k * 60, 495);
 				DynamicRitual.gemTextures[k].render(batch, 50, 50);
 				if (mine[k]) {
-					chosenSign.setPosition(375 + k * 60, 500);
+					chosenSign.setPosition(375 + k * 60, 520);
 					chosenSign.render(batch);
 				}
 			}
 		} else {
-			if (count == 0 || count == 4) {
-				pickAxe.render(batch, 0, 0);
-			} else {
-				pickAxe.setAngle(30);
-				pickAxe.render(batch, 0, 0);
-			}
-
+				pickAxe.render(batch, 50, 50);
 		}
 	}
 
 	@Override
 	public void update(float delta) {
-		angle += delta * 50;
-		if (angle > 90) {
+		if(count == 0 || count == 4) {
 			angle = 0;
+		} else{
+			if (!backward) { // axe go forward
+				angle += delta * 50;
+				if (angle > 90) {
+					backward = true;
+				}
+			} else { // axe go backward
+				angle -= delta * 50;
+				if (angle <= 0) {
+					backward = false;
+				}
+			}
 		}
+		pickAxe.setAngle(angle);
 		super.update(delta);
 	}
 }

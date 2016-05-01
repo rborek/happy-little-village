@@ -173,7 +173,6 @@ public class InputHandler implements GestureDetector.GestureListener {
 //            happyLittleVillage.setMenu();
 //            gameHandler.pause();
 //    }
-		gameHandler.getMiningWindow().interact(realPos.x, realPos.y); // for the mining window
 		isLongPressed = false;
 		if (slideArea.contains(realPos.x, realPos.y)) {
 			slideable = true;
@@ -198,6 +197,9 @@ public class InputHandler implements GestureDetector.GestureListener {
 				pickUpRitual(realPos.x, realPos.y);
 			}
 		} else { // start gameplay
+			if(gameHandler.getRitualTree().isPickAxeUnlocked()){
+				gameHandler.getMiningWindow().interact(realPos.x, realPos.y); // for the mining window
+			}
 			pickUpGem(realPos.x, realPos.y);
 			removeFromSlots(realPos.x, realPos.y);
 			ritualAltar.interact(realPos.x, realPos.y); // commence button

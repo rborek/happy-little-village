@@ -21,9 +21,10 @@ public class RitualTree extends GameObject {
 	private RitualNode viewingRitual = null;
 	private static HashMap<Integer, RitualNode> ritualIndexOnTree = new HashMap<Integer, RitualNode>();
 
-	private GameObject dot = new GameObject(Assets.getTexture("ui/dot.png"), 0, 0);
-	private GameObject dot2 = new GameObject(Assets.getTexture("ui/dot2.png"), 0, 0);
+	private RotatableGameObject dot = new RotatableGameObject(Assets.getTexture("ui/dot.png"), 0, 0);
+	private RotatableGameObject dot2 = new RotatableGameObject(Assets.getTexture("ui/dot2.png"), 0, 0);
 	private GameObject lockedRitualTextureOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree_locked.png"), 0, 0, 80, 80);
+	private GameObject surroundingPickAxe = new GameObject(Assets.getTexture("ui/surround_pick_axe.png"), 387, 369, 100, 100);
 	//	private GameObject unlockedRitualTexturesOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree_activated.png"), 0, 0);
 	private static HashMap<String, GameObject> unlockedRitualTexturesOnTree = new HashMap<String, GameObject>();
 	private GameObject continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), position.x + 1030, position.y + 5);
@@ -40,6 +41,7 @@ public class RitualTree extends GameObject {
 	private RotatableGameObject pickAxe = new RotatableGameObject(Assets.getTexture("ui/pick_axe.png"), 405, 390, 60, 60);
 	private Rectangle pickAxePosition = new Rectangle(pickAxe.getPosition().x, pickAxe.getPosition().y, pickAxe.getWidth(), pickAxe.getHeight());
 	private boolean viewPickAxe = false;
+	private boolean pickAxeUnlocked = false;
 	private GameObject blackGem = new GameObject(Assets.getTexture("gems/gem_black.png"), 1105, 550, 40, 40);
 	private static final int ritualSize = 80;
 
@@ -58,12 +60,12 @@ public class RitualTree extends GameObject {
 			new Rectangle(320, 325, ritualSize, ritualSize),
 			new Rectangle(320, 205, ritualSize, ritualSize),
 
-			new Rectangle(470, 565, ritualSize, ritualSize), // tier 3
+			new Rectangle(470, 565, ritualSize, ritualSize), // tier 4
 			new Rectangle(470, 445, ritualSize, ritualSize),
 			new Rectangle(470, 325, ritualSize, ritualSize),
 			new Rectangle(470, 205, ritualSize, ritualSize),
 
-			new Rectangle(575, 565, ritualSize, ritualSize), // tier 3
+			new Rectangle(575, 565, ritualSize, ritualSize), // tier 5
 			new Rectangle(575, 445, ritualSize, ritualSize),
 			new Rectangle(575, 325, ritualSize, ritualSize),
 			new Rectangle(575, 205, ritualSize, ritualSize),
@@ -275,13 +277,30 @@ public class RitualTree extends GameObject {
 		return false;
 	}
 
+
+	@Override
+	public void update(float delta) {
+		//check to enable the pickAxe
+		if (!pickAxeUnlocked) {
+			for (int k = 15; k < 19; k++) { // loop through tier 4, index 11-15
+				if (ritualIndexOnTree.get(k).prerequisitesActivated()) {
+					pickAxeUnlocked = true;
+					break;
+				}
+			}
+		}
+	}
+
 	@Override
 	public void render(Batch batch) {
 		BitmapFont font = Assets.getFont(30);
 		batch.draw(texture, position.x, position.y, width, height);
 		continueButton.render(batch);
 		blackGem.render(batch);
-		font.draw(batch, skillPoints + "", 1120, 550);
+		if (pickAxeUnlocked) {
+			surroundingPickAxe.render(batch);
+		}
+		font.draw(batch, skillPoints + "", 1120, 570);
 		pickAxe.render(batch, 0, 0);
 		//render lines
 		renderLines(batch);
@@ -307,15 +326,13 @@ public class RitualTree extends GameObject {
 		}
 
 
-
 		//render the viewing ritual
 		if (viewingRitual != null) {
 			viewingRitual.getRitual().render(batch, font, 845, 605, 835, 355, 54, 6);
 			// if the viewingRitual is already picked then render the chosenButton instead
-			if(!viewingRitual.prerequisitesActivated()){
+			if (!viewingRitual.prerequisitesActivated()) {
 				lockedButton.render(batch);
-			}
-			else if (!unlockedRituals.contains(viewingRitual.getRitual()) && skillPoints > 0) {
+			} else if (!unlockedRituals.contains(viewingRitual.getRitual()) && skillPoints > 0) {
 				unlockButton.render(batch);
 			} else if (!chosenRituals.contains(viewingRitual.getRitual())) {
 				chooseButton.render(batch);
@@ -325,8 +342,13 @@ public class RitualTree extends GameObject {
 		}
 
 		if (viewPickAxe) {
-			String description = "Pick Axe allows to monitor mining gems\n" +
-					"Unlocked automatically upon\n" + "unlocking any tier 4 ritual";
+			String description;
+			if (!pickAxeUnlocked) {
+				description = "Pick Axe allows to monitor mining gems\n" +
+						"unlocked automatically upon\n" + "unlocking any tier 4 ritual";
+			} else {
+				description = "Pick Axe has been unlocked\n" + "Click the icon on the mine to use it\n";
+			}
 			font.draw(batch, description, 840, 390);
 		}
 		//render chosen rituals on the bar
@@ -335,6 +357,7 @@ public class RitualTree extends GameObject {
 				chosenRituals.get(k).renderRecipe(batch, 40 + 100 * k, 115, 20, 4);
 			}
 		}
+
 
 	}
 
@@ -362,7 +385,7 @@ public class RitualTree extends GameObject {
 	}
 
 	private void drawLines(Vector2 start, Vector2 end, Batch batch, boolean activated) {
-		float distanceBetweenDot = 5;
+		float distanceBetweenDot = 2;
 		double distance = Math.sqrt(Math.pow(end.y - start.y, 2) + Math.pow(end.x - start.x, 2));
 		int times = (int) (distance / distanceBetweenDot);
 		Vector2 dir = new Vector2(end.x - start.x, end.y - start.y);
@@ -381,24 +404,34 @@ public class RitualTree extends GameObject {
 			}
 		}
 		double slope = (dir.y) / (dir.x);
-		double degree = Math.atan(slope);
+		double angle = Math.atan(slope);
 		double y = start.y;
 		double x = start.x;
 		int count = 0;
 		while (count < times) {
-			if(activated){
+			if (activated) {
 				dot2.render(batch);
-			}else {
+			} else {
 				dot.render(batch);
 			}
-			y += Math.abs(Math.sin(degree)) * distanceBetweenDot * signY;
-			x += Math.abs(Math.cos(degree)) * distanceBetweenDot * signX;
-			if(activated){
+
+			y += Math.abs(Math.sin(angle)) * distanceBetweenDot * signY;
+			x += Math.abs(Math.cos(angle)) * distanceBetweenDot * signX;
+			;
+			if (activated) {
 				dot2.setPosition((float) x, (float) y);
-			}else {
+				dot2.setAngle((float) angle  * 57.2958f);
+				System.out.println(angle);
+			} else {
 				dot.setPosition((float) x, (float) y);
+				dot.setAngle((float) angle * 57.2958f);
+				System.out.println(angle);
 			}
 			count++;
 		}
+	}
+
+	public boolean isPickAxeUnlocked() {
+		return pickAxeUnlocked;
 	}
 }

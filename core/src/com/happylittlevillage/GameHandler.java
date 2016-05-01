@@ -168,6 +168,11 @@ public class GameHandler {
 			ritualBook.update(delta);
 			miningWindow.update(delta);
 		}
+		else{ // when pause
+			if(messageScreen == 1){
+				ritualTree.update(delta);
+			}
+		}
 		if (isTutorial) {
 			//arrow for screen 0 and 1
 			if (tutorialMessage.getTutorialScreen() <= 1) {
@@ -184,7 +189,9 @@ public class GameHandler {
 		batch.draw(scroll, 1280 - 550, -12);
 		ritualAltar.render(batch);
 		gemBag.render(batch);
-		miningWindow.render(batch);
+		if(ritualTree.isPickAxeUnlocked()){
+			miningWindow.render(batch);
+		}
 		if (!intro) ritualBook.render(batch);
 //      optionWheel.render(batch);
 		if (!paused) {
