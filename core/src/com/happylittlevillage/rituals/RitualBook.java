@@ -105,15 +105,19 @@ public class RitualBook extends GameObject {
 				int index = k % count;
 //            System.out.println(index + " " + firstIndex);
 				// check for one specific ritual recipe position in the arrayList of recipePositions
-				for (int i = 0; i < dynamicRituals.get(index).getRitual().getRecipe().length; i++) {
-					for (int h = 0; h < dynamicRituals.get(index).getRitual().getRecipe()[0].length; h++) {
-						//if there is a gem in the position
-						if (dynamicRituals.get(index).getRitual().getRecipe()[i][h] != null) {
-							if (dynamicRituals.get(index).getRecipePositions()[i][h].contains(x, y)) { // if the recipe position contains the mouse
-								return getPickUpRitual(index);
-							}
-						}
-					}
+//				for (int i = 0; i < dynamicRituals.get(index).getRitual().getRecipe().length; i++) {
+//					for (int h = 0-; h < dynamicRituals.get(index).getRitual().getRecipe()[0].length; h++) {
+//						//if there is a gem in the position
+//						if (dynamicRituals.get(index).getRitual().getRecipe()[i][h] != null) {
+//							if (dynamicRituals.get(index).getRecipePositions()[i][h].contains(x, y)) { // if the recipe position contains the mouse
+//								return getPickUpRitual(index);
+//							}
+//						}
+//					}
+//				}
+				Rectangle rectangle = dynamicRituals.get(index).getRectanglePosition();
+				if(rectangle.contains(x,y)){
+					return getPickUpRitual(index);
 				}
 			}
 		}

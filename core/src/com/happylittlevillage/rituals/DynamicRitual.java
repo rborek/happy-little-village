@@ -152,4 +152,7 @@ public class DynamicRitual {
 		return ritual;
 	}
 
+	public Rectangle getRectanglePosition(){
+		return new Rectangle(posX - 3, 5, weeklyFrame.getWidth() ,weeklyFrame.getHeight());
+	}
 }
