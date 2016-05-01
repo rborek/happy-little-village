@@ -42,7 +42,7 @@ public class RitualTree extends GameObject {
 	private Rectangle pickAxePosition = new Rectangle(pickAxe.getPosition().x, pickAxe.getPosition().y, pickAxe.getWidth(), pickAxe.getHeight());
 	private boolean viewPickAxe = false;
 	private boolean pickAxeUnlocked = false;
-	private GameObject blackGemTexture = new GameObject(Assets.getTexture("gems/gem_black.png"), 1105, 550, 40, 40);
+	private GameObject blackGemTexture = new GameObject(Assets.getTexture("gems/gem_black.png"), 0, 0, 40, 40);
 	private static final int ritualSize = 80;
 
 	private Rectangle[] ritualPositionsOnTree = {
@@ -301,7 +301,7 @@ public class RitualTree extends GameObject {
 		BitmapFont font = Assets.getFont(30);
 		batch.draw(texture, position.x, position.y, width, height);
 		continueButton.render(batch);
-		blackGemTexture.setPosition(blackGemTexture.getPosition().x, blackGemTexture.getPosition().y);
+		blackGemTexture.setPosition(1105, 550);
 		blackGemTexture.render(batch);
 		if (pickAxeUnlocked) {
 			surroundingPickAxe.render(batch);
@@ -337,16 +337,17 @@ public class RitualTree extends GameObject {
 
 		//render the viewing ritual
 		if (viewingRitual != null) {
-			viewingRitual.getRitual().render(batch, font, 845, 605, 835, 355, 54, 6);
-			// if the viewingRitual is already picked then render the chosenButton instead
-			if (!viewingRitual.prerequisitesActivated()) {
+			if (!viewingRitual.prerequisitesActivated()) { // if the ritual is locked
 				lockedButton.render(batch);
-			} else if (!unlockedRituals.contains(viewingRitual.getRitual()) && blackGem > 0) {
+			} else if (!unlockedRituals.contains(viewingRitual.getRitual()) && blackGem > 0) { // if the ritual is unlockable
 				unlockButton.render(batch);
-			} else if (!chosenRituals.contains(viewingRitual.getRitual())) {
-				chooseButton.render(batch);
-			} else {
-				chosenButton.render(batch);
+			} else { // if the ritual is unlocked. Now we can see its info
+				viewingRitual.getRitual().render(batch, font, 845, 605, 835, 355, 54, 6);
+				if (!chosenRituals.contains(viewingRitual.getRitual())) {
+					chooseButton.render(batch);
+				} else {
+					chosenButton.render(batch);
+				}
 			}
 		}
 

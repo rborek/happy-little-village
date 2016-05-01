@@ -24,6 +24,9 @@ public class MiningWindow extends GameObject {
 	private float angle = 0;
 	private boolean backward = false;
 	private final double EXTRA_POSIBILITIES = 15;  // this is the total difference in possibilites of gems ( 10%)
+	private float time = 0;
+	private final float MINING_TIME = 6;
+	private boolean mining = false;
 
 	public MiningWindow(GemBag gemBag, Texture texture, float xPos, float yPos, int width, int height) {
 		super(texture, xPos, yPos, width, height);
@@ -31,31 +34,36 @@ public class MiningWindow extends GameObject {
 	}
 
 	public void interact(float x, float y) {
-		Rectangle a = new Rectangle(0, 0, 0, 0);
-		if (!show) { // open the window
-			a.set(position.x, position.y, width, height);
-			if (a.contains(x, y)) {
-				show = true;
-			}
-		} else {
-			a.set(continueButton.position.x, continueButton.position.y, continueButton.width, continueButton.height);
-			if (a.contains(x, y)) { // close the window
-				show = false;
-				return;
-			}
-			for (int k = 0; k < 4; k++) { //chose gems to mine
-				a.set(350 + k * 60, 475, 50, 50);
+		if(!mining) {
+			Rectangle a = new Rectangle(0, 0, 0, 0);
+			if (!show) { // open the window
+				a.set(position.x, position.y, width, height);
 				if (a.contains(x, y)) {
-					if (mine[k]) {
-						mine[k] = false;
-						count--;
-					} else {
-						mine[k] = true;
-						count++;
-					}
-					setPercentage();
+					show = true;
 				}
+			} else {
+				a.set(continueButton.position.x, continueButton.position.y, continueButton.width, continueButton.height);
+				if (a.contains(x, y)) { // close the window
+					show = false;
+					for(boolean gem : mine){
+						if(gem) mining = true;
+					}
+					return;
+				}
+				for (int k = 0; k < 4; k++) { //chose gems to mine
+					a.set(350 + k * 60, 475, 50, 50);
+					if (a.contains(x, y)) {
+						if (mine[k]) {
+							mine[k] = false;
+							count--;
+						} else {
+							mine[k] = true;
+							count++;
+						}
+						setPercentage();
+					}
 
+				}
 			}
 		}
 	}
@@ -99,22 +107,38 @@ public class MiningWindow extends GameObject {
 
 	@Override
 	public void update(float delta) {
-		if(count == 0 || count == 4) {
-			angle = 0;
-		} else{
-			if (!backward) { // axe go forward
-				angle += delta * 50;
-				if (angle > 90) {
-					backward = true;
-				}
-			} else { // axe go backward
-				angle -= delta * 50;
-				if (angle <= 0) {
-					backward = false;
-				}
+		for(boolean gem : mine){
+			if(gem){
+				time += delta;
+				break;
 			}
 		}
-		pickAxe.setAngle(angle);
-		super.update(delta);
+		if(time < MINING_TIME){
+			if(count == 0) {
+				angle = 0;
+			} else{
+				if (!backward) { // axe go forward
+					angle += delta * 50;
+					if (angle > 90) {
+						backward = true;
+					}
+				} else { // axe go backward
+					angle -= delta * 50;
+					if (angle <= 0) {
+						backward = false;
+					}
+				}
+			}
+			pickAxe.setAngle(angle);
+		}
+		else{
+			System.out.println("done");
+			time = 0;
+			for(boolean gem : mine){
+				gem = false;
+			}
+			mining = false;
+		}
+
 	}
 }
