@@ -35,8 +35,7 @@ public class RotatableGameObject extends GameObject {
 		if (angle == 0) {
 			batch.draw(texture, position.x, position.y, width, height);
 		} else {
-			batch.draw(texture, position.x, position.y, width / 2, height / 2, width, height, 1, 1, angle, 0, 0, (int) width, (int) height, false, false);
-			System.out.print("drawing");
+			batch.draw(texture, position.x, position.y, texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth(), texture.getHeight(), 1, 1, angle, 0, 0, (int) texture.getWidth(), (int) texture.getHeight(), false, false);
 		}
 	}
 

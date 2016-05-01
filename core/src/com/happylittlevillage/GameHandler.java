@@ -42,7 +42,7 @@ public class GameHandler {
 	private GemBook miniBook = new GemBook(this);
 	private boolean bookOpen;
 	private RitualTree ritualTree = new RitualTree(this, 30, 15);
-	private RitualBook ritualBook = new RitualBook(ritualTree, 600, 0);
+	private RitualBook ritualBook;
 	private WinMessage winMessage;
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
 	private boolean DEBUG = false;
@@ -82,7 +82,7 @@ public class GameHandler {
 			village = new Village(gemBag, 9999, 9999, 40);
 			ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
 		}
-
+		ritualBook = new RitualBook(ritualTree, 600, 0, village);
 		messageBox = new Introduction(this, isTutorial);
 		gameOverMessage = new GameOver(this, happyLittleVillage);
 		winMessage = new WinMessage(this);
@@ -126,8 +126,8 @@ public class GameHandler {
 		} else if (messageScreen == 1) {
 			messageScreen = 0;
 			paused = false;
-			ritualBook.setWeeklyChosenRitual(); // this is so that RitualBook will update new rituals from the ritual Tree after a week
-			ritualAltar.setWeeklyChosenRitual();
+			ritualBook.setWeeklyChosenRitual(); //RitualBook will update new rituals from the ritual Tree after a week
+			ritualAltar.setWeeklyChosenRitual();//Ritual Altar will know which new rituals are available
 		}
 	}
 
@@ -185,9 +185,7 @@ public class GameHandler {
 		ritualAltar.render(batch);
 		gemBag.render(batch);
 		miningWindow.render(batch);
-//        miniBook.render(batch);
 		if (!intro) ritualBook.render(batch);
-//		ritualTree.render(batch);
 //      optionWheel.render(batch);
 		if (!paused) {
 			if (isTutorial) {

@@ -171,14 +171,12 @@ public class RitualTree extends GameObject {
 		chosenRituals.add(0, weeklyRitual);
 	}
 
-
 	private void addPrerequisites(String name, ArrayList<String> prerequisites) {
 		HashMap<String, RitualNode> allRituals = Ritual.getRituals(); // shorten the name
 		if (allRituals.containsKey(name)) {
 			for (String prerequisite : prerequisites) {
 				RitualNode node = allRituals.get(prerequisite);
 				allRituals.get(name).setPrerequisites(node); // set prerequisites
-
 			}
 		}
 		prerequisites.clear();

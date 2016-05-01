@@ -9,6 +9,7 @@ import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.screens.GameScreen;
 import com.happylittlevillage.Assets;
+import com.happylittlevillage.village.Village;
 
 import java.util.ArrayList;
 
@@ -28,14 +29,16 @@ public class RitualBook extends GameObject {
 	private float slideTime = 0;
 	private RitualTree ritualTree;
 	private int lastIndex = 0;
+	private Village village;
 
-	public RitualBook(RitualTree ritualTree, float xPos, float yPos) {
+	public RitualBook(RitualTree ritualTree, float xPos, float yPos, Village village) {
 		super(Assets.getTexture("ui/parchment2.png"), xPos, yPos, 700, 250);
 		this.ritualTree = ritualTree;
+		this.village = village;
 		setWeeklyChosenRitual();
 	}
 
-	// to be called every weeek after pausing the game to update available rituals
+	// to be called every week after pausing the game to update available rituals
 	public void setWeeklyChosenRitual() {
 		dynamicRituals.clear(); //clear out all the content before adding new rituals
 		count = 0;
@@ -142,7 +145,7 @@ public class RitualBook extends GameObject {
 			renderSlidingIndex(batch);
 		}
 		for (int i = firstIndex; i < lastIndex; i++) {
-			dynamicRituals.get((i) % count).render(batch, font);
+			dynamicRituals.get((i) % count).render(batch, font,village);
 		}
 		batch.end(); // must end batch before disabling scissor
 		disableScissor();
@@ -151,9 +154,9 @@ public class RitualBook extends GameObject {
 
 	private void renderSlidingIndex(Batch batch) {
 		if (slideLeft) {
-			dynamicRituals.get((firstIndex - 1 + count) % count).render(batch, font);
+			dynamicRituals.get((firstIndex - 1 + count) % count).render(batch, font, village);
 		} else if (slideRight) {
-			dynamicRituals.get((firstIndex + 4 + count) % count).render(batch, font);
+			dynamicRituals.get((firstIndex + 4 + count) % count).render(batch, font, village);
 		}
 	}
 

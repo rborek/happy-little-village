@@ -149,10 +149,6 @@ public class InputHandler implements GestureDetector.GestureListener {
 		return (gameHandler.getOptionWheelPosition().contains(x, y));
 	}
 
-	public void clickNextButtonVillageInfo(float x, float y) {
-		gameHandler.getVillage().getVillageInformation().interact(x, y);
-	}
-
 	public void setDelta(float delta) {
 		this.delta = delta;
 	}
@@ -184,7 +180,6 @@ public class InputHandler implements GestureDetector.GestureListener {
 		} else {
 			slideable = false;
 		}
-		clickNextButtonVillageInfo(realPos.x, realPos.y); //  VillageInfo next button
 		if (gameHandler.isPaused()) {
 			checkContinue(realPos.x, realPos.y);
 		} else if (gameHandler.isTutorial()) { //  tutorial

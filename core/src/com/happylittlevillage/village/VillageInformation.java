@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class VillageInformation extends GameObject implements MenuItem {
 
     // add file to constructors
-    private GameObject foodTexture = new GameObject(Assets.getTexture("ui/food.png"), position.x + 20, 65);
-    private GameObject waterTexture = new GameObject(Assets.getTexture("ui/water.png"), position.x + 150, 70);
+    private GameObject foodTexture = new GameObject(Assets.getTexture("ui/food.png"), position.x + 10, 105, 40, 40);
+    private GameObject waterTexture = new GameObject(Assets.getTexture("ui/water.png"), position.x + 10, 65, 40, 40);
     private GameObject popTexture;
     private Village village;
     private BitmapFont font = new BitmapFont();
@@ -47,43 +47,33 @@ public class VillageInformation extends GameObject implements MenuItem {
 
     @Override
     public void update(float delta) {
-        for (int index = 0; index < addedResource.size(); index++) {
-            addedResource.get(index).updateMotion(delta, true);
-            if (addedResource.get(index).getAlpha() <= 0.07) {
-                addedResource.remove(addedResource.get(index));
-                index--;
-            }
-        }
     }
 
     @Override
     public void render(Batch batch) {
         batch.draw(texture, position.x, position.y, 500, 150);
-        nextButton.render(batch);
         if (page == 0) {
             // page 1
             foodTexture.render(batch);
             waterTexture.render(batch);
-            Assets.getFont(36).draw(batch, "" + village.getFood(), position.x + 70, position.y + 90);
-            Assets.getFont(36).draw(batch, "" + village.getWater(), position.x + 200, position.y + 90);
-            Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 300, position.y + 90);
-            Assets.getFont(30).draw(batch, "Time: " + (int) Math.ceil(village.getHoursLeft()), position.x + 300, 80);
-            Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(village.getDay()), position.x + 300, 145);
+            Assets.getFont(36).draw(batch, "" + village.getFood(), position.x + 60,  140);
+            Assets.getFont(36).draw(batch, "" + village.getWater(), position.x + 60, 100);
+            Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 280, position.y + 90);
+
+            Assets.getFont(30).draw(batch, "Time: " + (int) Math.ceil(village.getHoursLeft()), position.x + 300, 50);
+            Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(village.getDay()), position.x + 30, 50);
+
+            batch.draw(villagers.get(0), position.x + 355, 80);
+            Assets.getFont(30).draw(batch, "" + village.getPop(), position.x + 355, 80);
+            batch.draw(villagers.get(1), position.x + 390, 80);
+            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.FARMER), position.x + 390, 80);
+            batch.draw(villagers.get(2), position.x + 425, 80);
+            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.EXPLORER), position.x + 425, 80);
+            batch.draw(villagers.get(3), position.x + 460, 80);
+            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.MINER), position.x + 460, 80);
             moveAndFade(batch);
         } else {
             // page 2
-            batch.draw(villagers.get(0), position.x + 25, 80);
-            Assets.getFont(30).draw(batch, "" + village.getPop(), position.x + 25, 80);
-            batch.draw(villagers.get(1), position.x + 75, 80);
-            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.FARMER), position.x + 75, 80);
-            batch.draw(villagers.get(2), position.x + 125, 80);
-            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.EXPLORER), position.x + 125, 80);
-            batch.draw(villagers.get(3), position.x + 175, 80);
-            Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.MINER), position.x + 175, 80);
-            Assets.getFont(30).draw(batch, "Days left: " + village.getDaysLeft(), position.x + 300, 80);
-            if(village.getWeeklyRitual().getRecipe() != null){
-                Assets.getFont(30).draw(batch, "Times to do: " + village.getWeeklyRitual().getTimesLeftToDo(), position.x + 300, 140);
-            }
         }
     }
 
@@ -98,12 +88,6 @@ public class VillageInformation extends GameObject implements MenuItem {
 
     @Override
     public boolean interact(float mouseX, float mouseY) {
-        if (nextButtonPosition.contains(mouseX, mouseY)) {
-            page = page == 0 ? 1 : 0; // change the page
-            return true;
-        } else {
-            return false;
-
-        }
+        return false;
     }
 }

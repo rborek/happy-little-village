@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemColour;
+import com.happylittlevillage.village.Village;
 
 
 public class DynamicRitual {
@@ -32,13 +33,13 @@ public class DynamicRitual {
 		movePosition(posX);
 	}
 
-	public void render(Batch batch, BitmapFont font) {
-		renderRitual(batch, font, this, startY, gemSize, spaceBetweenGems, posX);
+	public void render(Batch batch, BitmapFont font, Village village) { // TODO it is a shame we have to pass village in just for the weekly ritual but time does not permit to change everything else
+		renderRitual(batch, font, this, startY, gemSize, spaceBetweenGems, posX, village);
 
 	}
 
 	// rendering moving Ritual
-	private void renderRitual(Batch batch, BitmapFont font, DynamicRitual dynamicRitual, float startY, int gemSize, int spaceBetweenGems, float posX) {
+	private void renderRitual(Batch batch, BitmapFont font, DynamicRitual dynamicRitual, float startY, int gemSize, int spaceBetweenGems, float posX, Village village) {
 		for (int k = 0; k < dynamicRitual.getRitual().getRecipe().length; k++) {
 			for (int h = 0; h < dynamicRitual.getRitual().getRecipe()[0].length; h++) {
 				if (dynamicRitual.getRitual().getRecipe()[k][h] != null) {
@@ -58,13 +59,21 @@ public class DynamicRitual {
 				}
 			}
 		}
-		for (int k = 0; k < dynamicRitual.getRitual().getEffects().length; k++) {
-			if (dynamicRitual.getRitual().getEffects()[k].getAmount() > 0) {
-				font.draw(batch, dynamicRitual.getRitual().getEffects()[k].getModifier().name() + " +" + dynamicRitual.getRitual().getEffects()[k].getAmount(), posX, startY - dynamicRitual.getRitual().getEffects().length * 35 - k * 25);
-			} else {
-				font.draw(batch, dynamicRitual.getRitual().getEffects()[k].getModifier().name() + dynamicRitual.getRitual().getEffects()[k].getAmount(), posX, startY - dynamicRitual.getRitual().getEffects().length * 35 - k * 25);
+		if (dynamicRitual.getRitual().getEffects().length == 0) { // weekly ritual
+            font.draw(batch, "Days left: " + village.getDaysLeft(), posX, startY -120);
+            if(village.getWeeklyRitual().getRecipe() != null){
+                font.draw(batch, "Times to do: " + village.getWeeklyRitual().getTimesLeftToDo(), posX, startY - 150);
+            }
+		} else {
+			for (int k = 0; k < dynamicRitual.getRitual().getEffects().length; k++) {
+				if (dynamicRitual.getRitual().getEffects()[k].getAmount() > 0) {
+					font.draw(batch, dynamicRitual.getRitual().getEffects()[k].getModifier().name() + " +" + dynamicRitual.getRitual().getEffects()[k].getAmount(), posX, startY - 100  - k * 25);
+				} else {
+					font.draw(batch, dynamicRitual.getRitual().getEffects()[k].getModifier().name() + dynamicRitual.getRitual().getEffects()[k].getAmount(), posX, startY - 100 - k * 25);
+				}
 			}
 		}
+
 	}
 
 	//this update the initial position before sliding

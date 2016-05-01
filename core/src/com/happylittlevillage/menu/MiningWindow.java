@@ -17,10 +17,10 @@ public class MiningWindow extends GameObject {
 	private GameObject chosenSign = new GameObject(Assets.getTexture("ui/chosen_sign.png"), 0, 0, 40, 40);
 	private RotatableGameObject pickAxe = new RotatableGameObject(Assets.getTexture("ui/pick_axe.png"), position.x, position.y, 50, 50);
 	private boolean[] mine = {false, false, false, false};
-	private String text = "What would you like\nto mine more today ?";
+	private String text = "What gems would \nyou like to mine?";
 	private BitmapFont font;
 	private GemBag gemBag;
-	private int count = 0;
+	private int count = 0; // number of activated gems
 	private float angle = 0;
 
 	public MiningWindow(GemBag gemBag, Texture texture, float xPos, float yPos, int width, int height) {
@@ -77,7 +77,7 @@ public class MiningWindow extends GameObject {
 
 	@Override
 	public void render(Batch batch) {
-		font = Assets.getFont(36);
+		font = Assets.getFont(32);
 		if (show) {
 			box.render(batch); // the background theme
 			continueButton.render(batch);
@@ -92,15 +92,12 @@ public class MiningWindow extends GameObject {
 				}
 			}
 		} else {
-//            if(count == 0 || count == 4 ) {
-//                angle = 0;
-////                pickAxe.render(batch,0,0);
-//            }
-//            else{
-//                pickAxe.setAngle(angle);
-////                pickAxe.render(batch,0,0);
-//            }
-			pickAxe.render(batch, 0, 0);
+			if (count == 0 || count == 4) {
+				pickAxe.render(batch, 0, 0);
+			} else {
+				pickAxe.setAngle(30);
+				pickAxe.render(batch, 0, 0);
+			}
 
 		}
 	}
