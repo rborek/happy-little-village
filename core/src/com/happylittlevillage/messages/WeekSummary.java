@@ -26,7 +26,6 @@ public class WeekSummary extends MessageBox {
 
 	public boolean checkRitual() {
 		if (village.getWeeklyRitual().isComplete()) {
-			village.setDaysLeft(7);
 			return true;
 		} else {
 			timesToDo = village.getWeeklyRitual().getTimesToDo();

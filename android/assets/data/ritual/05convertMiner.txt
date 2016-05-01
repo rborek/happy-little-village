@@ -1,3 +1,4 @@
 Mining time!
 10 YELLOW 11 YELLOW 01 YELLOW
+1
 MINER +2

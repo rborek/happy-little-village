@@ -17,6 +17,7 @@ public class Ritual {
 	protected GemColour[] gemCombination; // to be deleted
 	protected GemColour[][] recipe;
 	protected RitualEffect[] effects;
+	protected int blackGemRequire;
 
 	private static List<String> ritualNames = new ArrayList<String>();
 	private static HashMap<String, RitualNode> rituals = new HashMap<String, RitualNode>();
@@ -57,22 +58,24 @@ public class Ritual {
 			int col = Character.getNumericValue(combinationLine[i].charAt(1));
 			recipe[row][col] = GemColour.valueOf(combinationLine[i + 1].trim());
 		}
+
+		blackGemRequire = Integer.parseInt(file[2]);
 		int numEffects = 0;
 
 		// the third line of the file and all following lines represent ritual effects
 		// counts the number of effects
-		for (int i = 2; i < file.length; i++) {
+		for (int i = 3; i < file.length; i++) {
 			numEffects++;
 		}
 		effects = new RitualEffect[numEffects];
 		// adds each effect to the effects array
-		for (int i = 2; i < file.length; i++) {
+		for (int i = 3; i < file.length; i++) {
 			String[] effect = file[i].split(" ");
 			int modifier = Integer.parseInt(effect[1].substring(1));
 			if (effect[1].charAt(0) == '-') {
 				modifier *= -1;
 			}
-			effects[i - 2] = new RitualEffect(VillageModifier.valueOf(effect[0]), modifier);
+			effects[i - 3] = new RitualEffect(VillageModifier.valueOf(effect[0]), modifier);
 		}
 
 		// adds effects to an array of String to render easier
@@ -152,6 +155,8 @@ public class Ritual {
 	public String getName() {
 		return name;
 	}
+
+	public int getBlackGemRequire() { return blackGemRequire;}
 
 	public void render(Batch batch, BitmapFont font, float startX, float startY, float posX, float posY, int gemSize, int spaceBetweenGems) {
 		// render the recipe

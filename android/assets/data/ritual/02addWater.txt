@@ -1,3 +1,4 @@
 Well water
 00 BLUE 01 BLUE 10 BLUE
+1
 WATER +40

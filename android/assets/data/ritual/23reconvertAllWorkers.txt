@@ -1,5 +1,6 @@
 The village's rebellion
 00 BLUE 01 RED 02 YELLOW 03 RED
+4
 MINER -1
 FARMER -1
 EXPLORER -1

@@ -17,7 +17,7 @@ public class RitualNode {
 	}
 
 	public boolean activate() {
-		if (prerequisiteRituals.size() == 0) {
+		if (prerequisiteRituals.size() == 0 ) {
 			activated = true;
 			return true;
 		} else {

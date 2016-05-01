@@ -1,5 +1,6 @@
 For the greater good
 00 BLUE 01 YELLOW 11 RED
+2
 VILLAGER -1
 FOOD +100
 WATER +50

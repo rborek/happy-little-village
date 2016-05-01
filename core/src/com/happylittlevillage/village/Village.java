@@ -9,7 +9,7 @@ import com.happylittlevillage.rituals.WeeklyRitual;
 import java.util.*;
 
 public class Village {
-	private static final int MAX_HOURS = 1;
+	private static final int MAX_HOURS = 3;
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -35,6 +35,7 @@ public class Village {
 	private float villagerSpawnTimer = 0;
 	private Queue<Villager> villagersToSpawn = new ArrayDeque<Villager>();
 	private float gemThreshold = 0;
+	private int blackGem = 0;
 	//	private static Pool<Rectangle> rectPool = new Pool<Rectangle>() {
 //		@Override
 //		protected Rectangle newObject() {
@@ -119,7 +120,9 @@ public class Village {
 	}
 
 	public void generateNewWeeklyRitual() {
+		blackGem = (int)daysLeft / 2;
 		weeklyRitual.generateRandom();
+		daysLeft = 7;
 	}
 
 	public void addFood(float x) {
@@ -484,4 +487,12 @@ public class Village {
 	}
 
 	public VillageInformation getVillageInformation(){ return villageInformation; }
+
+	public int getBlackGem() {
+		return blackGem;
+	}
+
+	public void setBlackGem(int blackGem) {
+		this.blackGem = blackGem;
+	}
 }

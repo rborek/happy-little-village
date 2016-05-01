@@ -1,3 +1,4 @@
 Time to explore!
 00 RED 10 RED 20 RED
+1
 EXPLORER +2

@@ -1,4 +1,5 @@
 More food for good
 00 YELLOW 02 BLUE
+2
 FOOD +200
 WATER -100

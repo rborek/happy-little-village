@@ -157,6 +157,8 @@ public class GameHandler {
 				} else {
 					if (((WeekSummary) messageBox).checkRitual()) {
 						village.generateNewWeeklyRitual();
+						ritualTree.addBlackGem(village.getBlackGem()); // add winning black gems to ritual tree
+						village.setBlackGem(0);
 					}
 				}
 
@@ -241,6 +243,7 @@ public class GameHandler {
 					"Error writing to file");
 		}
 	}
+
 
 	public Village getVillage() {
 		return village;
