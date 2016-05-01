@@ -27,7 +27,7 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	// for the daily information
 	public MessageBox(String instruction, GameHandler gameHandler) {
 		super(Assets.getTexture("ui/parchment3.png"), 30, 15);
-		continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), position.x + 1030, position.y + 5);
+		continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), position.x + 1000, position.y + 5);
 		this.gameHandler = gameHandler;
 		this.text = instruction;
 		title = "";

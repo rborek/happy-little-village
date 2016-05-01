@@ -8,7 +8,6 @@ import com.happylittlevillage.GameHandler;
 import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.Assets;
 import com.happylittlevillage.objects.RotatableGameObject;
-import com.happylittlevillage.village.Village;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +31,7 @@ public class RitualTree extends GameObject {
 	private GameObject chooseButton = new GameObject(Assets.getTexture("ui/choose_button.png"), 925, 170);
 	private GameObject chosenButton = new GameObject(Assets.getTexture("ui/chosen_button.png"), 925, 170);
 	private GameObject unlockButton = new GameObject(Assets.getTexture("ui/unlock_button.png"), 925, 170);
+	private GameObject lockedButton = new GameObject(Assets.getTexture("ui/lock_button.png"), 925, 170);
 	private GameObject resetButton;
 	private GameObject chosenSign = new GameObject(Assets.getTexture("ui/chosen_sign.png"), 0, 0, 35, 35);
 	private Rectangle chooseButtonPosition = new Rectangle(chooseButton.getPosition().x, chooseButton.getPosition().y, chooseButton.getWidth(), chooseButton.getHeight()); // choose a Ritual
@@ -111,7 +111,7 @@ public class RitualTree extends GameObject {
 		unlockedRitualTexturesOnTree.put("FOOD", new GameObject(Assets.getTexture("ui/ritual_on_tree_food.png"), 0, 0, 80, 80));
 		unlockedRitualTexturesOnTree.put("WATER", new GameObject(Assets.getTexture("ui/ritual_on_tree_water.png"), 0, 0, 80, 80));
 		unlockedRitualTexturesOnTree.put("SACRIFICE", new GameObject(Assets.getTexture("ui/ritual_on_tree_sacrifice.png"), 0, 0, 80, 80));
-		unlockedRitualTexturesOnTree.put("HAPPINESS", new GameObject(Assets.getTexture("ui/ritual_on_tree_activated.png"), 0, 0, 80, 80));
+		unlockedRitualTexturesOnTree.put("HAPPINESS", new GameObject(Assets.getTexture("ui/ritual_on_tree_happy.png"), 0, 0, 80, 80));
 	}
 
 
@@ -281,7 +281,7 @@ public class RitualTree extends GameObject {
 		batch.draw(texture, position.x, position.y, width, height);
 		continueButton.render(batch);
 		blackGem.render(batch);
-		font.draw(batch, skillPoints + "", 1105, 600);
+		font.draw(batch, skillPoints + "", 1120, 550);
 		pickAxe.render(batch, 0, 0);
 		//render lines
 		renderLines(batch);
@@ -312,7 +312,10 @@ public class RitualTree extends GameObject {
 		if (viewingRitual != null) {
 			viewingRitual.getRitual().render(batch, font, 845, 605, 835, 355, 54, 6);
 			// if the viewingRitual is already picked then render the chosenButton instead
-			if (!unlockedRituals.contains(viewingRitual.getRitual()) && skillPoints > 0) {
+			if(!viewingRitual.prerequisitesActivated()){
+				lockedButton.render(batch);
+			}
+			else if (!unlockedRituals.contains(viewingRitual.getRitual()) && skillPoints > 0) {
 				unlockButton.render(batch);
 			} else if (!chosenRituals.contains(viewingRitual.getRitual())) {
 				chooseButton.render(batch);

@@ -32,6 +32,16 @@ public class RitualNode {
 		}
 	}
 
+	public boolean prerequisitesActivated(){
+		for (RitualNode ritualNode : prerequisiteRituals) {
+			if (!ritualNode.isActivated()) {
+				activated = false;
+				return false;
+			}
+		}
+		return true;
+	}
+
 
 	public ArrayList<RitualNode> getPrerequisiteRituals() {
 		return prerequisiteRituals;
