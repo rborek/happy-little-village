@@ -31,6 +31,7 @@ public class RitualBook extends GameObject {
 	private int lastIndex = 0;
 	private Village village;
 
+
 	public RitualBook(RitualTree ritualTree, float xPos, float yPos, Village village) {
 		super(Assets.getTexture("ui/parchment2.png"), xPos, yPos, 700, 250);
 		this.ritualTree = ritualTree;
@@ -140,7 +141,7 @@ public class RitualBook extends GameObject {
 		batch.draw(texture, position.x, position.y, width, height);
 		batch.end(); // drawing doesn't happen until .end() is called
 		batch.begin(); // restart batch to not scissor the background (as well as not break everything else that uses the batch);
-		enableScissor(620f, 0, 800f, 220f); // if this changes the Rectangle slideArea in InputHandler has to change
+		enableScissor(620f, 0, 800f, 230f); // if this changes the Rectangle slideArea in InputHandler has to change
 		if (isMoving) {
 			renderSlidingIndex(batch);
 		}

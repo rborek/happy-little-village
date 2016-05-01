@@ -16,7 +16,10 @@ public class WeekSummary extends MessageBox {
 	private int timesPerformed;
 	private int timesToDo;
 	private Texture[][] gems;
-	private GameObject blackGem = new GameObject(Assets.getTexture("gems/gem_black.png"), 620 + position.x, 670 + position.y);
+	private GameObject blackGem = new GameObject(Assets.getTexture("gems/gem_black.png"), 610 + position.x, 690 + position.y);
+	private GameObject foodIcon = new GameObject(Assets.getTexture("ui/food.png"),0,0);
+	private GameObject waterIcon = new GameObject(Assets.getTexture("ui/water.png"),0,0);
+	private GameObject happyIcon = new GameObject(Assets.getTexture("ui/happy_icon.png"),0,0);
 
 	public int setNumOfBlackGem(int numOfBlackGem) {
 		return this.numOfBlackGem = numOfBlackGem;
@@ -25,7 +28,7 @@ public class WeekSummary extends MessageBox {
 	private int numOfBlackGem = 0;
 
 	public WeekSummary(Village village, GemBag gembag, GameHandler gameHandler) {
-		super("", gameHandler);
+		super("Today's Summary", gameHandler);
 		this.village = village;
 		this.gemBag = gembag;
 		title = "Week Summary";
@@ -66,51 +69,64 @@ public class WeekSummary extends MessageBox {
 
 	@Override
 	public void render(Batch batch) {
-		super.render(batch);
-		//batch.draw(texture,position.x,position.y);
+		batch.draw(texture, position.x, position.y);
+		font = Assets.getFont(50);
+		font.draw(batch, text, position.x + 460, position.y + 640);
+		font = Assets.getFont(36);
+		continueButton.render(batch);
 		position.y -= 20;
-		int alignY = 600;
-		int alignX = 80;
-		font.draw(batch, "Food Consumed: " + village.getConsumedFood(), position.x + alignX, position.y + alignY);
-		alignY -= 40;
-		font.draw(batch, "Food Gathered: " + village.getGatheredFood(), position.x + alignX, position.y + alignY);
-		alignY -= 40;
-		font.draw(batch, "Food Total: " + village.getFood(), position.x + alignX, position.y + alignY);
-		alignY -= 40;
-		font.draw(batch, "Water Consumed: " + village.getConsumedWater(), position.x + alignX, position.y + alignY);
-		alignY -= 40;
-		font.draw(batch, "Water Gathered: " + village.getGatheredWater(), position.x + alignX, position.y + alignY);
-		alignY -= 40;
-		font.draw(batch, "Water Total: " + village.getWater(), position.x + alignX, position.y + alignY);
-		alignY -= 40;
-		font.draw(batch, "Population: " + village.getPop(), position.x + alignX, position.y + alignY);
+		int alignY = 540;
+		int alignX = 110;
+		foodIcon.setPosition(position.x + alignX, position.y + alignY);
+		foodIcon.render(batch);
+		font.draw(batch, "Consumed: " + village.getConsumedFood(), position.x + alignX + 50, position.y + alignY+ 40);
+		alignY -= 50;
+
+		font.draw(batch, "Gathered: " + village.getGatheredFood(), position.x + alignX+ 50, position.y + alignY+ 40);
+		foodIcon.setPosition(position.x + alignX, position.y + alignY);
+		foodIcon.render(batch);
+		alignY -= 50;
+
+		font.draw(batch, "Total: " + village.getFood(), position.x + alignX + 50, position.y + alignY + 40);
+		foodIcon.setPosition(position.x + alignX, position.y + alignY);
+		foodIcon.render(batch);
+		alignY -= 70;
+
+		waterIcon.setPosition(position.x + alignX, position.y + alignY);
+		waterIcon.render(batch);
+		font.draw(batch, "Consumed: " + village.getConsumedWater(), position.x + alignX + 50, position.y + alignY+ 40);
+		alignY -= 50;
+
+		waterIcon.setPosition(position.x + alignX, position.y + alignY);
+		waterIcon.render(batch);
+		font.draw(batch, "Gathered: " + village.getGatheredWater(), position.x + alignX+ 50, position.y + alignY+ 40);
+		alignY -= 50;
+
+		waterIcon.setPosition(position.x + alignX, position.y + alignY);
+		waterIcon.render(batch);
+		font.draw(batch, "Total: " + village.getWater(), position.x + alignX+ 50, position.y + alignY+ 40);
+		alignY -= 70;
+
+		font.draw(batch, "Population: " + village.getPop(), position.x + alignX+ 50, position.y + alignY+ 50);
 		position.y += 20;
 //		font.draw(batch, "Villagers Created: "+ village.getVillagerAdded(), position.x+200, position.y+150);
 //		font.draw(batch, "Villagers Lost: "+ (village.getPop()-village.getVillagerAdded()), position.x+200, position.y+110);
 
 		//for the gems
-		int alignY2 = 620;
+		int alignY2 = 580;
 		int alignX2 = 670;
 		if (village.getBlackGem() != 0) {
-			blackGem.setPosition(position.x + alignX2 + 400, position.y + alignY2 - 50 );
+			blackGem.setPosition(position.x + alignX2 + 450, position.y + alignY2 - 50 );
 			blackGem.render(batch);
-			font.draw(batch, "Congratulations! You have earned " + numOfBlackGem, position.x + alignX2 + 20, position.y + alignY2);
+			font.draw(batch, "Congratulations! You have earned    " + numOfBlackGem, position.x + alignX2, position.y + alignY2);
 		}
-//		alignY2 -= 40;
-//		font.draw(batch, "Red gems mined  " + village.getMinedGems()[0], position.x + alignX2, position.y + alignY2);
-//		alignY2 -= 40;
-//		font.draw(batch, "Yellow gems mined  " + village.getMinedGems()[1], position.x + alignX2, position.y + alignY2);
-//		alignY2 -= 40;
-//		font.draw(batch, "Green gems mined  " + village.getMinedGems()[2], position.x + alignX2, position.y + alignY2);
-//		alignY2 -= 40;
-//		font.draw(batch, "Blue gems mined  " + village.getMinedGems()[3], position.x + alignX2, position.y + alignY2);
 
 		//for the weekly Ritual
-		int alignY3 = 200;
-//        font.draw(batch, text, position.x + alignX2, position.y + alignY3);
+		int alignY3 = 310;
+		font.draw(batch, "Weekly Ritual:",position.x  + alignX2,position.y + alignY3 + 220);
 		for (int i = 0; i < gems.length; i++) {
 			for (int j = 0; j < gems[0].length; j++) {
-				if (gems[i][j] != null) batch.draw(gems[i][j], 720 + 64 * j, 350 - 64 * i, 64, 64);
+				if (gems[i][j] != null) batch.draw(gems[i][j], 720 + 64 * j, 430 - 64 * i, 64, 64);
 			}
 		}
 		alignY3 -= 50;

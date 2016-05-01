@@ -132,7 +132,7 @@ public class MiningWindow extends GameObject {
 			pickAxe.setAngle(angle);
 		}
 		else{
-			System.out.println("done");
+			angle = 0;
 			time = 0;
 			for(boolean gem : mine){
 				gem = false;

@@ -16,11 +16,12 @@ public class VillageInformation extends GameObject implements MenuItem {
     // add file to constructors
     private GameObject foodTexture = new GameObject(Assets.getTexture("ui/food.png"), position.x + 10, 105, 40, 40);
     private GameObject waterTexture = new GameObject(Assets.getTexture("ui/water.png"), position.x + 10, 65, 40, 40);
+    private GameObject happyTexture = new GameObject(Assets.getTexture("ui/happy_icon.png"), position.x + 240, 70, 40, 40);
     private GameObject popTexture;
     private Village village;
     private BitmapFont font = new BitmapFont();
     private ArrayList<InformationFlash> addedResource = new ArrayList<InformationFlash>();
-    private ArrayList<TextureRegion> villagers = new ArrayList<TextureRegion>();
+    public static ArrayList<TextureRegion> villagers = new ArrayList<TextureRegion>();
     private GameObject nextButton = new GameObject(Assets.getTexture("ui/next_button_villageinfo.png"), position.x + 450, position.y + 60);
     private Rectangle nextButtonPosition = new Rectangle(nextButton.getPosition().x, nextButton.getPosition().y, nextButton.getWidth(), nextButton.getHeight());
     private int page = 0;
@@ -56,6 +57,7 @@ public class VillageInformation extends GameObject implements MenuItem {
             // page 1
             foodTexture.render(batch);
             waterTexture.render(batch);
+            happyTexture.render(batch);
             Assets.getFont(36).draw(batch, "" + village.getFood(), position.x + 60,  140);
             Assets.getFont(36).draw(batch, "" + village.getWater(), position.x + 60, 100);
             Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 280, position.y + 90);

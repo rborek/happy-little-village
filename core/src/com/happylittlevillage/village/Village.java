@@ -2,14 +2,16 @@ package com.happylittlevillage.village;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.happylittlevillage.Assets;
 import com.happylittlevillage.gems.GemBag;
 import com.happylittlevillage.gems.GemColour;
+import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.rituals.WeeklyRitual;
 
 import java.util.*;
 
 public class Village {
-	private static final int MAX_HOURS = 1;
+	private static final int MAX_HOURS = 24;
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -36,6 +38,7 @@ public class Village {
 	private Queue<Villager> villagersToSpawn = new ArrayDeque<Villager>();
 	private float gemThreshold = 0;
 	private int blackGem = 0;
+
 	//	private static Pool<Rectangle> rectPool = new Pool<Rectangle>() {
 //		@Override
 //		protected Rectangle newObject() {
@@ -187,6 +190,7 @@ public class Village {
 		if (food != 0) {
 			this.food += food;
 		}
+		gatheredFood += food;
 	}
 
 	//TODO check the algorithm. Maybe less dependent on delta
@@ -202,6 +206,7 @@ public class Village {
 		if (water != 0) {
 			this.water += water;
 		}
+		gatheredWater += water;
 	}
 
 	private void mineGems(float delta) {
@@ -298,6 +303,10 @@ public class Village {
 		return gemsMined;
 	}
 
+	public void resetGatheredResources(){
+		gatheredWater = 0;
+		gatheredFood = 0;
+	}
 	public void resetMinedGems(){
 		// reset the gem from previous week
 		for (int resetGem : gemsMined) {

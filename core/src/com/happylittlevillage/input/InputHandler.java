@@ -77,7 +77,9 @@ public class InputHandler implements GestureDetector.GestureListener {
 
 	private void checkContinue(float mouseX, float mouseY) {
 		if (gameHandler.getMessageScreen() == 0) {
+			gameHandler.getVillage().resetGatheredResources();
 			gameHandler.getMessageBox().interact(mouseX, mouseY);
+
 		} else if (gameHandler.getMessageScreen() == 1) {
 			gameHandler.getRitualTree().interact(mouseX, mouseY);
 		}

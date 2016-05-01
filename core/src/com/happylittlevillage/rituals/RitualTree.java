@@ -1,5 +1,6 @@
 package com.happylittlevillage.rituals;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
@@ -43,6 +44,7 @@ public class RitualTree extends GameObject {
 	private boolean viewPickAxe = false;
 	private boolean pickAxeUnlocked = false;
 	private GameObject blackGemTexture = new GameObject(Assets.getTexture("gems/gem_black.png"), 0, 0, 40, 40);
+	private GameObject viewingFrame = new GameObject(Assets.getTexture("ui/viewing_frame.png"),0,0,80,80);
 	private static final int ritualSize = 80;
 
 	private Rectangle[] ritualPositionsOnTree = {
@@ -273,6 +275,7 @@ public class RitualTree extends GameObject {
 				// they share the same indexes on the key
 				viewingRitual = ritualIndexOnTree.get(k);
 				viewPickAxe = false;
+				viewingFrame.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
 				System.out.println(viewingRitual.toString());
 				return true;
 			}
@@ -350,6 +353,7 @@ public class RitualTree extends GameObject {
 					chosenButton.render(batch);
 				}
 			}
+			viewingFrame.render(batch);
 		}
 
 		if (viewPickAxe) {
