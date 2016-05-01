@@ -27,7 +27,7 @@ public class RitualTree extends GameObject {
 	private GameObject surroundingPickAxe = new GameObject(Assets.getTexture("ui/surround_pick_axe.png"), 387, 369, 100, 100);
 	//	private GameObject unlockedRitualTexturesOnTree = new GameObject(Assets.getTexture("ui/ritual_on_tree_activated.png"), 0, 0);
 	private static HashMap<String, GameObject> unlockedRitualTexturesOnTree = new HashMap<String, GameObject>();
-	private GameObject continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), position.x + 1030, position.y + 5);
+	private GameObject continueButton = new GameObject(Assets.getTexture("ui/continue_button.png"), position.x + 1020, position.y);
 	private Rectangle continueButtonPosition = new Rectangle(continueButton.getPosition().x, continueButton.getPosition().y, continueButton.getWidth(), continueButton.getHeight());
 	private GameObject chooseButton = new GameObject(Assets.getTexture("ui/choose_button.png"), 925, 170);
 	private GameObject chosenButton = new GameObject(Assets.getTexture("ui/chosen_button.png"), 925, 170);
@@ -203,6 +203,7 @@ public class RitualTree extends GameObject {
 	public boolean interact(float mouseX, float mouseY) {
 		//continue the game
 		if (continueButtonPosition.contains(mouseX, mouseY)) {
+			gameHandler.getVillage().setBlackGem(0);
 			gameHandler.unpauseInGame();
 			return true;
 		}

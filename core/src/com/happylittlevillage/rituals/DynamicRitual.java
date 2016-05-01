@@ -33,7 +33,7 @@ public class DynamicRitual {
 		movePosition(posX);
 	}
 
-	public void render(Batch batch, BitmapFont font, Village village) { // TODO it is a shame we have to pass village in just for the weekly ritual but time does not permit to change everything else
+	public void render(Batch batch, BitmapFont font, Village village) { // TODO it is a shame we have to pass village in just for the weekly ritual but time does not permit to optimize everything
 		renderRitual(batch, font, this, startY, gemSize, spaceBetweenGems, posX, village);
 
 	}
@@ -60,9 +60,9 @@ public class DynamicRitual {
 			}
 		}
 		if (dynamicRitual.getRitual().getEffects().length == 0) { // weekly ritual
-            font.draw(batch, "Days left: " + village.getDaysLeft(), posX, startY -120);
+            font.draw(batch, "Days left: " + village.getDaysLeft(), posX, startY -100);
             if(village.getWeeklyRitual().getRecipe() != null){
-                font.draw(batch, "Times to do: " + village.getWeeklyRitual().getTimesLeftToDo(), posX, startY - 150);
+                font.draw(batch, "Times to do: " + village.getWeeklyRitual().getTimesLeftToDo(), posX, startY - 130);
             }
 		} else {
 			for (int k = 0; k < dynamicRitual.getRitual().getEffects().length; k++) {

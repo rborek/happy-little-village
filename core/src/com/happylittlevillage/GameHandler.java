@@ -98,11 +98,6 @@ public class GameHandler {
 
 	public void pause() {
 		paused = true;
-//        //TODO This is a stupid place to put this method
-//        if (village.getDaysLeft() < 0) {
-//            lose = true;
-//            messageBox = gameOverMessage;
-//        }
 	}
 
 	public void finishIntro() {
@@ -151,18 +146,19 @@ public class GameHandler {
 		}
 
 		if (!paused) { // not pause
-			if (village.isNextDay()) { // if it is the end of the week
-				if (village.getWeeklyRitual().getRecipe() == null) { // if it is first week
+			if (village.isNextDay()) { // end of day
+				if (village.getWeeklyRitual().getRecipe() == null) { // if it is first day
 					village.generateNewWeeklyRitual();
+					village.setBlackGem(0);
 				} else {
 					if (((WeekSummary) messageBox).checkRitual()) {
 						village.generateNewWeeklyRitual();
 						ritualTree.addBlackGem(village.getBlackGem()); // add winning black gems to ritual tree
-						village.setBlackGem(0);
 					}
 				}
-
 				((WeekSummary) messageBox).stateRitual();
+				((WeekSummary) messageBox).setNumOfBlackGem(village.getBlackGem());
+
 				pause();
 			}
 			village.update(delta);
@@ -186,16 +182,7 @@ public class GameHandler {
 	}
 
 	public void render(Batch batch) {
-		batch.draw(background, 0, 0);
-		village.render(batch);
-		batch.draw(scroll, 1280 - 550, -12);
-		ritualAltar.render(batch);
-		gemBag.render(batch);
-		if(ritualTree.isPickAxeUnlocked()){
-			miningWindow.render(batch);
-		}
-		if (!intro) ritualBook.render(batch);
-//      optionWheel.render(batch);
+
 		if (!paused) {
 			if (isTutorial) {
 				tutorialMessage.render(batch);
@@ -207,6 +194,15 @@ public class GameHandler {
 					shapeRenderer.end();
 
 				}
+			}
+			batch.draw(background, 0, 0);
+			village.render(batch);
+			batch.draw(scroll, 1280 - 550, -12);
+			ritualAltar.render(batch);
+			gemBag.render(batch);
+			ritualBook.render(batch);
+			if(ritualTree.isPickAxeUnlocked()){
+				miningWindow.render(batch);
 			}
 			inputHandler.renderSelectedGem(batch);
 			inputHandler.renderSelectedRitual(batch);

@@ -2,10 +2,12 @@ package com.happylittlevillage.messages;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameHandler;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemBag;
 import com.happylittlevillage.gems.GemColour;
+import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.village.Village;
 
 public class WeekSummary extends MessageBox {
@@ -14,7 +16,13 @@ public class WeekSummary extends MessageBox {
 	private int timesPerformed;
 	private int timesToDo;
 	private Texture[][] gems;
+	private GameObject blackGem = new GameObject(Assets.getTexture("gems/gem_black.png"), 620 + position.x, 670 + position.y);
 
+	public int setNumOfBlackGem(int numOfBlackGem) {
+		return this.numOfBlackGem = numOfBlackGem;
+	}
+
+	private int numOfBlackGem = 0;
 
 	public WeekSummary(Village village, GemBag gembag, GameHandler gameHandler) {
 		super("", gameHandler);
@@ -83,13 +91,19 @@ public class WeekSummary extends MessageBox {
 		//for the gems
 		int alignY2 = 620;
 		int alignX2 = 670;
-		font.draw(batch, "Red gems mined  " + village.getMinedGems()[0], position.x + alignX2, position.y + alignY2);
-		alignY2 -= 40;
-		font.draw(batch, "Yellow gems mined  " + village.getMinedGems()[1], position.x + alignX2, position.y + alignY2);
-		alignY2 -= 40;
-		font.draw(batch, "Green gems mined  " + village.getMinedGems()[2], position.x + alignX2, position.y + alignY2);
-		alignY2 -= 40;
-		font.draw(batch, "Blue gems mined  " + village.getMinedGems()[3], position.x + alignX2, position.y + alignY2);
+		if (village.getBlackGem() != 0) {
+			blackGem.setPosition(position.x + alignX2 + 400, position.y + alignY2 - 50 );
+			blackGem.render(batch);
+			font.draw(batch, "Congratulations! You have earned " + numOfBlackGem, position.x + alignX2 + 20, position.y + alignY2);
+		}
+//		alignY2 -= 40;
+//		font.draw(batch, "Red gems mined  " + village.getMinedGems()[0], position.x + alignX2, position.y + alignY2);
+//		alignY2 -= 40;
+//		font.draw(batch, "Yellow gems mined  " + village.getMinedGems()[1], position.x + alignX2, position.y + alignY2);
+//		alignY2 -= 40;
+//		font.draw(batch, "Green gems mined  " + village.getMinedGems()[2], position.x + alignX2, position.y + alignY2);
+//		alignY2 -= 40;
+//		font.draw(batch, "Blue gems mined  " + village.getMinedGems()[3], position.x + alignX2, position.y + alignY2);
 
 		//for the weekly Ritual
 		int alignY3 = 200;
