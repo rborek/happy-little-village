@@ -87,7 +87,7 @@ public class WeekSummary extends MessageBox {
 		foodIcon.render(batch);
 		alignY -= 50;
 
-		font.draw(batch, "Total: " + village.getFood(), position.x + alignX + 50, position.y + alignY + 40);
+		font.draw(batch, "Remaining: " + village.getFood(), position.x + alignX + 50, position.y + alignY + 40);
 		foodIcon.setPosition(position.x + alignX, position.y + alignY);
 		foodIcon.render(batch);
 		alignY -= 70;
@@ -104,7 +104,7 @@ public class WeekSummary extends MessageBox {
 
 		waterIcon.setPosition(position.x + alignX, position.y + alignY);
 		waterIcon.render(batch);
-		font.draw(batch, "Total: " + village.getWater(), position.x + alignX+ 50, position.y + alignY+ 40);
+		font.draw(batch, "Remaining: " + village.getWater(), position.x + alignX+ 50, position.y + alignY+ 40);
 		alignY -= 70;
 
 		font.draw(batch, "Population: " + village.getPop(), position.x + alignX+ 50, position.y + alignY+ 50);
@@ -132,7 +132,7 @@ public class WeekSummary extends MessageBox {
 		alignY3 -= 50;
 		font.draw(batch, "Number of times to complete: " + village.getWeeklyRitual().getTimesLeftToDo(), position.x + alignX2, position.y + alignY3);
 		alignY3 -= 50;
-		font.draw(batch, "Days left to complete weekly ritual: " + village.getDaysLeft(), position.x + alignX2, position.y + alignY3);
+		font.draw(batch, "Days left to complete: " + village.getDaysLeft(), position.x + alignX2, position.y + alignY3);
 
 
 	}

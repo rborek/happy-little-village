@@ -26,16 +26,16 @@ public class MainMenu extends Miscellaneous {
 	public MainMenu(HappyLittleVillage happyLittleVillage) {
 		super(happyLittleVillage);
 		startButton = new GameObject(Assets.getTexture("menu/start_button.png"), buttonX, buttonY + 450, 360, 150);
-		tutorialButton = new GameObject(Assets.getTexture("menu/tutorial_button.png"), buttonX, buttonY + 325, 360, 150);
-		loadButton = new GameObject(Assets.getTexture("menu/load_button.png"), buttonX, buttonY + 200, 360, 150);
+//		tutorialButton = new GameObject(Assets.getTexture("menu/tutorial_button.png"), buttonX, buttonY + 325, 360, 150);
+//		loadButton = new GameObject(Assets.getTexture("menu/load_button.png"), buttonX, buttonY + 200, 360, 150);
 //        optionsButton = new GameObject(Assets.getTexture("menu/options_button.png"), buttonX, buttonY + 75);
 //        creditsButton = new GameObject(Assets.getTexture("menu/credits_button.png"), buttonX, buttonY);
-		exitButton = new GameObject(Assets.getTexture("menu/exit_button.png"), buttonX, buttonY + 50, 360, 150);
-		exitButtonPosition = new Rectangle(buttonX, buttonY - 100, exitButton.getWidth(), exitButton.getHeight());
+		exitButton = new GameObject(Assets.getTexture("menu/exit_button.png"), buttonX, buttonY + 10, 360, 150);
+		exitButtonPosition = new Rectangle(buttonX, buttonY + 10, exitButton.getWidth(), exitButton.getHeight());
 //        creditsButtonPosition = new Rectangle(buttonX, buttonY  , creditsButton.getWidth(), creditsButton.getHeight());
 //        optionsButtonPosition = new Rectangle(buttonX, buttonY + 75, optionsButton.getWidth(), optionsButton.getHeight());
-		loadButtonPosition = new Rectangle(buttonX, buttonY + 200, loadButton.getWidth(), loadButton.getHeight());
-		tutorialButtonPosition = new Rectangle(buttonX, buttonY + 325, tutorialButton.getWidth(), tutorialButton.getHeight());
+//		loadButtonPosition = new Rectangle(buttonX, buttonY + 200, loadButton.getWidth(), loadButton.getHeight());
+//		tutorialButtonPosition = new Rectangle(buttonX, buttonY + 325, tutorialButton.getWidth(), tutorialButton.getHeight());
 		startButtonPosition = new Rectangle(buttonX, buttonY + 450, startButton.getWidth(), startButton.getHeight());
 		background = Assets.getTexture("menu/menu.png");
 	}
@@ -54,10 +54,10 @@ public class MainMenu extends Miscellaneous {
 //        } else if (optionsButtonPosition.contains(realPos)) {
 //            happyLittleVillage.setOptions();
 //            return true;
-		} else if (tutorialButtonPosition.contains(realPos)) {
-			happyLittleVillage.setLoadingScreen(true);
-		} else if (loadButtonPosition.contains(realPos)) {
-			happyLittleVillage.setLoad();
+//		} else if (tutorialButtonPosition.contains(realPos)) {
+//			happyLittleVillage.setLoadingScreen(true);
+//		} else if (loadButtonPosition.contains(realPos)) {
+//			happyLittleVillage.setLoad();
 		} else if (exitButtonPosition.contains(realPos)) {
 			happyLittleVillage.setExit();
 			return true;
@@ -72,8 +72,8 @@ public class MainMenu extends Miscellaneous {
 		batch.begin();
 		batch.draw(background, 0, 0);
 		startButton.render(batch);
-		tutorialButton.render(batch);
-		loadButton.render(batch);
+//		tutorialButton.render(batch);
+//		loadButton.render(batch);
 //        optionsButton.render(batch);
 //        creditsButton.render(batch);
 		exitButton.render(batch);

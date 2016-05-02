@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.GameHandler;
 
 public class Introduction extends MessageBox {
-	private static String instruction = "Welcome to Happy Little Village\nWisely utilize gems to perform rituals and flourish your " +
-			"village";
+	private static String instruction = "Welcome to Happy Little Village\nWisely utilize gems to perform rituals and help your " +
+			"village flourish!";
 
 	public Introduction(GameHandler gameHandler, boolean isTutorial) {
 		super(instruction, gameHandler);
