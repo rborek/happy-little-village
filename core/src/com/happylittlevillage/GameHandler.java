@@ -48,7 +48,7 @@ public class GameHandler {
 	private boolean DEBUG = false;
 	// all menu items is put here
 	private MessageBox messageBox;
-	private GameOver gameOverMessage;
+	private LoseMessage loseMessage;
 	private boolean win = false;
 	private boolean intro = true;
 	private boolean lose = false;
@@ -84,8 +84,8 @@ public class GameHandler {
 		}
 		ritualBook = new RitualBook(ritualTree, 600, 0, village);
 		messageBox = new Introduction(this, isTutorial);
-		gameOverMessage = new GameOver(this, happyLittleVillage);
-		winMessage = new WinMessage(this);
+		loseMessage = new LoseMessage(this, happyLittleVillage);
+		winMessage = new WinMessage(this, happyLittleVillage);
 		Ritual.setVillage(village);
 		Gdx.input.setInputProcessor(gameGestureDetector);
 		pause();
@@ -131,9 +131,9 @@ public class GameHandler {
 		// lose
 		if (village.getSize() <= 0 || village.getDaysLeft() < 0) {
 			lose = true;
-			gameOverMessage.setCondition(0);
+			loseMessage.setCondition(0);
 			pause();
-			messageBox = gameOverMessage;
+			messageBox = loseMessage;
 			return;
 		}
 		//win
@@ -281,8 +281,8 @@ public class GameHandler {
 		return isTutorial;
 	}
 
-	public GameOver getGameOverMessage() {
-		return gameOverMessage;
+	public LoseMessage getLoseMessage() {
+		return loseMessage;
 	}
 
 	public Rectangle getOptionWheelPosition() {
@@ -299,5 +299,13 @@ public class GameHandler {
 
 	public MiningWindow getMiningWindow() {
 		return miningWindow;
+	}
+
+	public boolean isWin() {
+		return win;
+	}
+
+	public boolean isLose() {
+		return lose;
 	}
 }

@@ -10,8 +10,10 @@ import com.happylittlevillage.HappyLittleVillage;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemBag;
 import com.happylittlevillage.gems.GemColour;
+import com.happylittlevillage.messages.LoseMessage;
 import com.happylittlevillage.messages.MessageBox;
 import com.happylittlevillage.messages.TutorialMessage;
+import com.happylittlevillage.messages.WinMessage;
 import com.happylittlevillage.rituals.RitualAltar;
 import com.happylittlevillage.rituals.RitualBook;
 import com.happylittlevillage.rituals.RitualTree;
@@ -181,8 +183,17 @@ public class InputHandler implements GestureDetector.GestureListener {
 		} else {
 			slideable = false;
 		}
+		System.out.println("LOL");
 		if (gameHandler.isPaused()) {
-			checkContinue(realPos.x, realPos.y);
+			if(gameHandler.isWin()){
+				System.out.println("win");
+				((WinMessage)gameHandler.getMessageBox()).update(delta);
+			} else if(gameHandler.isLose()){
+				((LoseMessage)gameHandler.getMessageBox()).update(delta);
+
+			} else{
+				checkContinue(realPos.x, realPos.y);
+			}
 		} else if (gameHandler.isTutorial()) { //  tutorial
 			tutorialMessage.interact(realPos.x, realPos.y);
 			//this restrict player's interaction with the grid only

@@ -4,15 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.GameHandler;
+import com.happylittlevillage.HappyLittleVillage;
 
 public class WinMessage extends MessageBox {
 	private String message;
 	private String[] condition;
+	HappyLittleVillage happyLittleVillage;
 
-	public WinMessage(GameHandler gameHandler) {
+
+	public WinMessage(GameHandler gameHandler, HappyLittleVillage happyLittleVillage) {
 		// TODO Duke - don't worry about this
 		super("", gameHandler);
+		this.happyLittleVillage = happyLittleVillage;
 		message = "";
 		condition = new String[3];
 		condition[0] = "Enough food to survive, your \nvillagers part away with their food";
@@ -36,5 +41,16 @@ public class WinMessage extends MessageBox {
 		font.draw(batch, title, position.x + 70, position.y + 250);
 		font.draw(batch, message, position.x + 70, position.y + 280);
 		font.draw(batch, "YOU WIN!", position.x + 70, position.y + 230);
+	}
+
+	@Override
+	public boolean interact(float mouseX, float mouseY) {
+		Rectangle r = new Rectangle(continueButton.getPosition().x, continueButton.getPosition().y, continueButton.getWidth(), continueButton.getHeight());
+		if (r.contains(mouseX, mouseY)) {
+			System.out.println("interacted with continue button");
+			happyLittleVillage.setMenu();
+			return true;
+		}
+		return false;
 	}
 }

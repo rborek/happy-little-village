@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.happylittlevillage.GameHandler;
 import com.happylittlevillage.HappyLittleVillage;
 
-public class GameOver extends MessageBox {
+public class LoseMessage extends MessageBox {
 	private String message;
 	private static String[] condition = new String[]{
 			"All villagers died"};
@@ -17,7 +17,7 @@ public class GameOver extends MessageBox {
 	HappyLittleVillage happyLittleVillage;
 
 
-	public GameOver(GameHandler gameHandler, HappyLittleVillage happyLittleVillage) {
+	public LoseMessage(GameHandler gameHandler, HappyLittleVillage happyLittleVillage) {
 		super("", gameHandler);
 		this.happyLittleVillage = happyLittleVillage;
 		title = " GAME OVER ";
