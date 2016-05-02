@@ -2,6 +2,7 @@ package com.happylittlevillage;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.happylittlevillage.screens.Exit;
 import com.happylittlevillage.screens.*;
 
@@ -85,9 +86,6 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 	}
 
 	public void setExit() {
-		if (exit == null) {
-			exit = new Exit(this);
-		}
-		setScreen(exit);
+		Gdx.app.exit();
 	}
 }

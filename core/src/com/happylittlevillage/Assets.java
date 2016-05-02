@@ -77,6 +77,7 @@ public final class Assets {
 	}
 
 	public static BitmapFont getFont(int size) {
+		size *= 1.5;
 		if (fonts.containsKey(size)) {
 			return fonts.get(size);
 		} else {

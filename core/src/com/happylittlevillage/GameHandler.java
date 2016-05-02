@@ -7,15 +7,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
-import com.happylittlevillage.menu.MiningWindow;
-import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.gems.Gem;
 import com.happylittlevillage.gems.GemBag;
 import com.happylittlevillage.gems.GemBook;
 import com.happylittlevillage.input.GameGestureDetector;
 import com.happylittlevillage.input.InputHandler;
+import com.happylittlevillage.menu.MiningWindow;
 import com.happylittlevillage.menu.SaveGame;
 import com.happylittlevillage.messages.*;
+import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.rituals.Ritual;
 import com.happylittlevillage.rituals.RitualAltar;
 import com.happylittlevillage.rituals.RitualBook;
@@ -79,7 +79,7 @@ public class GameHandler {
 			tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
 			arrow.add(new Vector2(476, 579));
 		} else {
-			village = new Village(gemBag, 9999, 9999, 40);
+			village = new Village(gemBag, 200, 100, 5);
 			ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
 		}
 		ritualBook = new RitualBook(ritualTree, 600, 0, village);
@@ -165,9 +165,8 @@ public class GameHandler {
 			ritualAltar.update(delta);
 			ritualBook.update(delta);
 			miningWindow.update(delta);
-		}
-		else{ // when pause
-			if(messageScreen == 1){
+		} else { // when pause
+			if (messageScreen == 1) {
 				ritualTree.update(delta);
 			}
 		}
@@ -182,7 +181,6 @@ public class GameHandler {
 	}
 
 	public void render(Batch batch) {
-
 		if (!paused) {
 			if (isTutorial) {
 				tutorialMessage.render(batch);
@@ -201,7 +199,7 @@ public class GameHandler {
 			ritualAltar.render(batch);
 			gemBag.render(batch);
 			ritualBook.render(batch);
-			if(ritualTree.isPickAxeUnlocked()){
+			if (ritualTree.isPickAxeUnlocked()) {
 				miningWindow.render(batch);
 			}
 			inputHandler.renderSelectedGem(batch);
