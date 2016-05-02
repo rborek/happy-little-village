@@ -6,16 +6,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameHandler;
 import com.happylittlevillage.HappyLittleVillage;
 import com.happylittlevillage.input.GameGestureDetector;
 import com.happylittlevillage.input.InputHandler;
-import com.happylittlevillage.Assets;
 
 public class GameScreen implements Screen {
 	public static final int WIDTH = 1280;
@@ -23,13 +25,16 @@ public class GameScreen implements Screen {
 	private int lastResHeight;
 	private int lastResWidth;
 	private Texture sun;
+	private Sprite moon;
 	private Vector2 sunPos = new Vector2();
+	private Vector2 moonPos = new Vector2();
 	private Vector2 screenPos = new Vector2();
 	private HappyLittleVillage game;
 	private int dayTime;
 	private GameHandler gameHandler;
 	private InputHandler inputHandler;
 	private GameGestureDetector gameGestureDetector;
+	private ShapeRenderer shapeRenderer = new ShapeRenderer();
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport viewport;
@@ -41,6 +46,7 @@ public class GameScreen implements Screen {
 		this.game = game;
 		this.isTutorial = isTutorial;
 		sun = Assets.getTexture("bg/sun.png");
+		moon = new Sprite(Assets.getTexture("bg/moon.png"));
 		batch = new SpriteBatch();
 //		if (Gdx.app.getType() == Application.ApplicationType.Android || !Gdx.graphics.isGL30Available()) {
 //			batch = new SpriteBatch();
@@ -74,15 +80,23 @@ public class GameScreen implements Screen {
 		gameHandler.update(delta);
 		float time = dayTime - gameHandler.getVillage().getHoursLeft();
 		float percentage = (time / dayTime);
-		float skyAlpha = getSkyAlpha(percentage * 100) + 0.2f;
-		sunPos.x = percentage * 640;
+		float skyAlpha = getSkyAlpha(percentage * 200) + 0.2f;
+		sunPos.x = percentage * WIDTH;
 		sunPos.y = 485 + skyAlpha * 125f;
-		Gdx.gl.glClearColor(0, 191 / 255f * skyAlpha, 255 / 255f * skyAlpha, 1);
+		Gdx.gl.glClearColor(0, (60 / 255f) + Math.max(131 / 255f * skyAlpha, 0), (90 / 255f) + Math.max(165 / 255f * skyAlpha, 0), 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(sun, sunPos.x, sunPos.y, 90, 90);
+		boolean moonShow = time > gameHandler.getVillage().getMaxHours() / 2;
+		if (!gameHandler.isPaused() && !moonShow) batch.draw(sun, sunPos.x, sunPos.y, 90, 90);
+		if (moonShow) {
+			float moonAlpha = Math.min((float) (1.6 - 25 * Math.abs(3.0 * gameHandler.getVillage().getMaxHours() / 4.0 - time) / gameHandler.getVillage().getMaxHours() / 4.0), 1);
+			System.out.println(moonAlpha);
+			moon.setPosition(440, 620);
+			moon.setAlpha(moonAlpha);
+			moon.draw(batch);
+		}
 		gameHandler.render(batch);
-		font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(), 0, 12);
+//		font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(), 0, 12);
 		batch.end();
 	}
 
@@ -92,7 +106,11 @@ public class GameScreen implements Screen {
 	}
 
 	private float getSkyAlpha(float x) {
-		return (float) (Math.sqrt((50f * 50f) - (float) Math.pow(x - 50, 2)) / 50f);
+		float alpha = (float) (Math.sqrt((50f * 50f) - (float) Math.pow(x - 50, 2)) / 50f);
+		if (Float.isNaN(alpha)) {
+			return -1;
+		}
+		return alpha;
 	}
 
 	@Override

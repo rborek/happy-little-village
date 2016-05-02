@@ -13,7 +13,7 @@ import com.happylittlevillage.screens.GameScreen;
 import java.util.*;
 
 public class Village {
-	private static final int MAX_HOURS = 4;
+	private static final int MAX_HOURS = 24;
 	private ArrayList<Villager> villagers;
 	private ArrayList<Villager> deadVillagers = new ArrayList<Villager>();
 	private ArrayList<VillagerEffect> effects = new ArrayList<VillagerEffect>();
@@ -356,7 +356,9 @@ public class Village {
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		dimmer.begin(ShapeRenderer.ShapeType.Filled);
-		dimmer.setColor(new Color(0, 0, 0, Math.min(((MAX_HOURS - hoursLeft) / MAX_HOURS) * 0.5f, 0.5f)));
+		boolean isNight = (MAX_HOURS - hoursLeft) > MAX_HOURS / 2.1f;
+		float dimLevel = isNight ? Math.min(0.35f, (MAX_HOURS - (MAX_HOURS / 2.1f) - hoursLeft) * 0.4f) : 0f;
+		dimmer.setColor(new Color(0, 0, 0, dimLevel));
 		dimmer.rect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
 		dimmer.end();
 		Gdx.gl.glDisable(GL20.GL_BLEND);
