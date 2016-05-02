@@ -57,7 +57,6 @@ public class GameHandler {
 	private static ArrayList<Vector2> arrow = new ArrayList<Vector2>();
 	private TutorialMessage tutorialMessage;
 	private Rectangle optionWheelPosition = new Rectangle(0, 600, 64, 64);
-	private GameObject optionWheel = new GameObject(Assets.getTexture("menu/optionWheel.png"), 0, 600, 64, 64);
 	private Json saveInfo = new Json();
 	private SaveGame saveGame;
 	private int messageScreen = 0;
@@ -79,7 +78,7 @@ public class GameHandler {
 			tutorialMessage = new TutorialMessage(this, ritualAltar, miniBook);
 			arrow.add(new Vector2(476, 579));
 		} else {
-			village = new Village(gemBag, 200, 100, 5);
+			village = new Village(gemBag, 200, 150, 5);
 			ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
 		}
 		ritualBook = new RitualBook(ritualTree, 600, 0, village);

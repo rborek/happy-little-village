@@ -19,7 +19,6 @@ public class GemBag extends GameObject {
 			new GameObject(Gem.getArrayOfTextures()[1], PosX, 390, slotSize, slotSize),
 			new GameObject(Gem.getArrayOfTextures()[2], PosX, 470, slotSize, slotSize),
 			new GameObject(Gem.getArrayOfTextures()[3], PosX, 550, slotSize, slotSize),};
-	private Texture inactiveGem = Assets.getTexture("gems/gem_grey.png");
 	private Rectangle[] slots = new Rectangle[4];
 	private int[] gemAmounts = new int[GemColour.values().length];
 	private double[] cumulativeProbabilities = {0, 0, 0, 0}; // total will always be 10 percent
@@ -67,8 +66,6 @@ public class GemBag extends GameObject {
 			if (gemAmounts[i] != 0) {
 				gemTextures[i].render(batch);
 
-			} else {
-				batch.draw(inactiveGem, slots[i].x, slots[i].y);
 			}
 		}
 		for (int i = 0; i < gemTextures.length; i++) {

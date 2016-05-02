@@ -90,7 +90,6 @@ public class GameScreen implements Screen {
 		if (!gameHandler.isPaused() && !moonShow) batch.draw(sun, sunPos.x, sunPos.y, 90, 90);
 		if (moonShow) {
 			float moonAlpha = Math.min((float) (1.6 - 25 * Math.abs(3.0 * gameHandler.getVillage().getMaxHours() / 4.0 - time) / gameHandler.getVillage().getMaxHours() / 4.0), 1);
-			System.out.println(moonAlpha);
 			moon.setPosition(440, 620);
 			moon.setAlpha(moonAlpha);
 			moon.draw(batch);

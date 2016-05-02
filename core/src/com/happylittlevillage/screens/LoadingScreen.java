@@ -47,9 +47,7 @@ public class LoadingScreen extends ScreenAdapter {
 		screen.render(batch);
 		batch.end();
 		if (Assets.update()) {
-			if (Gdx.input.isTouched()) {
-				happyLittleVillage.setGameScreen(isTutorial);
-			}
+			happyLittleVillage.setGameScreen(isTutorial);
 		}
 	}
 

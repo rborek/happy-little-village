@@ -10,7 +10,7 @@ public class GemBook extends GameObject {
 	boolean open = false;
 
 	public GemBook(GameHandler gameHandler) {
-		super(Assets.getTexture("ui/small_book.png"), 1200, 410);
+		super(null, 1200, 410);
 		this.gameHandler = gameHandler;
 	}
 

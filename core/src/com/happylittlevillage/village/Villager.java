@@ -33,7 +33,7 @@ public class Villager extends GameObject implements Comparable<Villager> {
 	private static ArrayList<Edge> edges = new ArrayList<Edge>();
 	private Village village;
 	private Vector2 destination;
-	private float speed = 120; // magnitude of the villager
+	private final float speed = 120; // magnitude of the villager
 	private Vector2 velocity; // velocity of the villager
 	private float timer = getNewRestDuration();
 	private boolean resting = false;

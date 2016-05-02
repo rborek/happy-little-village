@@ -10,8 +10,6 @@ public class Gem {
 	private GemColour colour;
 	private final static Texture[] gemTextures = {Assets.getTexture("gems/gem_red.png"), Assets.getTexture("gems/gem_blue.png"),
 			Assets.getTexture("gems/gem_green.png"), Assets.getTexture("gems/gem_yellow.png")};
-	private final static Texture[] smallGemTextures = {Assets.getTexture("gems/mini_gem_red.png"), Assets.getTexture("gems/mini_gem_blue.png"),
-			Assets.getTexture("gems/mini_gem_green.png"), Assets.getTexture("gems/mini_gem_yellow.png")};
 
 	public Gem(GemColour colour) {
 		this.colour = colour;
@@ -35,10 +33,6 @@ public class Gem {
 
 	public static Texture[] getArrayOfTextures() {
 		return gemTextures;
-	}
-
-	public static Texture[] getArrayOfMiniTextures() {
-		return smallGemTextures;
 	}
 
 
