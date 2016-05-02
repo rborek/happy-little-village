@@ -18,7 +18,7 @@ import java.util.HashMap;
 public final class Assets {
 	private static final AssetManager manager = new AssetManager();
 	private static final HashMap<Integer, BitmapFont> fonts = new HashMap<Integer, BitmapFont>();
-	private static FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/fonts/gnuolane rg.ttf"));
+	private static FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/fonts/MoolBoran.ttf"));
 	private static FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
 	private Assets() {
