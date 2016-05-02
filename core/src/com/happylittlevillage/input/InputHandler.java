@@ -183,13 +183,11 @@ public class InputHandler implements GestureDetector.GestureListener {
 		} else {
 			slideable = false;
 		}
-		System.out.println("LOL");
 		if (gameHandler.isPaused()) {
 			if(gameHandler.isWin()){
-				System.out.println("win");
-				((WinMessage)gameHandler.getMessageBox()).update(delta);
+				((WinMessage)gameHandler.getMessageBox()).interact(realPos.x, realPos.y);
 			} else if(gameHandler.isLose()){
-				((LoseMessage)gameHandler.getMessageBox()).update(delta);
+				((LoseMessage)gameHandler.getMessageBox()).interact(realPos.x, realPos.y);
 
 			} else{
 				checkContinue(realPos.x, realPos.y);
