@@ -180,6 +180,9 @@ public class Village {
 		gatherFood(delta);
 		gatherWater(delta);
 		mineGems(delta);
+		if(happiness >100){
+			happiness = 100;
+		}
 	}
 
 	private void gatherFood(float delta) {

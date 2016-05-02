@@ -23,16 +23,16 @@ public class DynamicRitual {
 	private int index;
 	private float posX = 0;
 	public static final double SLIDING_SPEED = 5;
-	public static GameObject frame = new GameObject(Assets.getTexture("ui/frame_converted.png"), 0, 0, 140, 222);
-	public static GameObject weeklyFrame = new GameObject(Assets.getTexture("ui/frame_weekly.png"), 0, 0, 140, 222);
+	public static GameObject frame = new GameObject(Assets.getTexture("ui/frame_converted.png"), 0, 0, 145, 225);
+	public static GameObject weeklyFrame = new GameObject(Assets.getTexture("ui/frame_weekly.png"), 0, 0, 145, 225);
 	public static GameObject[] gemTextures = { // red blue green yellow
 			new GameObject(Gem.getArrayOfTextures()[0], 0, 0, gemSize, gemSize),
 			new GameObject(Gem.getArrayOfTextures()[1], 0, 0, gemSize, gemSize),
 			new GameObject(Gem.getArrayOfTextures()[2], 0, 0, gemSize, gemSize),
 			new GameObject(Gem.getArrayOfTextures()[3], 0, 0, gemSize, gemSize),};
-	public static GameObject foodIcon = new GameObject(Assets.getTexture("ui/food.png"), 0, 0, 35, 35);
-	public static GameObject waterIcon = new GameObject(Assets.getTexture("ui/water.png"), 0, 0, 35, 35);
-	public static GameObject happyIcon = new GameObject(Assets.getTexture("ui/happy_icon.png"), 0, 0, 32, 32);
+	public static GameObject foodIcon = new GameObject(Assets.getTexture("ui/food.png"), 0, 0, 30, 30);
+	public static GameObject waterIcon = new GameObject(Assets.getTexture("ui/water.png"), 0, 0, 30, 30);
+	public static GameObject happyIcon = new GameObject(Assets.getTexture("ui/happy_icon.png"), 0, 0, 28, 28);
 
 	public DynamicRitual(Ritual ritual) {
 		this.ritual = ritual;
@@ -75,30 +75,38 @@ public class DynamicRitual {
 			weeklyFrame.render(batch);
 		} else { // normal ritual
 			for (int k = 0; k < dynamicRitual.getRitual().getEffects().length; k++) {// render effects
-				float alignY = startY - 130 - k * 27; // align for the icons
+				float alignY = 0;
+				float alignX = 0;
+				if(k < 3){
+					alignX = posX;
+					alignY = startY - 130 - k * 27; // align for the icons
+				} else {
+					alignX = posX + 75;
+					alignY = startY - 130 - (k - 3) * 27; // align for the icons
+				}
 				String modifierName = dynamicRitual.getRitual().getEffects()[k].getModifier().name();
 				if (modifierName.equals("FOOD")) {
-					foodIcon.setPosition(posX, alignY);
+					foodIcon.setPosition(alignX, alignY);
 					foodIcon.render(batch);
 				} else if (modifierName.equals("WATER")) {
-					waterIcon.setPosition(posX, alignY);
+					waterIcon.setPosition(alignX, alignY);
 					waterIcon.render(batch);
 				} else if (modifierName.equals("HAPPINESS")) {
-					happyIcon.setPosition(posX, alignY);
+					happyIcon.setPosition(alignX, alignY);
 					happyIcon.render(batch);
 				} else if (modifierName.equals("VILLAGER")) {
-					batch.draw(VillageInformation.villagers.get(0), posX, alignY, 28, 35);
+					batch.draw(VillageInformation.villagers.get(0), alignX, alignY, 24, 30);
 				} else if (modifierName.equals("FARMER")) {
-					batch.draw(VillageInformation.villagers.get(1), posX, alignY, 28, 35);
+					batch.draw(VillageInformation.villagers.get(1), alignX, alignY, 24, 30);
 				} else if (modifierName.equals("EXPLORER")) {
-					batch.draw(VillageInformation.villagers.get(2), posX, alignY, 28, 35);
+					batch.draw(VillageInformation.villagers.get(2), alignX, alignY, 24, 30);
 				} else if (modifierName.equals("MINER")) {
-					batch.draw(VillageInformation.villagers.get(3), posX, alignY, 28, 35);
+					batch.draw(VillageInformation.villagers.get(3), alignX, alignY, 24, 30);
 				}
 				if (dynamicRitual.getRitual().getEffects()[k].getAmount() > 0) {
-					font.draw(batch, " +" + dynamicRitual.getRitual().getEffects()[k].getAmount(), posX + 30, startY - 100 - k * 27);
+					font.draw(batch, " +" + dynamicRitual.getRitual().getEffects()[k].getAmount(), alignX + 30, alignY + 25);
 				} else {
-					font.draw(batch, " " + dynamicRitual.getRitual().getEffects()[k].getAmount(), posX + 30, startY - 100 - k * 27);
+					font.draw(batch, " " + dynamicRitual.getRitual().getEffects()[k].getAmount(), alignX + 30, alignY + 25);
 				}
 			}
 			frame.setPosition(posX - 3, 5);

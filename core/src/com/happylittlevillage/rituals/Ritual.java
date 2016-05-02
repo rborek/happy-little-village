@@ -155,7 +155,9 @@ public class Ritual {
 		return name;
 	}
 
-	public int getBlackGemRequire() { return blackGemRequire;}
+	public int getBlackGemRequire() {
+		return blackGemRequire;
+	}
 
 	public void render(Batch batch, BitmapFont font, float startX, float startY, float posX, float posY, int gemSize, int spaceBetweenGems) {
 		// render the recipe
@@ -183,11 +185,20 @@ public class Ritual {
 		font.draw(batch, "Effect:\n ", posX, posY + 30);
 
 		// render the effect
+		float alignX = 0;
+		float alignY = 0;
 		for (int k = 0; k < this.getEffects().length; k++) {
-			if(this.getEffects()[k].getAmount() > 0){
-				font.draw(batch, this.getEffects()[k].getModifier().name() + " +" + this.getEffects()[k].getAmount(), posX, posY  - k * 30);
+			if (k < 4) {
+				alignX = posX;
+				alignY = posY - k *30;
 			} else {
-				font.draw(batch, this.getEffects()[k].getModifier().name() + " " + this.getEffects()[k].getAmount(), posX, posY  - k * 30);
+				alignX = posX + 250;
+				alignY = posY - (k - 4) *30;
+			}
+			if (this.getEffects()[k].getAmount() > 0) {
+				font.draw(batch, this.getEffects()[k].getModifier().name() + " +" + this.getEffects()[k].getAmount(), alignX, alignY);
+			} else {
+				font.draw(batch, this.getEffects()[k].getModifier().name() + " " + this.getEffects()[k].getAmount(), alignX, alignY);
 			}
 		}
 

@@ -16,7 +16,7 @@ public class VillageInformation extends GameObject implements MenuItem {
     // add file to constructors
     private GameObject foodTexture = new GameObject(Assets.getTexture("ui/food.png"), position.x + 10, 105, 40, 40);
     private GameObject waterTexture = new GameObject(Assets.getTexture("ui/water.png"), position.x + 10, 65, 40, 40);
-    private GameObject happyTexture = new GameObject(Assets.getTexture("ui/happy_icon.png"), position.x + 240, 70, 40, 40);
+    private GameObject happyTexture = new GameObject(Assets.getTexture("ui/happy_icon.png"), position.x + 185, 70, 40, 40);
     private GameObject popTexture;
     private Village village;
     private BitmapFont font = new BitmapFont();
@@ -24,7 +24,6 @@ public class VillageInformation extends GameObject implements MenuItem {
     public static ArrayList<TextureRegion> villagers = new ArrayList<TextureRegion>();
     private GameObject nextButton = new GameObject(Assets.getTexture("ui/next_button_villageinfo.png"), position.x + 450, position.y + 60);
     private Rectangle nextButtonPosition = new Rectangle(nextButton.getPosition().x, nextButton.getPosition().y, nextButton.getWidth(), nextButton.getHeight());
-    private int page = 0;
 
     protected VillageInformation(Village village, float xPos, float yPos) {
         super(Assets.getTexture("ui/info_menu.png"), xPos, yPos);
@@ -53,14 +52,12 @@ public class VillageInformation extends GameObject implements MenuItem {
     @Override
     public void render(Batch batch) {
         batch.draw(texture, position.x, position.y, 500, 150);
-        if (page == 0) {
-            // page 1
             foodTexture.render(batch);
             waterTexture.render(batch);
             happyTexture.render(batch);
             Assets.getFont(36).draw(batch, "" + village.getFood(), position.x + 60,  140);
             Assets.getFont(36).draw(batch, "" + village.getWater(), position.x + 60, 100);
-            Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 280, position.y + 90);
+            Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 230, position.y + 90);
 
             Assets.getFont(30).draw(batch, "Time: " + (int) Math.ceil(village.getHoursLeft()), position.x + 300, 50);
             Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(village.getDay()), position.x + 30, 50);
@@ -74,9 +71,7 @@ public class VillageInformation extends GameObject implements MenuItem {
             batch.draw(villagers.get(3), position.x + 460, 80);
             Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.MINER), position.x + 460, 80);
             moveAndFade(batch);
-        } else {
-            // page 2
-        }
+
     }
 
     // TODO need to fix this method
