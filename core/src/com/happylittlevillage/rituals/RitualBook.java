@@ -52,13 +52,15 @@ public class RitualBook extends GameObject {
 	}
 
 	public void moveRitual(boolean isLeft, float deltaX) {
-		if (!isMoving) {
-			if (!isLeft) {
-				previous();
-				slideRight = true;
-			} else {
-				next();
-				slideLeft = true;
+		if(dynamicRituals.size() >4){
+			if (!isMoving) {
+				if (!isLeft) {
+					previous();
+					slideRight = true;
+				} else {
+					next();
+					slideLeft = true;
+				}
 			}
 		}
 	}
@@ -141,7 +143,7 @@ public class RitualBook extends GameObject {
 
 	@Override
 	public void render(Batch batch) {
-		font = Assets.getFont(24);
+		font = Assets.getFont(22);
 		batch.draw(texture, position.x, position.y, width, height);
 		batch.end(); // drawing doesn't happen until .end() is called
 		batch.begin(); // restart batch to not scissor the background (as well as not break everything else that uses the batch);

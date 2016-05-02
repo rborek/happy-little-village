@@ -116,7 +116,7 @@ public class WeekSummary extends MessageBox {
 		int alignY2 = 580;
 		int alignX2 = 670;
 		if (village.getBlackGem() != 0) {
-			blackGem.setPosition(position.x + alignX2 + 450, position.y + alignY2 - 50 );
+			blackGem.setPosition(position.x + alignX2 + 450, position.y + alignY2 - 30 );
 			blackGem.render(batch);
 			font.draw(batch, "Congratulations! You have earned    " + numOfBlackGem, position.x + alignX2, position.y + alignY2);
 		}
