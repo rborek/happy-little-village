@@ -17,7 +17,8 @@ public class MiningWindow extends GameObject {
 	private GameObject chosenSign = new GameObject(Assets.getTexture("ui/chosen_sign.png"), 0, 0, 40, 40);
 	private RotatableGameObject pickAxe = new RotatableGameObject(Assets.getTexture("ui/pick_axe.png"), position.x, position.y, 50, 50);
 	private boolean[] mine = {false, false, false, false};
-	private String text = "What gems would \nyou like to mine?";
+	private String text = "What gems would";
+	private String text2 = "you like to mine?";
 	private BitmapFont font;
 	private GemBag gemBag;
 	private int count = 0; // number of activated gems
@@ -91,6 +92,7 @@ public class MiningWindow extends GameObject {
 			box.render(batch); // the background theme
 			continueButton.render(batch);
 			font.draw(batch, text, 350, 600);
+			font.draw(batch, text2, 350, 575);
 
 			for (int k = 0; k < 4; k++) {
 				DynamicRitual.gemTextures[k].setPosition(350 + k * 60, 495);

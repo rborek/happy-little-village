@@ -358,12 +358,12 @@ public class RitualTree extends GameObject {
 		if (viewPickAxe) {
 			String description;
 			if (!pickAxeUnlocked) {
-				description = "Pick Axe allows to monitor mining gems\n" +
-						"unlocked automatically upon\n" + "unlocking any tier 4 ritual";
+				description = "The pickaxe lets you \nprioritize mining gems.\n" +
+						"It is unlocked \nautomatically upon\n" + "unlocking any tier 4 ritual.";
 			} else {
-				description = "Pick Axe has been unlocked\n" + "Click the icon on the mine to use it\n";
+				description = "The pickaxe has been\n unlocked!" + " Click the icon \non the mine to use it.";
 			}
-			font.draw(batch, description, 840, 390);
+			font.draw(batch, description, 840, 490);
 		}
 		//render chosen rituals on the bar
 		if (chosenRituals.size() != 0) {
