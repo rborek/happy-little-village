@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class RitualTree extends GameObject {
 	private GameHandler gameHandler;
-	private int blackGem = 18;
+	private int blackGem = 36;
 	private ArrayList<Ritual> unlockedRituals = new ArrayList<Ritual>(); // all the unlocked rituals. Equal or greater than chosenRituals
 	private ArrayList<Ritual> chosenRituals = new ArrayList<Ritual>(); // chosen rituals and passed in ritualBook and ritualAltar
 	private RitualNode viewingRitual = null;
