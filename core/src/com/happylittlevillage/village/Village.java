@@ -1,12 +1,14 @@
 package com.happylittlevillage.village;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.happylittlevillage.Assets;
 import com.happylittlevillage.gems.GemBag;
-import com.happylittlevillage.gems.GemColour;
-import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.rituals.WeeklyRitual;
+import com.happylittlevillage.screens.GameScreen;
 
 import java.util.*;
 
@@ -38,6 +40,7 @@ public class Village {
 	private Queue<Villager> villagersToSpawn = new ArrayDeque<Villager>();
 	private float gemThreshold = 0;
 	private int blackGem = 0;
+	private ShapeRenderer dimmer = new ShapeRenderer();
 
 	//	private static Pool<Rectangle> rectPool = new Pool<Rectangle>() {
 //		@Override
@@ -345,6 +348,17 @@ public class Village {
 		for (VillagerEffect villagerEffect : effects) {
 			villagerEffect.render(batch);
 		}
+		batch.end();
+		batch.begin();
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		dimmer.begin(ShapeRenderer.ShapeType.Filled);
+		dimmer.setColor(new Color(0, 0, 0, Math.min(((MAX_HOURS - hoursLeft) / MAX_HOURS) * 0.5f, 0.5f)));
+		dimmer.rect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
+		dimmer.end();
+		Gdx.gl.glDisable(GL20.GL_BLEND);
+		batch.end();
+		batch.begin();
 		villageInformation.render(batch);
 	}
 
