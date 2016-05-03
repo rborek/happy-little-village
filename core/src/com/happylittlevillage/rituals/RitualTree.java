@@ -1,13 +1,12 @@
 package com.happylittlevillage.rituals;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.happylittlevillage.Assets;
 import com.happylittlevillage.GameHandler;
 import com.happylittlevillage.objects.GameObject;
-import com.happylittlevillage.Assets;
 import com.happylittlevillage.objects.RotatableGameObject;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.Map;
 
 public class RitualTree extends GameObject {
 	private GameHandler gameHandler;
-	private int blackGem = 18;
+	private int blackGem = 3;
 	private ArrayList<Ritual> unlockedRituals = new ArrayList<Ritual>(); // all the unlocked rituals. Equal or greater than chosenRituals
 	private ArrayList<Ritual> chosenRituals = new ArrayList<Ritual>(); // chosen rituals and passed in ritualBook and ritualAltar
 	private RitualNode viewingRitual = null;
@@ -42,7 +41,7 @@ public class RitualTree extends GameObject {
 	private boolean viewPickAxe = false;
 	private boolean pickAxeUnlocked = false;
 	private GameObject blackGemTexture = new GameObject(Assets.getTexture("gems/gem_black.png"), 0, 0, 40, 40);
-	private GameObject viewingFrame = new GameObject(Assets.getTexture("ui/viewing_frame.png"),0,0,80,80);
+	private GameObject viewingFrame = new GameObject(Assets.getTexture("ui/viewing_frame.png"), 0, 0, 80, 80);
 	private static final int ritualSize = 80;
 
 	private Rectangle[] ritualPositionsOnTree = {
@@ -221,21 +220,21 @@ public class RitualTree extends GameObject {
 			if (viewingRitual != null) {
 				System.out.println("View/Unlock/Choose");
 				// if it is not unlocked
-					if (blackGem > 0) { // if there is enough skillpoint
-						if (!unlockedRituals.contains(viewingRitual.getRitual())) { // if it is not in the unlocked list
-							if (viewingRitual.getRitual().getBlackGemRequire() <= blackGem) {
-								if (viewingRitual.activate()) { // if it is activated. Return true also activates it
-									unlockedRituals.add(viewingRitual.getRitual());
-									blackGem -= viewingRitual.getRitual().getBlackGemRequire();
-									return true;
-								}
+				if (blackGem > 0) { // if there is enough skillpoint
+					if (!unlockedRituals.contains(viewingRitual.getRitual())) { // if it is not in the unlocked list
+						if (viewingRitual.getRitual().getBlackGemRequire() <= blackGem) {
+							if (viewingRitual.activate()) { // if it is activated. Return true also activates it
+								unlockedRituals.add(viewingRitual.getRitual());
+								blackGem -= viewingRitual.getRitual().getBlackGemRequire();
+								return true;
 							}
 						}
 					}
+				}
 
 				//if it is unlocked, then select it and put it in the bar. Do not decrement skillPoint
 				//if it is not in chosenRituals and it is unlocked
-				if(chosenRituals.size() < 10) {
+				if (chosenRituals.size() < 10) {
 					if (!chosenRituals.contains(viewingRitual.getRitual()) && unlockedRituals.contains(viewingRitual.getRitual())) {
 						chosenRituals.add(viewingRitual.getRitual());
 						System.out.println("added to chosenRitual");
@@ -280,7 +279,7 @@ public class RitualTree extends GameObject {
 		return false;
 	}
 
-	public void addBlackGem(int blackGem){
+	public void addBlackGem(int blackGem) {
 		this.blackGem += blackGem;
 	}
 
@@ -308,7 +307,7 @@ public class RitualTree extends GameObject {
 			surroundingPickAxe.render(batch);
 		}
 		BitmapFont font = Assets.getFont(40);
-		font.draw(batch,chosenRituals.size() + "/10",1110,130);
+		font.draw(batch, chosenRituals.size() + "/10", 1110, 130);
 		font = Assets.getFont(30);
 		font.draw(batch, blackGem + "", 1120, 570);
 		pickAxe.render(batch, 0, 0);
@@ -369,18 +368,16 @@ public class RitualTree extends GameObject {
 		if (chosenRituals.size() != 0) {
 			for (int k = 0; k < chosenRituals.size(); k++) {
 				chosenRituals.get(k).renderRecipe(batch, 45 + 100 * k, 115, 20, 4);
-				if(chosenRituals.get(k).getName().equals("Weekly Ritual")){
+				if (chosenRituals.get(k).getName().equals("Weekly Ritual")) {
 					DynamicRitual.weeklyFrame.setPosition(43 + 100 * k, 35);
-					DynamicRitual.weeklyFrame.render(batch, 99,107);
-				} else{
+					DynamicRitual.weeklyFrame.render(batch, 99, 107);
+				} else {
 					DynamicRitual.frame.setPosition(43 + 100 * k, 35);
-					DynamicRitual.frame.render(batch, 99,107);
+					DynamicRitual.frame.render(batch, 99, 107);
 				}
 
 			}
 		}
-
-
 	}
 
 	private void renderLines(Batch batch) {
@@ -442,7 +439,7 @@ public class RitualTree extends GameObject {
 			;
 			if (activated) {
 				dot2.setPosition((float) x, (float) y);
-				dot2.setAngle((float) angle  * 57.2958f);
+				dot2.setAngle((float) angle * 57.2958f);
 			} else {
 				dot.setPosition((float) x, (float) y);
 				dot.setAngle((float) angle * 57.2958f);
