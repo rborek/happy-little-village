@@ -152,6 +152,7 @@ public class RitualTree extends GameObject {
 		chosenRituals.add(Ritual.getRitual("Dried meat"));
 		chosenRituals.add(Ritual.getRitual("Well water"));
 		chosenRituals.add(Ritual.getRitual("A little party"));
+		chosenRituals.add(Ritual.getRitual("Reproduce"));
 
 
 		for (Ritual ritual : chosenRituals) {

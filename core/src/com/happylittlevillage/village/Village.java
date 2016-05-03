@@ -222,7 +222,7 @@ public class Village {
 	}
 
 	private void mineGems(float delta) {
-		gemThreshold += delta / 30 * getNumberOf(VillagerRole.MINER);
+		gemThreshold += delta / 20 * getNumberOf(VillagerRole.MINER);
 		if(happiness <= 50){
 			gemThreshold = gemThreshold * (happiness * 2) / 100;
 		}
@@ -269,7 +269,7 @@ public class Village {
 	}
 
 	private void timePass(float delta) {
-		hoursLeft -= delta * .3f;
+		hoursLeft -= delta * .4f;
 		if (hoursLeft <= 0) {
 			dayPass();
 		}
