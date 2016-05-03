@@ -298,7 +298,6 @@ public class RitualTree extends GameObject {
 
 	@Override
 	public void render(Batch batch) {
-
 		batch.draw(texture, position.x, position.y, width, height);
 		continueButton.render(batch);
 		blackGemTexture.setPosition(1105, 550);
@@ -340,12 +339,12 @@ public class RitualTree extends GameObject {
 
 		//render the viewing ritual
 		if (viewingRitual != null) {
+			viewingRitual.getRitual().render(batch, font, 845, 605, 835, 355, 54, 6);
 			if (!viewingRitual.prerequisitesActivated()) { // if the ritual is locked
 				lockedButton.render(batch);
 			} else if (!unlockedRituals.contains(viewingRitual.getRitual()) && blackGem > 0) { // if the ritual is unlockable
 				unlockButton.render(batch);
 			} else { // if the ritual is unlocked. Now we can see its info
-				viewingRitual.getRitual().render(batch, font, 845, 605, 835, 355, 54, 6);
 				if (!chosenRituals.contains(viewingRitual.getRitual())) {
 					chooseButton.render(batch);
 				} else {
