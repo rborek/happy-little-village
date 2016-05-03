@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.HappyLittleVillage;
 import com.happylittlevillage.Assets;
+import com.happylittlevillage.rituals.Ritual;
 
 public class LoadingScreen extends ScreenAdapter {
 	protected HappyLittleVillage happyLittleVillage;
@@ -34,19 +35,19 @@ public class LoadingScreen extends ScreenAdapter {
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
 		screen = new GameObject(Assets.getTexture("menu/loading_screen.png"), 0, 0);
-		// if we ever wanna interact with the loading screen we have to set the input processor to this class, implement InputProcessor
-		//and methods like touchDragged touch down
 		Assets.load();
 	}
 
 	@Override
 	public void render(float delta) {
 		// Clear the screen
+		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		screen.render(batch);
 		batch.end();
 		if (Assets.update()) {
+			Ritual.load();
 			happyLittleVillage.setGameScreen(isTutorial);
 		}
 	}

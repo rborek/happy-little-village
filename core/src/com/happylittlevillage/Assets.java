@@ -155,8 +155,6 @@ public final class Assets {
 		param.magFilter = TextureFilter.Linear;
 		loadTextures(param);
 		loadAtlases();
-		manager.finishLoading();
-		Ritual.load();
 	}
 
 	public static void dispose() {

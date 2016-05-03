@@ -126,7 +126,7 @@ public class Village {
 	}
 
 	public void generateNewWeeklyRitual() {
-		blackGem = (int)daysLeft / 2;
+		blackGem = (int) (daysLeft / 2);
 		weeklyRitual.generateRandom();
 		daysLeft = 7;
 	}
@@ -359,7 +359,7 @@ public class Village {
 		boolean isNight = (MAX_HOURS - hoursLeft) > MAX_HOURS / 2.1f;
 		float dimLevel = isNight ? Math.min(0.35f, (MAX_HOURS - (MAX_HOURS / 2.1f) - hoursLeft) * 0.4f) : 0f;
 		dimmer.setColor(new Color(0, 0, 0, dimLevel));
-		dimmer.rect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
+		dimmer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		dimmer.end();
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 		batch.end();

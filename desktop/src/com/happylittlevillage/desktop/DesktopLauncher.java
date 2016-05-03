@@ -1,5 +1,7 @@
 package com.happylittlevillage.desktop;
 
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.happylittlevillage.HappyLittleVillage;
@@ -16,6 +18,7 @@ public class DesktopLauncher {
 		config.title = "Happy Little Village";
 		config.resizable = true;
 		config.useGL30 = false;
+		config.addIcon("data/textures/icon.png", Files.FileType.Internal);
 		new LwjglApplication(new HappyLittleVillage(), config);
 	}
 }

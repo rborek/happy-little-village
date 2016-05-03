@@ -62,14 +62,18 @@ public class VillageInformation extends GameObject implements MenuItem {
 		Assets.getFont(30).draw(batch, "Hours left: " + (int) Math.ceil(village.getHoursLeft()), position.x + 300, 55);
 		Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(village.getDay()), position.x + 30, 55);
 		position.x -= 50;
+		int numFarmers = village.getNumberOf(VillagerRole.FARMER);
+		int numExplorers = village.getNumberOf(VillagerRole.EXPLORER);
+		int numMiners = village.getNumberOf(VillagerRole.MINER);
+		int numCitizens = village.getPop() - numExplorers - numFarmers - numMiners;
 		batch.draw(villagers.get(0), position.x + 355, 90);
-		Assets.getFont(30).draw(batch, "" + village.getPop(), position.x + 355, 88);
+		Assets.getFont(30).draw(batch, "" + numCitizens, position.x + 355, 88);
 		batch.draw(villagers.get(1), position.x + 405, 90);
-		Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.FARMER), position.x + 405, 88);
+		Assets.getFont(30).draw(batch, "" + numFarmers, position.x + 405, 88);
 		batch.draw(villagers.get(2), position.x + 455, 90);
-		Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.EXPLORER), position.x + 455, 88);
+		Assets.getFont(30).draw(batch, "" + numExplorers, position.x + 455, 88);
 		batch.draw(villagers.get(3), position.x + 505, 90);
-		Assets.getFont(30).draw(batch, "" + village.getNumberOf(VillagerRole.MINER), position.x + 505, 88);
+		Assets.getFont(30).draw(batch, "" + numMiners, position.x + 505, 88);
 		position.x += 50;
 		moveAndFade(batch);
 
