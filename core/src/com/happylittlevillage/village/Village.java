@@ -112,8 +112,8 @@ public class Village {
 		float consumeFood = 0;
 		float consumeWater = 0;
 		for (Villager villager : villagers) {
-			consumeWater += villager.getRole().waterConsumption() / 5.5;
-			consumeFood += villager.getRole().foodConsumption() / 5.5;
+			consumeWater += villager.getRole().waterConsumption() / 5;
+			consumeFood += villager.getRole().foodConsumption() / 5;
 		}
 		food -= consumeFood * delta;
 		consumedFood += consumeFood * delta;
