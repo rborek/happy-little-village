@@ -1,5 +1,5 @@
 Dried meat
 00 RED 01 RED 11 YELLOW
 1
-FOOD +100
+FOOD +50
 WATER -20

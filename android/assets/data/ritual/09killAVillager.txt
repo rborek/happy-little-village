@@ -4,4 +4,4 @@ For the greater good
 VILLAGER -1
 FOOD +100
 WATER +50
-HAPPINESS -5
+HAPPINESS -10
