@@ -25,11 +25,10 @@ public class MainMenu extends Miscellaneous {
 	private static int buttonY = 68;
 	private GameObject loadingScreen;
 	private GameObject[] dots = new GameObject[3];
-	private boolean started = false;
-	private boolean toStart = false;
+	private boolean startPressed = false;
 	private boolean startedLoading = false;
-	private boolean loadDisplayed = false;
 	private float timer = 0;
+	private Thread assetLoad;
 
 	public MainMenu(HappyLittleVillage happyLittleVillage) {
 		super(happyLittleVillage);
@@ -54,10 +53,23 @@ public class MainMenu extends Miscellaneous {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (!started) {
+		if (!startPressed) {
 			super.touchDown(screenX, screenY, pointer, button); // set the realPos
 			if (startButtonPosition.contains(realPos)) {
-				toStart = true;
+				startPressed = true;
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						Ritual.load();
+						Assets.load();
+						Gdx.app.postRunnable(new Runnable() {
+							@Override
+							public void run() {
+								startedLoading = true;
+							}
+						});
+					}
+				}).start();
 				return true;
 			} else if (exitButtonPosition.contains(realPos)) {
 				happyLittleVillage.exit();
@@ -72,7 +84,7 @@ public class MainMenu extends Miscellaneous {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		if (!toStart) {
+		if (!startPressed) {
 			batch.draw(background, 0, 0);
 			startButton.render(batch);
 			exitButton.render(batch);
@@ -85,18 +97,13 @@ public class MainMenu extends Miscellaneous {
 					dots[i - 1].render(batch);
 				}
 			}
-			loadDisplayed = true;
 		}
 		batch.end();
-		if (started && !startedLoading) {
-			Assets.load();
-			startedLoading = true;
-		} else if (started && Assets.update()) {
-			Ritual.load();
+		if (startedLoading && Assets.update()) {
 			happyLittleVillage.switchToGameScreen(false);
 		}
-		started = loadDisplayed;
 	}
+
 
 	@Override
 	public void resize(int width, int height) {
