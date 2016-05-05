@@ -16,7 +16,6 @@ public class RitualEffect implements Comparable<RitualEffect> {
 		switch (modifier) {
 			case FOOD:
 				village.addFood(amount);
-				System.out.println("Food added is:" + amount);
 				break;
 			case VILLAGER:
 				if (amount > 0) {
@@ -31,7 +30,6 @@ public class RitualEffect implements Comparable<RitualEffect> {
 				break;
 			case WATER:
 				village.addWater(amount);
-				System.out.println("Water added is:" + amount);
 				break;
 			case FARMER:
 				if(amount > 0 ) { // if add

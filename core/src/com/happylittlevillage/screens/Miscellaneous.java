@@ -96,9 +96,7 @@ public abstract class Miscellaneous implements Screen, InputProcessor {
 
 	@Override
 	public void resize(int width, int height) {
-		System.out.println("calling resize");
 		if (width != lastResWidth || height != lastResHeight) {
-			System.out.println("resizing");
 			viewport.update(width, height);
 			lastResWidth = width;
 			lastResHeight = height;

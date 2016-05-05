@@ -25,34 +25,29 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 		setScreen(loadingScreen);
 	}
 
-	public void setGameScreen(boolean isTutorial) {
+	public void switchToGameScreen(boolean isTutorial) {
 		if (gameScreen == null) {
 			gameScreen = new GameScreen(this, isTutorial);
 		} else {
 			gameScreen.dispose();
 			gameScreen = new GameScreen(this, isTutorial);
 		}
-		if (mainMenu != null) {
-			mainMenu.dispose();
-		}
-		mainMenu = null;
 		if (options != null) {
 			options.dispose();
+			options = null;
 		}
-		options = null;
 		if (credits != null) {
 			credits.dispose();
+			credits = null;
 		}
-		credits = null;
-		if (exit != null) {
-			exit.dispose();
-		}
-		exit = null;
 		if (load != null) {
 			load.dispose();
+			load = null;
 		}
-		load = null;
-		Assets.unloadDir("data/textures/menu");
+		if (mainMenu != null) {
+			mainMenu.dispose();
+			mainMenu = null;
+		}
 		setScreen(gameScreen);
 	}
 
@@ -85,7 +80,7 @@ public class HappyLittleVillage extends Game implements ApplicationListener {
 		setScreen(load);
 	}
 
-	public void setExit() {
-		Gdx.app.exit();
+	public void exit() {
+		System.exit(0);
 	}
 }

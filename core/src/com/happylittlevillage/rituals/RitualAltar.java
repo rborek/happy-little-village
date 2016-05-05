@@ -261,7 +261,6 @@ public class RitualAltar extends GameObject implements MenuItem {
 			ritualEffects.add(ritual.getEffects());
 			if (ritual == weeklyRitual) {
 				((WeeklyRitual) ritual).commence();
-				System.out.println("WEEKLY RITUAL COMMENCE DETECTED");
 			}
 		}
 	}
@@ -271,7 +270,6 @@ public class RitualAltar extends GameObject implements MenuItem {
 		for (int row = 0; row < ritual.length; row++) {
 			for (int col = 0; col < ritual[0].length; col++) {
 				if (ritual[row][col] != null) {
-					System.out.println("coord " + row + col);
 					Vector2 gridMatch = matchOneGrid(x + SLOT_SIZE + SPACING - (ritual[0].length - col) * (SLOT_SIZE + SPACING), y - (row) * (SLOT_SIZE + SPACING));
 					if (gridMatch != null) {
 						//if we have a matching case, we loop through the ritual again and place all the gems in their grids
@@ -281,7 +279,6 @@ public class RitualAltar extends GameObject implements MenuItem {
 									int gridRow = (int) gridMatch.x - row + row2;
 									int gridCol = (int) gridMatch.y - col + col2;
 									if (gridRow >= 0 && gridRow <= 3 && gridCol >= 0 && gridCol <= 3) {
-										System.out.println("Passed");
 										if (grid[gridRow][gridCol] != null) {
 											gemBag.add(grid[gridRow][gridCol].getColour());
 										}
@@ -310,7 +307,6 @@ public class RitualAltar extends GameObject implements MenuItem {
 				gemBag.add(grid[gridRow][gridCol].getColour());
 			}
 			grid[gridRow][gridCol] = gem;
-			System.out.println("Set Colour" + grid[gridRow][gridCol].getColour() + "To position" + gridRow + gridCol);
 			return true;
 		}
 		return false;
@@ -332,7 +328,6 @@ public class RitualAltar extends GameObject implements MenuItem {
 					distance = Math.sqrt(Math.pow(center.x - x, 2) + Math.pow(center.y - y, 2)); // calculate distance from center of the gem to the specific grid
 					if (minDistance > distance) {
 						minDistance = distance;
-						System.out.println(minDistance);
 						//i is the row and k is the column
 						matchGrid.set(i, k);
 					}

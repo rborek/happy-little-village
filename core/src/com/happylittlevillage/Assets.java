@@ -55,7 +55,7 @@ public final class Assets {
 	public static void unloadDir(String dir) {
 		FileHandle directory = Gdx.files.internal(dir);
 		for (FileHandle file : directory.list()) {
-			System.out.println("disposing file " + file);
+//			System.out.println("disposing file " + file);
 			manager.unload(file.toString());
 		}
 	}
@@ -111,7 +111,7 @@ public final class Assets {
 			if (file.isDirectory()) {
 				loadTextures(file, param);
 			} else if (!manager.isLoaded(file.toString())) {
-				System.out.println("loading " + file);
+//				System.out.println("loading " + file);
 				manager.load(file.toString(), Texture.class, param);
 			}
 		}

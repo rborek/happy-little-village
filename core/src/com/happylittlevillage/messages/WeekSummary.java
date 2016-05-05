@@ -52,7 +52,6 @@ public class WeekSummary extends MessageBox {
 		for (int i = 0; i < gems.length; i++) {
 			for (int j = 0; j < gems[0].length; j++) {
 				if (colours[i][j] != null) {
-					System.out.println(colours[i][j]);
 					gems[i][j] = textures[colours[i][j].ordinal()];
 				}
 			}

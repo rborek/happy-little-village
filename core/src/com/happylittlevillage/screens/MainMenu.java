@@ -3,9 +3,10 @@ package com.happylittlevillage.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Rectangle;
-import com.happylittlevillage.objects.GameObject;
-import com.happylittlevillage.HappyLittleVillage;
 import com.happylittlevillage.Assets;
+import com.happylittlevillage.HappyLittleVillage;
+import com.happylittlevillage.objects.GameObject;
+import com.happylittlevillage.rituals.Ritual;
 
 public class MainMenu extends Miscellaneous {
 	private GameObject optionsButton;
@@ -22,6 +23,13 @@ public class MainMenu extends Miscellaneous {
 	private Rectangle exitButtonPosition;
 	private static int buttonX = 862;
 	private static int buttonY = 68;
+	private GameObject loadingScreen;
+	private GameObject[] dots = new GameObject[3];
+	private boolean started = false;
+	private boolean toStart = false;
+	private boolean startedLoading = false;
+	private boolean loadDisplayed = false;
+	private float timer = 0;
 
 	public MainMenu(HappyLittleVillage happyLittleVillage) {
 		super(happyLittleVillage);
@@ -38,29 +46,23 @@ public class MainMenu extends Miscellaneous {
 //		tutorialButtonPosition = new Rectangle(buttonX, buttonY + 325, tutorialButton.getWidth(), tutorialButton.getHeight());
 		startButtonPosition = new Rectangle(buttonX, buttonY + 450, startButton.getWidth(), startButton.getHeight());
 		background = Assets.getTexture("menu/menu.png");
+		loadingScreen = new GameObject(Assets.getTexture("menu/loading_screen.png"), 0, 0);
+		for (int i = 0; i < 3; i++) {
+			dots[i] = new GameObject(Assets.getTexture("menu/loading_dot.png"), 80 * i, 0);
+		}
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		super.touchDown(screenX, screenY, pointer, button); // set the realPos
-		System.out.println(realPos);
-//        if (creditsButtonPosition.contains(realPos)) {
-//            happyLittleVillage.setCredits();
-//            return true;
-//        }
-		if (startButtonPosition.contains(realPos)) {
-			happyLittleVillage.setLoadingScreen(false);
-			return true;
-//        } else if (optionsButtonPosition.contains(realPos)) {
-//            happyLittleVillage.setOptions();
-//            return true;
-//		} else if (tutorialButtonPosition.contains(realPos)) {
-//			happyLittleVillage.setLoadingScreen(true);
-//		} else if (loadButtonPosition.contains(realPos)) {
-//			happyLittleVillage.setLoad();
-		} else if (exitButtonPosition.contains(realPos)) {
-			happyLittleVillage.setExit();
-			return true;
+		if (!started) {
+			super.touchDown(screenX, screenY, pointer, button); // set the realPos
+			if (startButtonPosition.contains(realPos)) {
+				toStart = true;
+				return true;
+			} else if (exitButtonPosition.contains(realPos)) {
+				happyLittleVillage.exit();
+				return true;
+			}
 		}
 		return false;
 	}
@@ -70,14 +72,30 @@ public class MainMenu extends Miscellaneous {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(background, 0, 0);
-		startButton.render(batch);
-//		tutorialButton.render(batch);
-//		loadButton.render(batch);
-//        optionsButton.render(batch);
-//        creditsButton.render(batch);
-		exitButton.render(batch);
+		if (!toStart) {
+			batch.draw(background, 0, 0);
+			startButton.render(batch);
+			exitButton.render(batch);
+		} else {
+			timer += delta;
+			int frame = (int) (timer * 2 % 4);
+			loadingScreen.render(batch);
+			for (int i = 0; i <= frame; i++) {
+				if (i > 0) {
+					dots[i - 1].render(batch);
+				}
+			}
+			loadDisplayed = true;
+		}
 		batch.end();
+		if (started && !startedLoading) {
+			Assets.load();
+			startedLoading = true;
+		} else if (started && Assets.update()) {
+			Ritual.load();
+			happyLittleVillage.switchToGameScreen(false);
+		}
+		started = loadDisplayed;
 	}
 
 	@Override

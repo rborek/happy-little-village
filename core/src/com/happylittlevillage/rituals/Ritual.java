@@ -107,7 +107,7 @@ public class Ritual {
 	public static void addRitual(FileHandle fileHandle) {
 		Ritual ritual = new Ritual(fileHandle.readString().split("\r\n"));
 		rituals.put(ritual.getName(), new RitualNode(ritual));
-		System.out.println(ritual.getName() + ritual.getEffects()[0].getModifier().toString() + ritual.getEffects()[0].getAmount());
+//		System.out.println(ritual.getName() + ritual.getEffects()[0].getModifier().toString() + ritual.getEffects()[0].getAmount());
 	}
 
 	public static HashMap<String, RitualNode> getRituals() {

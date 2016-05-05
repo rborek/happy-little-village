@@ -232,7 +232,6 @@ public class Villager extends GameObject implements Comparable<Villager> {
 
 				} else if (destination == pathMarkers[0]) {
 					if (arriveAt(0)) {
-						System.out.println("yes");
 						destination = pathMarkers[MINE_INDEX];
 						calculateVelocity();
 					}
@@ -367,11 +366,9 @@ public class Villager extends GameObject implements Comparable<Villager> {
 				}
 			}
 		}
-		System.out.println("size of path " + path.size());
 		// now path contains the right node to walk, but from destination to position. So we have to loop back and add it to pathToTake. We exclude k = 0 as it is the position added above
 		for (int k = path.size() - 1; k >= 0; k--) {
 			pathToTake.add(path.get(k));
-			System.out.println(" -> " + path.get(k));
 		}
 	}
 

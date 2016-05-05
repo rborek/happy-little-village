@@ -171,7 +171,7 @@ public class InputHandler implements GestureDetector.GestureListener {
 	@Override
 	public boolean touchDown(float screenX, float screenY, int pointer, int button) {
 		Vector2 realPos = screen.getRealScreenPos(screenX, screenY);
-		System.out.println("Mouse click at:" + realPos);
+//		System.out.println("Mouse click at:" + realPos);
 //        if(clickOptionWheel(realPos.x,realPos.y)){
 //            gameHandler.saveGame();
 //            happyLittleVillage.setMenu();
@@ -263,7 +263,7 @@ public class InputHandler implements GestureDetector.GestureListener {
 	public boolean longPress(float x, float y) {
 		isLongPressed = true;
 		Vector2 realPos = screen.getRealScreenPos(x, y);
-		System.out.println("Long press detected");
+//		System.out.println("Long press detected");
 		pickUpRitual(realPos.x, realPos.y);
 		return false;
 	}

@@ -47,7 +47,6 @@ public class WinMessage extends MessageBox {
 	public boolean interact(float mouseX, float mouseY) {
 		Rectangle r = new Rectangle(continueButton.getPosition().x, continueButton.getPosition().y, continueButton.getWidth(), continueButton.getHeight());
 		if (r.contains(mouseX, mouseY)) {
-			System.out.println("interacted with continue button");
 			happyLittleVillage.setMenu();
 			return true;
 		}

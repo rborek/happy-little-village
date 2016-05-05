@@ -71,7 +71,6 @@ public class RitualBook extends GameObject {
 		if (firstIndex < 0) {
 			firstIndex = count - 1;
 		}
-		System.out.println("previous");
 	}
 
 	public void next() {
@@ -80,7 +79,6 @@ public class RitualBook extends GameObject {
 		if (firstIndex >= count) {
 			firstIndex = 0;
 		}
-		System.out.println("next");
 	}
 
 	private void enableScissor(float clipX, float clipY, float clipWidth, float clipHeight) {
@@ -196,7 +194,6 @@ public class RitualBook extends GameObject {
 				}
 			}
 			if (slideTime >= 0.7 / (DynamicRitual.SLIDING_SPEED)) {
-				System.out.println(slideTime);
 				slideTime = 0;
 				isMoving = false;
 				updateInitialPositions = false;

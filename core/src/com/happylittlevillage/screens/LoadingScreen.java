@@ -22,7 +22,10 @@ public class LoadingScreen extends ScreenAdapter {
 	protected int lastResHeight;
 	protected int lastResWidth;
 	private boolean isTutorial;
-	private GameObject screen;
+	private GameObject background;
+	private GameObject[] dots = new GameObject[3];
+	private float timer = 0;
+
 
 	public LoadingScreen(HappyLittleVillage happyLittleVillage, boolean isTutorial) {
 		this.happyLittleVillage = happyLittleVillage;
@@ -34,30 +37,38 @@ public class LoadingScreen extends ScreenAdapter {
 		viewport.apply();
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
-		screen = new GameObject(Assets.getTexture("menu/loading_screen.png"), 0, 0);
+		background = new GameObject(Assets.getTexture("menu/loading_screen.png"), 0, 0);
+		for (int i = 0; i < 3; i++) {
+			dots[i] = new GameObject(Assets.getTexture("menu/loading_dot.png"), 80 * i, 0);
+		}
+
 		Assets.load();
 	}
 
 	@Override
 	public void render(float delta) {
-		// Clear the screen
+		timer += delta;
+		int frame = (int) (timer * 2 % 4);
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		screen.render(batch);
+		background.render(batch);
+		for (int i = 0; i <= frame; i++) {
+			if (i > 0) {
+				dots[i - 1].render(batch);
+			}
+		}
 		batch.end();
 		if (Assets.update()) {
 			Ritual.load();
-			happyLittleVillage.setGameScreen(isTutorial);
+			happyLittleVillage.switchToGameScreen(isTutorial);
 		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		//Took this from GameScreen
-		System.out.println("calling resize");
 		if (width != lastResWidth || height != lastResHeight) {
-			System.out.println("resizing");
 			viewport.update(width, height);
 			lastResWidth = width;
 			lastResHeight = height;

@@ -86,12 +86,6 @@ public class RitualTree extends GameObject {
 		setPrerequisites();
 		addPresetChosenRituals(); // add default chosen rituals
 		texturesOfUnlockedRituals();
-		for (String name : Ritual.getRitualNames()) {
-			if (Ritual.getRituals().containsKey(name)) {
-				System.out.println("ritual is " + Ritual.getRitualNode(name).toString());
-			}
-		}
-
 	}
 
 	private void createIndexesOfRituals() {
@@ -219,7 +213,6 @@ public class RitualTree extends GameObject {
 		// choose ritual
 		else if (chooseButtonPosition.contains(mouseX, mouseY)) {
 			if (viewingRitual != null) {
-				System.out.println("View/Unlock/Choose");
 				// if it is not unlocked
 				if (blackGem > 0) { // if there is enough skillpoint
 					if (!unlockedRituals.contains(viewingRitual.getRitual())) { // if it is not in the unlocked list
@@ -238,7 +231,6 @@ public class RitualTree extends GameObject {
 				if (chosenRituals.size() < 10) {
 					if (!chosenRituals.contains(viewingRitual.getRitual()) && unlockedRituals.contains(viewingRitual.getRitual())) {
 						chosenRituals.add(viewingRitual.getRitual());
-						System.out.println("added to chosenRitual");
 					}
 				}
 				//unlock other ritual
@@ -247,7 +239,6 @@ public class RitualTree extends GameObject {
 		}
 		// unChoose ritual from the bar
 		else {
-			System.out.println("size is:" + chosenRituals.size());
 			//rectangle of the chosen ritual on the bar
 			Rectangle chosenRitualPosition = new Rectangle(0, 0, 0, 0);
 			for (int k = 0; k < chosenRituals.size(); k++) {
@@ -255,13 +246,11 @@ public class RitualTree extends GameObject {
 				if (chosenRitualPosition.contains(mouseX, mouseY)) {
 					if (!chosenRituals.get(k).getName().equals("Weekly Ritual")) {
 						chosenRituals.remove(k);
-						System.out.println("REMOVED");
 						return true;
 					}
 				}
 			}
 		}
-		System.out.println("touched nothing and the size of chosenRitual is " + chosenRituals.size());
 		return false;
 	}
 
@@ -273,7 +262,6 @@ public class RitualTree extends GameObject {
 				viewingRitual = ritualIndexOnTree.get(k);
 				viewPickAxe = false;
 				viewingFrame.setPosition(ritualPositionsOnTree[k].x, ritualPositionsOnTree[k].y);
-				System.out.println(viewingRitual.toString());
 				return true;
 			}
 		}

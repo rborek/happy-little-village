@@ -52,7 +52,6 @@ public abstract class MessageBox extends GameObject implements MenuItem {
 	public boolean interact(float mouseX, float mouseY) {
 		Rectangle r = new Rectangle(continueButton.getPosition().x, continueButton.getPosition().y, continueButton.getWidth(), continueButton.getHeight());
 		if (r.contains(mouseX, mouseY)) {
-			System.out.println("interacted with continue button");
 			gameHandler.unpauseInGame();
 			return true;
 		}
