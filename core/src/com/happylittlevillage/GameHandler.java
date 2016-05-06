@@ -153,6 +153,7 @@ public class GameHandler {
 					if (((WeekSummary) messageBox).checkRitual()) {
 						village.generateNewWeeklyRitual();
 						ritualTree.addBlackGem(village.getBlackGem()); // add winning black gems to ritual tree
+						((WeekSummary) messageBox).setNumOfBlackGem(village.getBlackGem());
 					}
 				}
 				((WeekSummary) messageBox).stateRitual();

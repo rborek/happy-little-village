@@ -67,9 +67,9 @@ public class DynamicRitual {
 			}
 		}
 		if (dynamicRitual.getRitual().getEffects().length == 0) { // weekly ritual
-			font.draw(batch, "Days left: " + village.getDaysLeft(), posX, startY - 100);
+			font.draw(batch, " Days left: " + village.getDaysLeft(), posX, startY - 100);
 			if (village.getWeeklyRitual().getRecipe() != null) {
-				font.draw(batch, "Times to do: " + village.getWeeklyRitual().getTimesLeftToDo(), posX, startY - 130);
+				font.draw(batch, " Times left: " + village.getWeeklyRitual().getTimesLeftToDo(), posX, startY - 130);
 			}
 			weeklyFrame.setPosition(posX - 3, 5);
 			weeklyFrame.render(batch);
