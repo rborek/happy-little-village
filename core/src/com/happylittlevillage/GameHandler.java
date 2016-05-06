@@ -79,7 +79,7 @@ public class GameHandler {
 			arrow.add(new Vector2(476, 579));
 		} else {
 			village = new Village(gemBag, 300, 200, 5);
-			ritualAltar = new RitualAltar(gemBag, 1280 - 400 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
+			ritualAltar = new RitualAltar(gemBag, 1280 - 440 - 48 - 30, 720 - 400 - 40 - 12, village, ritualTree);
 		}
 		ritualBook = new RitualBook(ritualTree, 600, 0, village);
 		messageBox = new Introduction(this, isTutorial);
@@ -195,7 +195,7 @@ public class GameHandler {
 			}
 			batch.draw(background, 0, 0);
 			village.render(batch);
-			batch.draw(scroll, 1280 - 550, -12);
+			batch.draw(scroll, 1280 - 680, -12, scroll.getWidth() * 1.3f, scroll.getHeight());
 			ritualAltar.render(batch);
 			gemBag.render(batch);
 			ritualBook.render(batch);

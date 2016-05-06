@@ -57,7 +57,7 @@ public class VillageInformation extends GameObject implements MenuItem {
 		happyTexture.render(batch);
 		Assets.getFont(36).draw(batch, "" + village.getFood(), position.x + 60, 140);
 		Assets.getFont(36).draw(batch, "" + village.getWater(), position.x + 60, 100);
-		Assets.getFont(36).draw(batch, "" + village.getHappiness(), position.x + 200, position.y + 105);
+		Assets.getFont(36).draw(batch, "" + village.getHappiness() + "%", position.x + 200, position.y + 108);
 
 		Assets.getFont(30).draw(batch, "Hours left: " + (int) Math.ceil(village.getHoursLeft()), position.x + 300, 55);
 		Assets.getFont(30).draw(batch, "Days elapsed: " + (int) Math.ceil(village.getDay()), position.x + 30, 55);
