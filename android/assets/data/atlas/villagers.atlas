@@ -1,228 +1,228 @@
 villagers.png
-size: 28, 1344
+size: 256, 256
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 citizen
   rotate: false
-  xy: 0, 0
+  xy: 1, 1
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: -1
 citizen_walk
   rotate: false
-  xy: 0, 42
+  xy: 30, 1
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 1
 citizen_walk
   rotate: false
-  xy: 0, 84
+  xy: 59, 1
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 2
 citizen_walk
   rotate: false
-  xy: 0, 126
+  xy: 88, 1
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 3
 death_sprite
   rotate: false
-  xy: 0, 168
+  xy: 117, 1
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 1
 death_sprite
   rotate: false
-  xy: 0, 210
+  xy: 146, 1
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 2
 death_sprite
   rotate: false
-  xy: 0, 252
+  xy: 175, 1
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 3
 death_sprite
   rotate: false
-  xy: 0, 294
+  xy: 204, 1
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 4
 death_sprite
   rotate: false
-  xy: 0, 336
+  xy: 1, 44
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 5
 death_sprite
   rotate: false
-  xy: 0, 378
+  xy: 30, 44
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 6
 death_sprite
   rotate: false
-  xy: 0, 420
+  xy: 59, 44
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 7
 evolve_sprite
   rotate: false
-  xy: 0, 462
+  xy: 88, 44
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 1
 evolve_sprite
   rotate: false
-  xy: 0, 504
+  xy: 117, 44
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 2
 evolve_sprite
   rotate: false
-  xy: 0, 546
+  xy: 146, 44
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 3
 evolve_sprite
   rotate: false
-  xy: 0, 588
+  xy: 175, 44
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 4
 evolve_sprite
   rotate: false
-  xy: 0, 630
+  xy: 204, 44
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 5
 evolve_sprite
   rotate: false
-  xy: 0, 672
+  xy: 1, 87
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 6
 evolve_sprite
   rotate: false
-  xy: 0, 714
+  xy: 30, 87
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 7
 evolve_sprite
   rotate: false
-  xy: 0, 756
+  xy: 59, 87
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 8
 evolve_sprite
   rotate: false
-  xy: 0, 798
+  xy: 88, 87
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 9
 explorer
   rotate: false
-  xy: 0, 840
+  xy: 117, 87
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: -1
 explorer_walk
   rotate: false
-  xy: 0, 882
+  xy: 146, 87
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 1
 explorer_walk
   rotate: false
-  xy: 0, 924
+  xy: 175, 87
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 2
 explorer_walk
   rotate: false
-  xy: 0, 966
+  xy: 204, 87
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 3
 farmer
   rotate: false
-  xy: 0, 1008
+  xy: 1, 130
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: -1
 farmer_walk
   rotate: false
-  xy: 0, 1050
+  xy: 30, 130
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 1
 farmer_walk
   rotate: false
-  xy: 0, 1092
+  xy: 59, 130
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 2
 farmer_walk
   rotate: false
-  xy: 0, 1134
+  xy: 88, 130
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 3
 miner
   rotate: false
-  xy: 0, 1176
+  xy: 117, 130
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: -1
 miner_walk
   rotate: false
-  xy: 0, 1218
+  xy: 146, 130
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 1
 miner_walk
   rotate: false
-  xy: 0, 1260
+  xy: 175, 130
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
   index: 2
 miner_walk
   rotate: false
-  xy: 0, 1302
+  xy: 204, 130
   size: 28, 42
   orig: 28, 42
   offset: 0, 0
