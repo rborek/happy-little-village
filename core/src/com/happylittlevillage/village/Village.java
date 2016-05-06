@@ -311,6 +311,8 @@ public class Village {
 		isNextDay = true;
 		villagerAdded = 0;
 		resetMinedGems();
+		consumedFood = 0;
+		consumedWater = 0;
 	}
 
 

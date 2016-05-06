@@ -184,14 +184,6 @@ public class GameHandler {
 		if (!paused) {
 			if (isTutorial) {
 				tutorialMessage.render(batch);
-			} else {
-				//Villager.renderPathMakers(batch);
-				if (DEBUG) {
-					shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-					Villager.renderPath(shapeRenderer);
-					shapeRenderer.end();
-
-				}
 			}
 			batch.draw(background, 0, 0);
 			village.render(batch);
@@ -204,6 +196,15 @@ public class GameHandler {
 			}
 			inputHandler.renderSelectedGem(batch);
 			inputHandler.renderSelectedRitual(batch);
+//			Villager.renderPathMakers(batch);
+			batch.end();
+			if (DEBUG) {
+				shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+				Villager.renderPath(shapeRenderer);
+				Villager.renderLines(shapeRenderer);
+				shapeRenderer.end();
+			}
+			batch.begin();
 		} else {
 			if (messageScreen == 0) {
 				messageBox.render(batch);
