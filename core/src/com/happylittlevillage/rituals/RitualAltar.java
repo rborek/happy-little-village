@@ -18,9 +18,9 @@ import java.util.Collections;
 public class RitualAltar extends GameObject implements MenuItem {
 	private GemBag gemBag;
 	// gonna replace animation with different picture
-	private GameObject commenceButton = new GameObject(Assets.getTexture("altar/button.png"), position.x + width, position.y);
+	private GameObject commenceButton = new GameObject(Assets.getTexture("altar/start_button.png"), position.x - 90, position.y);
 	private Rectangle commenceButtonPosition;
-	private GameObject removeAllButton = new GameObject(Assets.getTexture("altar/remove_all_button.png"), position.x + width, position.y + height / 2);
+	private GameObject removeAllButton = new GameObject(Assets.getTexture("altar/remove_button.png"), position.x - 90, position.y + height - 75);
 	private Rectangle removeAllButtonPosition;
 	private ArrayList<Ritual> rituals = new ArrayList<Ritual>();
 	//new measurements

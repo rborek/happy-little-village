@@ -13,7 +13,7 @@ public class GemBag extends GameObject {
 
 	private RitualAltar gemSlot;
 	private static final int slotSize = 64;
-	private static int PosX = 740;
+	private static int PosX = 1170;
 	public static GameObject[] gemTextures = {  // red blue green yellow
 			new GameObject(Gem.getArrayOfTextures()[0], PosX, 310, slotSize, slotSize),
 			new GameObject(Gem.getArrayOfTextures()[1], PosX, 390, slotSize, slotSize),

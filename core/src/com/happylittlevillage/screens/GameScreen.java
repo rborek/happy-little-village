@@ -81,7 +81,7 @@ public class GameScreen implements Screen {
 		float time = dayTime - gameHandler.getVillage().getHoursLeft();
 		float percentage = (time / dayTime);
 		float skyAlpha = getSkyAlpha(percentage * 200) + 0.2f;
-		sunPos.x = percentage * WIDTH;
+		sunPos.x = percentage * WIDTH * 0.85f;
 		sunPos.y = 485 + skyAlpha * 125f;
 		Gdx.gl.glClearColor(0, (60 / 255f) + Math.max(131 / 255f * skyAlpha, 0), (90 / 255f) + Math.max(165 / 255f * skyAlpha, 0), 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

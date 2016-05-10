@@ -409,7 +409,7 @@ public class Village {
 	}
 
 	private int randomX() {
-		return random.nextInt(685) + 5;
+		return random.nextInt(625) + 5;
 	}
 
 	private int randomY() {
