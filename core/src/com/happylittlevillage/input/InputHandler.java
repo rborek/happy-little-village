@@ -171,12 +171,6 @@ public class InputHandler implements GestureDetector.GestureListener {
 	@Override
 	public boolean touchDown(float screenX, float screenY, int pointer, int button) {
 		Vector2 realPos = screen.getRealScreenPos(screenX, screenY);
-//		System.out.println("Mouse click at:" + realPos);
-//        if(clickOptionWheel(realPos.x,realPos.y)){
-//            gameHandler.saveGame();
-//            happyLittleVillage.setMenu();
-//            gameHandler.pause();
-//    }
 		isLongPressed = false;
 		if (slideArea.contains(realPos.x, realPos.y)) {
 			slideable = true;

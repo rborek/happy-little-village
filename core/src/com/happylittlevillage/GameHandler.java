@@ -13,9 +13,7 @@ import com.happylittlevillage.gems.GemBook;
 import com.happylittlevillage.input.GameGestureDetector;
 import com.happylittlevillage.input.InputHandler;
 import com.happylittlevillage.menu.MiningWindow;
-import com.happylittlevillage.menu.SaveGame;
 import com.happylittlevillage.messages.*;
-import com.happylittlevillage.objects.GameObject;
 import com.happylittlevillage.rituals.Ritual;
 import com.happylittlevillage.rituals.RitualAltar;
 import com.happylittlevillage.rituals.RitualBook;
@@ -23,10 +21,6 @@ import com.happylittlevillage.rituals.RitualTree;
 import com.happylittlevillage.village.Village;
 import com.happylittlevillage.village.Villager;
 
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameHandler {
@@ -58,7 +52,6 @@ public class GameHandler {
 	private TutorialMessage tutorialMessage;
 	private Rectangle optionWheelPosition = new Rectangle(0, 600, 64, 64);
 	private Json saveInfo = new Json();
-	private SaveGame saveGame;
 	private int messageScreen = 0;
 	private MiningWindow miningWindow;
 
@@ -213,30 +206,6 @@ public class GameHandler {
 			}
 		}
 
-	}
-
-	public void saveGame() {
-//        saveGame = new SaveGame(village.getFood(), village.getWater(), village.getHappiness(), village.getWeeklyRitual(),
-//                village.getHoursLeft(), village.getDaysLeft(), village.getDay(),
-//                village.isNextDay(), village.getVillagerSpawnTimer(), village.getVillagersToSpawn().size(),
-//                village.getGemThreshold(), village.getHunger(), village.getDehydration(),
-//                village.getVillagers(), gemBag, ritualBook.getUnlockedRitual());
-		saveInfo.toJson(saveGame, SaveGame.class);
-		try {
-			FileWriter fileWriter =
-					new FileWriter("data/data.save/saveInfo.txt");
-			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			String text = saveInfo.prettyPrint(saveGame);
-			System.out.print("Info is: " + saveGame.toString());
-			bufferedWriter.write(text);
-			bufferedWriter.flush();
-			bufferedWriter.close();
-			FileReader fileReader = new FileReader("data/data.save/saveInfo.txt");
-			SaveGame saveGame1 = saveInfo.fromJson(SaveGame.class, fileReader);
-		} catch (IOException ex) {
-			System.out.println(
-					"Error writing to file");
-		}
 	}
 
 

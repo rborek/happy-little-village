@@ -1,5 +1,10 @@
-#In order to run the desktop build, set your project's working directory to android/assets
+#Happy Little Village
+Happy Little Village is a game for Android made using Java and libGDX. Originally created during Global Game Jam 2016, it was later released on the Google Play Store.
 
-Welcome to your happy little village! Your task is to maintain your villagers' water by providing food and water! Make sure to be efficient with your gems or you will be punished!
-Combine gems inside your bag on the bottom right into the altar to gain or sacrifice various resources! Click the button to combine a maximum of 16 gems of any kind! 
+#Building and running
+To build the project, use the build.gradle file in the root directory. To launch the game on desktop platforms, run DesktopLauncher.java.
 
+#How to play
+Click and hold down to pick up ritual recipes, then drag them to the altar and release to place gems. Press the green button to commence the ritual, and the red button to clear the altar. Click and drag horizontally to scroll through your available rituals.
+
+By completing rituals before the week's end, you gain black gems, which are used to unlock new rituals. If you fail to complete the weekly ritual within 7 days of receiving it, your village will be destroyed and the game will end.
